@@ -1,0 +1,29 @@
+@use 'variables' as *;
+$card-radius: 0.625rem;
+$card-padding: 1rem;
+$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+$header-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+// Buttons
+$button-primary-bg: $color-primary;
+$button-primary-hover: $color-primary-dark;
+$button-primary-text: $color-white;
+$button-secondary-bg: transparent;
+$button-secondary-border: $color-primary;
+$button-secondary-text: $color-primary;
+$button-radius: 0.75rem;
+$button-height: 3rem;
+
+// Cancel Button (Outline)
+$button-cancel-bg: transparent;
+$button-cancel-border: #2a3647;
+$button-cancel-text: #2a3647;
+
+// Confirm Button
+$button-confirm-bg: #2a3647;
+$button-confirm-text: #ffffff;
+
+// Inputs
+$input-border: $color-border;
+$input-height: 2.5rem;
+$input-radius: 0.5rem;
