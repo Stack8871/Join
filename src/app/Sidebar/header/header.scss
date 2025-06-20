@@ -1,4 +1,5 @@
-@use '../../../style/flexbox.scss' as *;
+@use 'main' as *;
+/* @use '../../../style/flexbox.scss' as *; */
 
 /* =====================================
    =            Header Desktop           =
@@ -13,10 +14,10 @@
   z-index: 10;
   background-color: #f8f9fa;
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: $header-shadow;
 }
 .header-inner {
-  max-width: 1440px;
+  max-width: $max-width;
   width: 100%;
   margin-inline: auto;
   display: flex;
@@ -24,12 +25,12 @@
   align-items: center;
 }
 .text-header {
-  font-size: 1.25rem;
+  font-size: $font-size-lg;
   font-weight: bold;
 }
 .circle-section {
   display: flex;
-  gap: 0.5rem;
+  gap: $spacing-xs;
   align-items: center;
   .circle-help {
     width: 25px;
@@ -50,9 +51,9 @@
 .site-header-mobil{
   @include space;
   z-index: 10;
-  background-color: #f8f9fa;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: $color-bg-light-400;
+  padding: $spacing-base $spacing-xl;
+  box-shadow:$header-shadow;
 }
 .circle-come-in-mobil {
   width: 50px;
