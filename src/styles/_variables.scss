@@ -11,6 +11,8 @@ $max-width: 1440px;
 // Primär
 $color-primary: #2a3647;
 $color-primary-dark: #1f2a3c;
+$color-blue-dark: #091831;
+
 $color-white: #ffffff;
 $color-black: #000000;
 $color-border: #d1d1d1;
@@ -43,7 +45,7 @@ $color-avatar-5: #1fd7c1;
 
 // Modal Backgrounds
 $color-modal-left-bg: #2a3647;     // dunkelblauer Infobereich
-$color-modal-right-bg: #ffffff;    // weißer Eingabebereich
+$color-modal-right-bg: $color-white;    // weißer Eingabebereich
 
 // Input Background & Border
 $color-input-bg: #f5f5f5;          // leicht grauer Hintergrund (falls verwendet)
@@ -56,5 +58,5 @@ $color-placeholder: #c5c5c5;
 $color-icon-muted: #6b6b6b;
 
 // Linkfarben (z. B. E-Mail)
-$color-link: #0056b3;
+$color-link: #007cee;
 $color-link-hover: #003f8a;

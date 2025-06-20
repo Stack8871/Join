@@ -1,23 +1,23 @@
-@use '../../../style/flexbox.scss' as *;
+@use 'main' as *;
 .nav-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1rem;
+  padding: $spacing-base;
 
   &.mobile {
     @include center-row;
     width: 100%;
-    padding: 0.5rem;
+    padding:$spacing-xs;
   }
 }
 .nav-item {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
+  padding: 0.75rem $spacing-base;
+  margin-bottom:$spacing-xs;
   text-decoration: none;
-  color: #ffffff;
+  color: $color-white;
   border-radius: 8px;
   transition: background-color 0.2s ease;
 
@@ -34,31 +34,31 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 0;
-    padding: 0.5rem;
+    padding: $spacing-2xs;
   }
 }
 .nav-icon {
   width: 24px;
   height: 24px;
-  margin-right: 1rem;
+  margin-right: $spacing-base;
   flex-shrink: 0;
 
   &.mobile {
     margin-right: 0;
-    margin-bottom: 0.25rem;
+    margin-bottom: $spacing-2xs;
     width: 20px;
     height: 20px;
   }
 }
 .nav-text {
   flex: 1;
-  font-size: 1rem;
+  font-size: $font-size-base;
 
   &.mobile {
     display: block;
     flex: none;
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
+    font-size: $font-size-sm;
+    margin-top: $spacing-2xs;
     text-align: center;
     width: 100%;
   }

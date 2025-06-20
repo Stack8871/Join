@@ -1,4 +1,4 @@
-@use '../../../style/flexbox.scss' as *;
+@use 'main' as *;
 
 /* =====================================
    =           Content left            =
@@ -34,7 +34,7 @@
   &.mobile {
     flex-direction: column;
     width: 80vw;
-    height: 80vh;
+    height: 80svh;
     margin: 0 auto;
     border-radius: 0;
   }
@@ -43,7 +43,7 @@
   position: relative;
   width: 467px;
   height: 600px;
-  background-color: #2A3647;
+  background-color: $color-primary;
   border-radius: 24px 0 0 24px;
 
   &.mobile {
@@ -55,8 +55,8 @@
 .left-content {
   @include center-column;
   flex-wrap: wrap;
-  gap: 1rem;
-  height: 50vh;
+  gap: 1$spacing-base;
+  height: 50svh;
 
   .underline {
     position: relative;
@@ -81,11 +81,11 @@
     }
   }
   h2 {
-    color: #ffffff;
+    color: $color-white;
     font-size: 61px;
   }
   h3 {
-    color: #ffffff;
+    color: $color-white;
     font-size: 27px;
     font-weight: 300;
   }
@@ -110,7 +110,7 @@
   position: relative;
   width: 733px;
   height: 600px;
-  background-color: #ffffff;
+  background-color: $color-white;
   border-radius: 0 24px 24px 0;
 
   &.mobile {
@@ -233,9 +233,9 @@
             transition: all 0.2s ease;
 
             &.cancel-btn {
-              background-color: #ffffff;
-              color: #2A3647;
-              border: 1px solid #2A3647;
+              background-color: $color-white;
+              color: $color-primary;
+              border: 1px solid $color-primary;
 
               &.mobile {
                 display: none;
@@ -247,9 +247,9 @@
             }
 
             &.create-btn {
-              background-color: #2A3647;
-              color: #ffffff;
-              border: 1px solid #2A3647;
+              background-color: $color-primary;
+              color: $color-white;
+              border: 1px solid $color-primary;
 
               &:hover {
                 background-color: #29ABE2;
