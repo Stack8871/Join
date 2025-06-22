@@ -1,0 +1,11 @@
+@use 'style/font';
+
+* {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  box-sizing: border-box;
+  text-decoration: none;
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
