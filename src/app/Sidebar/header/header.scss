@@ -51,7 +51,7 @@
 .site-header-mobil{
   @include space;
   z-index: 10;
-  background-color: $color-bg-light-400;
+  background-color: $color-bg-light;
   padding: $spacing-base $spacing-xl;
   box-shadow:$header-shadow;
 }

@@ -16,14 +16,13 @@ $button-height: 3rem;
 
 // Cancel Button (Outline)
 $button-cancel-bg: transparent;
-$button-cancel-border: #2a3647;
-$button-cancel-text: #2a3647;
+$button-cancel-border: $color-primary;
+$button-cancel-text: $color-primary;
 
 // Confirm Button
-$button-confirm-bg: #2a3647;
+$button-confirm-bg: $color-primary;
 $button-confirm-text: $color-white;
 
 // Inputs
 $input-border: $color-border;
-$input-height: 2.5rem;
 $input-radius: 0.5rem;

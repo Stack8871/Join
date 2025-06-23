@@ -18,33 +18,35 @@ $max-width: 1440px;
 // 🎨 Farben
 // --------------------------------------------------
 
-// Primär
 $color-primary: #2a3647;
 $color-primary-dark: #1f2a3c;
 $color-blue-dark: #091831;
-
-$color-white: #ffffff;
+$color-gray: #CDCDCD;  
+$color-light-gray: #f6f7f8;
+$color-mid-gray: #d2cfcf;
+$color-drak-gray: #a8a8a8;
+$color-white: #fff;
 $color-black: #000000;
-$color-border: #d1d1d1;
+$color-border: $color-gray;
 
 // Akzentfarben (Prioritäten & Labels)
 $color-accent-urgent: #ff3d00;
 $color-accent-medium: #ffa800;
 $color-accent-low: #7ae229;
 $color-badge-userstory: #0038ff;
-$color-badge-technical: #1fd7c1;
+$color-badge-technical: $color-mid-gray;
 $color-subtask-bar: #29abe2;
+$color-muted: #6b6b6b;
 
 // Hintergründe
-$color-bg-light: #f6f7f8;
-$color-bg-light-400: #f8f9fa;
+$color-bg-light: $color-light-gray;
 $color-bg-sidebar: $color-primary;
 $color-bg-card: $color-white;
 
 // Textfarben
 $color-text-heading: $color-black;
-$color-text-muted: #6b6b6b;
-$color-text-subtask: #a8a8a8;
+$color-text-muted: $color-muted;
+$color-text-subtask: $color-mid-gray;
 
 // Avatare (Beispiele)
 $color-avatar-1: #ff7a00;
@@ -59,13 +61,13 @@ $color-modal-right-bg: $color-white;    // weißer Eingabebereich
 
 // Input Background & Border
 $color-input-bg: #f5f5f5;          // leicht grauer Hintergrund (falls verwendet)
-$color-input-border: #d1d1d1;
+$color-input-border: $color-gray;
 
 // Placeholder / Disabled Text
 $color-placeholder: #c5c5c5;
 
 // Icon Farben (optional – aktuell monochrom)
-$color-icon-muted: #6b6b6b;
+$color-icon-muted: $color-muted;
 
 // Linkfarben (z. B. E-Mail)
 $color-link: #007cee;

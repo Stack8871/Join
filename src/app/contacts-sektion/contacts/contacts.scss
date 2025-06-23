@@ -1,4 +1,5 @@
 @use 'index' as *;
+
 .contact-container {
   width: 320px;
   border: 1px solid #e0e0e0;
@@ -91,7 +92,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: $font-size-base;
+  font-size: var(--font-size-base);
   margin-right: $spacing-base;
   flex-shrink: 0;
   box-shadow: 0 2px 6px rgba(74, 63, 247, 0.3);
@@ -104,7 +105,7 @@
 
   .name {
     font-weight: 600;
-    font-size: $font-size-base;
+    font-size: var(--font-size-base);
     margin-bottom: 0.25rem;
     color: #1e2a3a;
   }
@@ -122,8 +123,4 @@
     color: #4a3ff7;
     font-weight: 500;
   }
-}
-.bine {
-  height: 100vh;
-  /*das ist beser  */
 }
