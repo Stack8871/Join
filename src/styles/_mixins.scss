@@ -28,3 +28,12 @@
   flex-direction: row;
   align-items: center;
 }
+  @mixin close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
