@@ -2,24 +2,25 @@
 @if(isOpen) {
         <section class="section-overlay" [ngClass]="mobileClass">
             <div class="card-wrapper" [ngClass]="mobileClass">
+                <div class="close-btn" (click)="closePopup()">
+                    <span>X</span>
+                </div>
                 <div class="left-container" [ngClass]="mobileClass">
                     <div class="left-content">
-                      <img class="Logo-White" [ngClass]="mobileClass" src="/icons/join-logo-white.svg" alt="logo" />
+                        <div class="logo-container">
+                            <img class="logo-White" [ngClass]="mobileClass" src="/icons/join-logo-white.svg" alt="logo" />
+                         </div>
                         <div class="mobil-view" [ngClass]="mobileClass">
                         <h2>Add contact</h2>
-                        <h3>Tasks are better with a team!</h3>
-                        <img class="underline" [ngClass]="mobileClass" src="/img/Card_Contacts/Vector%205.png" alt="logo" />
+                        <h3 class="subheadline">Tasks are better with a team!</h3>
                         </div>
                     </div>
                 </div>
                 <div class="add-content-right" [ngClass]="mobileClass">
                     <div class="right-content">
-                        <div class="close-btn" (click)="closePopup()">
-                            <img src="/icons/close.svg" alt="close" /> <!-- Icon einfügen -->
-                        </div>
                         <div class="contact-form" [ngClass]="mobileClass">
                             <div class="contact-avatar" [ngClass]="mobileClass">
-                                <img src="/icons/person.svg" alt="person" /> <!-- Icon einfügen -->
+                                <img src="/icons-white/person.svg" alt="person" /> <!-- Icon einfügen -->
                             </div>
                             <form>
                                 <div class="input-group">
