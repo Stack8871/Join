@@ -1,11 +1,6 @@
-@use 'style/font';
+/* You can add global styles to this file, and also import other style files */
+@use 'index' as *;
 
-* {
-  padding: 0;
-  margin: 0;
-  position: relative;
-  box-sizing: border-box;
-  text-decoration: none;
-  scroll-behavior: smooth;
-  font-family: 'Inter', sans-serif;
+body{
+    font-family: $font-family-base;
 }
