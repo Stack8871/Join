@@ -112,9 +112,15 @@ export class Contacts implements OnInit, OnDestroy {
     }, {} as Record<string, Contact[]>);
   }
 
-  /** Liefert das Initial (erster Buchstabe) eines Namens */
+  /** Liefert die Initialen (erster Buchstabe des Vor- und Nachnamens) */
   getInitials(name: string): string {
-    return name.trim().charAt(0).toUpperCase();
+    const nameParts = name.trim().split(' ');
+    if (nameParts.length === 1) {
+      return nameParts[0].charAt(0).toUpperCase();
+    }
+    const firstName = nameParts[0];
+    const lastName = nameParts[nameParts.length - 1];
+    return (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
   }
 
   /** Gibt die zugewiesene Farbe eines Kontakts zurück oder generiert sie */
