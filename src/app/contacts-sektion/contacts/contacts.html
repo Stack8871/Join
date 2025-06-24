@@ -1,30 +1,30 @@
 <div class="contacts-page-container" [ngClass]="mobileClass">
   <div class="contact-container" [ngClass]="mobileClass">
-    <button class="add-contact-btn" (click)="addContact()">
-      Add new contact
-    </button>
+  <button class="add-contact-btn" (click)="addContact()">
+    Add new contact
+  </button>
 
-    <div class="contact-list">
-      @if (contacts.length === 0) {
-      } @else {
-        @for (group of groupedContacts | keyvalue; track group.key) {
-          <div class="group-header">{{ group.key }}</div>
+  <div class="contact-list">
+    @if (contacts.length === 0) {
+    } @else {
+      @for (group of groupedContacts | keyvalue; track group.key) {
+        <div class="group-header">{{ group.key }}</div>
 
-          @for (contact of group.value; track contact.email) {
+        @for (contact of group.value; track contact.email) {
             <div class="contact-item"
                  [class.selected]="selectedContact && selectedContact.email === contact.email"
                  (click)="selectContact(contact)">
               <div class="circle" [style.background-color]="getContactColor(contact)">{{ getInitials(contact.name) }}</div>
 
-              <div class="info">
-                <div class="name">{{ contact.name }}</div>
-                <div class="email">{{ contact.email }}</div>
-              </div>
+            <div class="info">
+              <div class="name">{{ contact.name }}</div>
+              <div class="email">{{ contact.email }}</div>
             </div>
-          }
+          </div>
         }
       }
-    </div>
+    }
+  </div>
   </div>
 
   <div class="contacts-info-container" [ngClass]="mobileClass">

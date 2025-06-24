@@ -1,9 +1,11 @@
-
-
-
-<app-header></app-header>
-<app-section-sidebar></app-section-sidebar>
-
-<main>
-  <router-outlet></router-outlet>
-</main>
+<div class="grid-container">
+  <header class="header">
+    <app-header></app-header>
+  </header>
+  <aside class="sidebar">
+    <app-section-sidebar></app-section-sidebar>
+  </aside>
+  <main class="content"> 
+    <router-outlet></router-outlet>
+  </main>
+</div>
