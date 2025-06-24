@@ -14,6 +14,7 @@
   z-index: 999;
   animation: slideInFromRight 0.3s ease-out forwards;
   backdrop-filter: blur(2px);
+  padding:0 3rem;
 
   @keyframes slideInFromRight {
     0% {
@@ -40,7 +41,7 @@
 .close-btn {
   position: absolute;
   top: 30px;
-  right: 20px;
+  right: 1.25rem;
   cursor: pointer;
   z-index:998;
 
@@ -70,22 +71,21 @@
 }
 .left-container {
   position: relative;
-  flex:1;
+  flex:40%;
   background-color: $color-primary;
   border-radius: 24px 0 0 24px;
     @include center;
     height: 100%;
 
   &.mobile {
-    width: 100%;
-    height: 300px;
+
     border-radius: 2rem 2rem 0 0;
-  }
+  } 
 }
 .left-content {
-display: flex;
-justify-content: center;
-flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: $spacing-md;
   height:100%;
@@ -113,7 +113,7 @@ flex-direction: column;
   }
   h2 {
     color: $color-white;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
   }
   h3 {
     color: $color-white;
@@ -121,24 +121,21 @@ flex-direction: column;
     font-weight: 300;
   }
 }
-.mobil-view {
+/* .mobil-view {
   &.mobile {
     display: flex;
-    flex-direction: column;
-
-    margin: 40px 170px 190px auto;
-    padding: 0 1rem; // Padding gegen Rausrutschen
+    flex-direction: column
 
     h2, h3 {
       line-height: 1.2;
     }
   }
-}
+} */
 /* =====================================
    =           Content Right           =
    ===================================== */
 .add-content-right {
-  flex: 2;
+  flex: 60%;
   position: relative;
   background-color: $color-white;
   border-radius: 0 2rem 2rem 0;
@@ -206,7 +203,7 @@ flex-direction: column;
       }
       form {
         @include center-column;
-        gap: 20px;
+        gap: 1.25rem;
         flex:1;
 
         .input-group {
@@ -230,14 +227,14 @@ flex-direction: column;
             right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
+            width: 1.25rem;
+            height: 1.25rem;
           }
         }
         .button-group {
           @include center-row-not-justify;
           width: 100%;
-          gap: 20px;
+          gap: 1.25rem;
 
           &.mobile {
             justify-content: center;
@@ -245,8 +242,8 @@ flex-direction: column;
           }
 
           button {
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 0.8rem 2.5rem 0.8rem 1rem  ;
+            border-radius: 0.5rem;
             font-size: var(--font-size-base);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -255,13 +252,19 @@ flex-direction: column;
               background-color: $color-white;
               color: $color-primary;
               border: 1px solid $color-primary;
-
-              &.mobile {
-                display: none;
+                &::after{
+                content: 'X';
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1rem;
               }
 
               &:hover {
-                background-color: #f5f5f5;
+                box-shadow:$card-shadow;
+                color: $color-subtask-bar;
+                border: 1px solid $color-subtask-bar;
               }
             }
 
@@ -269,10 +272,19 @@ flex-direction: column;
               background-color: $color-primary;
               color: $color-white;
               border: 1px solid $color-primary;
-
+              &::after{
+                content: '✔';
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1rem;
+                color: white; // oder passend zum Design
+              }
               &:hover {
                 background-color: #29ABE2;
                 border-color: #29ABE2;
+                box-shadow:$card-shadow;
               }
             }
           }

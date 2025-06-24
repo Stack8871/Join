@@ -1,7 +1,7 @@
 @use 'variables' as *;
 $card-radius: 0.625rem;
 $card-padding: 1rem;
-$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
 $header-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
 // Buttons
@@ -11,7 +11,7 @@ $button-primary-text: $color-white;
 $button-secondary-bg: transparent;
 $button-secondary-border: $color-primary;
 $button-secondary-text: $color-primary;
-$button-radius: 0.75rem;
+$button-radius: 0.8rem;
 $button-height: 3rem;
 
 // Cancel Button (Outline)

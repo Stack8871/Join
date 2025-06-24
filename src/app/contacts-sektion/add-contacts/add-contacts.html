@@ -3,7 +3,7 @@
         <section class="section-overlay" [ngClass]="mobileClass">
             <div class="card-wrapper" [ngClass]="mobileClass">
                 <div class="close-btn" (click)="closePopup()">
-                    <span>X</span>
+                    <span class="close-sign">X</span>
                 </div>
                 <div class="left-container" [ngClass]="mobileClass">
                     <div class="left-content">
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="button-group" [ngClass]="mobileClass">
                                     <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="closePopup()">Cancel</button>
-                                    <button type="submit" class="create-btn">Create contact</button>
+                                    <button type="submit" class="create-btn">Create contact </button>
                                 </div>
                             </form>
                         </div>
