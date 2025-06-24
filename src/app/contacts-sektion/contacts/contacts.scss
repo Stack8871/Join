@@ -1,16 +1,49 @@
 @use 'index' as *;
 
-.contact-container {
-  width: 320px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 1.25rem;
-  background-color: $color-white;
+.contacts-page-container {
+  display: flex;
   position: fixed;
   top: 80px;
   left: 232px;
   z-index: 5;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: calc(100% - 232px);
+
+  &.mobile {
+    flex-direction: column;
+    left: 0;
+    width: 100%;
+    padding: 0;
+  }
+  .contact-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: calc(100vh - 80px);
+
+    .mobile & {
+      width: 100%;
+      margin-bottom: 1rem;
+      height: calc(100vh - 160px);
+      border-radius: 0;
+      box-sizing: border-box;
+    }
+
+
+    .mobile.show-details & {
+      display: none;
+    }
+  }
+  .show-mobil {
+    display: none;
+
+    .mobile & {
+      display: block;
+      margin-top: -20px;
+    }
+  }
+
 }
 .new-contact-icon{
   width: 20px;
@@ -19,16 +52,16 @@
 }
 
 .add-contact-btn {
-    display:flex;
-    justify-content: center;
-    padding: 0.8rem 1rem  ;
-    border-radius: 0.5rem;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: $color-primary;
-    color: $color-white;
-    border: 1px solid $color-primary;
+  display:flex;
+  justify-content: center;
+  padding: 0.8rem 2.4rem  ;
+  border-radius: 0.5rem;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: $color-primary;
+  color: $color-white;
+  border: 1px solid $color-primary;
 
   &:hover {
     background-color: #29ABE2;
@@ -41,24 +74,91 @@
   }
 }
 
+
+
+.contacts-info-container {
+  display: flex;
+  gap: 2rem;
+  margin-left: 40px;
+  padding-top: 40px;
+
+  .mobile & {
+    flex-direction: column;
+    margin-left: 0;
+    padding-left: 20px;
+    padding-top: 20px;
+    align-items: flex-start;
+
+    h2 {
+      font-size: 38px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .contacts-info-line {
+      display: none;
+    }
+    h3 {
+      font-size: 15px;
+      margin-top: -48px;
+    }
+  }
+
+  .mobile.show-details & {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+
+  }
+
+  h2 {
+    font-size: 61px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+  }
+
+  .contacts-info-line {
+    margin: 0;
+
+    img {
+      max-width: 100%;
+      height: 44px;
+      top: 19px;
+      display: block;
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #020202;
+    padding-top: 24px;
+  }
+}
+
+
 .contact-list {
   min-height: 100px;
   max-height: 70vh;
   overflow-y: auto;
 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
   &::-webkit-scrollbar {
-    width: 6px;
+    display: none;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #d1d1d1;
-    border-radius: 3px;
+  .mobile & {
+    max-height: calc(100vh - 160px);
   }
 
   p {
     color: #6c757d;
     text-align: center;
-    padding: $spacing-base 0;
+    padding: 1rem 0;
     font-style: italic;
   }
 }
@@ -71,13 +171,15 @@
   padding: 0.5rem 0;
   margin-top: 0.5rem;
   border-bottom: 2px solid #f0f0f0;
+
 }
 .contact-item {
   display: flex;
   align-items: center;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0.5rem;
   transition: all 0.2s ease;
   cursor: pointer;
+  border-radius: 8px;
 
   &:last-child {
     border-bottom: none;
@@ -85,22 +187,26 @@
   &:hover {
     background-color: #f8f9fa;
   }
+
+  &.selected {
+    background-color: rgba(74, 63, 247, 0.1);
+    border-left: 4px solid #4a3ff7;
+  }
 }
 
 .circle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #4a3ff7; /* Joyn-like purple color */
-  color: $color-white;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: var(--font-size-base);
-  margin-right: $spacing-base;
+  font-size: 1rem;
+  margin-right: 1rem;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(74, 63, 247, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -110,7 +216,7 @@
 
   .name {
     font-weight: 600;
-    font-size: var(--font-size-base);
+    font-size: 1rem;
     margin-bottom: 0.25rem;
     color: #1e2a3a;
   }
@@ -127,5 +233,124 @@
   .email {
     color: #4a3ff7;
     font-weight: 500;
+  }
+}
+.back-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+
+  margin-bottom: 1.5rem;
+  padding: 0;
+  background-color: transparent;
+  color:  #29ABE2;
+  border: none;
+  font-weight: 600;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.mobile-only {
+    display: none;
+
+    .mobile & {
+      display: block;
+    }
+  }
+}
+.contacts-detail-container {
+  top: 190px;
+  right: 480px;
+
+  .mobile & {
+    position: relative;
+    top: -100px;
+    right: auto;
+    width: 100%;
+    margin-top: 1rem;
+    display: none;
+  }
+
+  .mobile.show-details & {
+    display: block;
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+    padding: 1rem;
+    margin-top: 140px;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+}
+.circle-initial {
+  display: flex;
+  gap: 4rem;
+  //align-items: start;
+
+  .mobile & {
+    gap: 1.5rem;
+  }
+}
+.alignment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .mobile & {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.circle-come-in {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.edit {
+  display: flex;
+  gap: 3rem;
+  top: 1rem;
+
+  .mobile & {
+    justify-content: center;
+    gap: 2rem;
+  }
+}
+
+.contacts-information {
+
+  h3 {
+    bottom: 2.75rem;
+  }
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .mobile & {
+    h3 {
+      bottom: 1rem;
+    }
+    top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

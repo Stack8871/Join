@@ -1,5 +1,5 @@
 @use 'index' as *;
-/* @use '../../../style/flexbox.scss' as *; */
+
 
 /* =====================================
    =            Header Desktop           =
@@ -25,7 +25,7 @@
   align-items: center;
 }
 .text-header {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   font-weight: bold;
 }
 .circle-section {
@@ -62,6 +62,6 @@
   background-color: #28a745;
 }
 .Logo-White {
-  width: 75px;
-  height: 75px;
+  width: 45px;
+  height: 45px;
 }
