@@ -14,7 +14,7 @@ export class Header implements OnDestroy {
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.breakpointSubscription = this.breakpointObserver
-      .observe(['(max-width: 616px)'])
+      .observe(['(max-width: 949px)'])
       .subscribe(result => this.isMobile.set(result.matches));
   }
 
