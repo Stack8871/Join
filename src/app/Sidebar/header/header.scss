@@ -14,7 +14,8 @@
   z-index: 10;
   background-color: #f8f9fa;
   padding: $spacing-base $spacing-xl;
-  box-shadow: $header-shadow;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.11);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
 }
 .header-inner {
   max-width: $max-width;
@@ -53,7 +54,8 @@
   z-index: 10;
   background-color: $color-bg-light;
   padding: $spacing-base $spacing-xl;
-  box-shadow:$header-shadow;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.11);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
 }
 .circle-come-in-mobil {
   width: 50px;
