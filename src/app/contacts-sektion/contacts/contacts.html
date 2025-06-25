@@ -1,9 +1,11 @@
 <div class="contacts-page-container" [ngClass]="mobileClass">
   <div class="contact-container" [ngClass]="mobileClass">
+    <div class="btn-position">
     <button class="add-contact-btn" (click)="addContact()">
       Add new contact
       <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
     </button>
+  </div>
 
     <div class="contact-list">
       @if (contacts.length === 0) {
