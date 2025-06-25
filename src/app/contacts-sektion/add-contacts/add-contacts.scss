@@ -73,12 +73,12 @@
   position: relative;
   flex:40%;
   background-color: $color-primary;
-  border-radius: 24px 0 0 24px;
+  border-radius: 2rem 0 0 2rem;
     @include center;
     height: 100%;
 
   &.mobile {
-
+    width:100%;
     border-radius: 2rem 2rem 0 0;
   } 
 }
@@ -87,7 +87,7 @@
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: $spacing-md;
+  gap: 3rem;
   height:100%;
   padding:0 3rem;
 
@@ -100,6 +100,7 @@
 
     &.mobile {
       margin-top: 10px;
+
     }
   }
   .logo-White {
