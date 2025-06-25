@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../contact-service';
-import { ColorService } from '../color.service';
+import { ColorService } from '../../shared/services/color.services';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
