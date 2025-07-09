@@ -1,0 +1,39 @@
+<div class="login-overlay">
+    <div class="login-overlay-backdrop" (click)="closeOverlay()"></div>
+    <div class="login-overlay-content">
+        <div class="login-header">
+            <img src="icons/join-logo.svg" alt="Join Logo">
+            <button class="close-btn" (click)="closeOverlay()">×</button>
+        </div>
+        <div class="login-content">
+            <div class="card big-card">
+                <h1 class="margin-bottom subline">Login</h1>
+                <form class="flex form-container">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            formControlName="name"
+                            />
+                        <img src="/icons/person.svg" alt="person" />
+                    </div>
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            placeholder="Enter your Password"
+                            formControlName="password"
+                            />
+                        <img src="/icons/person.svg" alt="person" />
+                    </div>
+                    <div class="button-group justify-center">
+                        <button type="submit" class="create-btn">Log in</button>
+                        <button type="button" class="cancel-btn">Guest Log in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="login-footer">
+            <a href="privacy">Privacy Policy</a> <a href="imprint">Imprint</a>
+        </div>
+    </div>
+</div>

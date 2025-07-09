@@ -1,0 +1,125 @@
+@use 'index' as *;
+
+// Login Overlay Styles
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-overlay-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.login-overlay-content {
+  position: relative;
+  background-color: $color-white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 652px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-base;
+  border-bottom: 1px solid $color-light-gray;
+
+  img {
+    max-height: 50px;
+  }
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: $color-medium-gray;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.login-content {
+  padding: $spacing-base;
+  max-width: 652px;
+}
+
+.login-footer {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-base;
+  padding: $spacing-base;
+  border-top: 1px solid $color-light-gray;
+
+  a {
+    color: $color-medium-gray;
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+// Original styles that are still needed
+.big-card {
+  max-width: 652px;
+  padding: $spacing-5xl;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
+  }
+}
+
+.subline {
+  position: relative;
+  display: inline-block;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 43%;
+    width: 15%;
+    border-bottom: 3px solid $color-subtask-bar;
+  }
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  justify-content: center;
+}
+
+.margin-bottom {
+  margin-bottom: $spacing-2xl;
+}
+
+.justify-center {
+  justify-content: center;
+}
