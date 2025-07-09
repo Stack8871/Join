@@ -1,0 +1,73 @@
+@use 'index' as *;
+
+/* =====================================
+   =            Header Desktop           =
+   ===================================== */
+.site-header {
+  @include space;
+  max-width: $max-width;
+  align-items: center;
+  height:65px
+}
+.header-inner {
+  max-width: $max-width;
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.text-header {
+  font-size: var(--font-size-md);
+  color: $color-black;
+  font-weight:400;
+  padding-left: 5%;
+}
+.circle-section {
+  display: flex;
+  gap: $spacing-xs;
+  align-items: center;
+  .circle-help, .circle-user {
+    border-radius: 50%;
+    background-color: transparent;
+  }
+  .circle-user{
+    border: 2px $color-primary solid;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    margin-right: 2rem;
+    color:$color-medium-gray;
+    &:hover{
+      background:$color-lighter-gray;
+    }
+  }
+  .circle-help{
+    border: 2px $color-gray solid;
+    width: 19px;
+    height: 19px;
+    text-align: center;
+    font-size: var(--font-size-sm);
+  }
+}
+/* =====================================
+   =            Header Mobil           =
+   ===================================== */
+.site-header-mobil{
+  @include space;
+  z-index: 10;
+  background-color: $color-bg-light;
+  padding: $spacing-base $spacing-xl;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.11);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
+}
+.circle-come-in-mobil {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #28a745;
+}
+.Logo-White {
+  width: 50px;
+  height: 50px;
+}
