@@ -1,4 +1,4 @@
-@if (isMobile()) {
+@if (breakpointObserver.isMobile()) {
   <div class="site-header">
     <img class="Logo-White" src="/icons/join-logo.svg" alt="logo" />
     <div class="circle-section">
@@ -7,11 +7,16 @@
         <span>?</span>
       </div>
       <div class="circle-user">
-        <a href="#">sr</a>
+        @if (user) {
+          <a href="#" (click)="logout()" title="{{ user.email }}">
+            {{ user.email.slice(0, 2) }}
+          </a>
+        } @else {
+          <a href="#">sr</a>
+        }
       </div>
     </div>
   </div>
-
 } @else {
   <div class="site-header">
     <h1 class="text-header">Kanban Projekt Management Tool</h1>
@@ -21,12 +26,18 @@
         <span>?</span>
       </div>
       <div class="circle-user">
-        <a href="#">sr</a>
+        @if (user) {
+          <a href="#" (click)="logout()" title="{{ user.email }}">
+            {{ user.email.slice(0, 2) }}
+          </a>
+        } @else {
+          <a href="#">sr</a>
+        }
       </div>
     </div>
   </div>
 }
 
-@if (loginService.showLogin$ | async) {
+@if (showLogin) {
   <app-login></app-login>
 }

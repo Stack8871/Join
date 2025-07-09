@@ -5,7 +5,7 @@ import { SectionSidebar } from './Shared/section-sidebar/section-sidebar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, SectionSidebar],
+  imports: [RouterOutlet, SectionSidebar, Header],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

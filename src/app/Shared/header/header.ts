@@ -1,39 +1,60 @@
-import { Component, signal, OnDestroy } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../login/login.service';
-import { Login } from '../../login/login';
+import { FormsModule } from '@angular/forms';
+import {LoginService} from '../../login/login.service';
+import {AuthService} from '../../login/firebase/firebase services/auth.service';
+import {Login} from '../../login/login';
+import {BreakpointObserverService} from './breakpoint.observer';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, Login],
+  standalone: true,
+  imports: [CommonModule, FormsModule, Login],
   templateUrl: './header.html',
   styleUrl: './header.scss',
-  standalone: true
 })
-export class Header implements OnDestroy {
-  isMobile = signal(false);
-  private breakpointSubscription: Subscription;
+export class Header {
+  email = '';
+  password = '';
+  errorMessage = '';
+
+  showLogin = false;
+  user: any;
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
-    private router: Router,
-    public loginService: LoginService
+    private loginService: LoginService,
+    private authService: AuthService,
+    public breakpointObserver: BreakpointObserverService
   ) {
-    this.breakpointSubscription = this.breakpointObserver
-      .observe(['(max-width: 949px)'])
-      .subscribe(result => this.isMobile.set(result.matches));
+    this.authService.user$.subscribe(user => this.user = user);
   }
 
-  navigateToLogin(): void {
-    this.loginService.openLoginOverlay();
+  login() {
+    this.authService.login(this.email, this.password)
+      .then(() => {
+        this.closeOverlay();
+      })
+      .catch(err => {
+        this.errorMessage = err.message;
+      });
   }
 
-  ngOnDestroy(): void {
-    if (this.breakpointSubscription) {
-      this.breakpointSubscription.unsubscribe();
-    }
+  guestLogin() {
+    // Optional: Gastzugang – passe ggf. E-Mail und Passwort an
+    this.authService.login('gast@join.de', '123456')
+      .then(() => this.closeOverlay())
+      .catch(err => this.errorMessage = err.message);
+  }
+
+  closeOverlay() {
+    this.loginService.closeLoginOverlay();
+  }
+
+  navigateToLogin() {
+    this.showLogin = true;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -1,39 +1,51 @@
-<div class="login-overlay">
-    <div class="login-overlay-backdrop" (click)="closeOverlay()"></div>
-    <div class="login-overlay-content">
-        <div class="login-header">
-            <img src="icons/join-logo.svg" alt="Join Logo">
-            <button class="close-btn" (click)="closeOverlay()">×</button>
-        </div>
-        <div class="login-content">
-            <div class="card big-card">
-                <h1 class="margin-bottom subline">Login</h1>
-                <form class="flex form-container">
-                    <div class="input-group">
-                        <input
-                            type="text"
-                            placeholder="Name"
-                            formControlName="name"
-                            />
-                        <img src="/icons/person.svg" alt="person" />
-                    </div>
-                    <div class="input-group">
-                        <input
-                            type="text"
-                            placeholder="Enter your Password"
-                            formControlName="password"
-                            />
-                        <img src="/icons/person.svg" alt="person" />
-                    </div>
-                    <div class="button-group justify-center">
-                        <button type="submit" class="create-btn">Log in</button>
-                        <button type="button" class="cancel-btn">Guest Log in</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="login-footer">
-            <a href="privacy">Privacy Policy</a> <a href="imprint">Imprint</a>
-        </div>
+<div class="login-card">
+  <div class="login-header">
+    <img src="/icons/join-logo.svg" alt="Join Logo" class="login-logo" />
+    <h2 class="subline">Log in</h2>
+  </div>
+
+  <form class="flex form-container" (ngSubmit)="login()">
+    <div class="input-group">
+      <input
+        type="email"
+        placeholder="E-Mail"
+        name="email"
+        [(ngModel)]="email"
+        required
+      />
+      <img src="/icons/person.svg" alt="person" />
     </div>
+    <div class="input-group">
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        [(ngModel)]="password"
+        required
+      />
+      <span class="material-icons">lock</span>
+    </div>
+
+    <div class="login-options">
+      <div class="remember-me">
+        <input type="checkbox" id="remember" />
+        <label for="remember">Remember me</label>
+      </div>
+      <a href="#" class="forgot-password">Forgot my password</a>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="login-btn primary">Log in</button>
+      <button type="button" class="guest-btn secondary" (click)="guestLogin()">Guest Log in</button>
+    </div>
+  </form>
+
+  <div class="login-footer">
+    <p>Not a Join user?</p>
+    <a href="#" class="sign-up-link">Sign up</a>
+  </div>
 </div>
