@@ -1,0 +1,42 @@
+@use 'index' as *;
+.wrapper {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+header {
+  color:$color-gray ;
+  font-size: 1.5rem;
+  height: 65px;
+  background-color: #f8f9fa;
+  box-shadow: $header-shadow;
+}
+
+.aside {
+  color: $color-gray;
+  background: $color-primary;
+  max-width:232px;
+}
+.content-container{
+  display: flex;
+  flex-direction: column;
+  width:100svw;
+
+}
+@media (width > 800px){
+  .content-container{
+    width: calc(100% - 195px);
+  }
+}
+.content{
+  max-width:1440px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  max-width: 500px;
+}
+.contact-list > li {
+  margin-bottom: 2rem;
+}

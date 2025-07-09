@@ -10,5 +10,5 @@ import { SectionSidebar } from './Shared/section-sidebar/section-sidebar';
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'Join';
+  protected title = 'join';
 }
