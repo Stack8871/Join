@@ -1,10 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
 @use 'index' as *;
 
 body{
-  font-family: $font-family-base;
-  font-weight: 400;
-  background:$color-lighter-gray;
+    font-family: $font-family-base;
+    font-weight: 400;
+    background:$color-lighter-gray;
 }
 a:hover{
-  cursor: pointer;
+      cursor: pointer;
 }
