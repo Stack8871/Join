@@ -2,6 +2,7 @@
   <div class="site-header">
     <img class="Logo-White" src="/icons/join-logo.svg" alt="logo" />
     <div class="circle-section">
+      <button class="btn primary login-btn" (click)="navigateToLogin()">Login</button>
       <div class="circle-help">
         <span>?</span>
       </div>
@@ -15,6 +16,7 @@
   <div class="site-header">
     <h1 class="text-header">Kanban Projekt Management Tool</h1>
     <div class="circle-section">
+      <button class="btn primary login-btn" (click)="navigateToLogin()">Login</button>
       <div class="circle-help">
         <span>?</span>
       </div>
@@ -23,4 +25,8 @@
       </div>
     </div>
   </div>
+}
+
+@if (loginService.showLogin$ | async) {
+  <app-login></app-login>
 }
