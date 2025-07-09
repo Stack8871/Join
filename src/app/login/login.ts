@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
 import { AuthService } from './firebase/firebase services/auth.service';
+import { SignUpService } from '../sign-up/sign-up.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class Login {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService
+    private authService: AuthService,
+    private signUpService: SignUpService
   ) {}
 
   login() {
@@ -37,5 +39,10 @@ export class Login {
 
   closeOverlay() {
     this.loginService.closeLoginOverlay();
+  }
+
+  openSignUp() {
+    this.loginService.closeLoginOverlay();
+    this.signUpService.openSignUpOverlay();
   }
 }

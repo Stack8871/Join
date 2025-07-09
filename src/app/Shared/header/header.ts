@@ -5,11 +5,13 @@ import {LoginService} from '../../login/login.service';
 import {AuthService} from '../../login/firebase/firebase services/auth.service';
 import {Login} from '../../login/login';
 import {BreakpointObserverService} from './breakpoint.observer';
+import {SignUpService} from '../../sign-up/sign-up.service';
+import {SignUp} from '../../sign-up/sign-up';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, Login],
+  imports: [CommonModule, FormsModule, Login, SignUp],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -19,14 +21,17 @@ export class Header {
   errorMessage = '';
 
   showLogin = false;
+  showSignUp = false;
   user: any;
 
   constructor(
     private loginService: LoginService,
     private authService: AuthService,
+    private signUpService: SignUpService,
     public breakpointObserver: BreakpointObserverService
   ) {
     this.authService.user$.subscribe(user => this.user = user);
+    this.signUpService.showSignUp$.subscribe(show => this.showSignUp = show);
   }
 
   login() {
