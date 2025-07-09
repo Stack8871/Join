@@ -1,0 +1,35 @@
+
+@use "sass:math";
+@use "sass:list";
+@use 'functions' as *;
+@use 'variables' as *;
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+html {
+  @for $i from 1 through list.length($type-steps) {
+    $step: list.nth($type-steps, $i);
+    $power: $i - $type-base-index;
+    $min: $type-base-min * math.pow($type-scale-min, $power);
+    $max: $type-base-max * math.pow($type-scale-max, $power);
+    --font-size-#{$step}: #{clamped($min, $max)};
+  }
+}
+a{
+    color:$color-subtask-bar;
+    text-decoration: none;
+    &:hover{
+      color: $color-avatar-3;
+    }
+}
+$font-family-base: 'Inter', sans-serif;
+$font-weight-bold: 700;
+$font-weight-semi: 600;
+$font-weight-regular: 400;
+h1{
+  font-size: var(--font-size-2xl);
+}

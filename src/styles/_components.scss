@@ -1,0 +1,328 @@
+@use 'variables' as *;
+@use 'spacing' as *;
+@use 'typography' as *;
+@use 'mixins' as *;
+$card-radius: 0.625rem;
+$card-padding: 1rem;
+$card-shadow: 0 5px 6px rgba(0, 0, 0, 0.07);
+$header-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
+
+
+$button-primary-bg: $color-primary;
+$button-primary-hover: $color-primary-dark;
+$button-primary-text: $color-white;
+$button-secondary-bg: transparent;
+$button-secondary-border: $color-primary;
+$button-secondary-text: $color-primary;
+$button-radius: 0.8rem;
+$button-height: 3rem;
+
+$button-cancel-bg: transparent;
+$button-cancel-border: $color-primary;
+$button-cancel-text: $color-primary;
+
+$button-confirm-bg: $color-primary;
+$button-confirm-text: $color-white;
+
+$input-border: $color-border;
+$input-radius: 0.5rem;
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    width: 100%;
+    background-color: #242424b6;
+    z-index:9999;
+  @include center;
+}
+
+.card{
+    border-radius: $card-radius;
+    padding: $card-padding;
+    box-shadow: $card-shadow;
+    background: $color-bg-card;
+    gap: $spacing-sm;
+    margin:$spacing-sm 0;
+}
+
+.section-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  @include center;
+  background-color: $color-bg-overlay;
+  z-index: 999;
+  animation: slideInFromRight 0.3s ease-out forwards;
+  backdrop-filter: blur(2px);
+  padding:0 3rem;
+
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 1.25rem;
+  cursor: pointer;
+  z-index:998;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.content-container{
+  display:grid;
+  gap:7%;
+}
+
+.line-seperator {
+  position: relative;
+  display: inline-block;
+  margin:$spacing-sm;
+  height:100%;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0px; 
+    right: 0;
+    height: 99%;
+    border-right: 3px solid $color-subtask-bar;
+  }
+}
+.underline{
+  position: relative;
+  display: inline-block;
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -8px; 
+    left: 0;
+    width: 35%;
+    border-bottom: 0px solid $color-subtask-bar;
+  }
+}
+@media (width < 767px){
+  .underline:before{
+      border-bottom: 3px solid $color-subtask-bar;
+  }
+  .line-seperator{
+    border-right: 0px solid $color-subtask-bar;
+    display: none;
+  }
+ 
+}
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: $color-white;;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: $spacing-base;
+  margin-right: $spacing-base;
+  flex-shrink: 0;
+  box-shadow: $header-shadow;
+  text-shadow: $card-shadow;
+}
+.circle-section {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+}
+.circle-help, .circle-user {
+border-radius: 50%;
+background-color: transparent;
+}
+.circle-user{
+border: 2px $color-primary solid;
+width: 35px;
+height: 35px;
+text-align: center;
+margin-right: 2rem;
+color:$color-medium-gray;
+&:hover{
+    background:$color-lighter-gray;
+}
+}
+.circle-help{
+    border: 2px $color-gray solid;
+    width: 19px;
+    height: 19px;
+    text-align: center;
+    font-size: var(--font-size-sm);
+}
+.btn{
+  border-radius: 0.5rem;
+  padding:$spacing-xs $spacing-sm;
+  font-size: var(--font-size-base);
+  border-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.primary{
+  background: $button-primary-bg;
+  color:$color-white;
+  &:hover {
+    background-color: $color-subtask-bar;
+    border-color: transparent;
+    box-shadow:$card-shadow;
+  }
+}
+
+.input-group {
+  position: relative;
+      width: 100%;
+      height:4.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+  img {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right:$spacing-base;
+  }
+
+  .validation-message {
+    color: $color-accent-urgent;
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+    padding-left: 12px;
+  }
+}
+.button-group {
+  max-width: 440px;
+  gap: 1.25rem;
+  display: flex;
+
+  button {
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.cancel-btn {
+      background-color: $color-white;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+        &::after{
+        content: 'X';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+      }
+      &:hover {
+        box-shadow:$card-shadow;
+        color: $color-subtask-bar;
+        border: 1px solid $color-subtask-bar;
+      }
+    }
+    &.create-btn {
+      background-color: $color-primary;
+      color: $color-white;
+      border: 1px solid $color-primary;
+      &::after{
+        content: '✔';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: $color-white // oder passend zum Design
+      }
+      &:hover {
+        background-color: $color-subtask-bar;
+        border-color: $color-subtask-bar;
+        box-shadow:$card-shadow;
+      }
+    }
+  }
+}
+.ai-center{
+  align-items: center;
+}
+.jc-center{
+justify-content: center;
+}
+
+@media (width < 767px){
+  .button-group {
+  flex-direction: column;
+  }
+}
+
+  input, textarea {
+    width: 100%;
+    max-width:440px;
+    margin-top:$spacing-xs;
+    padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
+    border: 1px solid $color-light-gray;
+    border-radius: $spacing-2xs;
+    font-size: var(--font-size-base);
+
+    &:focus {
+      outline: none;
+      border-color: $color-subtask-bar;
+    }
+
+    &.valid-field {
+      border-color: #4CAF50;
+      background-color: rgba(76, 175, 80, 0.05);
+    }
+
+    &.invalid-field {
+      border-color: $color-accent-urgent;
+      background-color: rgba(244, 67, 54, 0.05);
+    }
+  }
+  .add-icon{
+    border-radius:$card-radius;
+    padding: $spacing-2xs $spacing-xs;
+    border: 2px solid $color-primary;
+    background:transparent;
+    cursor: pointer;
+  }
+  .basic-gap{
+    gap:$spacing-base;
+  }
+  .small-gap{
+        gap:$spacing-sm;
+  }
+    .rounded-submenu{
+    display:flex;
+    position:sticky;
+    top:86%;
+    left:90%;
+    z-index:9998;
+  }
+  .search-container button{
+    display:none;
+  }
+@media (width > 767px){
+  .rounded-submenu {
+    display:none;
+  }
+  .search-container button{
+  display:flex;
+}
+}

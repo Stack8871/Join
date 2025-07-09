@@ -1,0 +1,12 @@
+$spacing-2xs: clamp(0.25rem, 0.2321rem + 0.0893vw, 0.3125rem);
+$spacing-xs: clamp(0.5rem, 0.4821rem + 0.0893vw, 0.5625rem);
+$spacing-sm: clamp(0.75rem, 0.7143rem + 0.1786vw, 0.875rem);
+$spacing-base: clamp(1rem, 0.9643rem + 0.1786vw, 1.125rem);
+$spacing-md: clamp(1.2rem, 1.1411rem + 0.2946vw, 1.4063rem);
+$spacing-lg: clamp(1.44rem, 1.3492rem + 0.454vw, 1.7578rem);
+$spacing-xl: clamp(2rem, 1.9286rem + 0.3571vw, 2.25rem);
+$spacing-2xl: clamp(2.0736rem, 1.8813rem + 0.9614vw, 2.7466rem);
+$spacing-3xl: clamp(2.4883rem, 2.2183rem + 1.3499vw, 3.4332rem);
+$spacing-4xl: clamp(3rem, 2.8929rem + 0.5357vw, 3.375rem);
+$spacing-5xl: clamp(3rem, 3rem + 0.5357vw, 4rem);
+$spacing-6xl: clamp(4rem, 3.8571rem + 0.7143vw, 4.5rem);
