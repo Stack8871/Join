@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {LoginService} from '../../login/login.service';
-import {AuthService} from '../../login/firebase/firebase-services/auth.service';
+import {AuthService} from '../firebase/firebase-services/auth.service';
 import {Login} from '../../login/login';
 import {BreakpointObserverService} from './breakpoint.observer';
 import {SignUpService} from '../../sign-up/sign-up.service';
