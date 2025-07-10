@@ -1,0 +1,76 @@
+<div class="contacts-page-container" [ngClass]="mobileClass">
+  <div class="contact-container" [ngClass]="mobileClass">
+    <button class="add-contact-btn" (click)="addContact()">
+      Add new contact
+      <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
+    </button>
+
+    <div class="contact-list">
+      @if (contacts.length === 0) {
+      } @else {
+        @for (group of groupedContacts | keyvalue; track group.key) {
+          <div class="group-header">{{ group.key }}</div>
+
+          @for (contact of group.value; track contact.email) {
+            <div class="contact-item"
+                 [class.selected]="selectedContact && selectedContact.email === contact.email"
+                 (click)="selectContact(contact)">
+              <div class="circle" [style.background-color]="getContactColor(contact)">{{ getInitials(contact.name) }}</div>
+
+              <div class="info">
+                <div class="name">{{ contact.name }}</div>
+                <div class="email">{{ contact.email }}</div>
+              </div>
+            </div>
+          }
+        }
+      }
+    </div>
+  </div>
+
+  <div class="contacts-info-container" [ngClass]="mobileClass">
+    <h2>Contacts</h2>
+    <div class="contacts-info-line">
+      <img src="/img/Card_Contacts/Vector.png" alt="Contacts vector image">
+    </div>
+    <h3>Better with a team</h3>
+    <img src="/img/Card_Contacts/Vector 5.png" alt="Contacts vector image" class="show-mobil" [ngClass]="mobileClass">
+  </div>
+  <!-- Back button for mobile view -->
+  <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">←</button>
+
+  <section class="contacts-detail-container" [ngClass]="mobileClass">
+    @if (selectedContact) {
+      <div class="contacts-detail">
+        <div class="circle-initial" [ngClass]="mobileClass">
+          <div class="circle-come-in" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
+          <div class="alignment" [ngClass]="mobileClass">
+            <h2>{{ selectedContact.name }}</h2>
+
+            <div class="edit" [ngClass]="mobileClass">
+              <div class="iconsbefore">
+                <img src="/icons/edit.svg" alt="">
+                <h4>Edit</h4>
+              </div>
+              <div class="iconsbefore">
+                <img src="/icons/delete.svg" alt="">
+                <h4>Delete</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts-information" [ngClass]="mobileClass">
+          <h3>Contact Information</h3>
+
+          <h4>Email</h4>
+          <p>{{ selectedContact.email }}</p>
+
+          <h4>Phone</h4>
+          <p>{{ selectedContact.phone }}</p>
+        </div>
+      </div>
+    }
+  </section>
+</div>
+
