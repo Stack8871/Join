@@ -3,9 +3,12 @@ import { ManageTask } from './board/manage-task/manage-task';
 import { summary } from './summary/summary';
 import { AddTask } from './board/add-task/add-task';
 import { TaskDetail } from './board/task-detail/task-detail';
+import { Login } from './login/login';
+import { SignUp } from './sign-up/sign-up';
 
 export const routes: Routes = [
-  { path: '', component: ManageTask},
+  { path: '', component: Login},
+  { path: 'sign-up', component: SignUp},
   { path: 'board', component: ManageTask },
   { path: 'summary', component:summary},
   { path: 'add-task', component: AddTask },
