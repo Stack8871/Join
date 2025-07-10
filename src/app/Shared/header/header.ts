@@ -45,7 +45,6 @@ export class Header {
   }
 
   guestLogin() {
-    // Optional: Gastzugang – passe ggf. E-Mail und Passwort an
     this.authService.login('gast@join.de', '123456')
       .then(() => this.closeOverlay())
       .catch(err => this.errorMessage = err.message);
