@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './Shared/header/header';
 import { SectionSidebar } from './Shared/section-sidebar/section-sidebar';
-import { AuthService } from './login/firebase/firebase-services/auth.service';
+import { AuthService } from './Shared/firebase/firebase-services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../login/firebase/firebase-services/auth.service';
+import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -32,7 +32,7 @@ export class SignUp {
         // Navigate to summary page after successful registration
         this.navigateAfterSignUp();
       })
-      .catch(err => {
+      .catch((err: Error) => {
         this.errorMessage = err.message;
       });
   }
