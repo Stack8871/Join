@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
 import { AuthService } from './firebase/firebase-services/auth.service';
-import { SignUpService } from '../sign-up/sign-up.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -19,21 +19,29 @@ export class Login {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,
-    private signUpService: SignUpService
+    private authService: AuthService
   ) {}
 
   login() {
     this.authService.login(this.email, this.password).then(() => {
       this.closeOverlay();
+      this.navigateAfterLogin();
     }).catch(err => {
       this.errorMessage = err.message;
     });
   }
   guestLogin() {
     this.authService.login('gast@join.de', '123456')
-      .then(() => this.closeOverlay())
+      .then(() => {
+        this.closeOverlay();
+        this.navigateAfterLogin();
+      })
       .catch(err => this.errorMessage = err.message);
+  }
+
+  navigateAfterLogin() {
+    // Navigate to summary page after successful login
+    window.location.href = '/summary';
   }
 
 
@@ -41,8 +49,4 @@ export class Login {
     this.loginService.closeLoginOverlay();
   }
 
-  openSignUp() {
-    this.loginService.closeLoginOverlay();
-    this.signUpService.openSignUpOverlay();
-  }
 }
