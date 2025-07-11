@@ -1,76 +1,73 @@
-<div class="contacts-page-container" [ngClass]="mobileClass">
-  <div class="contact-container" [ngClass]="mobileClass">
-    <button class="add-contact-btn" (click)="addContact()">
-      Add new contact
-      <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
-    </button>
+<div class="contacts-page-container">
+  <div class="contact-container" >
+<!--   <button class="add-contact-btn" (click)="openAddContact()">
+    <span>Add new contact</span>
+    <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
+  </button> -->
+    @if (firebase.ContactsList.length > 0) {
 
-    <div class="contact-list">
-      @if (contacts.length === 0) {
-      } @else {
-        @for (group of groupedContacts | keyvalue; track group.key) {
-          <div class="group-header">{{ group.key }}</div>
-
-          @for (contact of group.value; track contact.email) {
-            <div class="contact-item"
-                 [class.selected]="selectedContact && selectedContact.email === contact.email"
-                 (click)="selectContact(contact)">
-              <div class="circle" [style.background-color]="getContactColor(contact)">{{ getInitials(contact.name) }}</div>
-
-              <div class="info">
-                <div class="name">{{ contact.name }}</div>
-                <div class="email">{{ contact.email }}</div>
-              </div>
-            </div>
-          }
-        }
-      }
-    </div>
-  </div>
-
-  <div class="contacts-info-container" [ngClass]="mobileClass">
-    <h2>Contacts</h2>
-    <div class="contacts-info-line">
-      <img src="/img/Card_Contacts/Vector.png" alt="Contacts vector image">
-    </div>
-    <h3>Better with a team</h3>
-    <img src="/img/Card_Contacts/Vector 5.png" alt="Contacts vector image" class="show-mobil" [ngClass]="mobileClass">
-  </div>
-  <!-- Back button for mobile view -->
-  <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">←</button>
-
-  <section class="contacts-detail-container" [ngClass]="mobileClass">
-    @if (selectedContact) {
-      <div class="contacts-detail">
-        <div class="circle-initial" [ngClass]="mobileClass">
-          <div class="circle-come-in" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
-          <div class="alignment" [ngClass]="mobileClass">
-            <h2>{{ selectedContact.name }}</h2>
-
-            <div class="edit" [ngClass]="mobileClass">
-              <div class="iconsbefore">
-                <img src="/icons/edit.svg" alt="">
-                <h4>Edit</h4>
-              </div>
-              <div class="iconsbefore">
-                <img src="/icons/delete.svg" alt="">
-                <h4>Delete</h4>
-              </div>
-            </div>
-          </div>
+  <div class="contact-list">
+     @for (item of firebase.ContactsList; track item.id; let i = $index) {
+      <div class="group-header">A</div>
+      <div class="contact-item">
+        <div>
+          A
         </div>
-
-        <div class="contacts-information" [ngClass]="mobileClass">
-          <h3>Contact Information</h3>
-
-          <h4>Email</h4>
-          <p>{{ selectedContact.email }}</p>
-
-          <h4>Phone</h4>
-          <p>{{ selectedContact.phone }}</p>
+        <div class="info">
+          <div class="mame">{{ item.name }}</div>
+          <div>{{ item.email }}</div>
         </div>
       </div>
     }
-  </section>
+  </div>
+}
 </div>
-
+ <!--    <section class="contacts-detail-container">
+  <div class="back-btn">
+      <button (click)="closeContactDetails()">
+      <img src="/icons/arrow-left.svg" alt="">
+      </button> 
+    </div> 
+    <div class="contacts-info-container">
+      <h1>Contacts</h1>
+      <span class="line-seperator">&nbsp;</span>
+      <h3 class="underline">Better with a team</h3>
+    </div>
+  @if (selectedContact) {
+    <div class="contacts-detail">
+      <div class="circle-initial" [ngClass]="mobileClass">
+        <div class="circle-user" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
+        <div class="alignment" [ngClass]="mobileClass">
+        <h2>{{ item.name }}</h2>
+          <div class="button-group" [ngClass]="mobileClass" >
+            <div class="iconsbefore edit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" class="icon-edit" viewBox="0 0 19 19" fill="none">
+              <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z"/>
+              </svg>
+              <h4>Edit</h4>
+            </div>
+            <div class="iconsbefore delete">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" class="icon-edit" viewBox="0 0 17 18">
+              <path d="M3.5 18C2.95 18 2.47917 17.8042 2.0875 17.4125C1.69583 17.0208 1.5 16.55 1.5 16V3C1.21667 3 0.979167 2.90417 0.7875 2.7125C0.595833 2.52083 0.5 2.28333 0.5 2C0.5 1.71667 0.595833 1.47917 0.7875 1.2875C0.979167 1.09583 1.21667 1 1.5 1H5.5C5.5 0.716667 5.59583 0.479167 5.7875 0.2875C5.97917 0.0958333 6.21667 0 6.5 0H10.5C10.7833 0 11.0208 0.0958333 11.2125 0.2875C11.4042 0.479167 11.5 0.716667 11.5 1H15.5C15.7833 1 16.0208 1.09583 16.2125 1.2875C16.4042 1.47917 16.5 1.71667 16.5 2C16.5 2.28333 16.4042 2.52083 16.2125 2.7125C16.0208 2.90417 15.7833 3 15.5 3V16C15.5 16.55 15.3042 17.0208 14.9125 17.4125C14.5208 17.8042 14.05 18 13.5 18H3.5ZM3.5 3V16H13.5V3H3.5ZM5.5 13C5.5 13.2833 5.59583 13.5208 5.7875 13.7125C5.97917 13.9042 6.21667 14 6.5 14C6.78333 14 7.02083 13.9042 7.2125 13.7125C7.40417 13.5208 7.5 13.2833 7.5 13V6C7.5 5.71667 7.40417 5.47917 7.2125 5.2875C7.02083 5.09583 6.78333 5 6.5 5C6.21667 5 5.97917 5.09583 5.7875 5.2875C5.59583 5.47917 5.5 5.71667 5.5 6V13ZM9.5 13C9.5 13.2833 9.59583 13.5208 9.7875 13.7125C9.97917 13.9042 10.2167 14 10.5 14C10.7833 14 11.0208 13.9042 11.2125 13.7125C11.4042 13.5208 11.5 13.2833 11.5 13V6C11.5 5.71667 11.4042 5.47917 11.2125 5.2875C11.0208 5.09583 10.7833 5 10.5 5C10.2167 5 9.97917 5.09583 9.7875 5.2875C9.59583 5.47917 9.5 5.71667 9.5 6V13Z"/>
+              </svg>
+              <h4>Delete</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+          <div class="contacts-information" [ngClass]="mobileClass">
+            <h3>Contact Information</h3>
+            <h4 class="email-link">Email</h4>
+            <a href="mailto:{{ selectedContact.email }}">{{ selectedContact.email }}</a>
+            <h4>Phone</h4>
+            <a href="tel:{{ selectedContact.phone }}">{{ selectedContact.phone }}</a>
+          </div>
+    </div>
+    } 
+  </section>-->
+<!--   <div class="mobile-btn-add-contact">
+      <button (click)="openAddContact()">
+    <img src="/icons-white/person_add.svg" alt="check" />
+  </button>
+  </div> -->
+</div>
