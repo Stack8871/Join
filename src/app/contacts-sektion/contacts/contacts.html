@@ -4,28 +4,43 @@
     <span>Add new contact</span>
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button> -->
-    @if (firebase.ContactsList.length > 0) {
+    @if (firebase.ContactsList.length > 0) 
+    {
+<div class="contact-list">
+@for ( letter of groupedKeys; track letter) {
+    <div class="group-header">{{ letter }}</div>
 
-  <div class="contact-list">
-     @for (item of firebase.ContactsList; track item.id; let i = $index) {
-      <div class="group-header">A</div>
-      <div class="contact-item">
-        <div>
-          A
-        </div>
+@for ( contact of groupedContacts[letter]; track contact.id; let i = $index) {
+      <div class="contact-item" (click)="selectedContacts(letter, i)">
         <div class="info">
-          <div class="mame">{{ item.name }}</div>
-          <div>{{ item.email }}</div>
+        <div class="name">{{ contact.name }}</div>
+        <div class="email">{{ contact.email }}</div>
         </div>
       </div>
     }
-  </div>
-}
+  }
 </div>
- <!--    <section class="contacts-detail-container">
+      <div>
+        <app-add-contacts></app-add-contacts>
+      </div>
+          @if(isEdited){
+          <form (ngSubmit)="saveEdit()">
+            <input type="text" [(ngModel)]="editedContacts.name" name="name">
+            <input type="text" [(ngModel)]="editedContacts.email" name="email">
+            <button type="submit" [disabled]="!editedContacts.name || !editedContacts.email">save</button>
+            <button type="button" (click)="cancelEdit()">Cancel</button>
+          </form>
+          <pre>{{ editedContacts | json }}</pre>
+        }
+        @else {
+        <p class="no-items">No vocabulary items found. Add some to get started!</p>
+        }
+      }
+      </div>
+<section class="contacts-detail-container">
   <div class="back-btn">
-      <button (click)="closeContactDetails()">
-      <img src="/icons/arrow-left.svg" alt="">
+      <button>
+      <img src="/icons/arrow-left.svg" alt="back to overview">
       </button> 
     </div> 
     <div class="contacts-info-container">
@@ -33,14 +48,16 @@
       <span class="line-seperator">&nbsp;</span>
       <h3 class="underline">Better with a team</h3>
     </div>
-  @if (selectedContact) {
+  @if (selectedContactsIndex !== null) {
     <div class="contacts-detail">
-      <div class="circle-initial" [ngClass]="mobileClass">
-        <div class="circle-user" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
-        <div class="alignment" [ngClass]="mobileClass">
-        <h2>{{ item.name }}</h2>
-          <div class="button-group" [ngClass]="mobileClass" >
-            <div class="iconsbefore edit">
+      <div class="circle-initial">
+        <div class="circle-user"></div> 
+      </div>
+        <div class="alignment">
+        <h2>{{ selectedContact.name }}</h2>
+          <div class="button-group" >
+            <div class="iconsbefore edit" (click)="openEditContact(selectedContact)">
+              <button>Bearbeiten</button>
               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" class="icon-edit" viewBox="0 0 19 19" fill="none">
               <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z"/>
               </svg>
@@ -55,16 +72,15 @@
           </div>
         </div>
       </div>
-          <div class="contacts-information" [ngClass]="mobileClass">
+          <div class="contacts-information">
             <h3>Contact Information</h3>
             <h4 class="email-link">Email</h4>
             <a href="mailto:{{ selectedContact.email }}">{{ selectedContact.email }}</a>
             <h4>Phone</h4>
-            <a href="tel:{{ selectedContact.phone }}">{{ selectedContact.phone }}</a>
+            <a href="tel:{{ selectedContact.name }}">{{ selectedContact.name }}</a>
           </div>
-    </div>
-    } 
-  </section>-->
+  }
+  </section>
 <!--   <div class="mobile-btn-add-contact">
       <button (click)="openAddContact()">
     <img src="/icons-white/person_add.svg" alt="check" />
