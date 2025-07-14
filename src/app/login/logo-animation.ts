@@ -8,8 +8,15 @@ export class LogoAnimation {
   private initialPosition = { top: 0, left: 0 };
   private finalPosition = { top: 0, left: 0 };
   private animationInProgress = false;
+  private static animationHasPlayed = false;
 
   public initAnimation(onComplete?: () => void): void {
+    // If animation has already played, call the callback and return
+    if (LogoAnimation.animationHasPlayed) {
+      if (onComplete) onComplete();
+      return;
+    }
+
     // Prevent multiple animations from running simultaneously
     if (this.animationInProgress) {
       return;
@@ -21,6 +28,7 @@ export class LogoAnimation {
     if (!this.logoElement) {
       console.error('Logo element with class "img-start" not found');
       this.animationInProgress = false;
+      LogoAnimation.animationHasPlayed = true; // Mark as played even if element not found
       if (onComplete) onComplete();
       return;
     }
@@ -57,6 +65,7 @@ export class LogoAnimation {
   private animateToFinalPosition(onComplete?: () => void): void {
     if (!this.logoElement) {
       this.animationInProgress = false;
+      LogoAnimation.animationHasPlayed = true; // Mark as played even if element not found
       if (onComplete) onComplete();
       return;
     }
@@ -82,8 +91,9 @@ export class LogoAnimation {
         transition: ''
       });
 
-      // Reset the animation flag and call the callback
+      // Reset the animation flag, mark animation as played, and call the callback
       this.animationInProgress = false;
+      LogoAnimation.animationHasPlayed = true;
       if (onComplete) onComplete();
     }, { once: true });
   }
