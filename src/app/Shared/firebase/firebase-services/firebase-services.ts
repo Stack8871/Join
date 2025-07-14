@@ -4,6 +4,7 @@ import {DocumentData, QueryDocumentSnapshot, collection, onSnapshot, Unsubscribe
 } from 'firebase/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +75,14 @@ export class Firebase implements OnDestroy {
       email: obj.email,
       phone: obj.phone,
     };
+  }
+
+  getAlphabeticalContacts(): Observable<ContactsInterface[]> {
+    // Sort the contacts alphabetically by name
+    const sortedContacts = [...this.ContactsList].sort((a, b) =>
+      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+    );
+    return of(sortedContacts);
   }
 
   ngOnDestroy() {
