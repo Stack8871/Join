@@ -29,6 +29,7 @@ export class Firebase implements OnDestroy {
                 id: doc.id,
                 name: data['name'],
                 email: data['email'],
+                phone: data['phone'],
             });
           });
           
@@ -55,6 +56,7 @@ export class Firebase implements OnDestroy {
     {
         name: editedContacts.name,
         email: editedContacts.email,
+        phone: editedContacts.phone,
     });
   }
 
@@ -67,6 +69,7 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
     id: id,
     name: obj.name,
     email: obj.email,
+    phone: obj.phone,
   };
 }
   ngOnDestroy() {

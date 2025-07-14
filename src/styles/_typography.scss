@@ -33,3 +33,6 @@ $font-weight-regular: 400;
 h1{
   font-size: var(--font-size-2xl);
 }
+h2{
+  font-weight: $font-weight-regular;
+}

@@ -41,6 +41,9 @@
     display: flex;
     flex-direction: column;
     max-width: 450px;
+    @media(width < 860px){
+      flex:0;
+    }
   .mobile & {
     width: 100%;
     margin-bottom: $spacing-base;
@@ -88,13 +91,7 @@
       font-weight: $font-weight-regular;
     }
   }
-/*   .mobile.show-details & {
-    position: relative;
-    z-index: 1;
-    background-color: #fff;
-    padding-bottom: 20px;
-    margin-bottom: 10px;
-  } */
+
   h2 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
@@ -151,10 +148,12 @@
 .mobile-btn-add-contact{
 position: sticky;
     z-index: 100;
-    bottom: 10%;
-    left: 80%;
+    top:84%;
+    right:5%;
     width: 50px;
     height: 50px;
+    padding:5px 14px;
+
     display: flex;
     border-radius: 50%;
     justify-content: center;
@@ -286,14 +285,17 @@ position: sticky;
 }
 .contacts-detail{
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  & h2{
+    font-size: var(--font-size-xl);
+  }
 }
 .circle-initial {
   display: flex;
   gap: $spacing-4xl;
   justify-content: start;
   align-items: center;
-  //align-items: start;
+  margin-bottom:2rem;
   .mobile & {
     gap: 1.5rem;
     margin-bottom: $spacing-xl;

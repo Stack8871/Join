@@ -1,0 +1,57 @@
+<div class="overlay-container">
+  <div class="card-wrapper form-slide">
+    <div class="left-container">
+        <div class="left-content">
+            <div class="logo-container">
+                <img class="logo-White" src="/icons/join-logo-white.svg" alt="logo" />
+              </div>
+            <div class="mobil-view">
+            <h2>{{ isEditMode ? 'Edit Contact' : 'Add Contact' }}</h2>
+            <h3 class="subheadline">Tasks are better with a team!</h3>
+            </div>
+        </div>
+    </div>
+    <div class="right-container">
+        <div class="right-content">
+            <div class="contact-form" >
+                <div class="contact-avatar">
+                    <img src="/icons-white/person.svg" alt="person" /> 
+                </div>
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            formControlName="name"
+                            />
+                        <img src="/icons/person.svg" alt="person" />
+                    </div>
+                    <div class="input-group">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            formControlName="email"
+                            />
+                        <img src="/icons/mail.svg" alt="mail" />
+
+                    </div>
+                    <div class="input-group">
+                        <input
+                            type="tel"
+                            placeholder="Phone"
+                            formControlName="phone"
+                            />
+                        <img src="/icons/call.svg" alt="phone" />
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="cancel-btn" (click)="cancel()">Cancel</button>
+                        <button type="submit" class="create-btn" [disabled]="form.invalid">
+                            {{ isEditMode ? 'Update contact' : 'Create contact' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
