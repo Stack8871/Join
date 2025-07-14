@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged,signOut,
   User
 } from 'firebase/auth';
 import { auth } from '../firebase-config/firebase.config';
