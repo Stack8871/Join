@@ -6,10 +6,11 @@ import { AuthService } from './Shared/firebase/firebase-services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { LoadingSpinner } from './login/loading-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SectionSidebar, Header, CommonModule],
+  imports: [RouterOutlet, SectionSidebar, Header, CommonModule, LoadingSpinner],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
