@@ -41,10 +41,13 @@
   flex-direction: row;
   position: relative;
   @include center;
-  width: 100%;
+  width: 60svw;
   max-width: 1220px;
+  height:45svh;
 @media(width < 769px){
   flex-direction: column;
+  height:100%;
+  width:100%;
 }
 
   &.mobile {

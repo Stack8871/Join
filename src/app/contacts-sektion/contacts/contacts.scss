@@ -337,6 +337,7 @@ position: sticky;
   gap: $spacing-2xl;
   top: $spacing-base;
   color:$color-primary;
+  justify-content: center;
 
   .mobile & {
     justify-content: center;
