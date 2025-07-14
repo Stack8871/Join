@@ -1,20 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { OverlayService } from '../../Shared/firebase/firebase-services/overlay-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { FormsModule } from '@angular/forms';
-import { AddContacts } from '../add-contacts/add-contacts';
-
+import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
 
 @Component({
   selector: 'app-contacts',
-  imports: [CommonModule, FormsModule, AddContacts],
+  imports: [CommonModule, FormsModule, ContactsOverlay],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss'
 })
+
 export class Contacts implements OnInit {
+   private overlayService = inject(OverlayService);
+
     contacts$!: Observable<ContactsInterface[]>;
     firebase = inject(Firebase);
     isEdited = false;
@@ -24,21 +27,27 @@ export class Contacts implements OnInit {
     editedContacts ={
       name:'',
       email:'',
+      phone:'',
     };
+
     selectedContact: ContactsInterface = {
       id: '',
       name: '',
-      email: ''
-    }
-    openEditContact(contact: ContactsInterface): void {
-      this.isEdited = true;
-      this.contactsId = contact.id;
-      this.selectedContact = contact;
-      this.editedContacts = {
-        name: contact.name,
-        email: contact.email
+      email: '',
+      phone: '',
+    };
+
+    addNewContact() {
+      this.overlayService.openOverlay(); // kein Parameter = "Add Mode"
+    };
+
+    editContact(contact: ContactsInterface) {
+        this.overlayService.openOverlay(contact); // übergibt Kontakt als `contactToEdit`
       };
-    }
+      deleteItem(contactId: string) {
+        this.firebase.deleteContactsFromDatabase(contactId);
+      }
+
     selectedContacts(letter: string, index: number) {
       const contact = this.groupedContacts[letter][index];
       if (!contact) return;
@@ -48,32 +57,62 @@ export class Contacts implements OnInit {
       this.selectedContact = {
         id: contact.id,
         name: contact.name,
-        email: contact.email
+        email: contact.email,
+        phone: contact.phone ??'',
       };
-    }
+    };
+
     saveEdit(){
       console.log('SPEICHERN:', this.contactsId, this.editedContacts);
       if (this.contactsId) {
         this.firebase.editContactsToDatabase(this.contactsId, this.editedContacts);
-      }
+      };
       this.cancelEdit();
-    }
+    };
+
     cancelEdit(): void {
       this.isEdited = false;
       this.selectedContactsIndex = null;
       this.contactsId = '';
-      this.editedContacts = { name: '', email: '' };
+      this.editedContacts = { name: '', email: '', phone: '' };
+    };
+
+    showDeleteConfirm = false;
+    pendingDeleteId: string | null = null;
+
+    promptDelete(contactId: string) {
+      this.pendingDeleteId = contactId;
+      this.showDeleteConfirm = true;
     }
+
+    confirmDelete() {
+      if (this.pendingDeleteId) {
+        this.deleteItem(this.pendingDeleteId);
+      }
+      this.showDeleteConfirm = false;
+      this.pendingDeleteId = null;
+    }
+
+    cancelDelete() {
+      this.showDeleteConfirm = false;
+      this.pendingDeleteId = null;
+    }
+
     constructor(private contactService: Firebase){
       this.firebase;
-    }
-   groupedContacts: { [letter: string]: ContactsInterface[] } = {};
+    };
+
+    groupedContacts: { [letter: string]: ContactsInterface[] } = {};
+
     ngOnInit(): void {
       this.contacts$ = this.contactService.getAlphabeticalContacts();
       this.contacts$.subscribe((contacts) => {
         this.groupedContacts = this.groupContactsByFirstLetter(contacts);
       });
-    }
+      document.addEventListener('closeOverlay', () => {
+      this.overlayService.close();
+      });
+    };
 
     private groupContactsByFirstLetter(contacts: ContactsInterface[]): { [letter: string]: ContactsInterface[] } {
       const grouped: { [letter: string]: ContactsInterface[] } = {};
@@ -81,13 +120,30 @@ export class Contacts implements OnInit {
         const letter = contact.name.charAt(0).toUpperCase();
         if (!grouped[letter]) {
           grouped[letter] = [];
-        }
+        };
         grouped[letter].push(contact);
-      }
+      };
       return grouped;
-    }
+    };
 
     get groupedKeys(): string[] {
     return Object.keys(this.groupedContacts).sort();
-  }
+    };
+
+    getInitials(name: string): string {
+    if (!name) return '';
+    const parts = name.trim().split(' ');
+    const first = parts[0]?.charAt(0).toUpperCase() || '';
+    const last = parts[1]?.charAt(0).toUpperCase() || '';
+    return first + last;
+    };
+
+    getColor(name: string): string {
+      const colors = ['#FF8A00', '#6E00FF', '#009688', '#3F51B5', '#FF4081'];
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return colors[Math.abs(hash) % colors.length];
+    };
 }
