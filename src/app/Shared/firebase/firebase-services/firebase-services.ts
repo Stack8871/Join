@@ -1,6 +1,18 @@
 import { inject, Injectable, OnDestroy } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import {DocumentData, QueryDocumentSnapshot, collection, onSnapshot, Unsubscribe, addDoc, updateDoc, deleteDoc, doc,
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  collection,
+  onSnapshot,
+  Unsubscribe,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+  getDocs
 } from 'firebase/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -18,17 +30,17 @@ export class Firebase implements OnDestroy {
   constructor() {
     const auth = getAuth();
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log('Nutzer eingeloggt – Firestore wird geladen:', user.email);
-
         const contactsRef = collection(this.firestore, 'contacts');
+
+        if (user.email) {
+          await this.checkAndAddLoggedInUser(user.email, user.displayName || user.email.split('@')[0]);
+        }
 
         this.unsubscribe = onSnapshot(
           contactsRef,
           (snapshot) => {
-            console.log('Snapshot erhalten, Anzahl Dokumente:', snapshot.size);
-
             this.ContactsList = [];
             snapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
               const data = doc.data();
@@ -37,6 +49,7 @@ export class Firebase implements OnDestroy {
                 name: data['name'],
                 email: data['email'],
                 phone: data['phone'],
+                isLoggedInUser: data['isLoggedInUser'] || false
               });
             });
 
@@ -45,15 +58,8 @@ export class Firebase implements OnDestroy {
             );
 
             this.contactsSubject.next(sortedContacts);
-
-            console.log('ContactsList aktualisiert:', this.ContactsList);
-          },
-          (error) => {
-            console.error('Firestore-Fehler:', error.code, error.message);
           }
         );
-      } else {
-        console.warn('Kein Nutzer eingeloggt – Firestore-Abfrage wird nicht gestartet');
       }
     });
   }
@@ -67,6 +73,7 @@ export class Firebase implements OnDestroy {
       name: data.name,
       email: data.email,
       phone: data.phone,
+      isLoggedInUser: data.isLoggedInUser || false,
     });
   }
 
@@ -80,6 +87,7 @@ export class Firebase implements OnDestroy {
       name: obj.name,
       email: obj.email,
       phone: obj.phone,
+      isLoggedInUser: obj.isLoggedInUser || false,
     };
   }
 
@@ -98,5 +106,42 @@ export class Firebase implements OnDestroy {
     if (this.unsubscribe) {
       this.unsubscribe();
     }
+  }
+
+  private async checkAndAddLoggedInUser(email: string, name: string) {
+    try {
+      await this.resetLoggedInUserFlags();
+
+      const contactsRef = collection(this.firestore, 'contacts');
+      const q = query(contactsRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        await this.addContactsToDatabase({
+          name: name,
+          email: email,
+          isLoggedInUser: true
+        });
+      } else {
+        const docId = querySnapshot.docs[0].id;
+        await updateDoc(doc(this.firestore, 'contacts', docId), {
+          isLoggedInUser: true
+        });
+      }
+    } catch (_) {}
+  }
+
+  private async resetLoggedInUserFlags() {
+    try {
+      const contactsRef = collection(this.firestore, 'contacts');
+      const q = query(contactsRef, where('isLoggedInUser', '==', true));
+      const querySnapshot = await getDocs(q);
+
+      const updatePromises = querySnapshot.docs.map(doc =>
+        updateDoc(doc.ref, { isLoggedInUser: false })
+      );
+
+      await Promise.all(updatePromises);
+    } catch (_) {}
   }
 }

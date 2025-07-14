@@ -28,6 +28,7 @@ export class Contacts implements OnInit {
       name:'',
       email:'',
       phone:'',
+      isLoggedInUser: false,
     };
 
     selectedContact: ContactsInterface = {
@@ -35,6 +36,7 @@ export class Contacts implements OnInit {
       name: '',
       email: '',
       phone: '',
+      isLoggedInUser: false,
     };
 
     addNewContact() {
@@ -59,6 +61,7 @@ export class Contacts implements OnInit {
         name: contact.name,
         email: contact.email,
         phone: contact.phone ??'',
+        isLoggedInUser: contact.isLoggedInUser || false,
       };
     };
 
@@ -74,7 +77,7 @@ export class Contacts implements OnInit {
       this.isEdited = false;
       this.selectedContactsIndex = null;
       this.contactsId = '';
-      this.editedContacts = { name: '', email: '', phone: '' };
+      this.editedContacts = { name: '', email: '', phone: '', isLoggedInUser: false };
     };
 
     showDeleteConfirm = false;

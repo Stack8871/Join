@@ -3,4 +3,5 @@
     name: string;
     email: string;
     phone?: string;
-}
+    isLoggedInUser?: boolean;
+  }

@@ -167,7 +167,7 @@ position: sticky;
       .mobile-btn-add-contact{
         display: none;
       }
- 
+
   }
 .contact-list {
   min-height: 100px;
@@ -242,6 +242,25 @@ position: sticky;
     font-size: $spacing-base;
     margin-bottom: 0.25rem;
     color: $color-black;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logged-in-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-primary;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+
+      img {
+        width: 12px;
+        height: 12px;
+        filter: brightness(0) invert(1);
+      }
+    }
   }
   .email, .phone {
     font-size: 0.85rem;
@@ -312,6 +331,15 @@ position: sticky;
   }
   & h2{
     text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .logged-in-badge-detail {
+      font-size: 16px;
+      color: $color-primary;
+      font-weight: normal;
+    }
   }
 }
 .circle-user  {
