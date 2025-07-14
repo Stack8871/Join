@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 import { RouterModule } from '@angular/router';
+import { LogoAnimation } from './logo-animation';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,12 @@ export class Login implements OnInit {
   password = '';
   errorMessage = '';
   isLoading = true;
+  showLoginCard = false;
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService
+    private authService: AuthService,
+    private logoAnimation: LogoAnimation
   ) {}
 
   login() {
@@ -56,12 +59,26 @@ export class Login implements OnInit {
       // Add a small delay to ensure everything is rendered
       setTimeout(() => {
         this.isLoading = false;
+        // Initialize logo animation after loading is complete
+        setTimeout(() => {
+          this.logoAnimation.initAnimation(() => {
+            // Show login card after animation is complete
+            this.showLoginCard = true;
+          });
+        }, 100);
       }, 500);
     });
 
     // Fallback: Show login elements after a maximum time (5 seconds)
     setTimeout(() => {
       this.isLoading = false;
+      // Initialize logo animation after fallback loading is complete
+      setTimeout(() => {
+        this.logoAnimation.initAnimation(() => {
+          // Show login card after animation is complete
+          this.showLoginCard = true;
+        });
+      }, 100);
     }, 5000);
   }
 }
