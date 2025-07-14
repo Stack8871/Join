@@ -4,7 +4,7 @@ import {DocumentData, QueryDocumentSnapshot, collection, onSnapshot, Unsubscribe
 } from 'firebase/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { Observable, of } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,7 @@ import { Observable, of } from 'rxjs';
 export class Firebase implements OnDestroy {
   private firestore = inject(Firestore);
   private unsubscribe: Unsubscribe = () => {};
+  private contactsSubject = new BehaviorSubject<ContactsInterface[]>([]);
   ContactsList: ContactsInterface[] = [];
 
   constructor() {
@@ -40,6 +41,14 @@ export class Firebase implements OnDestroy {
               });
             });
 
+            // Sort the contacts alphabetically
+            const sortedContacts = [...this.ContactsList].sort((a, b) =>
+              a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+            );
+
+            // Emit the sorted contacts to subscribers
+            this.contactsSubject.next(sortedContacts);
+
             console.log('ContactsList aktualisiert:', this.ContactsList);
           },
           (error) => {
@@ -54,6 +63,9 @@ export class Firebase implements OnDestroy {
 
   async addContactsToDatabase(contacts: ContactsInterface) {
     await addDoc(collection(this.firestore, 'contacts'), contacts);
+    // Note: We don't need to manually update the BehaviorSubject here
+    // as the onSnapshot listener will automatically detect the change
+    // and update the ContactsList and emit through the BehaviorSubject
   }
 
   async editContactsToDatabase(id: string, data: ContactsInterface) {
@@ -62,10 +74,12 @@ export class Firebase implements OnDestroy {
       email: data.email,
       phone: data.phone,
     });
+    // The onSnapshot listener will handle the update
   }
 
   async deleteContactsFromDatabase(id: string) {
     await deleteDoc(doc(this.firestore, 'contacts', id));
+    // The onSnapshot listener will handle the deletion
   }
 
   setContactsObject(id: string, obj: ContactsInterface): ContactsInterface {
@@ -78,11 +92,16 @@ export class Firebase implements OnDestroy {
   }
 
   getAlphabeticalContacts(): Observable<ContactsInterface[]> {
-    // Sort the contacts alphabetically by name
-    const sortedContacts = [...this.ContactsList].sort((a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-    );
-    return of(sortedContacts);
+    // If we already have contacts, make sure they're emitted
+    if (this.ContactsList.length > 0 && this.contactsSubject.value.length === 0) {
+      const sortedContacts = [...this.ContactsList].sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+      this.contactsSubject.next(sortedContacts);
+    }
+
+    // Return the Observable from the BehaviorSubject
+    return this.contactsSubject.asObservable();
   }
 
   ngOnDestroy() {
