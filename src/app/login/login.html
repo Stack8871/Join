@@ -25,7 +25,7 @@
               [(ngModel)]="email"
               required
             />
-            <img src="/icons/person.svg" alt="person" />
+            <img src="/icons/mail.svg" alt="person" />
           </div>
 
           <div class="input-group">
@@ -36,7 +36,7 @@
               [(ngModel)]="password"
               required
             />
-            <span class="material-icons">lock</span>
+            <img src="/icons/lock.svg" alt="person" />
           </div>
 
           @if (errorMessage) {
@@ -47,8 +47,8 @@
 
 
           <div class="button-group justify-center">
-            <button type="submit" class="create-btn">Log in</button>
-            <button type="button" class="cancel-btn" (click)="guestLogin()">Guest Log in</button>
+            <button type="submit" class="btn create-btn">Log in</button>
+            <button type="button" class="btn cancel-btn" (click)="guestLogin()">Guest Log in</button>
           </div>
         </form>
       </div>

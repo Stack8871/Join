@@ -104,7 +104,7 @@
     gap: $spacing-3xl;
 }
  .card-circle-content:hover svg {
-  fill: $color-primary;  // Hover-Farbe (rot als Beispiel)
+  fill: $color-primary;  
 }
 .card-circle-content > *:hover{
     h4, h5{
@@ -155,26 +155,13 @@
   }
 }
 
-.dashboard-header {
-    display: flex;
-    align-items: center;
-    gap:$spacing-base;
-    flex-wrap: wrap;
-
-    & h1{
-        font-size: var(--font-size-2xl);
-        margin: 0;
-    }
-    & h2{
-        color:$color-primary;
-    }
-}
-.dashboard-header span {
-  color: #555;
-  margin-left: 1rem;
-  font-size: 1rem;
-  border-left: 2px solid #3498db;
-  padding-left: 1rem;
+.summary-header {
+  display: flex;
+  flex-wrap: wrap;
+  width:auto;
+  align-items: center;
+    margin-bottom: $spacing-3xl;
+    height:60px;
 }
 
 
