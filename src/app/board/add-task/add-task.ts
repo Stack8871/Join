@@ -26,9 +26,17 @@ contactsList = [
   { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
   { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
   { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
+  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
+  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
+  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
+  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
+  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
+  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
+  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
 ]; // Später dynamisch via Firestore
 
 form = this.fb.group({
+  status:'todo',
   title: ['', Validators.required],
   description: ['', Validators.required],
   dueDate: [''],
@@ -47,6 +55,7 @@ form = this.fb.group({
   ngOnInit() {
     if (this.isEditMode && this.taskToEdit) {
       this.form.patchValue({
+        status: this.taskToEdit.status,
         title: this.taskToEdit.title,
         description: this.taskToEdit.description,
         dueDate: this.taskToEdit.dueDate,

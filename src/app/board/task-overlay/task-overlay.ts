@@ -4,15 +4,16 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { AddTask } from '../add-task/add-task';
 
 @Component({
   selector: 'app-task-overlay',
- imports: [CommonModule, ReactiveFormsModule],
+ imports: [CommonModule, ReactiveFormsModule, AddTask],
   templateUrl: './task-overlay.html',
   styleUrl: './task-overlay.scss'
 })
 
-export class TaskOverlay  implements OnInit{
+export class TaskOverlay{
   private success = inject(SuccessServices);
   private fb = inject(FormBuilder);
   private firebase = inject(Firebase);

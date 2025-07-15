@@ -63,6 +63,7 @@ form {
     font-size: var(--font-size-base);
     color: $color-text-heading;
     width: 100%;
+    margin-bottom:$spacing-xs;
   }
   .validation-message {
     color: #ff0000;
@@ -73,9 +74,7 @@ form {
 .input-group {
   display: block;
   & label {
-    margin-bottom: 5px;
     display: block;
-    padding-bottom:$spacing-base;
   }
   &select{
     display: block;
@@ -121,7 +120,6 @@ img {
   display: flex;
   gap: 1rem;
   max-width: 440px;
-  margin:$spacing-xs 0 $spacing-lg 0;
 
   @media (max-width: 480px) {
     flex-direction: column;

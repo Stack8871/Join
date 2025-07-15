@@ -1,5 +1,6 @@
 export interface TaskInterface {
   id?:string;
+  status:'todo';
   title: string;
   description: string;
   category: string;
