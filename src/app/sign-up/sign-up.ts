@@ -16,6 +16,7 @@ export class SignUp {
   email = '';
   password = '';
   confirmPassword = '';
+  privacyPolicyAccepted = false;
   errorMessage = '';
 
   constructor(private authService: AuthService) {}

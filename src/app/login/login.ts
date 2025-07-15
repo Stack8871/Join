@@ -27,27 +27,48 @@ export class Login implements OnInit {
   ) {}
 
   login() {
-    this.authService.login(this.email, this.password).then(() => {
-      this.closeOverlay();
-      this.navigateAfterLogin();
-    }).catch(err => {
-      this.errorMessage = err.message;
-    });
+    this.authService.login(this.email, this.password)
+      .then(() => {
+        this.closeOverlay();
+        this.navigateAfterLogin();
+      })
+      .catch(error => {
+        this.errorMessage = this.mapFirebaseError(error.code);
+      });
   }
+
   guestLogin() {
     this.authService.login('gast@join.de', '123456')
       .then(() => {
         this.closeOverlay();
         this.navigateAfterLogin();
       })
-      .catch(err => this.errorMessage = err.message);
+      .catch(error => {
+        this.errorMessage = this.mapFirebaseError(error.code);
+      });
+  }
+
+  private mapFirebaseError(code: string): string {
+    switch (code) {
+      case 'auth/invalid-email':
+        return 'The email address is not valid.';
+      case 'auth/user-not-found':
+        return 'No user found with this email address.';
+      case 'auth/wrong-password':
+        return 'The password is incorrect.';
+      case 'auth/invalid-credential':
+        return 'Email or password is incorrect.';
+      case 'auth/too-many-requests':
+        return 'Too many login attempts. Please try again later.';
+      default:
+        return 'An unknown error occurred. Please try again.';
+    }
   }
 
   navigateAfterLogin() {
     // Navigate to summary page after successful login
     window.location.href = '/summary';
   }
-
 
   closeOverlay() {
     this.loginService.closeLoginOverlay();
@@ -56,26 +77,20 @@ export class Login implements OnInit {
   ngOnInit(): void {
     // Hide login elements when the application is fully loaded
     window.addEventListener('load', () => {
-      // Add a small delay to ensure everything is rendered
       setTimeout(() => {
         this.isLoading = false;
-        // Initialize logo animation after loading is complete
         setTimeout(() => {
           this.logoAnimation.initAnimation(() => {
-            // Show login card after animation is complete
             this.showLoginCard = true;
           });
         }, 100);
       }, 500);
     });
 
-    // Fallback: Show login elements after a maximum time (5 seconds)
     setTimeout(() => {
       this.isLoading = false;
-      // Initialize logo animation after fallback loading is complete
       setTimeout(() => {
         this.logoAnimation.initAnimation(() => {
-          // Show login card after animation is complete
           this.showLoginCard = true;
         });
       }, 100);

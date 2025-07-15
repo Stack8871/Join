@@ -17,7 +17,7 @@ header{
     display: flex;
     justify-content: space-between;
     width: 100dvw;
-    padding:$spacing-3xl;        
+    padding:$spacing-3xl;
     & img{
         max-height: 50px;
     }
@@ -87,4 +87,65 @@ footer{
 }
 .justify-center{
     justify-content: center;
+}
+
+.invalid-input {
+    border: 2px solid #ff3d00 !important;
+    background-color: rgba(255, 61, 0, 0.05);
+}
+
+.validation-message {
+    color: #ff3d00;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    min-height: 18px;
+}
+
+.error {
+    color: #ff3d00;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin: $spacing-xs 0;
+
+    input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        position: relative;
+        top: -3px;
+    }
+
+    label {
+        font-size: 14px;
+        cursor: pointer;
+
+        a {
+            color: $color-primary;
+            text-decoration: underline;
+
+            &:hover {
+                color: darken($color-primary, 10%);
+            }
+        }
+    }
+}
+
+// Button styles for disabled state
+.button-group {
+    button[disabled] {
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+    }
+
+    button:not([disabled]) {
+        opacity: 1;
+    }
 }
