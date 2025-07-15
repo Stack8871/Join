@@ -14,7 +14,7 @@
           </div>
       </form>
       <div>
-        <button class="btn primary">
+        <button class="btn primary" (click)="addNewTask()">
           + Add task
         </button>
       </div>
@@ -25,7 +25,7 @@
     @for (col of columns; track col.id) {
     <div class="column">
         <div class="flex space-between">
-          <h4>{{ col.title }}</h4> <button class=" add-icon">+</button></div>
+          <h4>{{ col.title }}</h4> <button class=" add-icon"(click)="addNewTask()">+</button></div>
         <div
           cdkDropList
           [cdkDropListData]="col.tasks"
@@ -63,4 +63,9 @@
     </div>
     }
   </div>
+    <ng-template #overlayTemplate>
+    <div class="overlay">
+      <app-task-overlay></app-task-overlay>
+    </div>
+  </ng-template>
 </div>
