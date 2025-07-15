@@ -7,6 +7,8 @@ import { TaskDetail } from './board/task-detail/task-detail';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
 import { Help } from './info/help/help';
+import { Privacy } from './info/privacy/privacy';
+import { Imprint } from './info/imprint/imprint';
 
 export const routes: Routes = [
   { path: '', component: Login},
@@ -16,5 +18,7 @@ export const routes: Routes = [
   { path: 'add-task', component: AddTask },
   { path: 'contacts', component: Contacts },
   { path: 'help', component: Help },
+  { path: 'privacy', component: Privacy },
+  { path: 'imprint', component: Imprint },
   { path: '**', redirectTo: '' }
 ];

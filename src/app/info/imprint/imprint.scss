@@ -1,0 +1,117 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/typography' as *;
+
+.imprint-container {
+  max-width: 800px;
+  margin: 0 0 0 2rem;
+  padding: 2rem;
+  color: $color-text-heading;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 1.5rem;
+    margin: 0 0 0 1.5rem;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 1rem;
+    margin: 0 0 0 1rem;
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: 2rem;
+    color: $color-primary;
+
+    @media (max-width: $breakpoint-md) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  h2 {
+    font-size: var(--font-size-xl);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: $color-primary;
+    font-weight: $font-weight-semi;
+
+    @media (max-width: $breakpoint-md) {
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  h3 {
+    font-size: var(--font-size-md);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: $color-primary;
+    font-weight: $font-weight-semi;
+
+    @media (max-width: $breakpoint-md) {
+      margin-top: 1.25rem;
+    }
+  }
+
+  p {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+
+    @media (max-width: $breakpoint-md) {
+      margin-bottom: 0.75rem;
+    }
+  }
+}
+
+.imprint-section {
+  margin-bottom: 3rem;
+
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 2rem;
+  }
+}
+
+.imprint-subsection {
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid $color-subtask-bar;
+
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 1.25rem;
+    padding-left: 0.75rem;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding-left: 0.5rem;
+  }
+
+  h3 {
+    color: $color-subtask-bar;
+  }
+}
+
+.imprint-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+
+  @media (max-width: $breakpoint-md) {
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+
+  p:last-child {
+    font-weight: $font-weight-semi;
+    margin-top: 1.5rem;
+  }
+}
+
+.imprint-list {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
