@@ -28,7 +28,8 @@ export class App {
       this.isLoggedIn = !!user;
 
       // If user logs out, redirect to login page
-      if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up' && this.currentRoute !== 'imprint') {
+      if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up' &&
+          this.currentRoute !== 'imprint' && this.currentRoute !== 'privacy') {
         this.router.navigate(['']);
       }
     });
