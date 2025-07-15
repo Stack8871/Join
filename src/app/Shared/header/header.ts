@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import {LoginService} from '../../login/login.service';
 import {AuthService} from '../firebase/firebase-services/auth.service';
 import {Login} from '../../login/login';
@@ -28,10 +29,15 @@ export class Header {
     private loginService: LoginService,
     private authService: AuthService,
     private signUpService: SignUpService,
-    public breakpointObserver: BreakpointObserverService
+    public breakpointObserver: BreakpointObserverService,
+    private router: Router
   ) {
     this.authService.user$.subscribe(user => this.user = user);
     this.signUpService.showSignUp$.subscribe(show => this.showSignUp = show);
+  }
+
+  navigateToHelp() {
+    this.router.navigate(['/help']);
   }
 
   login() {

@@ -99,7 +99,7 @@ $input-radius: 0.5rem;
   &::after {
     content: "";
     position: absolute;
-    top: 0px; 
+    top: 0px;
     right: 0;
     height: 99%;
     border-right: 3px solid $color-subtask-bar;
@@ -111,7 +111,7 @@ $input-radius: 0.5rem;
   &::before {
     content: "";
     position: absolute;
-    bottom: -8px; 
+    bottom: -8px;
     left: 0;
     width: 35%;
     border-bottom: 0px solid $color-subtask-bar;
@@ -125,7 +125,7 @@ $input-radius: 0.5rem;
     border-right: 0px solid $color-subtask-bar;
     display: none;
   }
- 
+
 }
 .circle {
   width: 40px;

@@ -6,6 +6,7 @@ import { Contacts } from './contacts-sektion/contacts/contacts';
 import { TaskDetail } from './board/task-detail/task-detail';
 import { Login } from './login/login';
 import { SignUp } from './sign-up/sign-up';
+import { Help } from './info/help/help';
 
 export const routes: Routes = [
   { path: '', component: Login},
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'summary', component:summary},
   { path: 'add-task', component: AddTask },
   { path: 'contacts', component: Contacts },
+  { path: 'help', component: Help },
   { path: '**', redirectTo: '' }
 ];
