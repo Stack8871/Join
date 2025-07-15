@@ -9,15 +9,17 @@ import { SignUp } from './sign-up/sign-up';
 import { Help } from './info/help/help';
 import { Privacy } from './info/privacy/privacy';
 import { Imprint } from './info/imprint/imprint';
+import { AuthGuard } from './Shared/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: Login},
+  { path: 'login', component: Login},
   { path: 'sign-up', component: SignUp},
-  { path: 'board', component: ManageTask },
-  { path: 'summary', component:summary},
-  { path: 'add-task', component: AddTask },
-  { path: 'contacts', component: Contacts },
-  { path: 'help', component: Help },
+  { path: 'board', component: ManageTask, canActivate: [AuthGuard] },
+  { path: 'summary', component: summary, canActivate: [AuthGuard] },
+  { path: 'add-task', component: AddTask, canActivate: [AuthGuard] },
+  { path: 'contacts', component: Contacts, canActivate: [AuthGuard] },
+  { path: 'help', component: Help, canActivate: [AuthGuard] },
   { path: 'privacy', component: Privacy },
   { path: 'imprint', component: Imprint },
   { path: '**', redirectTo: '' }
