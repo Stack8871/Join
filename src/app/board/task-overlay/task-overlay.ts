@@ -33,7 +33,6 @@ form = this.fb.group({
   priority: ['', Validators.required],
   category: ['', Validators.required],
 
-  // 🟢 Nutze ein Control, nicht Array!
   assignedTo: this.fb.control<string[]>([], Validators.required),
 
   subtasks: this.fb.array([]),

@@ -56,6 +56,7 @@ form {
   display: flex;
   flex-direction: column;
   max-width: 440px;
+  margin-bottom:$spacing-base;
   
 
   label {
@@ -73,6 +74,12 @@ form {
   display: block;
   & label {
     margin-bottom: 5px;
+    display: block;
+    padding-bottom:$spacing-base;
+  }
+  &select{
+    display: block;
+    width:400px;
   }
 }
 .date-input {
