@@ -28,7 +28,7 @@ export class App {
       this.isLoggedIn = !!user;
 
       // If user logs out, redirect to login page
-      if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up') {
+      if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up' && this.currentRoute !== 'imprint') {
         this.router.navigate(['']);
       }
     });

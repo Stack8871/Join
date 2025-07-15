@@ -16,7 +16,7 @@
       <div class="card big-card">
         <h1 class="margin-bottom subline">Login</h1>
 
-        <form class="flex form-container" (ngSubmit)="login()">
+        <form class="flex form-container" (ngSubmit)="login()" #loginForm="ngForm">
           <div class="input-group">
             <input
               type="email"
@@ -24,8 +24,15 @@
               name="email"
               [(ngModel)]="email"
               required
+              email
+              #emailInput="ngModel"
+              [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
             />
             <img src="/icons/mail.svg" alt="person" />
+          </div>
+          <div class="validation-message" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+            <span *ngIf="emailInput.errors?.['required']">Email is required.</span>
+            <span *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</span>
           </div>
 
           <div class="input-group">
@@ -35,8 +42,13 @@
               name="password"
               [(ngModel)]="password"
               required
+              #passwordInput="ngModel"
+              [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
             />
             <img src="/icons/lock.svg" alt="person" />
+          </div>
+          <div class="validation-message" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+            <span *ngIf="passwordInput.errors?.['required']">Password is required.</span>
           </div>
 
           @if (errorMessage) {
@@ -45,9 +57,8 @@
             </div>
           }
 
-
           <div class="button-group justify-center">
-            <button type="submit" class="btn create-btn">Log in</button>
+            <button type="submit" class="btn create-btn" [disabled]="loginForm.invalid">Log in</button>
             <button type="button" class="btn cancel-btn" (click)="guestLogin()">Guest Log in</button>
           </div>
         </form>
@@ -59,7 +70,7 @@
 
   <footer class="flex">
     <div class="footer-content">
-      <a href="privacy">Privacy Policy</a> <a href="imprint">Imprint</a>
+      <a routerLink="/privacy">Privacy Policy</a> <a href="imprint">Imprint</a>
     </div>
   </footer>
 </div>

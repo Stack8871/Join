@@ -4,18 +4,18 @@
 
 .help-container {
   max-width: 800px;
-  margin: 0 0 0 2rem; /* Changed from 0 auto to align left with some margin from sidebar */
+  margin: 0 0 0 2rem;
   padding: 2rem;
   color: $color-text-heading;
 
   @media (max-width: $breakpoint-md) {
     padding: 1.5rem;
-    margin: 0 0 0 1.5rem; /* Reduced left margin for medium screens */
+    margin: 0 0 0 1.5rem;
   }
 
   @media (max-width: $breakpoint-sm) {
     padding: 1rem;
-    margin: 0 0 0 1rem; /* Reduced left margin for small screens */
+    margin: 0 0 0 1rem;
   }
 
   h1 {
