@@ -1,0 +1,64 @@
+<div class="overlay-container">
+  <div class="card-wrapper form-slide">
+    <div class="right-container">
+        <div class="right-content">
+            <div class="contact-form" >
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="input-group">
+                        <label>Title</label>
+                        <input
+                            type="text"
+                            placeholder="Title"
+                            formControlName="title"
+                            />
+                        <img src="/icons/person.svg" alt="person" />
+                    </div>
+                    <div class="input-group">
+                        <label>Description</label>
+                        <input
+                            type="text"
+                            placeholder="description"
+                            formControlName="description"
+                            />
+                        <img src="/icons/mail.svg" alt="mail" />
+
+                    </div>
+                    <div class="input-group date-input">
+                        <input
+                        type="date"
+                        id="dueDate"
+                        formControlName="dueDate"
+                        >
+                    </div>
+                        <div class="input-group">
+                        <label>Assigned To</label>
+                        <select formControlName="assignedTo" multiple required>
+                            <option *ngFor="let contact of contactsList" [value]="contact.id">
+                            {{ contact.name }}
+                            </option>
+                        </select>
+                        </div>
+                    <div>
+                        <label><input type="radio" name="priority" formControlName="priority" value="Low" required /> low</label>
+                        <label><input type="radio" name="priority" formControlName="priority" value="Medium" /> Medium</label>
+                        <label><input type="radio" name="priority" formControlName="priority" value="High" /> High</label>
+                    </div>
+                      <div>
+                        <label>Category</label>
+                        <select name="category" formControlName="category" required>
+                        <option value="User Story">User Story</option>
+                        <option value="Technical Task">Technical Task</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="cancel-btn btn" (click)="cancel()">Cancel</button>
+                        <button type="submit" class="create-btn btn">
+                            {{ isEditMode ? 'Update' : 'Create' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
