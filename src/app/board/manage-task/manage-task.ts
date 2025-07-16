@@ -71,7 +71,7 @@ export class ManageTask{
     return this.columns.map(col => col.id);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TaskInterface[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
