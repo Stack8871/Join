@@ -4,7 +4,7 @@ import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay-service';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
@@ -17,7 +17,7 @@ import { SuccessServices } from '../../Shared/firebase/firebase-services/success
   styleUrl: './task-detail-overlay.scss'
 })
 export class TaskDetailOverlay implements OnInit{
-    private taskOverlayService = inject(TaskOverlayService);
+    private TaskService = inject(TaskService);
     tasks$!: Observable<TaskInterface[]>;
     private success = inject(SuccessServices);
     private fb = inject(FormBuilder);

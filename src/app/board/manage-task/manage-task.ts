@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import {
   CdkDropList,
   CdkDrag,
@@ -13,29 +13,37 @@ import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay-service';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { FormsModule } from '@angular/forms';
+import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskOverlay } from '../task-overlay/task-overlay';
 import { TaskDetailOverlay } from '../task-detail-overlay/task-detail-overlay';
-import { TaskInterface } from '../../interfaces/task-interface';
 
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskOverlay, TaskDetailOverlay],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    MatProgressBarModule,
+    CdkDragPlaceholder,
+    FormsModule,
+    TaskOverlay,
+    TaskDetailOverlay
+  ],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
 export class ManageTask{
-  private taskOverlayService = inject(TaskOverlayService);
+  private TaskService = inject(TaskService);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
   isSelected = false;
   taskId?: string ='';
-
   tasks: TaskInterface[] = [];
+ 
 
   columns = [
     { title: 'To Do', id: 'todoList', tasks: [] as TaskInterface[] },
@@ -45,6 +53,8 @@ export class ManageTask{
   ];
 
   ngOnInit() {
+  // Beispiel: Tasks aus Firebase holen
+  this.tasks$ = this.firebase.getTasks(); // getTasks() muss im Service existieren!
   this.tasks$.subscribe(tasks => {
     this.tasks = tasks;
     this.updateColumns();
@@ -62,7 +72,7 @@ export class ManageTask{
     return this.columns.map(col => col.id);
   }
 
-  drop(event: CdkDragDrop<TaskInterface[]>) {
+  drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -77,8 +87,7 @@ export class ManageTask{
         event.currentIndex
       );
     }
-  };
-
+  }
   selectedtasks(letter: string, index: number) {
     const task = this.tasks[index];
     if (!task) return;
@@ -97,17 +106,16 @@ export class ManageTask{
       id: task.id
     };
   };
-
-  addNewTask() {
-    this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
-  };
-
-  editTask(tasks: TaskInterface) {
-      this.taskOverlayService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
+    addNewTask() {
+      this.TaskService.openOverlay(); // kein Parameter = "Add Mode"
     };
-    deleteItem(taskId: string) {
-      this.firebase.deleteTaskFromDatabase(taskId);
-    }
+
+    editTask(tasks: TaskInterface) {
+        this.TaskService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
+      };
+      deleteItem(taskId: string) {
+        this.firebase.deleteTaskFromDatabase(taskId);
+      }
 
   selectedTasksIndex?: number;
   selectedTask?: TaskInterface;
