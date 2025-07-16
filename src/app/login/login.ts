@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { LogoAnimation } from './logo-animation';
 
 @Component({
@@ -23,7 +23,8 @@ export class Login implements OnInit {
   constructor(
     private loginService: LoginService,
     private authService: AuthService,
-    private logoAnimation: LogoAnimation
+    private logoAnimation: LogoAnimation,
+    private router: Router
   ) {}
 
   login() {
@@ -67,7 +68,7 @@ export class Login implements OnInit {
 
   navigateAfterLogin() {
     // Navigate to summary page after successful login
-    window.location.href = '/summary';
+    this.router.navigate(['/summary']);
   }
 
   closeOverlay() {

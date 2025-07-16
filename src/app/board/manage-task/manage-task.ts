@@ -75,7 +75,7 @@ export class ManageTask{
       addNewTask() {
         this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
       };
-  
+
       editTask(tasks: TaskInterface) {
           this.taskOverlayService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
         };

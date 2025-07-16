@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +19,7 @@ export class SignUp {
   privacyPolicyAccepted = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   signUp() {
     if (this.password !== this.confirmPassword) {
@@ -40,6 +40,6 @@ export class SignUp {
 
   navigateAfterSignUp() {
     // Navigate to summary page after successful registration
-    window.location.href = '/summary';
+    this.router.navigate(['/summary']);
   }
 }
