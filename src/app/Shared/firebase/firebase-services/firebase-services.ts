@@ -90,6 +90,9 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
         subtasks: editedTasks.subtasks,
   });
 }
+  async deleteTaskFromDatabase(id: string){
+    await deleteDoc(doc(this.firestore, 'tasks', id) )
+  };
 
   ngOnDestroy() {
     if (this.unsubscribe) {
