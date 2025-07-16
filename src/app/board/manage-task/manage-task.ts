@@ -53,8 +53,7 @@ export class ManageTask{
   ];
 
   ngOnInit() {
-  // Beispiel: Tasks aus Firebase holen
-  this.tasks$ = this.firebase.getTasks(); // getTasks() muss im Service existieren!
+  this.tasks$ = this.TaskService.getTasks(); // Großes T!
   this.tasks$.subscribe(tasks => {
     this.tasks = tasks;
     this.updateColumns();

@@ -15,21 +15,18 @@ import { collectionData, Firestore, collection, doc } from '@angular/fire/firest
 export class TaskService {
   private overlayRef: OverlayRef | null = null;
   private overlay = inject(Overlay);
-  tasks: TaskInterface[] = [];
   firestore: Firestore = inject(Firestore);
-  tasks$;
 
-  constructor() {
-    this.tasks$ = collectionData(this.getTasks());
+  constructor() {}
+
+  getTasks = (): Observable<TaskInterface[]> => {
+    const tasksRef = collection(this.firestore, 'tasks');
+    return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
   }
 
-  
-    getTasks(){
-      return collection(this.firestore, 'tasks');
-    }
-    getSingleTask(colId: string, docId: string){
-      return doc(collection(this.firestore, colId), docId);
-    }
+  getSingleTask(colId: string, docId: string){
+    return doc(collection(this.firestore, colId), docId);
+  }
 
   openOverlay(taskToEdit?: TaskInterface) {
     const config = new OverlayConfig({

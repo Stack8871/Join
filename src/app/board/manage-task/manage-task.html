@@ -25,20 +25,20 @@
     <div class="column">
         <div class="flex space-between">
           <h4>{{ col.title }}</h4> <button class=" add-icon"(click)="addNewTask()">+</button></div>
-<!--         <div
+<!--           <div
           cdkDropList
           [cdkDropListData]="col.tasks"
           [cdkDropListConnectedTo]="connectedDropLists"
           class="drop-list"
           (cdkDropListDropped)="drop($event)"
           [id]="col.id"
-        > -->
+          > -->
           @if (col.tasks.length === 0) {
           <div class="empty-column-message">
             No tasks yet. Drag tasks here.
           </div>
           }
-          @for (task of col.tasks; track task) {
+          @for (task of col.tasks; track task.id) {
           <div class="card flex column" cdkDrag>
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class=""><span class="category"> {{ task.category }}</span></div>
