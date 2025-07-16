@@ -56,12 +56,14 @@ form {
   display: flex;
   flex-direction: column;
   max-width: 440px;
+  margin-bottom:$spacing-base;
   
 
   label {
     font-size: var(--font-size-base);
     color: $color-text-heading;
     width: 100%;
+    margin-bottom:$spacing-xs;
   }
   .validation-message {
     color: #ff0000;
@@ -72,7 +74,11 @@ form {
 .input-group {
   display: block;
   & label {
-    margin-bottom: 5px;
+    display: block;
+  }
+  &select{
+    display: block;
+    width:400px;
   }
 }
 .date-input {
@@ -114,7 +120,6 @@ img {
   display: flex;
   gap: 1rem;
   max-width: 440px;
-  margin:$spacing-xs 0 $spacing-lg 0;
 
   @media (max-width: 480px) {
     flex-direction: column;

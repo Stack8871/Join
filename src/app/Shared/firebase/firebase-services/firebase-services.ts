@@ -81,6 +81,7 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
   await updateDoc(doc(this.firestore, 'tasks', id),
   {
         title: editedTasks.title,
+        status:editedTasks.status,
         description: editedTasks.description,
         dueDate: editedTasks.dueDate,
         priority: editedTasks.priority,
