@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TaskService } from '../Shared/firebase/firebase-services/task-service';
 import { TaskInterface } from '../interfaces/task-interface';
 import { Observable } from 'rxjs';
+import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 
 @Component({
   selector: 'app-summary',
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class summary implements OnInit {
   private taskService = inject(TaskService);
+  private authService = inject(AuthService);
   tasks$!: Observable<TaskInterface[]>;
   tasks: TaskInterface[] = [];
 
@@ -23,12 +25,26 @@ export class summary implements OnInit {
   urgentCount: number = 0;
   totalTasksCount: number = 0;
 
+  greeting: string = 'Good day';
+  userName: string = '';
+
   ngOnInit() {
     this.tasks$ = this.taskService.getTasks();
     this.tasks$.subscribe(tasks => {
       this.tasks = tasks;
       this.updateTaskCounts();
     });
+
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        // Use displayName if available, otherwise use email
+        this.userName = user.displayName || user.email?.split('@')[0] || 'User';
+      } else {
+        this.userName = 'User';
+      }
+    });
+
+    this.updateGreeting();
   }
 
   updateTaskCounts() {
@@ -38,5 +54,17 @@ export class summary implements OnInit {
     this.doneCount = this.tasks.filter(t => t.status === 'done').length;
     this.urgentCount = this.tasks.filter(t => t.priority === 'High').length;
     this.totalTasksCount = this.todoCount + this.inProgressCount + this.feedbackCount + this.doneCount;
+  }
+
+  updateGreeting() {
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+      this.greeting = 'Good morning';
+    } else if (hour >= 12 && hour < 18) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }
   }
 }
