@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskOverlay } from '../task-overlay/task-overlay';
 import { TaskDetailOverlay } from '../task-detail-overlay/task-detail-overlay';
+import { TaskFilterService } from './task-filter';
 
 
 @Component({
@@ -20,12 +21,15 @@ import { TaskDetailOverlay } from '../task-detail-overlay/task-detail-overlay';
 })
 export class ManageTask implements OnInit {
   private TaskService = inject(TaskService);
+  private filterService = inject(TaskFilterService);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
   isSelected = false;
   taskId?: string ='';
   tasks: TaskInterface[] = [];
+  searchTerm: string = '';
+  filteredColumns: any[] = [];
 
 
   columns = [
@@ -36,11 +40,12 @@ export class ManageTask implements OnInit {
   ];
 
   ngOnInit() {
-  this.tasks$ = this.TaskService.getTasks();
-  this.tasks$.subscribe(tasks => {
-    this.tasks = tasks;
-    this.updateColumns();
-  });
+    this.tasks$ = this.TaskService.getTasks();
+    this.tasks$.subscribe(tasks => {
+      this.tasks = tasks;
+      this.updateColumns();
+      this.filteredColumns = [...this.columns];
+    });
   }
 
   updateColumns() {
@@ -48,6 +53,13 @@ export class ManageTask implements OnInit {
     this.columns[1].tasks = this.tasks.filter(t => t.status === 'inProgress');
     this.columns[2].tasks = this.tasks.filter(t => t.status === 'feedback');
     this.columns[3].tasks = this.tasks.filter(t => t.status === 'done');
+
+    // Apply current filter to updated columns
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      this.applyFilter(this.searchTerm);
+    } else {
+      this.filteredColumns = [...this.columns];
+    }
   }
 
   get connectedDropLists(): string[] {
@@ -128,4 +140,17 @@ export class ManageTask implements OnInit {
   selectedTasksIndex?: number;
   selectedTask?: TaskInterface;
 
+  /**
+   * Applies filter to columns based on search term
+   * @param searchTerm The search term to filter by
+   */
+  applyFilter(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filteredColumns = [...this.columns];
+      return;
+    }
+
+    this.filteredColumns = this.filterService.filterColumns([...this.columns], searchTerm);
+  }
 }

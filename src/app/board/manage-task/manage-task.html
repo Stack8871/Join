@@ -5,7 +5,7 @@
   <div class="search-container">
       <form>
           <div class="input-search">
-              <input type="text" placeholder="Name">
+              <input type="text" placeholder="Name" [(ngModel)]="searchTerm" (ngModelChange)="applyFilter($event)" name="searchInput">
               <button class="magnifyin-glass">
                 <img src="/icons/magnifyin-glass.svg" alt="person" />
               </button>
@@ -21,7 +21,7 @@
   </div>
   </div>
   <div class="grid-board">
-    @for (col of columns; track col.id) {
+    @for (col of filteredColumns; track col.id) {
     <div class="column">
         <div class="flex space-between">
           <h4>{{ col.title }}</h4> <button class=" add-icon"(click)="addNewTask()">+</button></div>
@@ -32,7 +32,7 @@
           class="drop-list"
           (cdkDropListDropped)="drop($event)"
           [id]="col.id"
-          > 
+          >
           @if (col.tasks.length === 0) {
           <div class="empty-column-message">
             No tasks yet. Drag tasks here.
@@ -59,7 +59,7 @@
           </div>
           }
         </div>
-    </div> 
+    </div>
     }
   </div>
     <ng-template #overlayTemplate>
