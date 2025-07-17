@@ -212,7 +212,7 @@ img {
 
 select {
 
-  display: inline-block;
+  
   font: inherit;
   line-height: 1.5em;
   padding: 0.5em 3.5em 0.5em 1em;
@@ -221,9 +221,15 @@ select {
 }
 
 select.minimal {
+  display: inline-block;
+  appearance: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
   border-radius: $spacing-2xs;
   border:1px solid $color-light-gray;
-  height:40px;
+  height: 100%;
+  font-size: var(--font-size-base);
   background-image:
     linear-gradient(45deg, transparent 50%, $color-medium-gray 50%),
     linear-gradient(135deg, $color-medium-gray 50%, transparent 50%),
@@ -255,6 +261,35 @@ select.minimal:focus {
   background-repeat: no-repeat;
   border-color: $color-light-gray;
   outline: 0;
+}
+/* Multiselect: Zeilenhöhe und Scrollbar */
+select.minimal[multiple] {
+  height: 100%;
+  overflow-y: auto;
+
+  /* Scrollbar ausblenden für Webkit-Browser (Chrome, Safari, Edge) */
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  /* Scrollbar ausblenden für Firefox */
+  scrollbar-width: none;
+}
+
+
+
+/* Option-Styles */
+select.minimal option {
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+/* Optional: Hover- und Selected-Effekt */
+select.minimal option:checked,
+select.minimal option:hover {
+  background: #e0e7ff;
+  color: #222;
 }
 
 select:-moz-focusring {

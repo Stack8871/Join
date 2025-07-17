@@ -26,19 +26,6 @@ export class AddTask implements OnInit{
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
 
-/* contactsList = [
-  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
-  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
-  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
-  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
-  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
-  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
-  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
-  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
-  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
-  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
-];  */// Später dynamisch via Firestore
-
 form = this.fb.group({
   status:'todo',
   title: ['', Validators.required],
@@ -105,7 +92,7 @@ form = this.fb.group({
 
     setPriority(priority: string): void {
     this.form.get('priority')?.setValue(priority);
-  }
+  };
 
   async submit() {
     const value = this.form.getRawValue();
