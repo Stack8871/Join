@@ -1,7 +1,7 @@
 import { Component, Input, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
@@ -20,33 +20,55 @@ import { ContactsInterface } from '../../interfaces/contacts-interface';
 export class AddTask implements OnInit{
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
-  private fb = inject(FormBuilder);
   private firebase = inject(Firebase);
   public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
 
-form = this.fb.group({
-  status:'todo',
-  title: ['', Validators.required],
-  description: ['', Validators.required],
-  dueDate: [''],
-  priority: ['', Validators.required],
-  category: ['', Validators.required],
+form: FormGroup;
 
-  assignedTo: this.fb.control<string[]>([], Validators.required),
+constructor(private fb: FormBuilder) {
+  this.form = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    dueDate: ['', Validators.required],
+    priority: ['', Validators.required],
+    assignedTo: [[], Validators.required],
+    category: ['', Validators.required],
+    subtasks: this.fb.array([this.fb.control('', Validators.required)])
+  });
+}
 
-  subtasks: this.fb.array([]),
-});
+get subtasks(): FormArray {
+  return this.form.get('subtasks') as FormArray;
+}
 
-  get isEditMode(): boolean {
-    return !!this.taskToEdit;
+get subtaskControls(): FormControl[] {
+  // explizites Mapping, damit wirklich FormControl[] zurückgegeben wird
+  return (this.form.get('subtasks') as FormArray).controls.map(c => c as FormControl);
+}
+
+addSubtask() {
+  const subtasks = this.form.get('subtasks') as FormArray;
+  subtasks.push(this.fb.control('', Validators.required));
+}
+
+removeSubtask(index: number) {
+  const subtasks = this.form.get('subtasks') as FormArray;
+  if (subtasks.length > 1) {
+    subtasks.removeAt(index);
   }
+}
+
+  public isEditMode = false;
 
   ngOnInit() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
     });
+
+    // Beispiel: Setze Edit-Mode, wenn ein Task zum Bearbeiten übergeben wird
+    this.isEditMode = !!this.taskToEdit;
 
     if (this.isEditMode && this.taskToEdit) {
       this.form.patchValue({

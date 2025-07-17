@@ -3,6 +3,7 @@
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-content">
       <div class="left-side">
+        <!-- Title -->
         <div class="form-group">
           <div class="input-group">
             <label for="title">Title</label>
@@ -14,12 +15,14 @@
               [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}"
             >
             @if (isFieldInvalid('title')) {
-            <div class="validation-message">
-              {{ getValidationMessage('title') }}
-            </div>
-          }
+              <div class="validation-message">
+                {{ getValidationMessage('title') }}
+              </div>
+            }
           </div>
         </div>
+
+        <!-- Description -->
         <div class="form-group">
           <label for="description">Description</label>
           <div class="input-group">
@@ -29,31 +32,33 @@
               placeholder="Enter a description"
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"
             ></textarea>
+            @if (isFieldInvalid('description')) {
+              <div class="validation-message">
+                {{ getValidationMessage('description') }}
+              </div>
+            }
           </div>
-          @if (isFieldInvalid('description')) {
-            <div class="validation-message">
-              {{ getValidationMessage('description') }}
-            </div>
-          }
         </div>
+
+        <!-- Due Date -->
         <div class="form-group">
           <label for="dueDate">Due Date</label>
-          <div class="input-group date-input">
+          <div class="input-group">
             <input
               type="date"
               id="dueDate"
               formControlName="dueDate"
               [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}"
             >
+            @if (isFieldInvalid('dueDate')) {
+              <div class="validation-message">
+                {{ getValidationMessage('dueDate') }}
+              </div>
+            }
           </div>
-          @if (isFieldInvalid('dueDate')) {
-            <div class="validation-message">
-              {{ getValidationMessage('dueDate') }}
-            </div>
-          }
         </div>
       </div>
-      <div class="vertical-divider"></div>
+
       <div class="right-side">
         <div class="form-group">
           <label>Priority</label>
@@ -125,15 +130,12 @@
             </button>
           </div>
         </div>
-         @if (ContactsList.length > 0)
-        {
+        <!-- Assigned To -->
         <div class="form-group">
-          <label>Assigned To</label>
+          <label for="assignedTo">Assigned to</label>
           <select class="minimal" formControlName="assignedTo" multiple required>
-            @for ( contact of ContactsList; track contact.id) {
-              <option>
-              {{ contact.name }}
-              </option>
+            @for (contact of ContactsList; track contact.id) {
+              <option [value]="contact.id">{{ contact.name }}</option>
             }
           </select>
           @if (isFieldInvalid('assignedTo')) {
@@ -142,48 +144,59 @@
             </div>
           }
         </div>
-        }
+
+        <!-- Category -->
         <div class="form-group">
           <label for="category">Category</label>
-              <select class="minimal" name="category" formControlName="category" required>
-              <option value="User Story">User Story</option>
-              <option value="Technical Task">Technical Task</option>
-              </select>
+          <select class="minimal" name="category" formControlName="category" required>
+            <option value="User Story">User Story</option>
+            <option value="Technical Task">Technical Task</option>
+          </select>
           @if (isFieldInvalid('category')) {
             <div class="validation-message">
               {{ getValidationMessage('category') }}
             </div>
           }
         </div>
+
+        <!-- Subtasks -->
         <div class="form-group">
-          <label for="subtask">Subtask</label>
-          <div class="input-group">
-            <input
-              type="text"
-              id="subtask"
-              formControlName="subtask"
-              placeholder="Add new subtask"
-              [ngClass]="{'valid-field': isFieldValid('subtask'), 'invalid-field': isFieldInvalid('subtask')}"
-            >
-          </div>
-          @if (isFieldInvalid('subtask')) {
-            <div class="validation-message">
-              {{ getValidationMessage('subtask') }}
+          <label for="subtask">Subtasks</label>
+          @for (control of subtaskControls; track $index) {
+            <div class="input-group">
+              <input
+                type="text"
+                [formControl]="control"
+                placeholder="Add new subtask"
+                [ngClass]="{
+                  'valid-field': control.valid && control.touched,
+                  'invalid-field': control.invalid && control.touched
+                }"
+              >
+              @if (subtaskControls.length > 1) {
+                <button type="button" class="btn" (click)="removeSubtask($index)">−</button>
+              }
+              @if ($index === subtaskControls.length - 1) {
+                <button type="button" class="btn" (click)="addSubtask()">+</button>
+              }
             </div>
           }
         </div>
+
+        <!-- Buttons -->
         <div class="button-group">
-            <button type="button" class="cancel-btn btn" (click)="cancel()">Cancel</button>
-            <button type="submit" class="create-btn btn">
-                {{ isEditMode ? 'Update' : 'Create' }}
-            </button>
+          <button type="button" class="cancel-btn btn" (click)="cancel()">Cancel</button>
+          <button type="submit" class="create-btn btn">
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
         </div>
       </div>
     </div>
+
     <div class="flex-required">
       <div>
         <span>* This field is required</span>
       </div>
     </div>
-</form>
+  </form>
 </div>
