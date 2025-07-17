@@ -8,8 +8,8 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { TaskOverlay } from '../../../board/task-overlay/task-overlay';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { Firebase } from './firebase-services';
 import { collectionData, Firestore, collection, doc } from '@angular/fire/firestore';
+import { ContactsInterface } from '../../../interfaces/contacts-interface';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -18,6 +18,11 @@ export class TaskService {
   firestore: Firestore = inject(Firestore);
 
   constructor() {}
+
+  getContactsRef = ():Observable<ContactsInterface[]> => {
+    const contactsRef = collection(this.firestore, 'contacts');
+    return collectionData(contactsRef, { idField: 'id' }) as Observable<ContactsInterface[]>;
+  }
 
   getTasks = (): Observable<TaskInterface[]> => {
     const tasksRef = collection(this.firestore, 'tasks');

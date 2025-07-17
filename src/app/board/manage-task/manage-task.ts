@@ -36,7 +36,7 @@ export class ManageTask implements OnInit {
   ];
 
   ngOnInit() {
-  this.tasks$ = this.TaskService.getTasks(); // Großes T!
+  this.tasks$ = this.TaskService.getTasks();
   this.tasks$.subscribe(tasks => {
     this.tasks = tasks;
     this.updateColumns();

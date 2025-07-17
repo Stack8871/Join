@@ -1,9 +1,12 @@
 import { Component, Input, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { ContactsInterface } from '../../interfaces/contacts-interface';
 
 @Component({
   selector: 'app-add-task',
@@ -16,43 +19,57 @@ import { SuccessServices } from '../../Shared/firebase/firebase-services/success
 
 export class AddTask implements OnInit{
   private success = inject(SuccessServices);
-  private fb = inject(FormBuilder);
+  private taskService = inject(TaskService);
   private firebase = inject(Firebase);
-  
+  public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
-  userList = ['peter müller', 'petra Heinz', 'Erik Huber'];
+  @Input() contactToEdit?: ContactsInterface;
 
-contactsList = [
-  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
-  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
-  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
-  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
-  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
-  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
-  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
-  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
-  { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
-  { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
-]; // Später dynamisch via Firestore
+form: FormGroup;
 
-form = this.fb.group({
-  status:'todo',
-  title: ['', Validators.required],
-  description: ['', Validators.required],
-  dueDate: [''],
-  priority: ['', Validators.required],
-  category: ['', Validators.required],
+constructor(private fb: FormBuilder) {
+  this.form = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    dueDate: ['', Validators.required],
+    priority: ['', Validators.required],
+    assignedTo: [[], Validators.required],
+    category: ['', Validators.required],
+    subtasks: this.fb.array([this.fb.control('', Validators.required)])
+  });
+}
 
-  assignedTo: this.fb.control<string[]>([], Validators.required),
+get subtasks(): FormArray {
+  return this.form.get('subtasks') as FormArray;
+}
 
-  subtasks: this.fb.array([]),
-});
+get subtaskControls(): FormControl[] {
+  // explizites Mapping, damit wirklich FormControl[] zurückgegeben wird
+  return (this.form.get('subtasks') as FormArray).controls.map(c => c as FormControl);
+}
 
-  get isEditMode(): boolean {
-    return !!this.taskToEdit;
+addSubtask() {
+  const subtasks = this.form.get('subtasks') as FormArray;
+  subtasks.push(this.fb.control('', Validators.required));
+}
+
+removeSubtask(index: number) {
+  const subtasks = this.form.get('subtasks') as FormArray;
+  if (subtasks.length > 1) {
+    subtasks.removeAt(index);
   }
+}
+
+  public isEditMode = false;
 
   ngOnInit() {
+    this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
+      this.ContactsList = contacts;
+    });
+
+    // Beispiel: Setze Edit-Mode, wenn ein Task zum Bearbeiten übergeben wird
+    this.isEditMode = !!this.taskToEdit;
+
     if (this.isEditMode && this.taskToEdit) {
       this.form.patchValue({
         status: this.taskToEdit.status,
@@ -97,7 +114,7 @@ form = this.fb.group({
 
     setPriority(priority: string): void {
     this.form.get('priority')?.setValue(priority);
-  }
+  };
 
   async submit() {
     const value = this.form.getRawValue();
