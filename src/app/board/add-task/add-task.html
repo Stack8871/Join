@@ -164,22 +164,24 @@
           <label for="subtask">Subtasks</label>
           @for (control of subtaskControls; track $index) {
             <div class="input-group">
-              <input
-                type="text"
-                [formControl]="control"
-                placeholder="Add new subtask"
-                [ngClass]="{
-                  'valid-field': control.valid && control.touched,
-                  'invalid-field': control.invalid && control.touched
-                }"
-              >
-              @if (subtaskControls.length > 1) {
-                <button type="button" class="btn" (click)="removeSubtask($index)">−</button>
-              }
-              @if ($index === subtaskControls.length - 1) {
-                <button type="button" class="btn" (click)="addSubtask()">+</button>
-              }
-            </div>
+              <div class="subtasks">
+                <input
+                  type="text"
+                  [formControl]="control"
+                  placeholder="Add new subtask"
+                  [ngClass]="{
+                    'valid-field': control.valid && control.touched,
+                    'invalid-field': control.invalid && control.touched
+                  }"
+                >
+                @if (subtaskControls.length > 1) {
+                  <button type="button" class="" (click)="removeSubtask($index)">−</button>
+                }
+                @if ($index === subtaskControls.length - 1) {
+                  <button type="button" class="" (click)="addSubtask()">+</button>
+                }
+              </div>
+          </div>
           }
         </div>
 
