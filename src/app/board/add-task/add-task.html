@@ -135,7 +135,9 @@
           <label for="assignedTo">Assigned to</label>
           <select class="minimal" formControlName="assignedTo" multiple required>
             @for (contact of ContactsList; track contact.id) {
-              <option [value]="contact.id">{{ contact.name }}</option>
+              <option [value]="contact.id">
+                {{ contact.name }}
+              </option>
             }
           </select>
           @if (isFieldInvalid('assignedTo')) {

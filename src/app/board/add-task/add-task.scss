@@ -215,18 +215,24 @@ img {
   background:$color-white;
   & input{
     max-width:380px;
-    border:0 px solid transparent;
+    border:0px solid transparent;
   }
   & button{
     border: 0px solid  transparent;
     margin-left:1rem;
     background:$color-white;
+    color: $color-medium-gray;
+    &:hover{
+      color:$color-primary;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+    }
   }
 }
 select {
   font: inherit;
   line-height: 1.5em;
-  padding: 0.5em 3.5em 0.5em 1em;
+  padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
   appearance: none;
   -moz-appearance: none;
 }

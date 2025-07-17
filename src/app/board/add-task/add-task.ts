@@ -29,6 +29,7 @@ form: FormGroup;
 
 constructor(private fb: FormBuilder) {
   this.form = this.fb.group({
+    status:'todo',
     title: ['', Validators.required],
     description: ['', Validators.required],
     dueDate: ['', Validators.required],
