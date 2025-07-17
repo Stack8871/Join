@@ -27,6 +27,7 @@ export class summary implements OnInit {
 
   greeting: string = 'Good day';
   userName: string = '';
+  isGuest: boolean = false;
 
   ngOnInit() {
     this.tasks$ = this.taskService.getTasks();
@@ -37,10 +38,11 @@ export class summary implements OnInit {
 
     this.authService.user$.subscribe(user => {
       if (user) {
-        // Use displayName if available, otherwise use email
+        this.isGuest = user.email === 'gast@join.de';
         this.userName = user.displayName || user.email?.split('@')[0] || 'User';
       } else {
         this.userName = 'User';
+        this.isGuest = true; // Consider not logged in users as guests too
       }
     });
 

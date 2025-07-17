@@ -73,7 +73,7 @@
         </div>
         <div class="welcome">
             <h4>{{ greeting }},</h4>
-            <h3>{{ userName }}</h3>
+            <h3 *ngIf="!isGuest">{{ userName }}</h3>
         </div>
     </div>
   </section>
