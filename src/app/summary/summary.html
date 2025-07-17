@@ -14,7 +14,7 @@
                         </svg>
                     </span>
                     <div class="flex column ai-center">
-                        <h4>1</h4>
+                        <h4>{{ todoCount }}</h4>
                         <span>To-do</span>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         </svg>
                     </span>
                     <div class="flex column ai-center">
-                        <h4>1</h4>
+                        <h4>{{ doneCount }}</h4>
                         <span>Done</span>
                     </div>
 
@@ -40,7 +40,7 @@
                         </svg>
                     </span>
                     <div class="ai-center">
-                        <h4>1</h4>
+                        <h4>{{ urgentCount }}</h4>
                         <span>Urgent</span>
                     </div>
                     </div>
@@ -53,19 +53,19 @@
             <div class=" overview-gap ai-center grid-3-col grid-col-span-2">
                 <div class="card task-step-text hover-scale-btn">
                     <div class="flex column ai-center">
-                        <h4>5</h4>
+                        <h4>{{ totalTasksCount }}</h4>
                         <span>Tasks in Board</span>
                     </div>
                 </div>
                 <div class="card task-step-text hover-scale-btn">
                     <div class="flex column ai-center">
-                        <h4>5</h4>
+                        <h4>{{ inProgressCount }}</h4>
                         <span>Tasks in Progress</span>
                     </div>
                 </div>
                 <div class="card task-step-text hover-scale-btn">
                     <div class="flex column ai-center">
-                        <h4>5</h4>
+                        <h4>{{ feedbackCount }}</h4>
                         <span>Awaiting Feedback</span>
                     </div>
                 </div>
