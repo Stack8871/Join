@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import {
   CdkDropList,
   CdkDrag,
@@ -13,44 +13,65 @@ import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay-service';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { FormsModule } from '@angular/forms';
-import { TaskOverlay } from '../task-overlay/task-overlay';
 import { TaskInterface } from '../../interfaces/task-interface';
+import { TaskOverlay } from '../task-overlay/task-overlay';
+import { TaskDetailOverlay } from '../task-detail-overlay/task-detail-overlay';
 
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskOverlay],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    MatProgressBarModule,
+    CdkDragPlaceholder,
+    FormsModule,
+    TaskOverlay,
+    TaskDetailOverlay
+  ],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
 export class ManageTask{
-  private taskOverlayService = inject(TaskOverlayService);
+  private TaskService = inject(TaskService);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
   isSelected = false;
   taskId?: string ='';
-  todo = ['Task A', 'Task B'];
-  inProgress = ['Task C'];
-  feedback = ['Task D'];
-  done = ['Task E'];
-  isOpen = false;
+  tasks: TaskInterface[] = [];
+ 
 
   columns = [
-    { title: 'To Do', id: 'todoList', tasks: this.todo },
-    { title: 'In Progress', id: 'progressList', tasks: this.inProgress },
-    { title: 'Await Feedback', id: 'feedbackList', tasks: this.feedback },
-    { title: 'Done', id: 'doneList', tasks: this.done }
+    { title: 'To Do', id: 'todoList', tasks: [] as TaskInterface[] },
+    { title: 'In Progress', id: 'progressList', tasks: [] as TaskInterface[] },
+    { title: 'Await Feedback', id: 'feedbackList', tasks: [] as TaskInterface[] },
+    { title: 'Done', id: 'doneList', tasks: [] as TaskInterface[] }
   ];
+
+  ngOnInit() {
+  this.tasks$ = this.TaskService.getTasks(); // Großes T!
+  this.tasks$.subscribe(tasks => {
+    this.tasks = tasks;
+    this.updateColumns();
+  });
+  }
+
+  updateColumns() {
+    this.columns[0].tasks = this.tasks.filter(t => t.status === 'todo');
+    this.columns[1].tasks = this.tasks.filter(t => t.status === 'inProgress');
+    this.columns[2].tasks = this.tasks.filter(t => t.status === 'feedback');
+    this.columns[3].tasks = this.tasks.filter(t => t.status === 'done');
+  }
 
   get connectedDropLists(): string[] {
     return this.columns.map(col => col.id);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TaskInterface[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -66,21 +87,36 @@ export class ManageTask{
       );
     }
   }
-    openPopup(): void {
-    this.isOpen = true;
-  }
-    closePopup(): void {
-    this.isOpen = false;
-  }
-      addNewTask() {
-        this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
-      };
+  selectedtasks(letter: string, index: number) {
+    const task = this.tasks[index];
+    if (!task) return;
+    this.isSelected = true;
+    this.selectedTasksIndex = index;
+    this.taskId = task.id;
+    this.selectedTask = {
+      status: task.status, 
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+      priority: task.priority,
+      assignedTo: task.assignedTo,
+      category: task.category,
+      subtasks: task.subtasks,
+      id: task.id
+    };
+  };
+    addNewTask() {
+      this.TaskService.openOverlay(); // kein Parameter = "Add Mode"
+    };
 
-      editTask(tasks: TaskInterface) {
-          this.taskOverlayService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
-        };
-        deleteItem(taskId: string) {
-          this.firebase.deleteContactsFromDatabase(taskId);
-        }
+    editTask(tasks: TaskInterface) {
+        this.TaskService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
+      };
+      deleteItem(taskId: string) {
+        this.firebase.deleteTaskFromDatabase(taskId);
+      }
+
+  selectedTasksIndex?: number;
+  selectedTask?: TaskInterface;
 
 }

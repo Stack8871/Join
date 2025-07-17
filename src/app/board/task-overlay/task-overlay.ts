@@ -19,7 +19,7 @@ export class TaskOverlay{
   private firebase = inject(Firebase);
 
   @Input() taskToEdit?: TaskInterface;
-  userList = ['peter müller', 'petra Heinz', 'Erik Huber'];
+
 
 contactsList = [
   { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },

@@ -43,6 +43,13 @@ export class Firebase implements OnDestroy {
     } catch (error) {
       console.error('Error setting up Firestore listener:', error);
     }
+  };
+  getTasks(): Observable<TaskInterface[]> {
+    const tasksRef = collection(this.firestore, 'tasks');
+    return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
+  }
+  getSingleTask(colId: string, docId: string){
+    return doc(collection(this.firestore, colId), docId);
   }
     getAlphabeticalContacts() {
     const contactsRef = collection(this.firestore, 'contacts');
@@ -90,6 +97,9 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
         subtasks: editedTasks.subtasks,
   });
 }
+  async deleteTaskFromDatabase(id: string){
+    await deleteDoc(doc(this.firestore, 'tasks', id) )
+  };
 
   ngOnDestroy() {
     if (this.unsubscribe) {

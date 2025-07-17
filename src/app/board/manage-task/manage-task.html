@@ -19,7 +19,6 @@
         </button>
       </div>
   </div>
-
   </div>
   <div class="grid-board">
     @for (col of columns; track col.id) {
@@ -33,18 +32,18 @@
           class="drop-list"
           (cdkDropListDropped)="drop($event)"
           [id]="col.id"
-        >
+          > 
           @if (col.tasks.length === 0) {
           <div class="empty-column-message">
             No tasks yet. Drag tasks here.
           </div>
           }
-          @for (task of col.tasks; track task) {
+          @for (task of col.tasks; track task.id) {
           <div class="card flex column" cdkDrag>
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class=""><span class="category"> User Story</span></div>
-            <div class="task-title"><h4> HTML Base Template Creation</h4></div>
-            <div class="description">shortescription</div>
+            <div class=""><span class="category"> {{ task.category }}</span></div>
+            <div class="task-title"><h4> {{ task.title }}</h4></div>
+            <div class="description">{{ task.description }}</div>
               <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
             <div class="flex subtask-progress">
             <span>1/3</span>
@@ -55,17 +54,22 @@
                     <div class="circle red z-index-40">sr</div>
                     <div class="circle blue z-index-50">tm</div>
               </div>
-              <div>priority</div>
+              <div>{{ task.priority }}</div>
             </div>
           </div>
           }
         </div>
-    </div>
+    </div> 
     }
   </div>
     <ng-template #overlayTemplate>
     <div class="overlay">
       <app-task-overlay></app-task-overlay>
+    </div>
+  </ng-template>
+  <ng-template #overlayTemplate>
+    <div class="overlay">
+      <app-task-detail-overlay></app-task-detail-overlay>
     </div>
   </ng-template>
 </div>
