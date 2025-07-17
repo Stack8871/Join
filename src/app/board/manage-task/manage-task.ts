@@ -53,7 +53,7 @@ export class ManageTask{
   ];
 
   ngOnInit() {
-  this.tasks$ = this.TaskService.getTasks(); // Großes T!
+  this.tasks$ = this.TaskService.getTasks();
   this.tasks$.subscribe(tasks => {
     this.tasks = tasks;
     this.updateColumns();

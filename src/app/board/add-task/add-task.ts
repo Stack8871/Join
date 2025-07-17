@@ -1,9 +1,12 @@
 import { Component, Input, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { ContactsInterface } from '../../interfaces/contacts-interface';
 
 @Component({
   selector: 'app-add-task',
@@ -16,13 +19,14 @@ import { SuccessServices } from '../../Shared/firebase/firebase-services/success
 
 export class AddTask implements OnInit{
   private success = inject(SuccessServices);
+  private taskService = inject(TaskService);
   private fb = inject(FormBuilder);
   private firebase = inject(Firebase);
-  
+  public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
-  userList = ['peter müller', 'petra Heinz', 'Erik Huber'];
+  @Input() contactToEdit?: ContactsInterface;
 
-contactsList = [
+/* contactsList = [
   { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
   { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
   { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
@@ -33,7 +37,7 @@ contactsList = [
   { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
   { id: 'uid056', name: 'Heidi Fischer', email: 'miriam@mail.de' },
   { id: 'uid089', name: 'Helga Möbius', email: 'helga@mail.de' },
-]; // Später dynamisch via Firestore
+];  */// Später dynamisch via Firestore
 
 form = this.fb.group({
   status:'todo',
@@ -53,6 +57,10 @@ form = this.fb.group({
   }
 
   ngOnInit() {
+    this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
+      this.ContactsList = contacts;
+    });
+
     if (this.isEditMode && this.taskToEdit) {
       this.form.patchValue({
         status: this.taskToEdit.status,

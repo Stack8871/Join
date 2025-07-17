@@ -125,14 +125,16 @@
             </button>
           </div>
         </div>
-
+         @if (ContactsList.length > 0)
+        {
         <div class="form-group">
-
           <label>Assigned To</label>
           <select class="minimal" formControlName="assignedTo" multiple required>
-              <option *ngFor="let contact of contactsList" [value]="contact.id">
+            @for ( contact of ContactsList; track contact.id) {
+              <option>
               {{ contact.name }}
               </option>
+            }
           </select>
           @if (isFieldInvalid('assignedTo')) {
             <div class="validation-message">
@@ -140,6 +142,7 @@
             </div>
           }
         </div>
+        }
         <div class="form-group">
           <label for="category">Category</label>
               <select class="minimal" name="category" formControlName="category" required>
