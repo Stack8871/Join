@@ -209,10 +209,21 @@ img {
     }
   }
 }
-
+.subtasks{
+  border: 1px solid $color-light-gray;
+  border-radius: $spacing-2xs;
+  background:$color-white;
+  & input{
+    max-width:380px;
+    border:0 px solid transparent;
+  }
+  & button{
+    border: 0px solid  transparent;
+    margin-left:1rem;
+    background:$color-white;
+  }
+}
 select {
-
-  
   font: inherit;
   line-height: 1.5em;
   padding: 0.5em 3.5em 0.5em 1em;
@@ -266,32 +277,25 @@ select.minimal:focus {
 select.minimal[multiple] {
   height: 100%;
   overflow-y: auto;
-
   /* Scrollbar ausblenden für Webkit-Browser (Chrome, Safari, Edge) */
   &::-webkit-scrollbar {
     width: 0px;
     background: transparent;
   }
-
   /* Scrollbar ausblenden für Firefox */
   scrollbar-width: none;
 }
-
-
-
 /* Option-Styles */
 select.minimal option {
   padding: 6px 10px;
   border-radius: 4px;
 }
-
 /* Optional: Hover- und Selected-Effekt */
 select.minimal option:checked,
 select.minimal option:hover {
   background: #e0e7ff;
   color: #222;
 }
-
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
