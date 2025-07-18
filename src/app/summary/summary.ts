@@ -17,25 +17,26 @@ export class summary implements OnInit {
   private authService = inject(AuthService);
   tasks$!: Observable<TaskInterface[]>;
   tasks: TaskInterface[] = [];
-
   todoCount: number = 0;
   inProgressCount: number = 0;
   feedbackCount: number = 0;
   doneCount: number = 0;
   urgentCount: number = 0;
   totalTasksCount: number = 0;
-
   greeting: string = 'Good day';
   userName: string = '';
   isGuest: boolean = false;
 
+  /**
+   * Initializes the component by fetching tasks and user data.
+   * Sets up subscriptions to track tasks and user information.
+   */
   ngOnInit() {
     this.tasks$ = this.taskService.getTasks();
     this.tasks$.subscribe(tasks => {
       this.tasks = tasks;
       this.updateTaskCounts();
     });
-
     this.authService.user$.subscribe(user => {
       if (user) {
         this.isGuest = user.email === 'gast@join.de';
@@ -45,10 +46,13 @@ export class summary implements OnInit {
         this.isGuest = true; // Consider not logged in users as guests too
       }
     });
-
     this.updateGreeting();
   }
 
+  /**
+   * Updates task counters based on their status and priority.
+   * Calculates the total number of tasks across all statuses.
+   */
   updateTaskCounts() {
     this.todoCount = this.tasks.filter(t => t.status === 'todo').length;
     this.inProgressCount = this.tasks.filter(t => t.status === 'inProgress').length;
@@ -58,9 +62,11 @@ export class summary implements OnInit {
     this.totalTasksCount = this.todoCount + this.inProgressCount + this.feedbackCount + this.doneCount;
   }
 
+  /**
+   * Sets the appropriate greeting message based on the current time of day.
+   */
   updateGreeting() {
     const hour = new Date().getHours();
-
     if (hour >= 5 && hour < 12) {
       this.greeting = 'Good morning';
     } else if (hour >= 12 && hour < 18) {

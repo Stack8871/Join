@@ -27,14 +27,14 @@ export class App {
     this.authService.user$.subscribe(user => {
       this.isLoggedIn = !!user;
 
-      // If user logs out, redirect to login page
+
       if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up' &&
           this.currentRoute !== 'imprint' && this.currentRoute !== 'privacy') {
         this.router.navigate(['']);
       }
     });
 
-    // Track current route
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
