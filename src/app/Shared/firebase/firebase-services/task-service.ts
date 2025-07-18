@@ -58,8 +58,7 @@ export class TaskService {
     const portal = new ComponentPortal(TaskOverlay);
     const componentRef = this.overlayRef.attach(portal);
     if (taskToEdit) {
-      componentRef.instance.taskToEdit = taskToEdit;
-    }
+      componentRef.instance.taskToEdit = taskToEdit;}
     this.overlayRef.backdropClick().subscribe(() => this.close());
     document.addEventListener('closeOverlay', () => this.close(), { once: true });
   }

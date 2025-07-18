@@ -14,7 +14,7 @@ export class Firebase implements OnDestroy {
   private firestore = inject(Firestore);
   private unsubscribe: Unsubscribe = () => {};
  ContactsList: ContactsInterface[] = [];
- 
+
   constructor() {
     try {
       const contactsRef = query(collection(this.firestore, 'contacts'), orderBy('name'));
@@ -33,7 +33,7 @@ export class Firebase implements OnDestroy {
                 phone: data['phone'],
             });
           });
-          
+
           console.log('Updated ContactsList:', this.ContactsList);
         },
         (error) => {
@@ -71,7 +71,7 @@ export class Firebase implements OnDestroy {
   async deleteContactsFromDatabase(id: string){
     await deleteDoc(doc(this.firestore, 'contacts', id) )
   };
-  
+
 setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
   return{
     id: id,
