@@ -19,26 +19,24 @@ export class App {
   isLoggedIn = false;
   currentRoute = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {
-    // Subscribe to auth state changes
+  /**
+   * Initializes the app component, sets up authentication monitoring and route tracking.
+   * Redirects to home page if user is not logged in and tries to access protected routes.
+   * @param authService - Service for handling authentication
+   * @param router - Angular router for navigation
+   */
+  constructor(private authService: AuthService, private router: Router) {
     this.authService.user$.subscribe(user => {
       this.isLoggedIn = !!user;
-
-
       if (!this.isLoggedIn && this.currentRoute !== '' && this.currentRoute !== 'sign-up' &&
           this.currentRoute !== 'imprint' && this.currentRoute !== 'privacy') {
         this.router.navigate(['']);
       }
     });
-
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.currentRoute = event.url.substring(1); // Remove leading slash
+      this.currentRoute = event.url.substring(1);
     });
   }
 }
