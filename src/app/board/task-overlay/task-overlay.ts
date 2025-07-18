@@ -6,6 +6,7 @@ import { Firebase } from '../../Shared/firebase/firebase-services/firebase-servi
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { AddTask } from '../add-task/add-task';
 
+
 @Component({
   selector: 'app-task-overlay',
  imports: [CommonModule, ReactiveFormsModule, AddTask],
@@ -19,13 +20,6 @@ export class TaskOverlay{
   private firebase = inject(Firebase);
 
   @Input() taskToEdit?: TaskInterface;
-
-
-contactsList = [
-  { id: 'uid123', name: 'Heinz Müller', email: 'heinz@mail.de' },
-  { id: 'uid456', name: 'Miriam Peters', email: 'miriam@mail.de' },
-  { id: 'uid789', name: 'Harald Schmidt', email: 'harald@mail.de' },
-]; // Später dynamisch via Firestore
 
 form = this.fb.group({
   title: ['', Validators.required],

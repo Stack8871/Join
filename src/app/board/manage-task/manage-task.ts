@@ -7,20 +7,20 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { FormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
-import { TaskOverlay } from '../task-overlay/task-overlay';
-import { TaskDetailOverlay } from '../task-detail-overlay/task-detail-overlay';
+import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
+import { TaskOverlay } from '../task-overlay/task-overlay';
 
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskOverlay, TaskDetailOverlay],
+  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskOverlay, TaskDetail],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
 export class ManageTask implements OnInit {
-  private TaskService = inject(TaskService);
+  public TaskService = inject(TaskService);
   private filterService = inject(TaskFilterService);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
@@ -108,7 +108,7 @@ export class ManageTask implements OnInit {
       }
     }
   }
-  selectedtasks(letter: string, index: number) {
+  selectTask(index: number) {
     const task = this.tasks[index];
     if (!task) return;
     this.isSelected = true;
@@ -126,6 +126,7 @@ export class ManageTask implements OnInit {
       id: task.id
     };
   };
+  
     addNewTask() {
       this.TaskService.openOverlay(); // kein Parameter = "Add Mode"
     };

@@ -39,7 +39,7 @@
           </div>
           }
           @for (task of col.tasks; track task.id) {
-          <div class="card flex column" cdkDrag>
+          <div class="card flex column" cdkDrag (click)="selectTask(selectedTasksIndex ?? 0)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class=""><span class="category"> {{ task.category }}</span></div>
             <div class="task-title"><h4> {{ task.title }}</h4></div>
@@ -62,14 +62,11 @@
     </div>
     }
   </div>
+  <app-task-detail></app-task-detail>
     <ng-template #overlayTemplate>
     <div class="overlay">
-      <app-task-overlay></app-task-overlay>
-    </div>
-  </ng-template>
-  <ng-template #overlayTemplate>
-    <div class="overlay">
-      <app-task-detail-overlay></app-task-detail-overlay>
+      <app-task-overlay></app-task-overlay>      
+      
     </div>
   </ng-template>
 </div>
