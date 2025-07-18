@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -14,26 +14,20 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .spinner-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(255, 255, 255, 0.9);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      background: rgba(255,255,255,0.9);
       z-index: 9999;
       transition: opacity 0.3s ease-out;
     }
-
     .loading-text {
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 20px;
       color: #269af2;
     }
-
     .hidden {
       opacity: 0;
       pointer-events: none;
@@ -46,18 +40,13 @@ export class LoadingSpinner implements OnInit {
 
   constructor() {}
 
+  /**
+   * Hides the spinner when the app is ready.
+   * Uses load event and fallback timeout.
+   */
   ngOnInit(): void {
-    // Hide spinner when the application is fully loaded
-    window.addEventListener('load', () => {
-      // Add a small delay to ensure everything is rendered
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 500);
-    });
-
-    // Fallback: Hide spinner after a maximum time (5 seconds)
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 5000);
+    const hide = () => this.isLoading = false;
+    window.addEventListener('load', () => setTimeout(hide, 500));
+    setTimeout(hide, 5000);
   }
 }

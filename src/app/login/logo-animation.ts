@@ -1,50 +1,48 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class LogoAnimation {
   private logoElement: HTMLImageElement | null = null;
   private initialPosition = { top: 0, left: 0 };
   private finalPosition = { top: 0, left: 0 };
-  private animationInProgress = false;
-  private static animationHasPlayed = false;
 
+  private static hasPlayed = false;
+
+  private state: AnimationState = AnimationState.Idle;
+
+  /**
+   * Initializes the logo animation.
+   * @param onComplete Callback function after animation ends.
+   */
   public initAnimation(onComplete?: () => void): void {
-    // If animation has already played, call the callback and return
-    if (LogoAnimation.animationHasPlayed) {
-      if (onComplete) onComplete();
+    if (LogoAnimation.hasPlayed) {
+      onComplete?.();
       return;
     }
 
-    // Prevent multiple animations from running simultaneously
-    if (this.animationInProgress) {
-      return;
-    }
+    if (this.state !== AnimationState.Idle) return;
 
-    this.animationInProgress = true;
+    this.state = AnimationState.Running;
     this.logoElement = document.querySelector('.img-start') as HTMLImageElement;
 
     if (!this.logoElement) {
-      console.error('Logo element with class "img-start" not found');
-      this.animationInProgress = false;
-      LogoAnimation.animationHasPlayed = true; // Mark as played even if element not found
-      if (onComplete) onComplete();
+      console.error('Logo element not found');
+      this.resetState();
+      onComplete?.();
       return;
     }
 
     this.setPositions();
     this.applyInitialStyles();
-
-    // Force reflow
-    this.logoElement.offsetHeight;
-
+    this.logoElement.offsetHeight; // force reflow
     setTimeout(() => this.animateToFinalPosition(onComplete), 300);
   }
 
+  /**
+   * Calculates initial and final position of the logo.
+   */
   private setPositions(): void {
     const rect = this.logoElement!.getBoundingClientRect();
-
     this.finalPosition = { top: rect.top, left: rect.left };
     this.initialPosition = {
       top: (window.innerHeight - rect.height) / 2,
@@ -52,6 +50,9 @@ export class LogoAnimation {
     };
   }
 
+  /**
+   * Applies styles to position the logo at the center.
+   */
   private applyInitialStyles(): void {
     Object.assign(this.logoElement!.style, {
       position: 'fixed',
@@ -62,11 +63,14 @@ export class LogoAnimation {
     });
   }
 
+  /**
+   * Animates the logo to its final position.
+   * @param onComplete Callback function after animation ends.
+   */
   private animateToFinalPosition(onComplete?: () => void): void {
     if (!this.logoElement) {
-      this.animationInProgress = false;
-      LogoAnimation.animationHasPlayed = true; // Mark as played even if element not found
-      if (onComplete) onComplete();
+      this.resetState();
+      onComplete?.();
       return;
     }
 
@@ -78,8 +82,8 @@ export class LogoAnimation {
 
     this.logoElement.addEventListener('transitionend', () => {
       if (!this.logoElement) {
-        this.animationInProgress = false;
-        if (onComplete) onComplete();
+        this.resetState();
+        onComplete?.();
         return;
       }
 
@@ -91,10 +95,20 @@ export class LogoAnimation {
         transition: ''
       });
 
-      // Reset the animation flag, mark animation as played, and call the callback
-      this.animationInProgress = false;
-      LogoAnimation.animationHasPlayed = true;
-      if (onComplete) onComplete();
+      this.state = AnimationState.Completed;
+      LogoAnimation.hasPlayed = true;
+      onComplete?.();
     }, { once: true });
   }
+
+  private resetState(): void {
+    this.state = AnimationState.Completed;
+    LogoAnimation.hasPlayed = true;
+  }
+}
+
+enum AnimationState {
+  Idle = 'Idle',
+  Running = 'Running',
+  Completed = 'Completed'
 }
