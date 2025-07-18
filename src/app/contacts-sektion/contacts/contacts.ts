@@ -21,7 +21,7 @@ export class Contacts implements OnInit {
     contacts$!: Observable<ContactsInterface[]>;
     firebase = inject(Firebase);
     isEdited = false;
-    isSelected = false;
+    public isSelected = false;
     selectedContactsIndex: number | null = null;
     contactsId?: string ='';
     editedContacts ={

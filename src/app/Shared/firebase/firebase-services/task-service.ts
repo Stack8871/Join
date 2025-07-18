@@ -8,7 +8,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { TaskOverlay } from '../../../board/task-overlay/task-overlay';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { collectionData, Firestore, collection, doc } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, addDoc, updateDoc, deleteDoc, doc} from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 
 @Injectable({ providedIn: 'root' })
@@ -32,6 +32,26 @@ export class TaskService {
   getSingleTask(colId: string, docId: string){
     return doc(collection(this.firestore, colId), docId);
   }
+
+  async addTaskToDatabase(tasks:TaskInterface){
+    await addDoc(collection(this.firestore, 'tasks'), tasks)
+  }
+  async editTaskToDatabase(id: string, editedTasks: TaskInterface){
+  await updateDoc(doc(this.firestore, 'tasks', id),
+  {
+        title: editedTasks.title,
+        status:editedTasks.status,
+        description: editedTasks.description,
+        dueDate: editedTasks.dueDate,
+        priority: editedTasks.priority,
+        assignedTo: editedTasks.assignedTo,
+        category: editedTasks.category,
+        subtasks: editedTasks.subtasks,
+  });
+}
+  async deleteTaskFromDatabase(id: string){
+    await deleteDoc(doc(this.firestore, 'tasks', id) )
+  };
 
   openOverlay(taskToEdit?: TaskInterface) {
     const config = new OverlayConfig({

@@ -25,6 +25,7 @@ export class Firebase implements OnDestroy {
     } catch (error) {
       console.error('Error setting up Firestore listener:', error);
     }
+<<<<<<< Updated upstream
   }
 
   /**
@@ -69,6 +70,10 @@ export class Firebase implements OnDestroy {
    * @returns Observable of TaskInterface array
    */
   getTasks(): Observable<TaskInterface[]> {
+=======
+  };
+/*   getTasks(): Observable<TaskInterface[]> {
+>>>>>>> Stashed changes
     const tasksRef = collection(this.firestore, 'tasks');
     return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
   }
@@ -81,6 +86,7 @@ export class Firebase implements OnDestroy {
    */
   getSingleTask(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
+<<<<<<< Updated upstream
   }
 
   /**
@@ -88,6 +94,10 @@ export class Firebase implements OnDestroy {
    * @returns Observable of ContactsInterface array
    */
   getAlphabeticalContacts() {
+=======
+  } */
+    getAlphabeticalContacts() {
+>>>>>>> Stashed changes
     const contactsRef = collection(this.firestore, 'contacts');
     const sortedQuery = query(contactsRef, orderBy('name'));
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<ContactsInterface[]>;
