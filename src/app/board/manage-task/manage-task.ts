@@ -9,13 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
-import { TaskOverlay } from '../task-overlay/task-overlay';
-
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskOverlay, TaskDetail],
+  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskDetail],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
@@ -103,30 +101,22 @@ export class ManageTask implements OnInit {
         }
 
         task.status = newStatus;
-        2156
         this.firebase.editTaskToDatabase(task.id, task);
       }
     }
   }
-  selectTask(index: number) {
-    const task = this.tasks[index];
+  selectTask(task: TaskInterface) {
     if (!task) return;
     this.isSelected = true;
-    this.selectedTasksIndex = index;
+    this.selectedTask = { ...task };
     this.taskId = task.id;
-    this.selectedTask = {
-      status: task.status,
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate,
-      priority: task.priority,
-      assignedTo: task.assignedTo,
-      category: task.category,
-      subtasks: task.subtasks,
-      id: task.id
-    };
-  };
-  
+  }
+
+  closeOverlay() {
+    this.isSelected = false;
+    this.selectedTask = undefined;
+  }
+
     addNewTask() {
       this.TaskService.openOverlay(); // kein Parameter = "Add Mode"
     };

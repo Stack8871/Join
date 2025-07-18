@@ -1,25 +1,25 @@
 <div class="overlay-container">
   <div class="card-wrapper form-slide">
     <div class="card big-card">
-      <div class="close-btn">
+      <div class="close-btn" (click)="close.emit()">
         <span class="close-sign">X</span>
       </div>
       <div>
         <div class="">
-          <span class="category"> {{ selectedTask?.category }}</span>
+          <span class="category"> {{ selectedTask.category }}</span>
         </div>
         <div class="task-detail-title">
-          <h3> {{ selectedTask?.title }}</h3>
+          <h3> {{ selectedTask.title }}</h3>
         </div>
-        <div class="description">{{ selectedTask?.description }} </div>
+        <div class="description">{{ selectedTask.description }} </div>
         <div class="flex column small-gap">
           <div class="flex ai-center small-gap">
             <h4>due date:</h4>
-            <h5>{{ selectedTask?.dueDate }}</h5>
+            <h5>{{ selectedTask.dueDate }}</h5>
           </div>
           <div class="flex ai-center small-gap">
             <h4>Priority:</h4>
-            <h5>{{ selectedTask?.priority }}<span>
+            <h5>{{ selectedTask.priority }}<span>
                 <img src="/icons/prio-medium.svg" alt="">
               </span></h5>
           </div>
@@ -30,14 +30,14 @@
             <div class="flex column">
               <div class="flex assigned-to small-gap">
                 <div class="circle blue flex">pf</div>
-                <div>{{ selectedTask?.assignedTo }}</div>
+                <div>{{ selectedTask.assignedTo }}</div>
               </div>
             </div>
             <div class="flex column basic-gap subtask-container">
               <div class="flex basic-gap">
                 <h4>Subtasks:</h4>
               </div>
-              @for (subtask of selectedTask?.subtasks; track $index) {
+              @for (subtask of selectedTask.subtasks; track $index) {
                <div class="checkbox-container">
                   <input class="custom-checkbox" type="checkbox" name="Subtask1" id="st1">
                   <label for="Subtask1" class="label-for-checkbox">{{ selectedTask?.subtasks }}</label>
