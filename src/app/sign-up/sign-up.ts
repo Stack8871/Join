@@ -19,27 +19,25 @@ export class SignUp {
   privacyPolicyAccepted = false;
   errorMessage = '';
 
+  /** Initializes the SignUp component with required services */
   constructor(private authService: AuthService, private router: Router) {}
 
+  /** Handles user registration process after validating passwords match */
   signUp() {
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match.';
       return;
     }
-
     this.authService.register(this.email, this.password)
       .then(() => {
         console.log('User registered');
-        // Navigate to summary page after successful registration
         this.navigateAfterSignUp();
       })
-      .catch((err: Error) => {
-        this.errorMessage = err.message;
-      });
+      .catch((err: Error) => this.errorMessage = err.message);
   }
 
+  /** Navigates to the summary page after successful registration */
   navigateAfterSignUp() {
-    // Navigate to summary page after successful registration
     this.router.navigate(['/summary']);
   }
 }
