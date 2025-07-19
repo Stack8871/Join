@@ -34,6 +34,25 @@ export class TaskDetail implements OnInit {
     document.dispatchEvent(new CustomEvent('closeOverlay'));
   }
 
+  editTasks(task: TaskInterface | null) {
+    if (!task) return;
+    
+    // Event für Edit-Overlay senden
+    document.dispatchEvent(new CustomEvent('openEditOverlay', {
+      detail: { task: task }
+    }));
+    
+    // Task-Detail-Overlay schließen
+    this.close.emit();
+  }
+
+  promptDelete(taskId: string) {
+    if (confirm('Möchten Sie diese Aufgabe wirklich löschen?')) {
+      // Hier die Löschlogik implementieren
+      console.log('Task löschen:', taskId);
+    }
+  }
+
   trackByIndex(index: number) {
     return index;
   }

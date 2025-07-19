@@ -38,7 +38,7 @@ export class TaskService {
    * Retrieves contacts collection from Firestore
    * @returns Observable of contacts array
    */
-  getContactsRef = (): Observable<ContactsInterface[]> => {
+  getContactsRef(): Observable<ContactsInterface[]> {
     const contactsRef = collection(this.firestore, 'contacts');
     return collectionData(contactsRef, { idField: 'id' }) as Observable<ContactsInterface[]>;
   }
@@ -47,7 +47,7 @@ export class TaskService {
    * Retrieves tasks collection from Firestore
    * @returns Observable of tasks array
    */
-  getTasks = (): Observable<TaskInterface[]> => {
+  getTasks(): Observable<TaskInterface[]> {
     const tasksRef = collection(this.firestore, 'tasks');
     return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
   }
