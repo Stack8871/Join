@@ -6,6 +6,7 @@ import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
 import { collectionData, Firestore, collection, doc } from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
+import { UserInitialsServices } from '../../services/user-initials-services';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -13,7 +14,25 @@ export class TaskService {
   private overlay = inject(Overlay);
   firestore: Firestore = inject(Firestore);
 
-  constructor() {}
+  constructor(private userInitialsServices: UserInitialsServices) {}
+
+/**
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
+   */
+  getInitials(name: string): string {
+    return this.userInitialsServices.getInitials(name);
+  }
+
+  /**
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.userInitialsServices.getColor(name);
+  }
 
   /**
    * Retrieves contacts collection from Firestore
