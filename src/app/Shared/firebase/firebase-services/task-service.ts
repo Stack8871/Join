@@ -4,7 +4,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { TaskOverlay } from '../../../board/task-overlay/task-overlay';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { collectionData, Firestore, collection, doc } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, doc, deleteDoc } from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { UserInitialsServices } from '../../services/user-initials-services';
 
@@ -60,6 +60,21 @@ export class TaskService {
    */
   getSingleTask(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
+  }
+
+  /**
+   * Deletes a task from the database
+   * @param taskId The ID of the task to delete
+   */
+  async deleteTaskFromDatabase(taskId: string): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await deleteDoc(taskRef);
+      console.log('Task successfully deleted!');
+    } catch (error) {
+      console.error('Error deleting task: ', error);
+      throw error;
+    }
   }
 
   /**

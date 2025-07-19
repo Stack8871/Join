@@ -46,10 +46,41 @@ export class TaskDetail implements OnInit {
     this.close.emit();
   }
 
-  promptDelete(taskId: string) {
-    if (confirm('Möchten Sie diese Aufgabe wirklich löschen?')) {
-      // Hier die Löschlogik implementieren
-      console.log('Task löschen:', taskId);
+    showDeleteConfirm = false;
+    pendingDeleteId: string | null = null;
+
+    promptDelete(taskId: string) {
+      this.pendingDeleteId = taskId;
+      this.showDeleteConfirm = true;
+    }
+
+    cancelDelete() {
+      this.showDeleteConfirm = false;
+      this.pendingDeleteId = null;
+    }
+        confirmDelete() {
+      if (this.pendingDeleteId) {
+        this.deleteItem(this.pendingDeleteId);
+      }
+      this.showDeleteConfirm = false;
+      this.pendingDeleteId = null;
+    }
+
+    deleteItem(taskId: string) {
+      this.firebase.deleteTaskFromDatabase(taskId);
+    }
+
+
+  async deleteTask(taskId: string) {
+    try {
+      await this.taskService.deleteTaskFromDatabase(taskId);
+      // Task erfolgreich gelöscht - Overlay schließen
+      this.close.emit();
+      // Optional: Erfolgs-Nachricht anzeigen
+      console.log('Task erfolgreich gelöscht!');
+    } catch (error) {
+      console.error('Fehler beim Löschen der Task:', error);
+      alert('Fehler beim Löschen der Aufgabe. Bitte versuchen Sie es erneut.');
     }
   }
 

@@ -389,30 +389,3 @@ position: sticky;
     gap: $spacing-base;
   }
 }
-.iconsbefore{
-  display:flex;
-  gap:$spacing-xs;
-  height:$spacing-base;
-  &:hover{
-    color:$color-subtask-bar;
-  }
-}
-.subheadline {
-  position: relative;
-  display: inline-block;
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -8px; // Abstand zur Schrift
-    left: 0;
-    width: 25%;
-    border-bottom: 3px solid $color-subtask-bar;
-  }
-}
-.iconsbefore svg {
-  fill: $color-primary;  // Standardfarbe
-  transition: fill 0.3s;
-}
- .iconsbefore:hover svg {
-  fill: $color-subtask-bar;  // Hover-Farbe (rot als Beispiel)
-}
