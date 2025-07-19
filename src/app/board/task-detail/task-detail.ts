@@ -87,4 +87,32 @@ export class TaskDetail implements OnInit {
   trackByIndex(index: number) {
     return index;
   }
+
+  /**
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
+   */
+  getInitials(name: string): string {
+    return this.taskService.getInitials(name);
+  }
+
+  /**
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.taskService.getColor(name);
+  }
+
+  /**
+   * Findet den Namen eines Kontakts anhand der ID
+   * @param contactId - Die ID des Kontakts
+   * @returns Der Name des Kontakts oder leerer String
+   */
+  getContactName(contactId: string): string {
+    const contact = this.ContactsList.find(c => c.id === contactId);
+    return contact ? contact.name : '';
+  }
 }

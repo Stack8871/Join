@@ -142,3 +142,46 @@ cursor: pointer;
 .label-for-checkbox{
   margin-left:$spacing-xl;
 }
+
+// Contact initials styling for task detail
+.circle-initial {
+  margin-right: $spacing-sm;
+}
+
+.circle-user {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: $spacing-base;
+  flex-shrink: 0;
+  box-shadow: $card-shadow;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  border: 2px solid $color-white;
+}
+
+.contact-name {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: $color-primary;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+.small-gap {
+  gap: $spacing-sm;
+}
+
+.no-contacts,
+.no-subtasks {
+  color: $color-subtask-bar;
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  padding: $spacing-sm 0;
+}

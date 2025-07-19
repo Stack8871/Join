@@ -146,6 +146,59 @@ export class ManageTask implements OnInit, OnDestroy {
   selectedTask?: TaskInterface;
 
   /**
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
+   */
+  getInitials(name: string): string {
+    return this.TaskService.getInitials(name);
+  }
+
+  /**
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.TaskService.getColor(name);
+  }
+
+  /**
+   * Findet den Namen eines Kontakts anhand der ID
+   * @param contactId - Die ID des Kontakts
+   * @returns Der Name des Kontakts oder leerer String
+   */
+  getContactName(contactId: string): string {
+    const contact = this.firebase.ContactsList.find(c => c.id === contactId);
+    return contact ? contact.name : '';
+  }
+
+  /**
+   * Berechnet den Fortschritt der Subtasks als Prozent
+   * @param task - Das Task-Objekt
+   * @returns Prozentfortschritt (0-100)
+   */
+  getSubtaskProgress(task: TaskInterface): number {
+    if (!task.subtasks || task.subtasks.length === 0) {
+      return 100;
+    }
+    const completed = task.subtasks.filter(subtask => subtask.done).length;
+    return Math.round((completed / task.subtasks.length) * 100);
+  }
+
+  /**
+   * Zählt die abgeschlossenen Subtasks
+   * @param task - Das Task-Objekt
+   * @returns Anzahl der abgeschlossenen Subtasks
+   */
+  getCompletedSubtasks(task: TaskInterface): number {
+    if (!task.subtasks || task.subtasks.length === 0) {
+      return 0;
+    }
+    return task.subtasks.filter(subtask => subtask.done).length;
+  }
+
+  /**
    * Applies filter to columns based on search term
    * @param searchTerm The search term to filter by
    */

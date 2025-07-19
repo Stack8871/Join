@@ -44,17 +44,21 @@
             <div class=""><span class="category"> {{ task.category }}</span></div>
             <div class="task-title"><h4> {{ task.title }}</h4></div>
             <div class="description">{{ task.description }}</div>
-              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
-            <div class="flex subtask-progress">
-            <span>1/3</span>
-            </div>
-            <div class="flex">
-                <div class="flex">
-                    <div class="circle blue z-index-30">br</div>
-                    <div class="circle red z-index-40">sr</div>
-                    <div class="circle blue z-index-50">tm</div>
+            @if (task.subtasks && task.subtasks.length > 0) {
+              <mat-progress-bar mode="determinate" [value]="getSubtaskProgress(task)"></mat-progress-bar>
+              <div class="flex subtask-progress">
+                <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
               </div>
-              <div>{{ task.priority }}</div>
+            }
+            <div class="flex space-between align-center">
+                <div class="flex assigned-contacts">
+                    @for (contactId of task.assignedTo; track contactId) {
+                      <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
+                        {{ getInitials(getContactName(contactId)) }}
+                      </div>
+                    }
+              </div>
+              <div class="priority-indicator">{{ task.priority }}</div>
             </div>
           </div>
           }

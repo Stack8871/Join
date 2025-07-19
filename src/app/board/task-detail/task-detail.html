@@ -27,25 +27,35 @@
             <div class="">
               <h4>Assigned to</h4>
             </div>
-            <div class="flex column">
-              <div class="flex assigned-to small-gap">
-                <div class="circle-initial">
- <!--                  <div class="circle-user" [style.backgroundColor]="getColor(selectedContact.name)">
-                    {{ getInitials(selectedContact.name) }}
-                  </div> -->
-                </div>
-                <div>{{ selectedTask.assignedTo }}</div>
-              </div>
+            <div class="flex column small-gap">
+              @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
+                @for (contactId of selectedTask.assignedTo; track contactId) {
+                  <div class="flex assigned-to small-gap ai-center">
+                    <div class="circle-initial">
+                      <div class="circle-user" [style.backgroundColor]="getColor(getContactName(contactId))">
+                        {{ getInitials(getContactName(contactId)) }}
+                      </div>
+                    </div>
+                    <div class="contact-name">{{ getContactName(contactId) }}</div>
+                  </div>
+                }
+              } @else {
+                <div class="no-contacts">No contacts assigned</div>
+              }
             </div>
             <div class="flex column basic-gap subtask-container">
               <div class="flex basic-gap">
                 <h4>Subtasks:</h4>
               </div>
-              @for (subtask of selectedTask.subtasks; track $index) {
-               <div class="checkbox-container">
-                  <input class="custom-checkbox" type="checkbox" name="Subtask1" id="st1">
-                  <label for="Subtask1" class="label-for-checkbox">{{ selectedTask.subtasks }}</label>
-                </div> 
+              @if (selectedTask.subtasks && selectedTask.subtasks.length > 0) {
+                @for (subtask of selectedTask.subtasks; track $index) {
+                 <div class="checkbox-container">
+                    <input class="custom-checkbox" type="checkbox" [checked]="subtask.done" [id]="'subtask-' + $index">
+                    <label [for]="'subtask-' + $index" class="label-for-checkbox">{{ subtask.title }}</label>
+                  </div> 
+                }
+              } @else {
+                <div class="no-subtasks">No subtasks defined</div>
               }
             </div>
             <div class="edit-delete-section">
