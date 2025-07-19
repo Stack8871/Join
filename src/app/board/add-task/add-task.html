@@ -136,10 +136,29 @@
           <select class="minimal" formControlName="assignedTo" multiple required>
             @for (contact of ContactsList; track contact.id) {
               <option [value]="contact.id">
-                {{ contact.name }}
+                {{ getInitials(contact.name) }} - {{ contact.name }}
               </option>
             }
           </select>
+          
+          <!-- Anzeige der zugewiesenen Kontakte mit Initialen -->
+          @if (form.get('assignedTo')?.value && form.get('assignedTo')?.value.length > 0) {
+            <div class="assigned-contacts-display">
+              <label>Selected contacts:</label>
+              <div class="contacts-list">
+                @for (contactId of form.get('assignedTo')?.value; track contactId) {
+                  @if (getContactById(contactId); as contact) {
+                    <div class="">
+                      <div class="circle" [style.backgroundColor]="getColor(contact.name)">
+                        {{ getInitials(contact.name) }}
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+          
           @if (isFieldInvalid('assignedTo')) {
             <div class="validation-message">
               {{ getValidationMessage('assignedTo') }}

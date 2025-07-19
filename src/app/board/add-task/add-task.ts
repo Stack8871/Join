@@ -117,6 +117,33 @@ removeSubtask(index: number) {
     this.form.get('priority')?.setValue(priority);
   };
 
+  /**
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
+   */
+  getInitials(name: string): string {
+    return this.taskService.getInitials(name);
+  }
+
+  /**
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.taskService.getColor(name);
+  }
+
+  /**
+   * Findet einen Kontakt anhand der ID
+   * @param contactId - Die ID des Kontakts
+   * @returns Der Kontakt oder undefined
+   */
+  getContactById(contactId: string): ContactsInterface | undefined {
+    return this.ContactsList.find(contact => contact.id === contactId);
+  }
+
   async submit() {
     const value = this.form.getRawValue();
 
