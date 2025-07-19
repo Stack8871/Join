@@ -1,4 +1,4 @@
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy} from '@angular/core';
 import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop, CdkDragPlaceholder, moveItemInArray, transferArrayItem,} from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
@@ -17,7 +17,7 @@ import { TaskFilterService } from './task-filter';
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
-export class ManageTask implements OnInit {
+export class ManageTask implements OnInit, OnDestroy {
   public TaskService = inject(TaskService);
   private filterService = inject(TaskFilterService);
   tasks$!: Observable<TaskInterface[]>;
@@ -28,6 +28,7 @@ export class ManageTask implements OnInit {
   tasks: TaskInterface[] = [];
   searchTerm: string = '';
   filteredColumns: any[] = [];
+  private editOverlayListener?: (event: any) => void;
 
 
   columns = [
@@ -44,6 +45,19 @@ export class ManageTask implements OnInit {
       this.updateColumns();
       this.filteredColumns = [...this.columns];
     });
+
+    // Event-Listener für Edit-Overlay
+    this.editOverlayListener = (event: any) => {
+      this.selectedTask = event.detail.task;
+      this.editTask(event.detail.task);
+    };
+    document.addEventListener('openEditOverlay', this.editOverlayListener);
+  }
+
+  ngOnDestroy() {
+    if (this.editOverlayListener) {
+      document.removeEventListener('openEditOverlay', this.editOverlayListener);
+    }
   }
 
   updateColumns() {
