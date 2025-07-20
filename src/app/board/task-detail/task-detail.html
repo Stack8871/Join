@@ -19,9 +19,12 @@
           </div>
           <div class="flex small-gap">
             <h4>Priority:</h4>
-            <h5>{{ selectedTask.priority }}<span>
-                <img src="/icons/prio-medium.svg" alt="">
-              </span></h5>
+            <h5 class="priority-container">
+              {{ selectedTask.priority }}
+              <span class="priority-icon">
+                <img [src]="getPriorityIcon(selectedTask.priority)" [alt]="selectedTask.priority + ' priority'">
+              </span>
+            </h5>
           </div>
           <div class="flex column basic-gap">
             <div>

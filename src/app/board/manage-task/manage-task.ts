@@ -215,6 +215,24 @@ export class ManageTask implements OnInit, OnDestroy {
   }
 
   /**
+   * Bestimmt das Icon-Pfad für eine Priorität
+   * @param priority - Die Priorität der Task (Low, Medium, High)
+   * @returns Der Pfad zum entsprechenden Icon
+   */
+  getPriorityIcon(priority: string): string {
+    switch (priority.toLowerCase()) {
+      case 'low':
+        return '/icons/prio-low.svg';
+      case 'medium':
+        return '/icons/prio-medium.svg';
+      case 'high':
+        return '/icons/prio-high.svg';
+      default:
+        return '/icons/prio-medium.svg'; // Fallback
+    }
+  }
+
+  /**
    * Applies filter to columns based on search term
    * @param searchTerm The search term to filter by
    */

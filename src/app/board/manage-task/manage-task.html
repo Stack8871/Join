@@ -58,7 +58,10 @@
                       </div>
                     }
               </div>
-              <div class="priority-indicator">{{ task.priority }}</div>
+              <div class="priority-indicator">
+                <span>{{ task.priority }}</span>
+                <img [src]="getPriorityIcon(task.priority)" [alt]="task.priority + ' priority'" class="priority-icon-small">
+              </div>
             </div>
           </div>
           }

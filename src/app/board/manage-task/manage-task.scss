@@ -242,6 +242,15 @@ h4{
     font-size: 12px;
     font-weight: 500;
     color: $color-subtask-bar;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .priority-icon-small {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
   }
 
   .space-between {

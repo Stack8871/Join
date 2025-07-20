@@ -229,3 +229,22 @@ h5{
 .category-default {
   background-color: $color-primary;
 }
+
+// Priority styling with dynamic icons
+.priority-container {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.priority-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: $spacing-xs;
+}
+
+.priority-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
