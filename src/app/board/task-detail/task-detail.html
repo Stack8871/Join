@@ -13,24 +13,24 @@
         </div>
         <div class="description">{{ selectedTask.description }} </div>
         <div class="flex column small-gap">
-          <div class="flex ai-center small-gap">
+          <div class="flex small-gap">
             <h4>due date:</h4>
             <h5>{{ selectedTask.dueDate }}</h5>
           </div>
-          <div class="flex ai-center small-gap">
+          <div class="flex small-gap">
             <h4>Priority:</h4>
             <h5>{{ selectedTask.priority }}<span>
                 <img src="/icons/prio-medium.svg" alt="">
               </span></h5>
           </div>
           <div class="flex column basic-gap">
-            <div class="">
+            <div>
               <h4>Assigned to</h4>
             </div>
             <div class="flex column small-gap">
               @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
                 @for (contactId of selectedTask.assignedTo; track contactId) {
-                  <div class="flex assigned-to small-gap ai-center">
+                  <div class="flex assigned-to small-gap">
                     <div class="circle-initial">
                       <div class="circle-user" [style.backgroundColor]="getColor(getContactName(contactId))">
                         {{ getInitials(getContactName(contactId)) }}
@@ -50,8 +50,10 @@
               @if (selectedTask.subtasks && selectedTask.subtasks.length > 0) {
                 @for (subtask of selectedTask.subtasks; track $index) {
                  <div class="checkbox-container">
-                    <input class="custom-checkbox" type="checkbox" [checked]="subtask.done" [id]="'subtask-' + $index">
-                    <label [for]="'subtask-' + $index" class="label-for-checkbox">{{ subtask.title }}</label>
+                    <input class="custom-checkbox" type="checkbox" [checked]="subtask?.done || false" [id]="'subtask-' + $index">
+                    <label [for]="'subtask-' + $index" class="label-for-checkbox">
+                      {{ subtask?.title || 'Subtask ' + ($index + 1) }}
+                    </label>
                   </div> 
                 }
               } @else {

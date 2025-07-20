@@ -47,6 +47,7 @@ $color-bg-overlay: rgba(0, 0, 0, 0.5);
 
 // Textfarben
 $color-text-heading: $color-black;
+$color-text-primary: $color-black;
 $color-text-muted: $color-muted;
 $color-text-subtask: $color-medium-gray;
 
@@ -74,3 +75,4 @@ $color-icon-muted: $color-muted;
 // Linkfarben (z. B. E-Mail)
 $color-link: #007cee;
 $color-link-hover: #003f8a;
+$color-text-secondary: $color-subtask-bar;
