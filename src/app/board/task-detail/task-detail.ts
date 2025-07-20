@@ -115,4 +115,20 @@ export class TaskDetail implements OnInit {
     const contact = this.ContactsList.find(c => c.id === contactId);
     return contact ? contact.name : '';
   }
+
+  /**
+   * Bestimmt die CSS-Klasse für eine Kategorie
+   * @param category - Die Kategorie der Task
+   * @returns Die entsprechende CSS-Klasse
+   */
+  getCategoryClass(category: string): string {
+    switch (category.toLowerCase()) {
+      case 'user story':
+        return 'category-userstory';
+      case 'technical task':
+        return 'category-technical';
+      default:
+        return 'category-default';
+    }
+  }
 }

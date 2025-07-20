@@ -207,3 +207,25 @@ h5{
   font-size: var(--font-size-sm);
   padding: $spacing-sm 0;
 }
+
+// Category styling with dynamic colors
+.category {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: $color-white;
+  display: inline-block;
+}
+
+.category-userstory {
+  background-color: $color-badge-userstory;
+}
+
+.category-technical {
+  background-color: $color-badge-technical;
+}
+
+.category-default {
+  background-color: $color-primary;
+}

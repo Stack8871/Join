@@ -199,6 +199,22 @@ export class ManageTask implements OnInit, OnDestroy {
   }
 
   /**
+   * Bestimmt die CSS-Klasse für eine Kategorie
+   * @param category - Die Kategorie der Task
+   * @returns Die entsprechende CSS-Klasse
+   */
+  getCategoryClass(category: string): string {
+    switch (category.toLowerCase()) {
+      case 'user story':
+        return 'category-userstory';
+      case 'technical task':
+        return 'category-technical';
+      default:
+        return 'category-default';
+    }
+  }
+
+  /**
    * Applies filter to columns based on search term
    * @param searchTerm The search term to filter by
    */

@@ -63,21 +63,28 @@ h4{
 .category{
   border-radius: $card-radius;
   padding: $spacing-2xs;
-  background:$color-badge-userstory;
   font-size: var(--font-size-sm);
-  color:$color-lighter-gray;
+  color:$color-white;
+  font-weight: 500;
+}
+
+// Dynamic category colors
+.category-userstory {
+  background-color: $color-badge-userstory;
+}
+
+.category-technical {
+  background-color: $color-badge-technical;
+}
+
+.category-default {
+  background-color: $color-primary;
 }
 .user-story-clr{
     background:$color-badge-userstory;
 }
 .tecnical-clr{
     background:$color-medium-gray;
-}
-.blue{
-    background: $color-avatar-3;
-}
-.red{
-    background: $color-accent-urgent;
 }
 .position-absolute{
     position: absolute;

@@ -6,7 +6,7 @@
       </div>
       <div>
         <div class="">
-          <span class="category"> {{ selectedTask.category }}</span>
+          <span class="category" [ngClass]="getCategoryClass(selectedTask.category)"> {{ selectedTask.category }}</span>
         </div>
         <div class="task-detail-title">
           <h3> {{ selectedTask.title }}</h3>
