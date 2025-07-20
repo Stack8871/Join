@@ -225,8 +225,8 @@ export class ManageTask implements OnInit, OnDestroy {
         return '/icons/prio-low.svg';
       case 'medium':
         return '/icons/prio-medium.svg';
-      case 'high':
-        return '/icons/prio-high.svg';
+      case 'urgent':
+        return '/icons/prio-urgent.svg';
       default:
         return '/icons/prio-medium.svg'; // Fallback
     }
