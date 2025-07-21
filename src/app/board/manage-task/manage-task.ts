@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
+import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
+import { AddTask } from '../add-task/add-task';
 
 @Component({
   selector: 'app-manage-task',
@@ -20,6 +22,7 @@ import { TaskFilterService } from './task-filter';
 export class ManageTask implements OnInit, OnDestroy {
   public TaskService = inject(TaskService);
   private filterService = inject(TaskFilterService);
+  private taskOverlayService = inject(TaskOverlayService);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
@@ -132,11 +135,11 @@ export class ManageTask implements OnInit, OnDestroy {
   }
 
     addNewTask() {
-      this.TaskService.openOverlay(); // kein Parameter = "Add Mode"
+      this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
     };
 
     editTask(tasks: TaskInterface) {
-        this.TaskService.openOverlay(tasks); // übergibt Kontakt als `contactToEdit`
+        this.taskOverlayService.openOverlay(tasks); // übergibt Task als `taskToEdit`
       };
       deleteItem(taskId: string) {
         this.firebase.deleteTaskFromDatabase(taskId);

@@ -143,7 +143,7 @@ export class TaskDetail implements OnInit {
         return '/icons/prio-low.svg';
       case 'medium':
         return '/icons/prio-medium.svg';
-      case 'urgent':
+         case 'urgent':
         return '/icons/prio-urgent.svg';
       default:
         return '/icons/prio-medium.svg'; // Fallback
