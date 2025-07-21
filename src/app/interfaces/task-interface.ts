@@ -5,7 +5,7 @@ export interface TaskInterface {
   description: string;
   category: string;
   dueDate: string;
-  priority: 'Low' | 'Medium' | 'High';
+  priority: 'low' | 'medium' | 'urgent';
   assignedTo: string[];
   subtasks?: { title: string; done: boolean }[];
 }

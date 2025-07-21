@@ -45,7 +45,11 @@
                     </div>
                     </div>
                     <div class="urgent-content">
-                        <h5>Octorber 16, 2025</h5>
+                        @if (hasUpcomingTasks) {
+                            <h5>{{ nextDueDate }}</h5>
+                        } @else {
+                            <h5>No upcoming deadlines</h5>
+                        }
                         <span>upcoming deadline</span>
                     </div>
                 </div>
