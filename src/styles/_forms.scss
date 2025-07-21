@@ -4,11 +4,14 @@
 @use 'components' as *;
 .btn{
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: var(--font-size-base);
   border-color: transparent;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+.justify-space-between{
+justify-content: space-between;
 }
 
 .ghost-btn{
@@ -54,6 +57,7 @@
   max-width: 440px;
   gap: 1.25rem;
   display: flex;
+  cursor: pointer;
 
   button {
     border-radius: 0.5rem;
@@ -163,6 +167,9 @@
 .btn.delete {
   background: #e53935;
   color: $color-white;
+}
+.justify-end{
+  justify-content: flex-end;
 }
 
 .iconsbefore{

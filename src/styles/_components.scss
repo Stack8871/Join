@@ -26,7 +26,9 @@ $button-confirm-text: $color-white;
 
 $input-border: $color-border;
 $input-radius: 0.5rem;
-
+a:hover, button:hover{
+  cursor: pointer;
+}
 .overlay{
   position: fixed;
   top: 0;
@@ -45,6 +47,7 @@ $input-radius: 0.5rem;
   background: $color-bg-card;
   gap: $spacing-sm;
   margin:$spacing-sm 0;
+  max-width:35svw;
 }
 .small-card-padding{
   padding:$small-card-padding;

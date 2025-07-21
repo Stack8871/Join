@@ -34,7 +34,6 @@
     font-size: var(--font-size-2xl);
 }
 
-
 .task-detail-card{
     max-width: 550px;
     margin:0 $spacing-base;
@@ -156,8 +155,8 @@ h5{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none; 
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: url('/icons/checkbox.svg') no-repeat; 
   background-size: 20px;
   border: 1px solid transparent;
