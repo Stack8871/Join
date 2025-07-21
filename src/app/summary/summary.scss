@@ -13,14 +13,14 @@
 .row{
     flex-direction: row;
 }
-  .parent {
+.parent {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
     gap: 10px;
     padding: 10px;
     background: #eee;
-  }
+}
 .grid-col-span-2{
     grid-column:span 2;
 }
@@ -51,18 +51,14 @@
     }
 }
 .circle-primary-color{
- background: $color-primary;
-
+    background: $color-primary;
+    & svg{
+        fill: $color-gray;  // Standardfarbe
+        transition: fill 0.3s;
+    }
  &:hover{
     background: $color-white;
  }
-}
-.circle-primary-color svg {
-  fill: $color-gray;  // Standardfarbe
-  transition: fill 0.3s;
-}
-.circle-primary-color:hover svg {
-  fill: $color-white;  // Hover-Farbe (rot als Beispiel)
 }
 .circle-urgent-color{
  background: $color-accent-urgent;
@@ -77,6 +73,9 @@
     margin:$spacing-sm 0;
     &:hover{
         background: $color-primary;
+        & svg{
+            fill: $color-primary;
+        }
     }
 }
 .card-circle-content{
@@ -103,9 +102,6 @@
 .summery-card{
     gap: $spacing-3xl;
 }
- .card-circle-content:hover svg {
-  fill: $color-primary;  
-}
 .card-circle-content > *:hover{
     h4, h5{
         color:$color-white;
@@ -124,6 +120,9 @@
         font-size: var(--font-size-base);
     }
 }
+.circle-urgent-color svg {
+        fill: $color-white;  
+    }
 .overview-gap{
     gap:$spacing-2xl;
 }
