@@ -304,6 +304,7 @@ position: sticky;
 }
 .contacts-detail{
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   & h2{
     font-size: var(--font-size-xl);
@@ -360,24 +361,8 @@ position: sticky;
   color: $color-white;
   }
 }
-.button-group {
-  display: flex;
-  gap: $spacing-2xl;
-  top: $spacing-base;
-  color:$color-primary;
-  justify-content: center;
-
-  .mobile & {
-    justify-content: center;
-    gap: $spacing-lg;
-    display:none;
-  }
-}
 .contacts-information {
-  h3 {
-    bottom: 2.75rem;
-    font-weight: $font-weight-regular;
-  }
+
   top: 6rem;
   display: flex;
   flex-direction: column;
