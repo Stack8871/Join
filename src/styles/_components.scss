@@ -3,7 +3,8 @@
 @use 'typography' as *;
 @use 'mixins' as *;
 $card-radius: 0.625rem;
-$card-padding: 1rem;
+$small-card-padding: 1rem;
+$big-small-card-padding: 3rem;
 $card-shadow: 0 5px 6px rgba(0, 0, 0, 0.07);
 $header-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
 
@@ -39,11 +40,17 @@ $input-radius: 0.5rem;
 
 .card{
     border-radius: $card-radius;
-    padding: $card-padding;
+    padding: $small-card-padding;
     box-shadow: $card-shadow;
     background: $color-bg-card;
     gap: $spacing-sm;
     margin:$spacing-sm 0;
+}
+.small-card-padding{
+  padding:$small-card-padding;
+}
+.big-card-padding{
+  padding:$big-small-card-padding;
 }
 
 .section-overlay{
@@ -398,4 +405,9 @@ justify-content: center;
  .iconsbefore:hover svg {
   fill: $color-subtask-bar;  // Hover-Farbe (rot als Beispiel)
 }
-
+.flex{
+    display: flex;
+}
+.column{
+  flex-direction:column;
+}

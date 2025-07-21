@@ -4,7 +4,7 @@
       <div class="close-btn" (click)="close.emit()">
         <span class="close-sign">X</span>
       </div>
-      <div>
+      <div class="flex column basic-gap big-card-padding">
         <div class="">
           <span class="category" [ngClass]="getCategoryClass(selectedTask.category)"> {{ selectedTask.category }}</span>
         </div>

@@ -69,7 +69,9 @@
     </div>
     }
   </div>
-  @if (selectedTask) {
+  
+  @if (isSelected && selectedTask) {
     <div class="overlay">
-    <app-task-detail [selectedTask]="selectedTask" (close)="closeOverlay()"></app-task-detail>
-  </div>}
+      <app-task-detail [selectedTask]="selectedTask" (close)="closeOverlay()"></app-task-detail>
+    </div>
+  }
