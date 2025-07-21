@@ -180,3 +180,10 @@
     color:$color-subtask-bar;
   }
 }
+  .iconsbefore svg {
+    fill: $color-primary;  // Standardfarbe
+    transition: fill 0.3s;
+  }
+  .iconsbefore:hover svg {
+    fill: $color-subtask-bar;  // Hover-Farbe (rot als Beispiel)
+  }

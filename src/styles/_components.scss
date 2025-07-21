@@ -80,7 +80,8 @@ $input-radius: 0.5rem;
     width: 6rem;
     height: 6rem;
     border-radius: 50%;
-    color: #fff;
+    border: 3px solid $color-white;
+    color: $color-white;
     display: flex
 ;
     align-items: center;
@@ -103,11 +104,6 @@ $input-radius: 0.5rem;
     width: 24px;
     height: 24px;
   }
-}
-
-.content-container{
-  display:grid;
-  gap:7%;
 }
 
 .line-seperator {
@@ -260,13 +256,6 @@ $input-radius: 0.5rem;
     border-bottom: 3px solid $color-subtask-bar;
   }
 }
-  .iconsbefore svg {
-    fill: $color-primary;  // Standardfarbe
-    transition: fill 0.3s;
-  }
-  .iconsbefore:hover svg {
-    fill: $color-subtask-bar;  // Hover-Farbe (rot als Beispiel)
-  }
   .flex{
       display: flex;
   }
