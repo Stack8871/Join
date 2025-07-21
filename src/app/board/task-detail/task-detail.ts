@@ -149,4 +149,75 @@ export class TaskDetail implements OnInit {
         return '/icons/prio-medium.svg'; // Fallback
     }
   }
+
+  /**
+   * Schaltet den Status eines Subtasks um und aktualisiert die Datenbank
+   * @param subtaskIndex - Der Index des Subtasks im Array
+   */
+  async toggleSubtask(subtaskIndex: number) {
+    if (!this.selectedTask.subtasks || subtaskIndex < 0 || subtaskIndex >= this.selectedTask.subtasks.length) {
+      return;
+    }
+
+    // Sicherstellen, dass der Subtask ein Objekt ist
+    let subtask = this.selectedTask.subtasks[subtaskIndex];
+    
+    // Wenn der Subtask ein String ist, in ein Objekt umwandeln
+    if (typeof subtask === 'string') {
+      subtask = {
+        title: subtask,
+        done: false
+      };
+      this.selectedTask.subtasks[subtaskIndex] = subtask;
+    }
+
+    // Status des Subtasks umschalten
+    subtask.done = !subtask.done;
+
+    try {
+      // Task in der Datenbank aktualisieren
+      await this.firebase.editTaskToDatabase(this.selectedTask.id!, this.selectedTask);
+      console.log('Subtask status updated successfully');
+    } catch (error) {
+      // Bei Fehler den Status zurücksetzen
+      subtask.done = !subtask.done;
+      console.error('Error updating subtask status:', error);
+    }
+  }
+
+  /**
+   * Berechnet den Fortschritt der Subtasks in Prozent
+   * @returns Fortschritt zwischen 0 und 100
+   */
+  getSubtaskProgress(): number {
+    if (!this.selectedTask.subtasks || this.selectedTask.subtasks.length === 0) {
+      return 0;
+    }
+    
+    const completedSubtasks = this.selectedTask.subtasks.filter(subtask => {
+      // Handle both string and object formats
+      if (typeof subtask === 'string') {
+        return false; // Strings are considered not done
+      }
+      return subtask.done;
+    }).length;
+    
+    return (completedSubtasks / this.selectedTask.subtasks.length) * 100;
+  }
+
+  /**
+   * Gibt die Anzahl der erledigten Subtasks zurück
+   * @returns Anzahl der erledigten Subtasks
+   */
+  getCompletedSubtasks(): number {
+    if (!this.selectedTask.subtasks) return 0;
+    
+    return this.selectedTask.subtasks.filter(subtask => {
+      // Handle both string and object formats
+      if (typeof subtask === 'string') {
+        return false; // Strings are considered not done
+      }
+      return subtask.done;
+    }).length;
+  }
 }
