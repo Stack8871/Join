@@ -1,0 +1,64 @@
+// Utility Classes - Centralized to avoid duplication
+@use 'mixins' as *;
+
+// Flexbox utilities
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
+// Alignment utilities
+.space-between {
+  justify-content: space-between;
+}
+
+.center {
+  @include center;
+}
+
+.center-column {
+  @include center-column;
+}
+
+.center-row {
+  @include center-row;
+}
+
+// Grid utilities
+.grid-col-span-2 {
+  grid-column: span 2;
+}
+
+.grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2xs);
+}
+
+// Container utilities
+.container {
+  margin: var(--spacing-3xl);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1440px;
+padding: 4% 0 4% 4%;
+}
+
+// Hover utilities
+.hover-scale-btn:hover {
+  transform: scale(1.1, 1.1);
+  transform-origin: center;
+  transition: all 150ms ease-in-out;
+}

@@ -4,7 +4,7 @@
 @use 'mixins' as *;
 $card-radius: 0.625rem;
 $small-card-padding: 1rem;
-$big-small-card-padding: 3rem;
+$big-small-card-padding: 4.3%;
 $card-shadow: 0 5px 6px rgba(0, 0, 0, 0.07);
 $header-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
 
@@ -47,7 +47,6 @@ a:hover, button:hover{
   background: $color-bg-card;
   gap: $spacing-sm;
   margin:$spacing-sm 0;
-  max-width:35svw;
 }
 .small-card-padding{
   padding:$small-card-padding;
@@ -220,6 +219,7 @@ a:hover, button:hover{
   }
 }
 
+@media (max-width: 767px) {
   .ai-center{
     align-items: center;
   }
@@ -242,27 +242,23 @@ a:hover, button:hover{
   .search-container button{
     display:none;
   }
+}
+
 @media (width > 767px){
   .rounded-submenu {
     display:none;
   }
 
-.subheadline {
-  position: relative;
-  display: inline-block;
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -8px; // Abstand zur Schrift
-    left: 0;
-    width: 25%;
-    border-bottom: 3px solid $color-subtask-bar;
-  }
-}
-  .flex{
-      display: flex;
-  }
-  .column{
-    flex-direction:column;
+  .subheadline {
+    position: relative;
+    display: inline-block;
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -8px; // Abstand zur Schrift
+      left: 0;
+      width: 25%;
+      border-bottom: 3px solid $color-subtask-bar;
+    }
   }
 }

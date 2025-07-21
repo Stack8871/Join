@@ -1,27 +1,11 @@
 
 @use 'index' as *;
-.flex{
-  display: flex;
-}
-.column{
-  flex-direction: column;
-}
-.space-between{
-  justify-content:space-between;
-}
-.container{
-  margin:$spacing-3xl;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 1440px;
-}
+
+// Board-specific styles only
 .header-section{
-  display: flex;
-  justify-content: space-between;
+  @include space; // Using mixin instead of duplicating flex + space-between
   margin-bottom: $spacing-5xl;
   flex-wrap:wrap;
-  align-items: center;
 }
 .grid-board{
   display:grid;
@@ -103,7 +87,7 @@ h4{
     margin-left: -37px;
 }
 .search-container{
-    display: flex;
+    @include center-row-not-justify;
     gap:$spacing-base;
     align-items: end;
 }
@@ -119,8 +103,7 @@ h4{
    }
 }
 .input-search{
-  display: flex;
-  align-items: center;
+  @include center-row-not-justify;
 }
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -162,9 +145,7 @@ h4{
   color: $color-gray;
   background-color: rgba(0, 0, 0, 0.03);
   margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include center-column;
   min-height: 250px;
 }
 /*
@@ -195,12 +176,11 @@ h4{
     margin-right:$spacing-xs;
   }
   .edit-delete-section{
-    display: flex;
+    @include center;
     justify-content: flex-end;
   }
   .edit-delete{
-    display: flex;
-    align-items: center;
+    @include center-row-not-justify;
     height: 24px;
     margin: 0 $spacing-xs;
     gap: $spacing-2xs;
@@ -215,7 +195,7 @@ h4{
   // Contact initials styling for task cards
   .assigned-contacts {
     gap: 4px;
-    align-items: center;
+    @include center-row-not-justify;
   }
 
   .circle-initials {
@@ -223,9 +203,7 @@ h4{
     height: 32px;
     border-radius: 50%;
     color: $color-white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include center;
     font-weight: 600;
     font-size: 12px;
     flex-shrink: 0;
@@ -242,8 +220,7 @@ h4{
     font-size: 12px;
     font-weight: 500;
     color: $color-subtask-bar;
-    display: flex;
-    align-items: center;
+    @include center-row-not-justify;
     gap: 4px;
   }
 
@@ -253,10 +230,4 @@ h4{
     object-fit: contain;
   }
 
-  .space-between {
-    justify-content: space-between;
-  }
-
-  .align-center {
-    align-items: center;
-  }
+  // Utility classes are now in _utilities.scss
