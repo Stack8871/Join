@@ -275,7 +275,7 @@ select.minimal {
 }
 
 select.minimal:focus {
-  background-image:
+/*   background-image:
     linear-gradient(45deg, $color-primary 50%, transparent 50%),
     linear-gradient(135deg, transparent 50%, $color-primary 50%),
     linear-gradient(to right, $color-light-gray);
@@ -287,7 +287,7 @@ select.minimal:focus {
     5px 5px,
     5px 5px,
     1px 1.5em;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   border-color: $color-light-gray;
   outline: 0;
 }
@@ -295,7 +295,7 @@ select.minimal:focus {
 select.minimal[multiple] {
   height: 120px; /* Feste Höhe statt 100% */
   overflow-y: auto;
-  background-image: none; /* Entfernt den Dropdown-Pfeil bei Multiselect */
+  /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
   
   /* Scrollbar ausblenden für Webkit-Browser (Chrome, Safari, Edge) */
   &::-webkit-scrollbar {
