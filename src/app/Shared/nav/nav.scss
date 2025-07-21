@@ -6,7 +6,6 @@
   &.mobile {
     @include center-row;
     width: 100%;
-    padding:$spacing-xs;
   }
 }
 a.nav-item {
@@ -18,7 +17,7 @@ a.nav-item {
   color: $color-gray;
   transition: background-color 0.2s ease;
   &:hover {
-    background-color: $color-blue-dark;
+    background-color: $color-primary-dark;
     color:$color-white;
   }
   &.active {
@@ -31,8 +30,9 @@ a.nav-item {
     justify-content: center;
     align-items: center;
     margin-bottom: 0;
-    padding: $spacing-2xs;
+    padding: 1.2rem;
     font-size:0.5rem;
+    border-radius: $spacing-sm;
   }
 }
 .nav-item svg {

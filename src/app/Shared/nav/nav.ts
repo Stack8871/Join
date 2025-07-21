@@ -1,12 +1,12 @@
 import {Component, OnDestroy, signal, WritableSignal} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-nav',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './nav.html',
   styleUrl: './nav.scss'
 })
