@@ -1,4 +1,7 @@
 // Utility Classes - Centralized to avoid duplication
+@use 'variables' as *;
+@use 'spacing' as *;
+@use 'typography' as *;
 @use 'mixins' as *;
 
 // Flexbox utilities
@@ -62,3 +65,62 @@ padding: 4% 0 4% 4%;
   transform-origin: center;
   transition: all 150ms ease-in-out;
 }
+  .priority-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid $color-light-gray;
+    border-radius: 8px;
+    background-color: $color-white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: var(--font-size-base);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & span{
+      height:21px;
+    }
+    &.urgent {
+      & svg {
+        fill: $color-accent-urgent;
+      }
+      &.selected,
+      &:hover {
+        background-color: $color-accent-urgent;
+        color: $color-white;
+        border-color: $color-accent-urgent;
+        & svg {
+          fill: $color-white;
+        }
+      }
+    }
+    &.medium {
+      & svg {
+        fill: $color-accent-medium;
+      }
+      &.selected,
+      &:hover {
+        background-color: $color-accent-medium;
+        color: $color-white;
+        border-color: $color-accent-medium;
+        & svg {
+          fill: $color-white;
+        }
+      }
+    }
+    &.low {
+      & svg {
+        fill: $color-accent-low;
+      }
+      &.selected,
+      &:hover {
+        background-color: $color-accent-low;
+        color: $color-white;
+        border-color: $color-accent-low;
+        & svg {
+          fill: $color-white;
+        }
+      }
+    }
+  }
