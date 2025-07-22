@@ -2,7 +2,7 @@
   <div class="card-wrapper form-slide">
     <div class="card big-card">
       <div class="close-btn" (click)="close.emit()">
-        <span class="close-sign">X</span>
+         <span class="close-sign">X</span>
       </div>
       <div class="flex column basic-gap big-card-padding">
         <div class="">
@@ -12,7 +12,7 @@
           <h3> {{ selectedTask.title }}</h3>
         </div>
         <div class="description">{{ selectedTask.description }} </div>
-        <div class="flex column small-gap">
+        <div class="flex column small-gap margin-top">
           <div class="flex small-gap">
             <h4>due date:</h4>
             <h5>{{ selectedTask.dueDate }}</h5>
@@ -26,14 +26,14 @@
               </span>
             </h5>
           </div>
-          <div class="flex column basic-gap">
+          <div class="flex column basic-gap margin-top">
             <div>
               <h4>Assigned to</h4>
             </div>
             <div class="flex column small-gap">
               @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
                 @for (contactId of selectedTask.assignedTo; track contactId) {
-                  <div class="flex assigned-to small-gap">
+                  <div class="flex assigned-to">
                     <div class="circle-initial">
                       <div class="circle-user" [style.backgroundColor]="getColor(getContactName(contactId))">
                         {{ getInitials(getContactName(contactId)) }}
