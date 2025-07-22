@@ -38,6 +38,10 @@
   @include center-row;
 }
 
+.basic-gap{
+  gap:$spacing-base;
+}
+
 // Grid utilities
 .grid-col-span-2 {
   grid-column: span 2;

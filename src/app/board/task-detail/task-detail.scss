@@ -144,7 +144,6 @@ h5{
   position: relative; 
   box-sizing: border-box; 
   padding: 0 10px;
-  gap:$spacing-xs;
   border: 1px solid transparent;
   border-radius: 0;
   height: 30px;
@@ -175,17 +174,13 @@ h5{
 }
 
 .label-for-checkbox{
-  margin-left:$spacing-sm;
   cursor: pointer;
   font-size: var(--font-size-base);
   color: $color-text-primary;
 }
-
-// Contact initials styling for task detail
-.circle-initial {
-  margin-right: $spacing-sm;
+.custom-checkbox > input{
+  padding:0;
 }
-
 .circle-user {
   width: 42px;
   height: 42px;

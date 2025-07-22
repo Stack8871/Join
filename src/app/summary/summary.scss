@@ -66,6 +66,8 @@
 .urgent-circle, .urgent-content {
     min-width: 172px;
     text-align: center;
+    align-items: center;
+    gap:$spacing-2xs;
 }
 .urgent-content{
     display: flex;

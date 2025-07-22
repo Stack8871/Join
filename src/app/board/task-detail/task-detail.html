@@ -33,7 +33,7 @@
             <div class="flex column small-gap">
               @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
                 @for (contactId of selectedTask.assignedTo; track contactId) {
-                  <div class="flex assigned-to small-gap">
+                  <div class="flex assigned-to">
                     <div class="circle-initial">
                       <div class="circle-user" [style.backgroundColor]="getColor(getContactName(contactId))">
                         {{ getInitials(getContactName(contactId)) }}
