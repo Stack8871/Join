@@ -112,7 +112,7 @@
     &.mobile {
       display: none;
        }
-  }; 
+  };
   h2 {
     color: $color-white;
     font-size: var(--font-size-2xl);
@@ -134,6 +134,59 @@
   flex:1;
   width:100%;
 }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 1rem;
+
+    &.error {
+      input {
+        border-color: red;
+      }
+    }
+
+    .error-input {
+      border-color: red !important;
+    }
+
+    input {
+      padding-right: 35px; /* Add padding to make room for the icon on the right */
+    }
+
+    img {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+
+    .speech-bubble {
+      position: absolute;
+      color: white;
+      font-size: 0.8rem;
+      background-color: red;
+      padding: 10px 15px;
+      border-radius: 8px;
+      z-index: 10;
+      top: -5px;
+      left: 10px;
+      transform: translateY(-100%);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 15px;
+        border-width: 8px 8px 0;
+        border-style: solid;
+        border-color: red transparent transparent transparent;
+      }
+    }
+  }
 
   .right-content {
   position: relative;
@@ -194,4 +247,3 @@
     }
   }
 }
-
