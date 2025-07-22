@@ -41,7 +41,9 @@
 .basic-gap{
   gap:$spacing-base;
 }
-
+.small-padding{
+  padding: $spacing-xs $spacing-sm;
+}
 // Grid utilities
 .grid-col-span-2 {
   grid-column: span 2;
@@ -62,7 +64,9 @@
   max-width: 1440px;
 padding: 4% 0 4% 4%;
 }
-
+.margin-top{
+  margin-top: $spacing-base;
+}
 // Hover utilities
 .hover-scale-btn:hover {
   transform: scale(1.1, 1.1);

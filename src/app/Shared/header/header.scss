@@ -33,13 +33,18 @@
   }
   .circle-user{
     border: 2px $color-primary solid;
-    width: 35px;
-    height: 35px;
-    text-align: center;
+    width: 45px;
+    height: 45px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 2rem;
     color:$color-medium-gray;
     position: relative;
     cursor: pointer;
+    & span{
+      margin-top:-4px;
+    }
     &:hover{
       background:$color-lighter-gray;
     }

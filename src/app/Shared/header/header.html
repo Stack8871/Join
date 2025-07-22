@@ -9,7 +9,7 @@
            (mouseenter)="showDropdownMenu()" 
            ((click))="hideDropdownMenu()">
         @if (user) {
-          <a href="#" title="{{ user.email }}">
+          <a href="#" class="small-padding" title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
           </a>
         } @else {
@@ -48,7 +48,7 @@
            (mouseenter)="showDropdownMenu()" 
            (click)="hideDropdownMenu()">
         @if (user) {
-          <span href="#" title="{{ user.email }}">
+          <span href="#"  title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
           </span>
         } @else {
