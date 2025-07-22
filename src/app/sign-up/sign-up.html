@@ -15,7 +15,7 @@
             <div class="card big-card">
                 <h1 class="margin-bottom subline">Sign up</h1>
               <form class="flex form-container" (ngSubmit)="signUp()" #signupForm="ngForm">
-                <div class="input-group">
+                <div class="input-group justify-end">
                   <input
                     type="text"
                     placeholder="Name"
@@ -26,7 +26,7 @@
                     #nameInput="ngModel"
                     [class.invalid-input]="nameInput.invalid && (nameInput.dirty || nameInput.touched)"
                   />
-                  <img src="/icons/person.svg" alt="person" />
+                  <img src="icons/person.svg" alt="person" />
                 </div>
                 @if (nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
                   <div class="validation-message">
@@ -39,7 +39,7 @@
                   </div>
                 }
 
-                <div class="input-group">
+                <div class="input-group justify-end">
                   <input
                     type="email"
                     placeholder="Enter your Email"
@@ -50,7 +50,7 @@
                     #emailInput="ngModel"
                     [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
                   />
-                  <img src="/icons/person.svg" alt="person" />
+                  <img src="icons/mail.svg" alt="person" />
                 </div>
                 @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
                   <div class="validation-message">
@@ -63,7 +63,7 @@
                   </div>
                 }
 
-                <div class="input-group">
+                <div class="input-group justify-end">
                   <input
                     type="password"
                     placeholder="Enter your Password"
@@ -74,7 +74,7 @@
                     #passwordInput="ngModel"
                     [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
                   />
-                  <img src="/icons/person.svg" alt="person" />
+                  <img src="icons/lock.svg" alt="person" />
                 </div>
                 @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
                   <div class="validation-message">
@@ -87,7 +87,7 @@
                   </div>
                 }
 
-                <div class="input-group">
+                <div class="input-group justify-end">
                   <input
                     type="password"
                     placeholder="Confirm your Password"
@@ -97,7 +97,7 @@
                     #confirmPasswordInput="ngModel"
                     [class.invalid-input]="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)"
                   />
-                  <img src="/icons/person.svg" alt="person" />
+                  <img src="icons/lock.svg" alt="person" />
                 </div>
                 @if ((confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)) {
                   <div class="validation-message">

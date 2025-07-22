@@ -17,7 +17,7 @@
         <h1 class="margin-bottom subline">Login</h1>
 
         <form class="flex form-container" (ngSubmit)="login()" #loginForm="ngForm">
-          <div class="input-group">
+          <div class="input-group justify-end">
             <input
               type="email"
               placeholder="E-Mail"
@@ -28,14 +28,14 @@
               #emailInput="ngModel"
               [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
             />
-            <img src="/icons/mail.svg" alt="person" />
+            <img src="icons/mail.svg" alt="person" />
           </div>
           <div class="validation-message" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
             <span *ngIf="emailInput.errors?.['required']">Email is required.</span>
             <span *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</span>
           </div>
 
-          <div class="input-group">
+          <div class="input-group justify-end">
             <input
               type="password"
               placeholder="Enter your Password"
@@ -45,7 +45,7 @@
               #passwordInput="ngModel"
               [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
             />
-            <img src="/icons/lock.svg" alt="person" />
+            <img src="icons/lock.svg" alt="person" />
           </div>
           <div class="validation-message" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
             <span *ngIf="passwordInput.errors?.['required']">Password is required.</span>

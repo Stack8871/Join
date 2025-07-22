@@ -5,6 +5,7 @@ body{
     font-family: $font-family-base;
     font-weight: 400;
     background:$color-lighter-gray;
+    text-wrap: balance;
 }
 a:hover{
       cursor: pointer;
