@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { collectionData, Firestore, collection, doc, deleteDoc } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, doc, deleteDoc, query, where, orderBy } from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { UserInitialsServices } from '../../services/user-initials-services';
 
@@ -45,6 +45,16 @@ export class TaskService {
   getTasks(): Observable<TaskInterface[]> {
     const tasksRef = collection(this.firestore, 'tasks');
     return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
+  }
+
+  /**
+   * Retrieves urgent tasks sorted by due date
+   * @returns Observable of urgent tasks array sorted by due date
+   */
+  getUrgentTasksByDueDate(): Observable<TaskInterface[]> {
+    const tasksRef = collection(this.firestore, 'tasks');
+    const urgentTasksQuery = query(tasksRef, where('priority', '==', 'urgent'), orderBy('dueDate', 'asc'));
+    return collectionData(urgentTasksQuery, { idField: 'id' }) as Observable<TaskInterface[]>;
   }
 
   /**

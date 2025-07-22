@@ -7,6 +7,7 @@ import { OverlayService } from '../../Shared/firebase/firebase-services/overlay-
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { FormsModule } from '@angular/forms';
 import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
+import { AuthService } from '../../Shared/firebase/firebase-services/auth.service';
 
 @Component({
   selector: 'app-contacts',
@@ -17,6 +18,7 @@ import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
 
 export class Contacts implements OnInit {
    private overlayService = inject(OverlayService);
+   private authService = inject(AuthService);
 
     contacts$!: Observable<ContactsInterface[]>;
     firebase = inject(Firebase);
@@ -24,6 +26,7 @@ export class Contacts implements OnInit {
     public isSelected = false;
     selectedContactsIndex: number | null = null;
     contactsId?: string ='';
+    currentUserEmail: string | null = null;
     editedContacts ={
       name:'',
       email:'',
@@ -44,7 +47,16 @@ export class Contacts implements OnInit {
     };
 
     editContact(contact: ContactsInterface) {
-        this.overlayService.openOverlay(contact); // übergibt Kontakt als `contactToEdit`
+        // Ensure isLoggedInUser is set correctly based on current user's email
+        const isCurrentUser = this.currentUserEmail ? contact.email === this.currentUserEmail : false;
+
+        // Create a copy of the contact with the correct isLoggedInUser flag
+        const contactToEdit = {
+          ...contact,
+          isLoggedInUser: isCurrentUser
+        };
+
+        this.overlayService.openOverlay(contactToEdit); // übergibt Kontakt als `contactToEdit`
       };
       deleteItem(contactId: string) {
         this.firebase.deleteContactsFromDatabase(contactId);
@@ -56,12 +68,16 @@ export class Contacts implements OnInit {
       this.isSelected = true;
       this.selectedContactsIndex = index;
       this.contactsId = contact.id;
+
+      // Ensure isLoggedInUser is set correctly based on current user's email
+      const isCurrentUser = this.currentUserEmail ? contact.email === this.currentUserEmail : false;
+
       this.selectedContact = {
         id: contact.id,
         name: contact.name,
         email: contact.email,
         phone: contact.phone ??'',
-        isLoggedInUser: contact.isLoggedInUser || false,
+        isLoggedInUser: isCurrentUser,
       };
     };
 
@@ -109,13 +125,31 @@ export class Contacts implements OnInit {
 
     ngOnInit(): void {
       this.contacts$ = this.contactService.getAlphabeticalContacts();
-      this.contacts$.subscribe((contacts) => {
-        this.groupedContacts = this.groupContactsByFirstLetter(contacts);
+
+      // Subscribe to auth service to get current user
+      this.authService.user$.subscribe(user => {
+        this.currentUserEmail = user ? user.email : null;
+
+        // Re-fetch contacts when user changes
+        this.updateContacts();
       });
+
       document.addEventListener('closeOverlay', () => {
-      this.overlayService.close();
+        this.overlayService.close();
       });
     };
+
+    updateContacts(): void {
+      this.contacts$.subscribe((contacts) => {
+        // Mark the contact that matches the current user's email
+        const updatedContacts = contacts.map(contact => ({
+          ...contact,
+          isLoggedInUser: this.currentUserEmail ? contact.email === this.currentUserEmail : false
+        }));
+
+        this.groupedContacts = this.groupContactsByFirstLetter(updatedContacts);
+      });
+    }
 
     private groupContactsByFirstLetter(contacts: ContactsInterface[]): { [letter: string]: ContactsInterface[] } {
       const grouped: { [letter: string]: ContactsInterface[] } = {};
