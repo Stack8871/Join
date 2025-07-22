@@ -60,20 +60,20 @@
                     {{ getCompletedSubtasks() }}/{{ selectedTask.subtasks.length }} Subtasks completed
                   </div>
                 </div>
-                
+
                 <!-- Subtask-Liste -->
                 @for (subtask of selectedTask.subtasks; track $index) {
                  <div class="checkbox-container">
-                    <input 
-                      class="custom-checkbox" 
-                      type="checkbox" 
-                      [checked]="(typeof subtask === 'string') ? false : (subtask?.done || false)" 
+                    <input
+                      class="custom-checkbox"
+                      type="checkbox"
+                      [checked]="(typeof subtask === 'string') ? false : (subtask?.done || false)"
                       [id]="'subtask-' + $index"
                       (change)="toggleSubtask($index)">
                     <label [for]="'subtask-' + $index" class="label-for-checkbox">
                       {{ (typeof subtask === 'string') ? subtask : (subtask?.title || 'Subtask ' + ($index + 1)) }}
                     </label>
-                  </div> 
+                  </div>
                 }
               } @else {
                 <div class="no-subtasks">No subtasks defined</div>

@@ -31,6 +31,7 @@ export class Firebase implements OnDestroy {
                 name: data['name'],
                 email: data['email'],
                 phone: data['phone'],
+                isLoggedInUser: data['isLoggedInUser'] || false,
             });
           });
 
@@ -65,6 +66,7 @@ export class Firebase implements OnDestroy {
         name: editedContacts.name,
         email: editedContacts.email,
         phone: editedContacts.phone,
+        isLoggedInUser: editedContacts.isLoggedInUser || false,
     });
   }
 
@@ -78,7 +80,7 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
     name: obj.name,
     email: obj.email,
     phone: obj.phone,
-
+    isLoggedInUser: obj.isLoggedInUser || false,
   };
 }
   async addTaskToDatabase(tasks:TaskInterface){
@@ -107,4 +109,3 @@ setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
     }
   }
 }
-
