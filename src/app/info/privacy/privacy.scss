@@ -1,9 +1,9 @@
-@use '../../../styles/variables' as *;
-@use '../../../styles/mixins' as *;
-@use '../../../styles/typography' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'typography' as *;
 
 .privacy-container {
-  max-width: 800px;
+  max-width: 80svw;
   margin: 0 0 0 2rem;
   padding: 2rem;
   color: $color-text-heading;
@@ -33,7 +33,7 @@
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     color: $color-primary;
-    font-weight: $font-weight-regular;
+
 
     @media (max-width: $breakpoint-md) {
       margin-top: 2rem;
@@ -46,7 +46,7 @@
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     color: $color-primary;
-    font-weight: $font-weight-regular;
+ 
 
     @media (max-width: $breakpoint-md) {
       margin-top: 1.25rem;

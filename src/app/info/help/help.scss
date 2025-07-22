@@ -1,9 +1,9 @@
-@use '../../../styles/variables' as *;
-@use '../../../styles/mixins' as *;
-@use '../../../styles/typography' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'typography' as *;
 
 .help-container {
-  max-width: 800px;
+  max-width: 80svw;
   margin: 0 0 0 2rem;
   padding: 2rem;
   color: $color-text-heading;
