@@ -7,7 +7,7 @@
       </div>
       <div class="circle-user" 
            (mouseenter)="showDropdownMenu()" 
-           ((click))="hideDropdownMenu()">
+           (mouseleave)="hideDropdownMenu()">
         @if (user) {
           <a href="#" class="small-padding" title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
@@ -59,7 +59,7 @@
         @if (showDropdown) {
           <div class="dropdown-menu" 
                (mouseenter)="showDropdownMenu()" 
-               (click)="hideDropdownMenu()"
+               (mouseleave)="hideDropdownMenu()"
                (click)="$event.stopPropagation()">
             <a class="dropdown-item" routerLink="/imprint" (click)="closeDropdown()">
               <span>Imprint</span>
