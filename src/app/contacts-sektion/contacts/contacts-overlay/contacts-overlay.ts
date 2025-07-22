@@ -4,6 +4,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ContactsInterface} from '../../../interfaces/contacts-interface';
 import {Firebase} from '../../../Shared/firebase/firebase-services/firebase-services';
 import {SuccessServices} from '../../../Shared/firebase/firebase-services/success-services';
+import {OverlayService} from '../../../Shared/firebase/firebase-services/overlay-services';
 
 @Component({
   standalone: true,
@@ -16,13 +17,17 @@ export class ContactsOverlay implements OnInit {
   private success = inject(SuccessServices);
   private fb = inject(FormBuilder);
   private firebase = inject(Firebase);
+  private overlayService = inject(OverlayService);
   @Input() contactToEdit?: ContactsInterface;
 
   form = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['']
+    phone: ['', Validators.required]
   });
+
+  // Flag to show phone validation error
+  showPhoneValidationError = false;
 
   /** Checks if form is in edit mode. */
   get isEditMode(): boolean {
@@ -37,6 +42,12 @@ export class ContactsOverlay implements OnInit {
         email: this.contactToEdit.email,
         phone: this.contactToEdit.phone
       });
+
+      // If phone is empty and showPhoneValidationError is true, mark the phone field as touched
+      // to trigger validation error display
+      if (this.showPhoneValidationError && !this.contactToEdit.phone) {
+        this.form.get('phone')?.markAsTouched();
+      }
     }
   }
 
@@ -53,11 +64,14 @@ export class ContactsOverlay implements OnInit {
       await this.firebase.addContactsToDatabase(value as ContactsInterface);
       this.success.show('Contact added');
     }
-    document.dispatchEvent(new CustomEvent('closeOverlay'));
+
+    // Close the overlay directly using the service
+    this.overlayService.close();
   }
 
   /** Cancels editing and closes the overlay. */
   cancel() {
-    document.dispatchEvent(new CustomEvent('closeOverlay'));
+    // Close the overlay directly using the service
+    this.overlayService.close();
   }
 }
