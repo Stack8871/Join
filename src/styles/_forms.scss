@@ -2,6 +2,51 @@
 @use 'spacing' as *;
 @use 'typography' as *;
 @use 'components' as *;
+
+.form-content{
+  display:flex;
+flex-wrap: wrap;  
+  gap:1rem;
+}
+.flex-required{
+margin-top:$spacing-base;
+}
+.priority{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+  margin-bottom:$spacing-base;
+  
+
+  label {
+    font-size: var(--font-size-base);
+    color: $color-text-heading;
+    width: 100%;
+    margin-bottom:$spacing-xs;
+  }
+  .validation-message {
+    color: #ff0000;
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+  }
+}
+.input-group {
+  display: block;
+  & label {
+    display: block;
+  }
+  &select{
+    display: block;
+    width:400px;
+  }
+}
+
 .btn{
   border-radius: 0.5rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
@@ -32,7 +77,6 @@ justify-content: space-between;
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
       @media (width < 720px){
         height:3rem;
       }
@@ -116,17 +160,14 @@ justify-content: space-between;
     border: 1px solid $color-light-gray;
     border-radius: $spacing-2xs;
     font-size: var(--font-size-base);
-
     &:focus {
       outline: none;
       border-color: $color-subtask-bar;
     }
-
     &.valid-field {
       border-color: #4CAF50;
       background-color: rgba(76, 175, 80, 0.05);
     }
-
     &.invalid-field {
       border-color: $color-accent-urgent;
       background-color: rgba(244, 67, 54, 0.05);
@@ -142,7 +183,6 @@ justify-content: space-between;
     .search-container button{
   display:flex;
 }
-
 .delete-confirm-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -151,7 +191,6 @@ justify-content: space-between;
   display: flex; align-items: center; justify-content: center;
   z-index: 1000;
 }
-
 .delete-dialog {
   background: $color-primary;
   padding: 2rem;
@@ -311,4 +350,33 @@ justify-content: space-between;
   color: $color-primary;
   font-weight: bold;
   font-size: 16px;
+}
+.priority-icon {
+  margin-left:$spacing-sm;
+  padding-top:2px;
+}
+.button-group {
+  margin-top: $spacing-base;
+
+  .submit-btn {
+    padding: 12px 24px;
+    background-color: $color-primary;
+    color: $color-white;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $color-subtask-bar;
+      box-shadow: $card-shadow;
+    }
+  }
+}
+.horizontal-line{
+  border-right: 1px solid $color-light-gray;
+  @media (width < 780px){
+    display:none;
+  }
 }

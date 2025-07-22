@@ -17,11 +17,13 @@
  flex-direction: column;
   gap:$spacing-sm;
   padding-right:3%;
+  flex:1;
 }
 .right-side{
  display:flex;
  flex-direction: column;
   padding-left:3%;
+  flex:1;
 
 }
 
@@ -96,16 +98,13 @@ img {
   height: 20px;
   cursor: pointer;
 }
-.priority-buttons {
-  display: flex;
-  gap: 1rem;
-  max-width: 440px;
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
+.task-container{
+  width: 65svw;
+  padding: 5%;
 }
-
+  .task-heading{
+    padding-bottom:3%;
+  }
 .priority-icon {
   margin-left:$spacing-sm;
   padding-top:2px;
@@ -310,4 +309,7 @@ select:-moz-focusring {
 }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
+  @media (width < 769px) {
+    display:none;
+  }
 }

@@ -12,53 +12,12 @@
     }
   }
 }
-.left-side{
- display:flex;
- flex-direction: column;
-  gap:$spacing-sm;
-  padding-right:3%;
-}
-.right-side{
- display:flex;
- flex-direction: column;
-  padding-left:3%;
-
-}
 
 .vertical-divider {
   width: 1px;
   background-color: $color-light-gray;
   @media (max-width: 768px) {
   display:none;
-  }
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  max-width: 440px;
-  margin-bottom:$spacing-base;
-  
-
-  label {
-    font-size: var(--font-size-base);
-    color: $color-text-heading;
-    width: 100%;
-    margin-bottom:$spacing-xs;
-  }
-  .validation-message {
-    color: #ff0000;
-    font-size: var(--font-size-sm);
-    margin-top: 4px;
-  }
-}
-.input-group {
-  display: block;
-  & label {
-    display: block;
-  }
-  &select{
-    display: block;
-    width:400px;
   }
 }
 .date-input {
@@ -95,39 +54,6 @@ img {
   width: 20px;
   height: 20px;
   cursor: pointer;
-}
-.priority-buttons {
-  display: flex;
-  gap: 1rem;
-  max-width: 440px;
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
-}
-
-.priority-icon {
-  margin-left:$spacing-sm;
-  padding-top:2px;
-}
-.button-group {
-  margin-top: $spacing-base;
-
-  .submit-btn {
-    padding: 12px 24px;
-    background-color: $color-primary;
-    color: $color-white;
-    border: none;
-    border-radius: 8px;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $color-subtask-bar;
-      box-shadow: $card-shadow;
-    }
-  }
 }
 .subtasks{
   border: 1px solid $color-light-gray;
@@ -307,7 +233,4 @@ select:-moz-focusring {
       }
     }
   }
-}
-.horizontal-line{
-  border-right: 1px solid $color-light-gray;
 }

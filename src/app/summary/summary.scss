@@ -64,7 +64,7 @@
     }
 }
 .urgent-circle, .urgent-content {
-    min-width: 172px;
+    min-width: 122px;
     text-align: center;
     align-items: center;
     gap:$spacing-2xs;
@@ -86,8 +86,7 @@
 }
 .tasks-overview{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-columns: 50% 50%;
     gap: $spacing-sm;
     padding: $spacing-2xs;
     max-width: 400px;
@@ -113,11 +112,12 @@
 .summary-header {
   display: flex;
   flex-wrap: wrap;
-  width:auto;
+  width:300px;
   align-items: center;
     margin-bottom: $spacing-3xl;
     height:60px;
 }
+
 .greeting {
   font-size: 1.5rem;
   color: #2c3e50;
