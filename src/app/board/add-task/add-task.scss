@@ -48,13 +48,14 @@ form {
 .left-side{
  display:flex;
  flex-direction: column;
-  flex:1;
   gap:$spacing-sm;
+  padding-right:3%;
 }
 .right-side{
  display:flex;
  flex-direction: column;
-  flex:1;
+  padding-left:3%;
+
 }
 
 .vertical-divider {
@@ -275,19 +276,6 @@ select.minimal {
 }
 
 select.minimal:focus {
-/*   background-image:
-    linear-gradient(45deg, $color-primary 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, $color-primary 50%),
-    linear-gradient(to right, $color-light-gray);
-  background-position:
-    calc(100% - 15px) 1em,
-    calc(100% - 20px) 1em,
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-  background-repeat: no-repeat; */
   border-color: $color-light-gray;
   outline: 0;
 }
@@ -382,4 +370,7 @@ select:-moz-focusring {
       }
     }
   }
+}
+.horizontal-line{
+  border-right: 1px solid $color-light-gray;
 }

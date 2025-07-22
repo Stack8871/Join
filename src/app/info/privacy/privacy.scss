@@ -29,11 +29,11 @@
   }
 
   h2 {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-md);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     color: $color-primary;
-    font-weight: $font-weight-semi;
+    font-weight: $font-weight-regular;
 
     @media (max-width: $breakpoint-md) {
       margin-top: 2rem;
@@ -42,11 +42,11 @@
   }
 
   h3 {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     color: $color-primary;
-    font-weight: $font-weight-semi;
+    font-weight: $font-weight-regular;
 
     @media (max-width: $breakpoint-md) {
       margin-top: 1.25rem;
@@ -68,7 +68,7 @@
   margin-bottom: 2rem;
 
   p {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
   }
 
   @media (max-width: $breakpoint-md) {
@@ -114,7 +114,7 @@
   }
 
   p:last-child {
-    font-weight: $font-weight-semi;
+    font-weight: $font-weight-regular;
     margin-top: 1.5rem;
   }
 }

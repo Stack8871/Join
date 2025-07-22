@@ -2,11 +2,11 @@ import { Component, signal, OnDestroy } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { Nav } from '../nav/nav';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-section-sidebar',
-  imports: [Nav, RouterLink],
+  imports: [Nav, RouterLink, RouterLinkActive],
   templateUrl: './section-sidebar.html',
   styleUrl: './section-sidebar.scss'
 })

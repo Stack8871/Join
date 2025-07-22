@@ -7,7 +7,7 @@
       </div>
       <div class="circle-user" 
            (mouseenter)="showDropdownMenu()" 
-           (mouseleave)="hideDropdownMenu()">
+           ((click))="hideDropdownMenu()">
         @if (user) {
           <a href="#" title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
@@ -46,24 +46,21 @@
       </div>
       <div class="circle-user" 
            (mouseenter)="showDropdownMenu()" 
-           (mouseleave)="hideDropdownMenu()">
+           (click)="hideDropdownMenu()">
         @if (user) {
-          <a href="#" title="{{ user.email }}">
+          <span href="#" title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
-          </a>
+          </span>
         } @else {
-          <a href="#">sr</a>
+          <span>sr</span>
         }
         
         <!-- Dropdown Menu -->
         @if (showDropdown) {
           <div class="dropdown-menu" 
                (mouseenter)="showDropdownMenu()" 
-               (mouseleave)="hideDropdownMenu()"
+               (click)="hideDropdownMenu()"
                (click)="$event.stopPropagation()">
-            <a class="dropdown-item" routerLink="/help" (click)="closeDropdown()">
-              <span>Help</span>
-            </a>
             <a class="dropdown-item" routerLink="/imprint" (click)="closeDropdown()">
               <span>Imprint</span>
             </a>

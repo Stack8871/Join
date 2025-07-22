@@ -81,7 +81,7 @@ export class Header {
     // Add a small delay to allow moving between circle and dropdown
     this.dropdownTimeout = setTimeout(() => {
       this.showDropdown = false;
-    }, 170); // 150ms delay
+    }, 220); // 150ms delay
   }
 
   /** Toggles the dropdown menu */
