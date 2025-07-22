@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnInit } from '@angular/core';
+import { Component, Input, inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,9 @@ export class AddTask implements OnInit{
   public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
+  
+  // Custom dropdown state
+  isDropdownOpen = false;
 
 form: FormGroup;
 
@@ -155,6 +158,40 @@ removeSubtask(index: number) {
    */
   getContactById(contactId: string): ContactsInterface | undefined {
     return this.ContactsList.find(contact => contact.id === contactId);
+  }
+
+  // Custom dropdown methods
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleContact(contactId: string): void {
+    const currentValue = this.form.get('assignedTo')?.value || [];
+    const index = currentValue.indexOf(contactId);
+    
+    if (index > -1) {
+      // Contact is already selected, remove it
+      currentValue.splice(index, 1);
+    } else {
+      // Contact is not selected, add it
+      currentValue.push(contactId);
+    }
+    
+    this.form.get('assignedTo')?.setValue([...currentValue]);
+  }
+
+  isContactSelected(contactId: string): boolean {
+    const currentValue = this.form.get('assignedTo')?.value || [];
+    return currentValue.includes(contactId);
+  }
+
+  // Close dropdown when clicking outside
+  @HostListener('document:click', ['$event'])
+  closeDropdown(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.custom-select-wrapper')) {
+      this.isDropdownOpen = false;
+    }
   }
 
   async submit() {

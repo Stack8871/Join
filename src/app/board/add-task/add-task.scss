@@ -12,7 +12,6 @@
     }
   }
 }
-
 .add-task-container {
   width: 100%;
   height: 100%;
@@ -226,8 +225,9 @@ img {
   border: 1px solid $color-light-gray;
   border-radius: $spacing-2xs;
   background:$color-white;
+  display:flex;
   & input{
-    max-width:380px;
+    max-width:350px;
     border:0px solid transparent;
   }
   & button{
@@ -242,12 +242,20 @@ img {
     }
   }
 }
+.plus-icon, .minus-icon{
+  font-size: var(--font-size-base);
+  margin:0;
+  padding-right: 5%;
+}
+
 select {
   font: inherit;
   line-height: 1.5em;
   padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
   appearance: none;
   -moz-appearance: none;
+  border-radius: $spacing-2xs;
+  border:1px solid $color-light-gray;
 }
 
 select.minimal {
@@ -256,8 +264,6 @@ select.minimal {
   outline: none;
   box-shadow: none;
   cursor: pointer;
-  border-radius: $spacing-2xs;
-  border:1px solid $color-light-gray;
   height: 100%;
   font-size: var(--font-size-base);
   background-image:
@@ -285,21 +291,19 @@ select.minimal[multiple] {
   overflow-y: auto;
   /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
   
-  /* Scrollbar ausblenden für Webkit-Browser (Chrome, Safari, Edge) */
-  &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
-  /* Scrollbar ausblenden für Firefox */
-  scrollbar-width: none;
+
 }
 /* Option-Styles */
 select.minimal option {
-  padding: 8px 12px;
+  padding: 12px 16px;
   border-radius: 4px;
   font-family: inherit;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.6;
+  position: relative;
+  background: $color-white;
+  color: $color-text-heading;
+  border: none;
   
   /* Styling für bessere Lesbarkeit */
   &:checked {
@@ -311,6 +315,31 @@ select.minimal option {
   &:hover:not(:checked) {
     background: #f0f0f0 !important;
     color: $color-text-heading !important;
+  }
+}
+
+/* Multi-Select Styling für bessere Darstellung */
+select.minimal[multiple] option {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  
+  &::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    flex-shrink: 0;
+    background: var(--contact-color, #ccc);
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    font-size: 10px;
+    font-weight: 600;
   }
 }
 /* Optional: Hover- und Selected-Effekt */
@@ -373,4 +402,107 @@ select:-moz-focusring {
 }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
+}
+
+/* Custom Multi-Select Dropdown Styles */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+}
+
+.custom-select-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-xs $spacing-base;
+  border: 1px solid $color-light-gray;
+  border-radius: $spacing-2xs;
+  background: $color-white;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  transition: border-color 0.2s ease;
+  
+  &:hover {
+    border-color: $color-subtask-bar;
+  }
+  
+  &.open {
+    border-color: $color-primary;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .placeholder {
+    color: $color-text-heading;
+  }
+  
+  .dropdown-arrow {
+    font-size: 12px;
+    color: $color-medium-gray;
+    transition: transform 0.2s ease;
+  }
+  
+  &.open .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: $color-white;
+  border: 1px solid $color-primary;
+  border-top: none;
+  border-radius: 0 0 $spacing-2xs $spacing-2xs;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: $card-shadow;
+}
+
+.contact-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-xs $spacing-base;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: #f8f9fa;
+  }
+  
+  &.selected {
+    background-color: rgba(41, 171, 226, 0.1);
+  }
+}
+
+.contact-option-content {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex: 1;
+}
+
+.circle-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-white;
+  font-weight: 600;
+  font-size: 10px;
+  flex-shrink: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.checkbox-indicator {
+  color: $color-primary;
+  font-weight: bold;
+  font-size: 16px;
 }

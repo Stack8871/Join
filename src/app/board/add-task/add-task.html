@@ -123,13 +123,45 @@
         <!-- Assigned To -->
         <div class="form-group">
           <label for="assignedTo">Assigned to</label>
-          <select class="minimal" formControlName="assignedTo" multiple required>
-            @for (contact of ContactsList; track contact.id) {
-            <option [value]="contact.id">
-              {{ getInitials(contact.name) }} - {{ contact.name }}
-            </option>
+          
+          <!-- Custom Multi-Select Dropdown -->
+          <div class="custom-select-wrapper">
+            <div class="custom-select-header" (click)="toggleDropdown()" 
+                 [class.open]="isDropdownOpen">
+              <span class="placeholder">
+                @if (form.get('assignedTo')?.value?.length > 0) {
+                  {{ form.get('assignedTo')?.value?.length }} contact(s) selected
+                } @else {
+                  Select contacts
+                }
+              </span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            
+            @if (isDropdownOpen) {
+            <div class="custom-select-dropdown">
+              @for (contact of ContactsList; track contact.id) {
+              @if (contact.id) {
+              <div class="contact-option" 
+                   [class.selected]="isContactSelected(contact.id)"
+                   (click)="toggleContact(contact.id)">
+                <div class="contact-option-content">
+                  <div class="circle-small" [style.backgroundColor]="getColor(contact.name)">
+                    {{ getInitials(contact.name) }}
+                  </div>
+                  <span class="contact-name">{{ contact.name }}</span>
+                </div>
+                <div class="checkbox-indicator">
+                  @if (isContactSelected(contact.id)) {
+                    ✓
+                  }
+                </div>
+              </div>
+              }
+              }
+            </div>
             }
-          </select>
+          </div>
 
           <!-- Anzeige der zugewiesenen Kontakte mit Initialen -->
           @if (form.get('assignedTo')?.value && form.get('assignedTo')?.value.length > 0) {
@@ -138,10 +170,11 @@
             <div class="contacts-list">
               @for (contactId of form.get('assignedTo')?.value; track contactId) {
               @if (getContactById(contactId); as contact) {
-              <div class="">
+              <div class="contact-item-display">
                 <div class="circle" [style.backgroundColor]="getColor(contact.name)">
                   {{ getInitials(contact.name) }}
                 </div>
+                <span class="contact-name">{{ contact.name }}</span>
               </div>
               }
               }
@@ -181,10 +214,10 @@
                     'invalid-field': control.invalid && control.touched
                   }">
               @if (subtaskControls.length > 1) {
-              <button type="button" class="" (click)="removeSubtask($index)">−</button>
+              <button type="button" class="minus-icon" (click)="removeSubtask($index)">−</button>
               }
               @if ($index === subtaskControls.length - 1) {
-              <button type="button" class="" (click)="addSubtask()">+</button>
+              <button type="button" class="plus-icon" (click)="addSubtask()">+</button>
               }
             </div>
           </div>
