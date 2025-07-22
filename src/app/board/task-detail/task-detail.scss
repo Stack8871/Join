@@ -163,6 +163,9 @@ h5{
   cursor: pointer;
   flex-shrink: 0;
 }
+.iconsbefore:hover h4{
+  color:$color-subtask-bar;
+}
 
 .custom-checkbox:focus{
   border: 1px solid transparent;
