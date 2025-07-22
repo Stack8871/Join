@@ -42,13 +42,11 @@ export class ContactsOverlay implements OnInit {
         email: this.contactToEdit.email,
         phone: this.contactToEdit.phone
       });
-
-      // If phone is empty and showPhoneValidationError is true, mark the phone field as touched
-      // to trigger validation error display
-      if (this.showPhoneValidationError && !this.contactToEdit.phone) {
-        this.form.get('phone')?.markAsTouched();
-      }
     }
+
+    // Always mark the phone field as touched when the overlay appears
+    // This will ensure the field is red from the start
+    this.form.get('phone')?.markAsTouched();
   }
 
   /**

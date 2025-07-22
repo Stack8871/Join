@@ -141,10 +141,29 @@
       border-color: red !important;
     }
 
-    .error-message {
-      color: red;
+    .speech-bubble {
+      position: absolute;
+      color: white;
       font-size: 0.8rem;
-      margin-top: 0.25rem;
+      background-color: red;
+      padding: 10px 15px;
+      border-radius: 8px;
+      z-index: 10;
+      top: -5px;
+      left: 10px;
+      transform: translateY(-100%);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 15px;
+        border-width: 8px 8px 0;
+        border-style: solid;
+        border-color: red transparent transparent transparent;
+      }
     }
   }
 

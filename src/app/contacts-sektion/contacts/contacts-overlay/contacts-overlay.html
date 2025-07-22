@@ -36,6 +36,9 @@
 
                     </div>
                     <div class="input-group" [class.error]="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)">
+                        <div *ngIf="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)" class="speech-bubble">
+                            please enter number
+                        </div>
                         <input
                             type="tel"
                             placeholder="Phone"
@@ -43,9 +46,6 @@
                             [class.error-input]="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)"
                             />
                         <img src="/icons/call.svg" alt="phone" />
-                        <div *ngIf="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)" class="error-message">
-                            Please enter phone number
-                        </div>
                     </div>
                     <div class="button-group">
                         <button type="button" class="cancel-btn btn " (click)="cancel()">Cancel</button>
