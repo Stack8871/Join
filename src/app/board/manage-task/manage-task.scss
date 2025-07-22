@@ -22,6 +22,19 @@
   gap: $spacing-sm;
   margin:$spacing-sm 0;
 }
+.add-task-btn{
+  display:inline-block;
+ width:80px;
+}
+@media ( width < 720px){
+  .add-task-btn{
+      display:none;
+  }
+}
+.add-task-plus{
+  padding: 0;
+}
+
 
 /* Add cursor pointer and hover effect for draggable cards */
 .card[cdkDrag] {
@@ -148,24 +161,7 @@ h4{
   @include center-column;
   min-height: 250px;
 }
-/*
-.task-detail-title{
-    font-size: var(--font-size-2xl);
-}
-.overlay{
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100svh;
-  width: 100%;
-  background-color: #242424b6;
-  z-index:9999;
-  @include center;
-}
- .task-detail-card{
-    max-width: 550px;
-    margin:0 $spacing-base;
-} */
+
   .assigned-to{
     align-items: center;
     margin-bottom: $spacing-base;
@@ -229,5 +225,3 @@ h4{
     height: 16px;
     object-fit: contain;
   }
-
-  // Utility classes are now in _utilities.scss

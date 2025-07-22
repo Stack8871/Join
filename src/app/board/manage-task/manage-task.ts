@@ -10,7 +10,6 @@ import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
 import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
-import { AddTask } from '../add-task/add-task';
 
 @Component({
   selector: 'app-manage-task',

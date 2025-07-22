@@ -1,3 +1,313 @@
-.add-task-container{
-background: white;
+@use "index" as *;
+
+.form-slide {
+  animation: slideInFromRight 0.3s ease-out forwards;
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+.left-side{
+ display:flex;
+ flex-direction: column;
+  gap:$spacing-sm;
+  padding-right:3%;
+}
+.right-side{
+ display:flex;
+ flex-direction: column;
+  padding-left:3%;
+
+}
+
+.vertical-divider {
+  width: 1px;
+  background-color: $color-light-gray;
+  @media (max-width: 768px) {
+  display:none;
+  }
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+  margin-bottom:$spacing-base;
+  
+
+  label {
+    font-size: var(--font-size-base);
+    color: $color-text-heading;
+    width: 100%;
+    margin-bottom:$spacing-xs;
+  }
+  .validation-message {
+    color: #ff0000;
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+  }
+}
+.input-group {
+  display: block;
+  & label {
+    display: block;
+  }
+  &select{
+    display: block;
+    width:400px;
+  }
+}
+.date-input {
+  position: relative;
+  input {
+    padding-right: 20px;
+    color: $color-text-heading;
+    cursor: pointer;
+    background-color: $color-white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+    }
+    &::-ms-clear {
+      display: none;
+    }
+    &:hover {
+      border-color: $color-subtask-bar;
+    }
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba(41, 171, 226, 0.2);
+    }
+    &::placeholder {
+      color: $color-light-gray;
+    }
+  }
+}
+img {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.priority-buttons {
+  display: flex;
+  gap: 1rem;
+  max-width: 440px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.priority-icon {
+  margin-left:$spacing-sm;
+  padding-top:2px;
+}
+.button-group {
+  margin-top: $spacing-base;
+
+  .submit-btn {
+    padding: 12px 24px;
+    background-color: $color-primary;
+    color: $color-white;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $color-subtask-bar;
+      box-shadow: $card-shadow;
+    }
+  }
+}
+.subtasks{
+  border: 1px solid $color-light-gray;
+  border-radius: $spacing-2xs;
+  background:$color-white;
+  display:flex;
+  & input{
+    max-width:350px;
+    border:0px solid transparent;
+  }
+  & button{
+    border: 0px solid  transparent;
+    margin-left:1rem;
+    background:$color-white;
+    color: $color-medium-gray;
+    &:hover{
+      color:$color-primary;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+    }
+  }
+}
+.plus-icon, .minus-icon{
+  font-size: var(--font-size-base);
+  margin:0;
+  padding-right: 5%;
+}
+
+select {
+  font: inherit;
+  line-height: 1.5em;
+  padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
+  appearance: none;
+  -moz-appearance: none;
+  border-radius: $spacing-2xs;
+  border:1px solid $color-light-gray;
+}
+
+select.minimal {
+  display: inline-block;
+  appearance: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  height: 100%;
+  font-size: var(--font-size-base);
+  background-image:
+    linear-gradient(45deg, transparent 50%, $color-medium-gray 50%),
+    linear-gradient(135deg, $color-medium-gray 50%, transparent 50%),
+    linear-gradient(to right, $color-light-gray);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+}
+
+select.minimal:focus {
+  border-color: $color-light-gray;
+  outline: 0;
+}
+/* Multiselect: Zeilenhöhe und Scrollbar */
+select.minimal[multiple] {
+  height: 120px; /* Feste Höhe statt 100% */
+  overflow-y: auto;
+  /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
+  
+
+}
+/* Option-Styles */
+select.minimal option {
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  position: relative;
+  background: $color-white;
+  color: $color-text-heading;
+  border: none;
+  
+  /* Styling für bessere Lesbarkeit */
+  &:checked {
+    background: $color-primary !important;
+    color: white !important;
+    font-weight: 500;
+  }
+  
+  &:hover:not(:checked) {
+    background: #f0f0f0 !important;
+    color: $color-text-heading !important;
+  }
+}
+
+/* Multi-Select Styling für bessere Darstellung */
+select.minimal[multiple] option {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  
+  &::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    flex-shrink: 0;
+    background: var(--contact-color, #ccc);
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+/* Optional: Hover- und Selected-Effekt */
+select.minimal option:checked,
+select.minimal option:hover {
+  background: #e0e7ff;
+  color: #222;
+}
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+/* Assigned Contacts Display Styles */
+.assigned-contacts-display {
+  margin-top: 12px;
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-text-heading;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .contacts-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    
+    .contact-item-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background-color: #f8f9fa;
+      border-radius: 20px;
+      border: 1px solid #e9ecef;
+      
+      .circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 500;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      
+      .contact-name {
+        font-size: 14px;
+        color:$color-medium-gray;
+        font-weight: 400;
+      }
+    }
+  }
+}
+.horizontal-line{
+  border-right: 1px solid $color-light-gray;
 }

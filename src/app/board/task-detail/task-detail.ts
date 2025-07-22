@@ -8,6 +8,7 @@ import { Firebase } from '../../Shared/firebase/firebase-services/firebase-servi
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 
+
 @Component({
   selector: 'app-task-detail',
  imports: [CommonModule, ReactiveFormsModule],

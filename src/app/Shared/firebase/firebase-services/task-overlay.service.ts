@@ -5,7 +5,7 @@ import {
   OverlayConfig,
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { AddTask } from '../../../board/add-task/add-task';
+import { TaskOverlay } from '../../../board/task-overlay/task-overlay';
 import { TaskInterface } from '../../../interfaces/task-interface';
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +25,7 @@ export class TaskOverlayService {
     });
 
     this.overlayRef = this.overlay.create(config);
-    const portal = new ComponentPortal(AddTask);
+    const portal = new ComponentPortal(TaskOverlay);
     const componentRef = this.overlayRef.attach(portal);
 
     // ❗ WICHTIG: Task übergeben, wenn Edit-Modus
