@@ -1,144 +1,289 @@
 @use 'index' as *;
 
-.flex{
-    display: flex;
+.task-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: $color-white;
+  border-radius: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
-.column{
-    flex-direction: column;
+
+.form-slide {
+  animation: slideInFromRight 0.3s ease-out forwards;
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+.add-task-heading {
+  font-weight: 700;
+  color: $color-text-heading;
+  margin-bottom: 1.5rem;
 }
 
 .task-detail-title{
     font-size: var(--font-size-2xl);
 }
-.overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100svh;
-    width: 100%;
-    background-color: #242424b6;
-    z-index:9999;
-  @include center;
-}
+
 .task-detail-card{
     max-width: 550px;
     margin:0 $spacing-base;
 }
+
 h4{
     color:$color-primary;
     font-size: var(--font-size-base);
     font-weight: 400;
 }
+
 h5{
   font-size: var(--font-size-base);
   font-weight: 400;
 }
-  .assigned-to{
+
+.assigned-to{
     align-items: center;
     margin-bottom: $spacing-base;
-  }
-  .ckeckbox-subtask{
+}
+
+.ckeckbox-subtask{
     display: inline-block;
     width:24px;
     margin-right:$spacing-xs;
-  }
-  .edit-delete-section{
+}
+
+.edit-delete-section{
     display: flex;
     justify-content: flex-end;
-  }
-  .edit-delete{
+}
+
+.edit-delete{
     display: flex;
     align-items: center;
-    flex-direction: row;
     height: 24px;
     margin: 0 $spacing-xs;
     gap: $spacing-2xs;
-    min-width: 3rem;
-  }
-  .red{
-    background: $color-accent-urgent;
-  }
-  .blue{
-        background: $color-badge-userstory;
-  }
+}
 
+.delete-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
 
-  .ai-center{
+.delete-dialog {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  min-width: 300px;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.cancel {
+  background: #ccc;
+}
+
+.btn.delete {
+  background: #ff3d00;
+  color: white;
+}
+
+.iconsbefore{
+    display: flex;
+    gap: $spacing-2xs;
     align-items: center;
-    max-width: 200px;
-    justify-content: space-between;
-    & span{
-      padding-top:1px;
-    }
-  }
-  .rounded{
+    cursor: pointer;
+}
+.iconsbefore:hover {
+    color: $color-subtask-bar;
+}
+.iconsbefore:hover svg path {
+    fill: $color-subtask-bar;
+}
+
+.ai-center{
+    align-items: center;
+}
+.rounded{
     border-radius: 50%;
-  }
-  .description{
-    color:$color-gray;
 }
-.subtask-progress{
-align-items: center;
-gap: $spacing-xs;
-}
-.category{
-        border-radius: $card-radius;
-        padding: $spacing-2xs;
-        background:$color-badge-userstory;
-        font-size: var(--font-size-sm);
-        color:$color-lighter-gray;
-}
-.user-story-clr{
-    background:$color-badge-userstory;
-}
-.tecnical-clr{
-    background:$color-medium-gray;
-}
-.form-control{
-  display:grid;
-  grid-template-columns: 10px auto;
-  gap:0.5em;
-}
+
+// Checkbox styling (zurück zum Original)
 .checkbox-container{
-/* mandatory */
-display: flex; /* so the label can enfold another element and placed properly */
-position: relative; /* so the content can be placed absolutely */
-box-sizing: border-box; /* so the padding does not affect the position of content */
-/* the following are optional and up to your point of view */
-padding: 0 10px;
-gap:$spacing-xs;
-border: 1px solid transparent;
-border-radius: 0;
-height: 30px;
+  display: flex; 
+  position: relative; 
+  box-sizing: border-box; 
+  padding: 0 10px;
+  gap:$spacing-xs;
+  border: 1px solid transparent;
+  border-radius: 0;
+  height: 30px;
+  align-items: center;
 }
+
 .custom-checkbox {
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none; /* so the operating system does nothing about rendering the element*/
-display: flex; /* so it can be positioned absolutely */
-position: absolute; /* so it can be placed anywhere */
-background: url('/icons/checkbox.svg') no-repeat; /* this image will be shown when the state is OFF */
-/* the following are optional and up to your point of view */
-background-size: 20px;
-border: 1px solid transparent;
-width: 100%;
-height: 100%;
-margin: 0 ;
-cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; 
+  width: 22px;
+  height: 22px;
+  background: url('/icons/checkbox.svg') no-repeat; 
+  background-size: 20px;
+  border: 1px solid transparent;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
 }
+
 .custom-checkbox:focus{
   border: 1px solid transparent;
+}
 
-}
 .custom-checkbox:checked {
-background: url('/icons/box-checked.svg') no-repeat;
-background-size: 20px;
-border: 1px solid transparent;
-width: 100%;
-height: 100%;
-margin: 0 ;
-cursor: pointer;
+  background: url('/icons/box-checked.svg') no-repeat;
+  background-size: 20px;
 }
+
 .label-for-checkbox{
-  margin-left:$spacing-xl;
+  margin-left:$spacing-sm;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  color: $color-text-primary;
+}
+
+// Contact initials styling for task detail
+.circle-initial {
+  margin-right: $spacing-sm;
+}
+
+.circle-user {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: $spacing-base;
+  flex-shrink: 0;
+  box-shadow: $card-shadow;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  border: 2px solid $color-white;
+}
+
+.contact-name {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: $color-text-primary;
+}
+
+.small-gap {
+  gap: $spacing-sm;
+}
+
+.no-contacts,
+.no-subtasks {
+  color: $color-text-secondary;
+  font-style: italic;
+  font-size: var(--font-size-sm);
+  padding: $spacing-sm 0;
+}
+
+// Category styling with dynamic colors
+.category {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: $color-white;
+  display: inline-block;
+}
+
+.category-userstory {
+  background-color: $color-badge-userstory;
+}
+
+.category-technical {
+  background-color: $color-badge-technical;
+}
+
+.category-default {
+  background-color: $color-primary;
+}
+
+// Priority styling with dynamic icons
+.priority-container {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.priority-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: $spacing-xs;
+}
+
+.priority-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+// Subtask progress bar styling
+.subtask-progress-section {
+  margin: $spacing-sm 0;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: $spacing-xs;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: $color-subtask-bar;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: var(--font-size-sm);
+  color: $color-text-secondary;
+  text-align: center;
 }

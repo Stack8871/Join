@@ -72,6 +72,20 @@ removeSubtask(index: number) {
     this.isEditMode = !!this.taskToEdit;
 
     if (this.isEditMode && this.taskToEdit) {
+      // Clear existing subtasks
+      const subtasksArray = this.form.get('subtasks') as FormArray;
+      subtasksArray.clear();
+      
+      // Add subtasks from taskToEdit
+      if (this.taskToEdit.subtasks && this.taskToEdit.subtasks.length > 0) {
+        this.taskToEdit.subtasks.forEach(subtask => {
+          subtasksArray.push(this.fb.control(subtask.title, Validators.required));
+        });
+      } else {
+        // Add at least one empty subtask
+        subtasksArray.push(this.fb.control('', Validators.required));
+      }
+
       this.form.patchValue({
         status: this.taskToEdit.status,
         title: this.taskToEdit.title,
@@ -80,7 +94,6 @@ removeSubtask(index: number) {
         priority: this.taskToEdit.priority,
         assignedTo: this.taskToEdit.assignedTo,
         category: this.taskToEdit.category,
-        subtasks: this.taskToEdit.subtasks,
       });
     }
   }
@@ -117,14 +130,51 @@ removeSubtask(index: number) {
     this.form.get('priority')?.setValue(priority);
   };
 
+  /**
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
+   */
+  getInitials(name: string): string {
+    return this.taskService.getInitials(name);
+  }
+
+  /**
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.taskService.getColor(name);
+  }
+
+  /**
+   * Findet einen Kontakt anhand der ID
+   * @param contactId - Die ID des Kontakts
+   * @returns Der Kontakt oder undefined
+   */
+  getContactById(contactId: string): ContactsInterface | undefined {
+    return this.ContactsList.find(contact => contact.id === contactId);
+  }
+
   async submit() {
     const value = this.form.getRawValue();
+    
+    // Convert subtasks from string array to object array
+    const processedValue = {
+      ...value,
+      subtasks: value.subtasks?.filter((subtask: string) => subtask.trim() !== '')
+        .map((subtask: string) => ({
+          title: subtask,
+          done: false
+        })) || []
+    };
 
     if (this.isEditMode && this.taskToEdit?.id) {
-      await this.firebase.editTaskToDatabase(this.taskToEdit.id, value as TaskInterface);
+      await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
       this.success.show('Task updated');
     } else {
-      await this.firebase.addTaskToDatabase(value as TaskInterface);
+      await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
       this.success.show('Task added');
     }
 

@@ -1,44 +1,14 @@
 
 @use 'index' as *;
 
-.flex{
-    display: flex;
-}
-.flex-1{
-    flex:1;
-}
-.column{
-    flex-direction: column;
-}
-.row{
-    flex-direction: row;
-}
-  .parent {
+// Summary-specific styles only
+.parent {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
     gap: 10px;
     padding: 10px;
     background: #eee;
-  }
-.grid-col-span-2{
-    grid-column:span 2;
-}
-  .grid-3-col {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-2xs;
-  }
-.space-between{
-    justify-content:space-between;
-}
-.container{
-    margin:$spacing-3xl;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 1440px;
-
 }
 .task-step-text{
     color:$color-primary;
@@ -51,34 +21,25 @@
     }
 }
 .circle-primary-color{
- background: $color-primary;
-
+    background: $color-primary;
+    & svg{
+        fill: $color-gray;  // Standardfarbe
+        transition: fill 0.3s;
+    }
  &:hover{
     background: $color-white;
  }
-}
-.circle-primary-color svg {
-  fill: $color-gray;  // Standardfarbe
-  transition: fill 0.3s;
-}
-.circle-primary-color:hover svg {
-  fill: $color-white;  // Hover-Farbe (rot als Beispiel)
 }
 .circle-urgent-color{
  background: $color-accent-urgent;
  
 }
-.card{
-    border-radius: $card-radius;
-    padding: $card-padding;
-    box-shadow: $card-shadow;
-    background: $color-bg-card;
-    gap: $spacing-sm;
-    margin:$spacing-sm 0;
-    &:hover{
-        background: $color-primary;
+.card:hover{
+    background: $color-primary;
+    & svg{
+        fill: $color-primary;
     }
-}
+    }
 .card-circle-content{
     display:flex;
     flex-basis:100%;
@@ -93,18 +54,9 @@
         }
     }
 }
-.hover-scale-btn:hover{
-    transform: scale(1.1,1.1);
-    transform-origin: center;
-    transition: all;
-    transition-duration: 150ms;
-    transition-timing-function: ease-in-out;
-}
+// .hover-scale-btn is now defined in _utilities.scss
 .summery-card{
     gap: $spacing-3xl;
-}
- .card-circle-content:hover svg {
-  fill: $color-primary;  
 }
 .card-circle-content > *:hover{
     h4, h5{
@@ -124,6 +76,9 @@
         font-size: var(--font-size-base);
     }
 }
+.circle-urgent-color svg {
+        fill: $color-white;  
+    }
 .overview-gap{
     gap:$spacing-2xl;
 }
@@ -139,7 +94,6 @@
 .margin-bottom{
     margin-bottom: $spacing-5xl;
 }
-
 .dashboard-container {
   display: flex;
   gap: 4rem;
@@ -154,7 +108,6 @@
     color:$color-subtask-bar;
   }
 }
-
 .summary-header {
   display: flex;
   flex-wrap: wrap;
@@ -163,8 +116,6 @@
     margin-bottom: $spacing-3xl;
     height:60px;
 }
-
-
 .greeting {
   font-size: 1.5rem;
   color: #2c3e50;

@@ -15,10 +15,10 @@
         </div>
         <div class="nav-container"> <app-nav></app-nav></div>
         <div class="bottom-links">
-          <a class="nav-item" routerLink="/privacy">
+          <a class="nav-item" routerLink="/privacy" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <span class="nav-text">Privacy Policy</span>
           </a>
-          <a class="nav-item" routerLink="/imprint">
+          <a class="nav-item" routerLink="/imprint" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
             <span class="nav-text">Imprint</span>
           </a>
         </div>

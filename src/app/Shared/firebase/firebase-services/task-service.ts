@@ -1,17 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { TaskOverlay } from '../../../board/task-overlay/task-overlay';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { collectionData, Firestore, collection, doc, query, where, orderBy } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, doc, deleteDoc } from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { UserInitialsServices } from '../../services/user-initials-services';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private overlayRef: OverlayRef | null = null;
-  private overlay = inject(Overlay);
   firestore: Firestore = inject(Firestore);
 
   constructor(private userInitialsServices: UserInitialsServices) {}
@@ -53,16 +48,6 @@ export class TaskService {
   }
 
   /**
-   * Retrieves urgent tasks sorted by due date
-   * @returns Observable of urgent tasks array sorted by due date
-   */
-  getUrgentTasksByDueDate(): Observable<TaskInterface[]> {
-    const tasksRef = collection(this.firestore, 'tasks');
-    const urgentTasksQuery = query(tasksRef, where('priority', '==', 'urgent'), orderBy('dueDate', 'asc'));
-    return collectionData(urgentTasksQuery, { idField: 'id' }) as Observable<TaskInterface[]>;
-  }
-
-  /**
    * Gets a reference to a single task document
    * @param colId Collection ID
    * @param docId Document ID
@@ -73,30 +58,17 @@ export class TaskService {
   }
 
   /**
-   * Opens a task overlay component
-   * @param taskToEdit Optional task to edit
+   * Deletes a task from the database
+   * @param taskId The ID of the task to delete
    */
-  openOverlay(taskToEdit?: TaskInterface) {
-    const config = new OverlayConfig({
-      hasBackdrop: true,
-      backdropClass: 'cdk-overlay-dark-backdrop',
-      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-      scrollStrategy: this.overlay.scrollStrategies.block(),
-    });
-    this.overlayRef = this.overlay.create(config);
-    const portal = new ComponentPortal(TaskOverlay);
-    const componentRef = this.overlayRef.attach(portal);
-    if (taskToEdit) {
-      componentRef.instance.taskToEdit = taskToEdit;}
-    this.overlayRef.backdropClick().subscribe(() => this.close());
-    document.addEventListener('closeOverlay', () => this.close(), { once: true });
-  }
-
-  /**
-   * Closes the overlay
-   */
-  close() {
-    this.overlayRef?.dispose();
-    this.overlayRef = null;
+  async deleteTaskFromDatabase(taskId: string): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await deleteDoc(taskRef);
+      console.log('Task successfully deleted!');
+    } catch (error) {
+      console.error('Error deleting task: ', error);
+      throw error;
+    }
   }
 }

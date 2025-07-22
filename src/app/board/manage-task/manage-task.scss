@@ -1,27 +1,11 @@
 
 @use 'index' as *;
-.flex{
-  display: flex;
-}
-.column{
-  flex-direction: column;
-}
-.space-between{
-  justify-content:space-between;
-}
-.container{
-  margin:$spacing-3xl;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 1440px;
-}
+
+// Board-specific styles only
 .header-section{
-  display: flex;
-  justify-content: space-between;
+  @include space; // Using mixin instead of duplicating flex + space-between
   margin-bottom: $spacing-5xl;
   flex-wrap:wrap;
-  align-items: center;
 }
 .grid-board{
   display:grid;
@@ -32,7 +16,7 @@
 }
 .card{
   border-radius: $card-radius;
-  padding: $card-padding;
+  padding: $small-card-padding;
   box-shadow: $card-shadow;
   background: $color-bg-card;
   gap: $spacing-sm;
@@ -63,21 +47,28 @@ h4{
 .category{
   border-radius: $card-radius;
   padding: $spacing-2xs;
-  background:$color-badge-userstory;
   font-size: var(--font-size-sm);
-  color:$color-lighter-gray;
+  color:$color-white;
+  font-weight: 500;
+}
+
+// Dynamic category colors
+.category-userstory {
+  background-color: $color-badge-userstory;
+}
+
+.category-technical {
+  background-color: $color-badge-technical;
+}
+
+.category-default {
+  background-color: $color-primary;
 }
 .user-story-clr{
     background:$color-badge-userstory;
 }
 .tecnical-clr{
     background:$color-medium-gray;
-}
-.blue{
-    background: $color-avatar-3;
-}
-.red{
-    background: $color-accent-urgent;
 }
 .position-absolute{
     position: absolute;
@@ -96,7 +87,7 @@ h4{
     margin-left: -37px;
 }
 .search-container{
-    display: flex;
+    @include center-row-not-justify;
     gap:$spacing-base;
     align-items: end;
 }
@@ -112,8 +103,7 @@ h4{
    }
 }
 .input-search{
-  display: flex;
-  align-items: center;
+  @include center-row-not-justify;
 }
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -155,9 +145,7 @@ h4{
   color: $color-gray;
   background-color: rgba(0, 0, 0, 0.03);
   margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include center-column;
   min-height: 250px;
 }
 /*
@@ -188,12 +176,11 @@ h4{
     margin-right:$spacing-xs;
   }
   .edit-delete-section{
-    display: flex;
+    @include center;
     justify-content: flex-end;
   }
   .edit-delete{
-    display: flex;
-    align-items: center;
+    @include center-row-not-justify;
     height: 24px;
     margin: 0 $spacing-xs;
     gap: $spacing-2xs;
@@ -204,3 +191,43 @@ h4{
   .rounded{
     border-radius: 50%;
   }
+
+  // Contact initials styling for task cards
+  .assigned-contacts {
+    gap: 4px;
+    @include center-row-not-justify;
+  }
+
+  .circle-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: $color-white;
+    @include center;
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+    box-shadow: $card-shadow;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    border: 2px solid $color-white;
+  }
+
+  .circle-initials:not(:first-child) {
+    margin-left: -13px;
+  }
+
+  .priority-indicator {
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-subtask-bar;
+    @include center-row-not-justify;
+    gap: 4px;
+  }
+
+  .priority-icon-small {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  // Utility classes are now in _utilities.scss

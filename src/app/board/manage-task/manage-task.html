@@ -15,7 +15,7 @@
       </form>
       <div>
         <button class="btn primary" (click)="addNewTask()">
-          + Add task
+          Add task +
         </button>
       </div>
   </div>
@@ -41,20 +41,27 @@
           @for (task of col.tasks; track task.id) {
           <div class="card flex column" cdkDrag (click)="selectTask(task)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class=""><span class="category"> {{ task.category }}</span></div>
+            <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ task.category }}</span></div>
             <div class="task-title"><h4> {{ task.title }}</h4></div>
             <div class="description">{{ task.description }}</div>
-              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
-            <div class="flex subtask-progress">
-            <span>1/3</span>
-            </div>
-            <div class="flex">
-                <div class="flex">
-                    <div class="circle blue z-index-30">br</div>
-                    <div class="circle red z-index-40">sr</div>
-                    <div class="circle blue z-index-50">tm</div>
+            @if (task.subtasks && task.subtasks.length > 0) {
+              <mat-progress-bar mode="determinate" [value]="getSubtaskProgress(task)"></mat-progress-bar>
+              <div class="flex subtask-progress">
+                <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
               </div>
-              <div>{{ task.priority }}</div>
+            }
+            <div class="flex space-between align-center">
+                <div class="flex assigned-contacts">
+                    @for (contactId of task.assignedTo; track contactId) {
+                      <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
+                        {{ getInitials(getContactName(contactId)) }}
+                      </div>
+                    }
+              </div>
+              <div class="priority-indicator">
+                <span>{{ task.priority }}</span>
+                <img [src]="getPriorityIcon(task.priority)" [alt]="task.priority + ' priority'" class="priority-icon-small">
+              </div>
             </div>
           </div>
           }
@@ -62,7 +69,9 @@
     </div>
     }
   </div>
-  @if (selectedTask) {
+  
+  @if (isSelected && selectedTask) {
     <div class="overlay">
-    <app-task-detail [selectedTask]="selectedTask" (close)="closeOverlay()"></app-task-detail>
-  </div>}
+      <app-task-detail [selectedTask]="selectedTask" (close)="closeOverlay()"></app-task-detail>
+    </div>
+  }
