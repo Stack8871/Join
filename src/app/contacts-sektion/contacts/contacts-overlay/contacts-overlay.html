@@ -36,9 +36,11 @@
 
                     </div>
                     <div class="input-group" [class.error]="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)">
-                        <div *ngIf="form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)" class="speech-bubble">
-                            please enter number
-                        </div>
+                        @if (form.get('phone')?.invalid && (form.get('phone')?.touched || showPhoneValidationError)) {
+                            <div class="speech-bubble">
+                                please enter number
+                            </div>
+                        }
                         <input
                             type="tel"
                             placeholder="Phone"

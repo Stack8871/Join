@@ -141,6 +141,19 @@
       border-color: red !important;
     }
 
+    input {
+      padding-right: 35px; /* Add padding to make room for the icon on the right */
+    }
+
+    img {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+
     .speech-bubble {
       position: absolute;
       color: white;
