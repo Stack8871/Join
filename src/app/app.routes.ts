@@ -9,11 +9,13 @@ import { Privacy } from './info/privacy/privacy';
 import { Imprint } from './info/imprint/imprint';
 import { AuthGuard } from './Shared/guards/auth.guard';
 import { AddTask } from './board/add-task/add-task';
+import { MobileWelcome } from './mobile-welcome/mobile-welcome';
 
 export const routes: Routes = [
   { path: '', component: Login},
   { path: 'login', component: Login},
   { path: 'sign-up', component: SignUp},
+  { path: 'mobile-welcome', component: MobileWelcome, canActivate: [AuthGuard] },
   { path: 'board', component: ManageTask, canActivate: [AuthGuard] },
   { path: 'summary', component: summary, canActivate: [AuthGuard] },
   { path: 'add-task', component: AddTask, canActivate: [AuthGuard] },
