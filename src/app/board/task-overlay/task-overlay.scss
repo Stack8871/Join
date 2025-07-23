@@ -96,11 +96,17 @@ img {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  cursor: pointer;
+  cursor: pointer;    
+
 }
 .task-container{
-  width: 65svw;
-  padding: 5%;
+  width: 85svw;
+  padding: 5%;  
+  overflow: auto;
+  @media(width < 720px){
+    height: 89svh;
+
+  }
 }
   .task-heading{
     padding-bottom:3%;
@@ -134,7 +140,7 @@ img {
   background:$color-white;
   display:flex;
   & input{
-    max-width:350px;
+    max-width:390px;
     border:0px solid transparent;
   }
   & button{

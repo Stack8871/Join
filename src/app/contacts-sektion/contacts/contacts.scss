@@ -329,7 +329,7 @@ position: sticky;
   gap: 0.5rem;
 
   .mobile & {
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
   }
   & h2{
@@ -374,4 +374,11 @@ position: sticky;
     flex-direction: column;
     gap: $spacing-base;
   }
+}
+.edit-group{
+  max-width: 440px;
+    gap: 1.25rem;
+    display: flex;
+    margin-top: 4%;
+
 }

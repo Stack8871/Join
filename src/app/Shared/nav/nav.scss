@@ -5,7 +5,7 @@
   width: 100%;
   &.mobile {
     @include center-row;
-    width: 100%;
+    width: 99svw;
     height: 85px;
   }
 }
