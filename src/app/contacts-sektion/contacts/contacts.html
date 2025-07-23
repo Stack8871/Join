@@ -1,4 +1,4 @@
-<div class="contacts-page-container">
+<div class="contacts-page-container" [class.mobile]="breakpointHandler.isMobile()" [class.show-details]="showMobileDetails">
   <div class="contact-container">
     <button class="add-contact-btn" (click)="addNewContact()">
       <span>Add new contact</span>
@@ -34,7 +34,7 @@
   </div>
   <section class="contacts-detail-container">
     <div class="back-btn">
-      <button>
+      <button (click)="goBackToList()">
         <img src="/icons/arrow-left.svg" alt="">
       </button>
     </div>
@@ -78,15 +78,15 @@
                   <h4>Delete</h4>
                 </div>
               </div>
-            </div> 
-          </div>       
+            </div>
+          </div>
           <div class="contacts-information">
             <h3>Contact Information</h3>
             <span class="email-link">Email</span>
             <a href="mailto:{{ selectedContact.email }}">{{ selectedContact.email }}</a>
             <span>Phone</span>
             <a href="tel:{{ selectedContact.phone }}">{{ selectedContact.phone }}</a>
-          </div>  
+          </div>
         </div>
       </div>
     }

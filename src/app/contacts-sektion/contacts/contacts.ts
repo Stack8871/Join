@@ -10,6 +10,7 @@ import { OverlayService } from '../../Shared/firebase/firebase-services/overlay-
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
 import { AuthService } from '../../Shared/firebase/firebase-services/auth.service';
+import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpointserver';
 
 @Component({
   selector: 'app-contacts',
@@ -21,6 +22,12 @@ export class Contacts implements OnInit, OnDestroy {
   private overlayService = inject(OverlayService);
   private authService = inject(AuthService);
   firebase = inject(Firebase);
+  breakpointHandler = inject(BreakpointObserverHandler);
+
+  // Flag to track whether details are being shown in mobile view
+  showMobileDetails = false;
+
+  constructor() {}
 
   contacts$!: Observable<ContactsInterface[]>;
   groupedContacts: { [letter: string]: ContactsInterface[] } = {};
@@ -71,6 +78,16 @@ export class Contacts implements OnInit, OnDestroy {
     this.contactsId = contact.id;
     const isCurrentUser = this.currentUserEmail ? contact.email === this.currentUserEmail : false;
     this.selectedContact = { ...contact, phone: contact.phone ?? '', isLoggedInUser: isCurrentUser };
+
+    // Show details in mobile view
+    if (this.breakpointHandler.isMobile()) {
+      this.showMobileDetails = true;
+    }
+  }
+
+  /** Returns to the contact list in mobile view */
+  goBackToList() {
+    this.showMobileDetails = false;
   }
 
   /** Saves the edited contact to database */
@@ -208,5 +225,6 @@ export class Contacts implements OnInit, OnDestroy {
     this.authSubscription?.unsubscribe();
     this.contactsSubscription?.unsubscribe();
     document.removeEventListener('closeOverlay', this.closeOverlayListener);
+    this.breakpointHandler.ngOnDestroy();
   }
 }
