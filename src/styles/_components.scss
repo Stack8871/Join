@@ -138,7 +138,7 @@ a:hover, button:hover{
     border-bottom: 0px solid $color-subtask-bar;
   }
 }
-@media (width < 767px){
+@media (width < 860px){
   .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }
