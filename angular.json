@@ -59,7 +59,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/",
+              "baseHref": "/angular-projects/join/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

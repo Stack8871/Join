@@ -49,10 +49,10 @@ a:hover, button:hover{
   margin:$spacing-sm 0;
 }
 .small-card-padding{
-  padding:$small-card-padding;
+  padding:$spacing-base;
 }
 .big-card-padding{
-  padding:$big-small-card-padding;
+  padding:$spacing-2xl;
 }
 
 .section-overlay{
@@ -113,7 +113,7 @@ a:hover, button:hover{
   display: inline-block;
   margin:$spacing-sm;
   height:90%;
-  @media(width < 820px){
+  @media(width < 700px){
     display:none;
   }
 
@@ -138,7 +138,7 @@ a:hover, button:hover{
     border-bottom: 0px solid $color-subtask-bar;
   }
 }
-@media (width < 860px){
+@media (width < 490px){
   .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }

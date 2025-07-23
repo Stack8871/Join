@@ -100,12 +100,12 @@ img {
 
 }
 .task-container{
-  width: 85svw;
+  width: 58svw ;
   padding: 5%;  
   overflow: auto;
   @media(width < 720px){
     height: 89svh;
-
+  width: 85svw;
   }
 }
   .task-heading{

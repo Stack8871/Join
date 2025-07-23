@@ -107,10 +107,13 @@
 .summary-header {
   display: flex;
   flex-wrap: wrap;
-  width:300px;
+  width:100ch;
   align-items: center;
     margin-bottom: $spacing-3xl;
     height:60px;
+    @media (width < 450px){
+        width: 30ch;
+    }
 }
 
 .greeting {

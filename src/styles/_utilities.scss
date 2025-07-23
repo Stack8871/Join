@@ -191,3 +191,14 @@ padding: 4%;
 .justify-start{
   justify-content: flex-start;
 }
+.big-card{
+  max-width:652px;
+  padding:$spacing-5xl;
+  justify-content: center;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  & h1{
+    text-align: center;
+  }
+}

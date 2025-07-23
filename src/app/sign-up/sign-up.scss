@@ -38,17 +38,6 @@ header{
 footer{
     height:65px;
 }
-.big-card{
-    max-width:652px;
-    padding:$spacing-5xl;
-    justify-content: center;
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    & h1{
-        text-align: center;
-    }
-}
 .subline {
   position: relative;
   display: inline-block;
