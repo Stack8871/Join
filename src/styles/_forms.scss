@@ -74,7 +74,7 @@ justify-content: space-between;
 .input-group {
   position: relative;
       width: 100%;
-      height:rem;
+
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
@@ -375,7 +375,11 @@ justify-content: space-between;
 }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
-  @media (width < 780px){
+  margin:0 6%;
+  @media (width < 1000px){
+    margin:0 2%;
+  }
+  @media (width < 859px){
     display:none;
   }
 }

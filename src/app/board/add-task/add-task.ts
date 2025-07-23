@@ -7,6 +7,7 @@ import { TaskService } from '../../Shared/firebase/firebase-services/task-servic
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
+import { UserPermissionService } from '../../Shared/services/user-permission.service';
 
 @Component({
   selector: 'app-add-task',
@@ -21,9 +22,11 @@ export class AddTask implements OnInit{
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
   private firebase = inject(Firebase);
+  private userPermissionService = inject(UserPermissionService);
   public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
+  canCreateTask = false;
 
   // Custom dropdown state
   isDropdownOpen = false;
@@ -69,6 +72,11 @@ removeSubtask(index: number) {
   ngOnInit() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
+    });
+
+    // Check if user has permission to create tasks
+    this.userPermissionService.canCreate().subscribe(canCreate => {
+      this.canCreateTask = canCreate;
     });
 
     // Beispiel: Setze Edit-Mode, wenn ein Task zum Bearbeiten übergeben wird
@@ -195,6 +203,12 @@ removeSubtask(index: number) {
   }
 
   async submit() {
+    // Check if user has permission to create/edit tasks
+    if (!this.canCreateTask) {
+      this.success.show('You do not have permission to create or edit tasks', 3000);
+      return;
+    }
+
     // Check if required fields are filled
     const requiredFields = ['title', 'dueDate', 'category'];
     let hasEmptyRequiredFields = false;

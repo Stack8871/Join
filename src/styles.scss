@@ -94,6 +94,15 @@ body{
     background:$color-lighter-gray;
     text-wrap: balance;
 }
+
+// Material Components ohne Google Fonts überschreiben
+.mat-mdc-progress-bar {
+    font-family: $font-family-base !important;
+}
+
+.mat-typography {
+    font-family: $font-family-base !important;
+}
 a:hover{
       cursor: pointer;
 }

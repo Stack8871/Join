@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, OnDestroy} from '@angular/core';
 import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop, CdkDragPlaceholder, moveItemInArray, transferArrayItem,} from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -10,6 +10,8 @@ import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
 import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
+import { UserPermissionService } from '../../Shared/services/user-permission.service';
+import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 
 @Component({
   selector: 'app-manage-task',
@@ -22,6 +24,8 @@ export class ManageTask implements OnInit, OnDestroy {
   public TaskService = inject(TaskService);
   private filterService = inject(TaskFilterService);
   private taskOverlayService = inject(TaskOverlayService);
+  private userPermissionService = inject(UserPermissionService);
+  private success = inject(SuccessServices);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
@@ -31,6 +35,9 @@ export class ManageTask implements OnInit, OnDestroy {
   searchTerm: string = '';
   filteredColumns: any[] = [];
   private editOverlayListener?: (event: any) => void;
+  canCreateTask = false;
+  canEditTask = false;
+  canDeleteTask = false;
 
 
   columns = [
@@ -46,6 +53,17 @@ export class ManageTask implements OnInit, OnDestroy {
       this.tasks = tasks;
       this.updateColumns();
       this.filteredColumns = [...this.columns];
+    });
+
+    // Check if user has permission to create/edit tasks
+    this.userPermissionService.canCreate().subscribe(canCreate => {
+      this.canCreateTask = canCreate;
+      this.canEditTask = canCreate;
+    });
+
+    // Check if user has permission to delete tasks
+    this.userPermissionService.canDelete().subscribe(canDelete => {
+      this.canDeleteTask = canDelete;
     });
 
     // Event-Listener für Edit-Overlay
@@ -117,6 +135,7 @@ export class ManageTask implements OnInit, OnDestroy {
         }
 
         task.status = newStatus;
+        // Note: We allow all users (including guests) to drag and drop tasks as it's a form of "clicking" mentioned in requirements
         this.firebase.editTaskToDatabase(task.id, task);
       }
     }
@@ -134,15 +153,28 @@ export class ManageTask implements OnInit, OnDestroy {
   }
 
     addNewTask() {
+      if (!this.canCreateTask) {
+        this.success.show('You do not have permission to create tasks', 3000);
+        return;
+      }
       this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
     };
 
     editTask(tasks: TaskInterface) {
-        this.taskOverlayService.openOverlay(tasks); // übergibt Task als `taskToEdit`
-      };
-      deleteItem(taskId: string) {
-        this.firebase.deleteTaskFromDatabase(taskId);
+      if (!this.canEditTask) {
+        this.success.show('You do not have permission to edit tasks', 3000);
+        return;
       }
+      this.taskOverlayService.openOverlay(tasks); // übergibt Task als `taskToEdit`
+    };
+
+    deleteItem(taskId: string) {
+      if (!this.canDeleteTask) {
+        this.success.show('You do not have permission to delete tasks', 3000);
+        return;
+      }
+      this.firebase.deleteTaskFromDatabase(taskId);
+    }
 
   selectedTasksIndex?: number;
   selectedTask?: TaskInterface;
@@ -224,13 +256,13 @@ export class ManageTask implements OnInit, OnDestroy {
   getPriorityIcon(priority: string): string {
     switch (priority.toLowerCase()) {
       case 'low':
-        return '/icons/prio-low.svg';
+        return 'icons/prio-low.svg';
       case 'medium':
-        return '/icons/prio-medium.svg';
+        return 'icons/prio-medium.svg';
       case 'urgent':
-        return '/icons/prio-urgent.svg';
+        return 'icons/prio-urgent.svg';
       default:
-        return '/icons/prio-medium.svg'; // Fallback
+        return 'icons/prio-medium.svg'; // Fallback
     }
   }
 

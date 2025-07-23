@@ -1,5 +1,4 @@
 @use 'index' as *;
-
 .contacts-page-container {
     display: flex;
     flex-direction: row;
@@ -9,6 +8,7 @@
     left: 0;
     padding: 0;
     margin-top: 0;
+    width: 99svw;
   }
 }
 .contacts-detail-container {
@@ -89,13 +89,11 @@
       font-size: var(--font-size-xl);
       font-weight: bold;
     }
-
     h3 {
       font-size: var(--font-size-base);
       font-weight: $font-weight-regular;
     }
   }
-
   h2 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
@@ -118,7 +116,6 @@
     font-weight:400;
   }
 }
-
 .add-contact-btn {
     display:flex;
     justify-content: center;
@@ -151,8 +148,8 @@
 .mobile-btn-add-contact{
 position: sticky;
     z-index: 100;
-    top:84%;
-    right:5%;
+    bottom:12%;
+    left:98%;
     width: 50px;
     height: 50px;
     padding:5px 14px;
@@ -169,7 +166,6 @@ position: sticky;
       .mobile-btn-add-contact{
         display: none;
       }
-
   }
 .contact-list {
   min-height: 100px;
@@ -337,7 +333,6 @@ position: sticky;
     display: flex;
     align-items: center;
     gap: 10px;
-
     .logged-in-badge-detail {
       font-size: 16px;
       color: $color-primary;

@@ -7,7 +7,7 @@
           <div class="input-search">
               <input type="text" placeholder="Name" [(ngModel)]="searchTerm" (ngModelChange)="applyFilter($event)" name="searchInput">
               <button class="magnifyin-glass">
-                <img src="/icons/magnifyin-glass.svg" alt="person" />
+                <img src="icons/magnifyin-glass.svg" alt="person" />
               </button>
               <div  class="validation-message">
               </div>
@@ -45,7 +45,9 @@
             <div class="task-title"><h4> {{ task.title }}</h4></div>
             <div class="description">{{ task.description }}</div>
             @if (task.subtasks && task.subtasks.length > 0) {
-              <mat-progress-bar mode="determinate" [value]="getSubtaskProgress(task)"></mat-progress-bar>
+              <div class="progress-bar-container">
+                <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
+              </div>
               <div class="flex subtask-progress">
                 <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
               </div>

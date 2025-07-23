@@ -7,6 +7,7 @@ import { TaskService } from '../../Shared/firebase/firebase-services/task-servic
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
+import { UserPermissionService } from '../../Shared/services/user-permission.service';
 
 
 @Component({
@@ -19,15 +20,28 @@ export class TaskDetail implements OnInit {
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
   private firebase = inject(Firebase);
+  private userPermissionService = inject(UserPermissionService);
   public ContactsList: ContactsInterface[] = [];
   @Input() selectedTask!: TaskInterface;
   @Output() close = new EventEmitter<void>();
+  canDeleteTask = false;
+  canEditTask = false;
 
   constructor() {}
 
   ngOnInit() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
+    });
+
+    // Check if user has permission to delete tasks
+    this.userPermissionService.canDelete().subscribe(canDelete => {
+      this.canDeleteTask = canDelete;
+    });
+
+    // Check if user has permission to create/edit tasks
+    this.userPermissionService.canCreate().subscribe(canCreate => {
+      this.canEditTask = canCreate;
     });
   }
 
@@ -37,12 +51,18 @@ export class TaskDetail implements OnInit {
 
   editTasks(task: TaskInterface | null) {
     if (!task) return;
-    
+
+    // Check if user has permission to edit tasks
+    if (!this.canEditTask) {
+      this.success.show('You do not have permission to edit tasks', 3000);
+      return;
+    }
+
     // Event für Edit-Overlay senden
     document.dispatchEvent(new CustomEvent('openEditOverlay', {
       detail: { task: task }
     }));
-    
+
     // Task-Detail-Overlay schließen
     this.close.emit();
   }
@@ -51,6 +71,10 @@ export class TaskDetail implements OnInit {
     pendingDeleteId: string | null = null;
 
     promptDelete(taskId: string) {
+      if (!this.canDeleteTask) {
+        this.success.show('You do not have permission to delete tasks', 3000);
+        return;
+      }
       this.pendingDeleteId = taskId;
       this.showDeleteConfirm = true;
     }
@@ -68,11 +92,20 @@ export class TaskDetail implements OnInit {
     }
 
     deleteItem(taskId: string) {
+      if (!this.canDeleteTask) {
+        this.success.show('You do not have permission to delete tasks', 3000);
+        return;
+      }
       this.firebase.deleteTaskFromDatabase(taskId);
     }
 
 
   async deleteTask(taskId: string) {
+    if (!this.canDeleteTask) {
+      this.success.show('You do not have permission to delete tasks', 3000);
+      return;
+    }
+
     try {
       await this.taskService.deleteTaskFromDatabase(taskId);
       // Task erfolgreich gelöscht - Overlay schließen
@@ -139,15 +172,15 @@ export class TaskDetail implements OnInit {
    * @returns Der Pfad zum entsprechenden Icon
    */
   getPriorityIcon(priority: string): string {
-    switch (priority.toLowerCase()) {
-      case 'low':
-        return '/icons/prio-low.svg';
-      case 'medium':
-        return '/icons/prio-medium.svg';
-         case 'urgent':
-        return '/icons/prio-urgent.svg';
+    switch (priority) {
+      case 'Low':
+        return 'icons/prio-low.svg';
+      case 'Medium':
+        return 'icons/prio-medium.svg';
+      case 'Urgent':
+        return 'icons/prio-urgent.svg';
       default:
-        return '/icons/prio-medium.svg'; // Fallback
+        return 'icons/prio-medium.svg'; // Fallback
     }
   }
 
@@ -162,7 +195,7 @@ export class TaskDetail implements OnInit {
 
     // Sicherstellen, dass der Subtask ein Objekt ist
     let subtask = this.selectedTask.subtasks[subtaskIndex];
-    
+
     // Wenn der Subtask ein String ist, in ein Objekt umwandeln
     if (typeof subtask === 'string') {
       subtask = {
@@ -177,6 +210,7 @@ export class TaskDetail implements OnInit {
 
     try {
       // Task in der Datenbank aktualisieren
+      // Note: We allow guests to toggle subtasks as it's a form of "clicking" mentioned in requirements
       await this.firebase.editTaskToDatabase(this.selectedTask.id!, this.selectedTask);
       console.log('Subtask status updated successfully');
     } catch (error) {
@@ -194,7 +228,7 @@ export class TaskDetail implements OnInit {
     if (!this.selectedTask.subtasks || this.selectedTask.subtasks.length === 0) {
       return 0;
     }
-    
+
     const completedSubtasks = this.selectedTask.subtasks.filter(subtask => {
       // Handle both string and object formats
       if (typeof subtask === 'string') {
@@ -202,7 +236,7 @@ export class TaskDetail implements OnInit {
       }
       return subtask.done;
     }).length;
-    
+
     return (completedSubtasks / this.selectedTask.subtasks.length) * 100;
   }
 
@@ -212,7 +246,7 @@ export class TaskDetail implements OnInit {
    */
   getCompletedSubtasks(): number {
     if (!this.selectedTask.subtasks) return 0;
-    
+
     return this.selectedTask.subtasks.filter(subtask => {
       // Handle both string and object formats
       if (typeof subtask === 'string') {

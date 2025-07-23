@@ -11,6 +11,9 @@ import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
 import { AuthService } from '../../Shared/firebase/firebase-services/auth.service';
 import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpointserver';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
+import { UserPermissionService } from '../../Shared/services/user-permission.service';
+import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 
 @Component({
   selector: 'app-contacts',
@@ -20,9 +23,17 @@ import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpo
 })
 export class Contacts implements OnInit, OnDestroy {
   private overlayService = inject(OverlayService);
+  private taskService = inject(TaskService);
   private authService = inject(AuthService);
+  private userPermissionService = inject(UserPermissionService);
+  private success = inject(SuccessServices);
   firebase = inject(Firebase);
   breakpointHandler = inject(BreakpointObserverHandler);
+
+  // Permission flags
+  canCreateContact = false;
+  canEditContact = false;
+  canDeleteContact = false;
 
   // Flag to track whether details are being shown in mobile view
   showMobileDetails = false;
@@ -54,11 +65,19 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Opens overlay to add new contact */
   addNewContact() {
+    if (!this.canCreateContact) {
+      this.success.show('You do not have permission to create contacts', 3000);
+      return;
+    }
     this.overlayService.openOverlay();
   }
 
   /** Opens overlay to edit a specific contact */
   editContact(contact: ContactsInterface) {
+    if (!this.canEditContact) {
+      this.success.show('You do not have permission to edit contacts', 3000);
+      return;
+    }
     const isCurrentUser = this.currentUserEmail ? contact.email === this.currentUserEmail : false;
     const contactToEdit = { ...contact, isLoggedInUser: isCurrentUser };
     this.overlayService.openOverlay(contactToEdit);
@@ -66,6 +85,10 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Deletes contact by ID */
   deleteItem(contactId: string) {
+    if (!this.canDeleteContact) {
+      this.success.show('You do not have permission to delete contacts', 3000);
+      return;
+    }
     this.firebase.deleteContactsFromDatabase(contactId);
   }
 
@@ -108,6 +131,10 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Prompts delete confirmation */
   promptDelete(contactId: string) {
+    if (!this.canDeleteContact) {
+      this.success.show('You do not have permission to delete contacts', 3000);
+      return;
+    }
     this.pendingDeleteId = contactId;
     this.showDeleteConfirm = true;
   }
@@ -146,6 +173,16 @@ export class Contacts implements OnInit, OnDestroy {
       if (user) this.checkUserInContacts(user.email);
     });
     document.addEventListener('closeOverlay', this.closeOverlayListener);
+
+    // Initialize permission flags
+    this.userPermissionService.canCreate().subscribe(canCreate => {
+      this.canCreateContact = canCreate;
+      this.canEditContact = canCreate; // Use same permission for edit as create
+    });
+
+    this.userPermissionService.canDelete().subscribe(canDelete => {
+      this.canDeleteContact = canDelete;
+    });
   }
 
   /** Updates grouped contacts and marks the logged-in user */
@@ -178,19 +215,12 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Returns initials from full name */
   getInitials(name: string): string {
-    if (!name) return '';
-    const parts = name.trim().split(' ');
-    return (parts[0]?.charAt(0).toUpperCase() || '') + (parts[1]?.charAt(0).toUpperCase() || '');
+    return this.taskService.getInitials(name);
   }
 
   /** Generates consistent color for name */
   getColor(name: string): string {
-    const colors = ['#FF8A00', '#6E00FF', '#009688', '#3F51B5', '#FF4081'];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
+    return this.taskService.getColor(name);
   }
 
   /**
