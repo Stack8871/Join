@@ -11,6 +11,7 @@ import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { ContactsOverlay } from './contacts-overlay/contacts-overlay';
 import { AuthService } from '../../Shared/firebase/firebase-services/auth.service';
 import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpointserver';
+import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 
 @Component({
   selector: 'app-contacts',
@@ -20,6 +21,7 @@ import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpo
 })
 export class Contacts implements OnInit, OnDestroy {
   private overlayService = inject(OverlayService);
+  private taskService = inject(TaskService);
   private authService = inject(AuthService);
   firebase = inject(Firebase);
   breakpointHandler = inject(BreakpointObserverHandler);
@@ -168,19 +170,12 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Returns initials from full name */
   getInitials(name: string): string {
-    if (!name) return '';
-    const parts = name.trim().split(' ');
-    return (parts[0]?.charAt(0).toUpperCase() || '') + (parts[1]?.charAt(0).toUpperCase() || '');
+    return this.taskService.getInitials(name);
   }
 
   /** Generates consistent color for name */
   getColor(name: string): string {
-    const colors = ['#FF8A00', '#6E00FF', '#009688', '#3F51B5', '#FF4081'];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
+    return this.taskService.getColor(name);
   }
 
   /**
