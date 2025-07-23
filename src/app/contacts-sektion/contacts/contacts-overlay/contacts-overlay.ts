@@ -5,6 +5,7 @@ import {ContactsInterface} from '../../../interfaces/contacts-interface';
 import {Firebase} from '../../../Shared/firebase/firebase-services/firebase-services';
 import {SuccessServices} from '../../../Shared/firebase/firebase-services/success-services';
 import {OverlayService} from '../../../Shared/firebase/firebase-services/overlay-services';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -18,6 +19,9 @@ export class ContactsOverlay implements OnInit {
   private fb = inject(FormBuilder);
   private firebase = inject(Firebase);
   private overlayService = inject(OverlayService);
+  private overlayOpenedForUser = false;
+  private contactsSubscription?: Subscription;
+  private authSubscription?: Subscription;
   @Input() contactToEdit?: ContactsInterface;
 
   form = this.fb.group({
@@ -34,6 +38,13 @@ export class ContactsOverlay implements OnInit {
     return !!this.contactToEdit;
   }
 
+  /** Gets the contact ID for delete operations */
+  get contactId(): string | undefined {
+    return this.contactToEdit?.id;
+  }
+    showDeleteConfirm = false;
+    pendingDeleteId: string | null = null;
+
   /** Initializes the form with contact data if in edit mode. */
   ngOnInit() {
     if (this.isEditMode && this.contactToEdit) {
@@ -47,6 +58,33 @@ export class ContactsOverlay implements OnInit {
     // Always mark the phone field as touched when the overlay appears
     // This will ensure the field is red from the start
     this.form.get('phone')?.markAsTouched();
+  }
+  /** Deletes contact by ID */
+  deleteItem(contactId: string) {
+    this.firebase.deleteContactsFromDatabase(contactId);
+  }
+
+  /** Prompts delete confirmation */
+  promptDelete(contactId: string) {
+    this.pendingDeleteId = contactId;
+    this.showDeleteConfirm = true;
+  }
+
+  /** Confirms and deletes the selected contact */
+  confirmDelete() {
+    if (this.pendingDeleteId) {
+      this.deleteItem(this.pendingDeleteId);
+      this.success.show('Contact deleted');
+      this.overlayService.close();
+    }
+    this.showDeleteConfirm = false;
+    this.pendingDeleteId = null;
+  }
+
+  /** Cancels delete confirmation */
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    this.pendingDeleteId = null;
   }
 
   /**
@@ -63,12 +101,6 @@ export class ContactsOverlay implements OnInit {
       this.success.show('Contact added');
     }
 
-    // Close the overlay directly using the service
-    this.overlayService.close();
-  }
-
-  /** Cancels editing and closes the overlay. */
-  cancel() {
     // Close the overlay directly using the service
     this.overlayService.close();
   }
