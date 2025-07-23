@@ -24,7 +24,7 @@ export class AddTask implements OnInit{
   public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
-  
+
   // Custom dropdown state
   isDropdownOpen = false;
 
@@ -78,7 +78,7 @@ removeSubtask(index: number) {
       // Clear existing subtasks
       const subtasksArray = this.form.get('subtasks') as FormArray;
       subtasksArray.clear();
-      
+
       // Add subtasks from taskToEdit
       if (this.taskToEdit.subtasks && this.taskToEdit.subtasks.length > 0) {
         this.taskToEdit.subtasks.forEach(subtask => {
@@ -168,7 +168,7 @@ removeSubtask(index: number) {
   toggleContact(contactId: string): void {
     const currentValue = this.form.get('assignedTo')?.value || [];
     const index = currentValue.indexOf(contactId);
-    
+
     if (index > -1) {
       // Contact is already selected, remove it
       currentValue.splice(index, 1);
@@ -176,7 +176,7 @@ removeSubtask(index: number) {
       // Contact is not selected, add it
       currentValue.push(contactId);
     }
-    
+
     this.form.get('assignedTo')?.setValue([...currentValue]);
   }
 
@@ -195,8 +195,25 @@ removeSubtask(index: number) {
   }
 
   async submit() {
+    // Check if required fields are filled
+    const requiredFields = ['title', 'dueDate', 'category'];
+    let hasEmptyRequiredFields = false;
+
+    for (const field of requiredFields) {
+      const control = this.form.get(field);
+      if (!control?.value) {
+        control?.markAsTouched();
+        hasEmptyRequiredFields = true;
+      }
+    }
+
+    if (hasEmptyRequiredFields) {
+      this.success.show('Please fill out all required fields marked with *', 3000);
+      return;
+    }
+
     const value = this.form.getRawValue();
-    
+
     // Convert subtasks from string array to object array
     const processedValue = {
       ...value,

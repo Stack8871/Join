@@ -5,7 +5,7 @@
 
 .form-content{
   display:flex;
-flex-wrap: wrap;  
+flex-wrap: wrap;
   gap:1rem;
 }
 .flex-required{
@@ -22,7 +22,7 @@ margin-top:$spacing-base;
   flex-direction: column;
   max-width: 440px;
   margin-bottom:$spacing-base;
-  
+
 
   label {
     font-size: var(--font-size-base);
@@ -30,11 +30,12 @@ margin-top:$spacing-base;
     width: 100%;
     margin-bottom:$spacing-xs;
   }
-  .validation-message {
+  /* Old validation message style - replaced by global style */
+  /* .validation-message {
     color: #ff0000;
     font-size: var(--font-size-sm);
     margin-top: 4px;
-  }
+  } */
 }
 .input-group {
   display: block;
@@ -84,12 +85,13 @@ justify-content: space-between;
     margin-right:$spacing-base;
   }
 
-  .validation-message {
+  /* Old validation message style - replaced by global style */
+  /* .validation-message {
     color: $color-accent-urgent;
     font-size: var(--font-size-sm);
     margin-top: 4px;
     padding-left: 12px;
-  }
+  } */
 }
 @media (width < 767px){
   .button-group {
@@ -264,27 +266,27 @@ justify-content: space-between;
   cursor: pointer;
   font-size: var(--font-size-base);
   transition: border-color 0.2s ease;
-  
+
   &:hover {
     border-color: $color-subtask-bar;
   }
-  
+
   &.open {
     border-color: $color-primary;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  
+
   .placeholder {
     color: $color-text-heading;
   }
-  
+
   .dropdown-arrow {
     font-size: 12px;
     color: $color-medium-gray;
     transition: transform 0.2s ease;
   }
-  
+
   &.open .dropdown-arrow {
     transform: rotate(180deg);
   }
@@ -312,11 +314,11 @@ justify-content: space-between;
   padding: $spacing-xs $spacing-base;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  
+
   &:hover {
     background-color: #f8f9fa;
   }
-  
+
   &.selected {
     background-color: rgba(41, 171, 226, 0.1);
   }

@@ -116,6 +116,16 @@ export class Contacts implements OnInit, OnDestroy {
   confirmDelete() {
     if (this.pendingDeleteId) {
       this.deleteItem(this.pendingDeleteId);
+      // Reset detail view if the deleted contact was selected
+      if (this.pendingDeleteId === this.contactsId) {
+        this.selectedContactsIndex = null;
+        this.selectedContact = { id: '', name: '', email: '', phone: '', isLoggedInUser: false };
+        this.contactsId = '';
+        // Reset mobile view state
+        if (this.breakpointHandler.isMobile()) {
+          this.showMobileDetails = false;
+        }
+      }
     }
     this.showDeleteConfirm = false;
     this.pendingDeleteId = null;
