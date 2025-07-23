@@ -10,7 +10,7 @@
       @for ( letter of groupedKeys; track letter) {
       <div class="group-header">{{ letter }}</div>
       @for ( contact of groupedContacts[letter]; track contact.id; let i = $index) {
-      <div class="contact-item" (click)="selectedContacts(letter, i)">
+      <div class="contact-item" [ngClass]="{'selected': selectedContactsIndex === i && groupedContacts[letter][i].id === contactsId}" (click)="selectedContacts(letter, i)">
         <div class="circle" [style.backgroundColor]="getColor(contact.name)">
           {{ getInitials(contact.name) }}
         </div>
