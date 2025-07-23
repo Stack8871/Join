@@ -2,18 +2,24 @@ import { inject, Injectable, OnDestroy } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { collection, collectionData, query, orderBy } from '@angular/fire/firestore';
-import { DocumentData, QueryDocumentSnapshot, onSnapshot, Unsubscribe, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  onSnapshot,
+  Unsubscribe,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc
+} from 'firebase/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { TaskInterface } from '../../../interfaces/task-interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-
+@Injectable({ providedIn: 'root' })
 export class Firebase implements OnDestroy {
   private firestore = inject(Firestore);
   private unsubscribe: Unsubscribe = () => {};
- ContactsList: ContactsInterface[] = [];
+  ContactsList: ContactsInterface[] = [];
 
   constructor() {
     try {
@@ -21,87 +27,80 @@ export class Firebase implements OnDestroy {
       this.unsubscribe = onSnapshot(
         contactsRef,
         (snapshot) => {
-          console.log('Snapshot received, number of documents:', snapshot.size);
           this.ContactsList = [];
           snapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
             const data = doc.data();
-            console.log('Document ID:', doc.id, 'Data:', data);
             this.ContactsList.push({
-                id: doc.id,
-                name: data['name'],
-                email: data['email'],
-                phone: data['phone'],
-                isLoggedInUser: data['isLoggedInUser'] || false,
+              id: doc.id,
+              name: data['name'],
+              email: data['email'],
+              phone: data['phone'],
+              isLoggedInUser: data['isLoggedInUser'] || false,
             });
           });
-
-          console.log('Updated ContactsList:', this.ContactsList);
         },
         (error) => {
-          console.error('Error getting documents:', error);
+          // Fehlerbehandlung optional
         }
       );
     } catch (error) {
-      console.error('Error setting up Firestore listener:', error);
+      // Fehlerbehandlung optional
     }
-  };
-/*   getTasks(): Observable<TaskInterface[]> {
-    const tasksRef = collection(this.firestore, 'tasks');
-    return collectionData(tasksRef, { idField: 'id' }) as Observable<TaskInterface[]>;
   }
-  getSingleTask(colId: string, docId: string){
-    return doc(collection(this.firestore, colId), docId);
-  } */
-    getAlphabeticalContacts() {
+
+  getAlphabeticalContacts(): Observable<ContactsInterface[]> {
     const contactsRef = collection(this.firestore, 'contacts');
     const sortedQuery = query(contactsRef, orderBy('name'));
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<ContactsInterface[]>;
   }
-  async addContactsToDatabase(contacts:ContactsInterface){
-    await addDoc(collection(this.firestore, 'contacts'), contacts)
+
+  async addContactsToDatabase(contacts: ContactsInterface) {
+    await addDoc(collection(this.firestore, 'contacts'), contacts);
   }
-    async editContactsToDatabase(id: string, editedContacts: ContactsInterface){
-    await updateDoc(doc(this.firestore, 'contacts', id),
-    {
-        name: editedContacts.name,
-        email: editedContacts.email,
-        phone: editedContacts.phone,
-        isLoggedInUser: editedContacts.isLoggedInUser || false,
+
+  async editContactsToDatabase(id: string, editedContacts: ContactsInterface) {
+    await updateDoc(doc(this.firestore, 'contacts', id), {
+      name: editedContacts.name,
+      email: editedContacts.email,
+      phone: editedContacts.phone,
+      isLoggedInUser: editedContacts.isLoggedInUser || false,
     });
   }
 
-  async deleteContactsFromDatabase(id: string){
-    await deleteDoc(doc(this.firestore, 'contacts', id) )
-  };
-
-setContactsObject(id: string, obj: ContactsInterface):ContactsInterface{
-  return{
-    id: id,
-    name: obj.name,
-    email: obj.email,
-    phone: obj.phone,
-    isLoggedInUser: obj.isLoggedInUser || false,
-  };
-}
-  async addTaskToDatabase(tasks:TaskInterface){
-    await addDoc(collection(this.firestore, 'tasks'), tasks)
+  async deleteContactsFromDatabase(id: string) {
+    await deleteDoc(doc(this.firestore, 'contacts', id));
   }
-  async editTaskToDatabase(id: string, editedTasks: TaskInterface){
-  await updateDoc(doc(this.firestore, 'tasks', id),
-  {
-        title: editedTasks.title,
-        status:editedTasks.status,
-        description: editedTasks.description,
-        dueDate: editedTasks.dueDate,
-        priority: editedTasks.priority,
-        assignedTo: editedTasks.assignedTo,
-        category: editedTasks.category,
-        subtasks: editedTasks.subtasks,
-  });
-}
-  async deleteTaskFromDatabase(id: string){
-    await deleteDoc(doc(this.firestore, 'tasks', id) )
-  };
+
+  setContactsObject(id: string, obj: ContactsInterface): ContactsInterface {
+    return {
+      id: id,
+      name: obj.name,
+      email: obj.email,
+      phone: obj.phone,
+      isLoggedInUser: obj.isLoggedInUser || false,
+    };
+  }
+
+  async addTaskToDatabase(tasks: TaskInterface) {
+    await addDoc(collection(this.firestore, 'tasks'), tasks);
+  }
+
+  async editTaskToDatabase(id: string, editedTasks: TaskInterface) {
+    await updateDoc(doc(this.firestore, 'tasks', id), {
+      title: editedTasks.title,
+      status: editedTasks.status,
+      description: editedTasks.description,
+      dueDate: editedTasks.dueDate,
+      priority: editedTasks.priority,
+      assignedTo: editedTasks.assignedTo,
+      category: editedTasks.category,
+      subtasks: editedTasks.subtasks,
+    });
+  }
+
+  async deleteTaskFromDatabase(id: string) {
+    await deleteDoc(doc(this.firestore, 'tasks', id));
+  }
 
   ngOnDestroy() {
     if (this.unsubscribe) {

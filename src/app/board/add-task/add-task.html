@@ -7,13 +7,7 @@
         <div class="form-group">
           <div class="input-group column">
             <label for="title">Title <span class="required-asterisk">*</span></label>
-            <input type="text" id="title" formControlName="title" placeholder="Enter a title"
-              [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}">
-            @if (isFieldInvalid('title')) {
-            <div class="speech-bubble title-validation">
-              {{ getValidationMessage('title') }}
-            </div>
-            }
+            <input type="text" id="title" formControlName="title" placeholder="Enter a title">
           </div>
         </div>
 
@@ -21,13 +15,7 @@
         <div class="form-group">
           <label for="description">Description</label>
           <div class="input-group">
-            <textarea id="description" formControlName="description" placeholder="Enter a description"
-              [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"></textarea>
-            @if (isFieldInvalid('description')) {
-            <div class="speech-bubble description-validation">
-              {{ getValidationMessage('description') }}
-            </div>
-            }
+            <textarea id="description" formControlName="description" placeholder="Enter a description"></textarea>
           </div>
         </div>
 
@@ -35,13 +23,7 @@
         <div class="form-group">
           <label for="dueDate">Due Date <span class="required-asterisk">*</span></label>
           <div class="input-group">
-            <input type="date" id="dueDate" formControlName="dueDate"
-              [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}">
-            @if (isFieldInvalid('dueDate')) {
-            <div class="speech-bubble duedate-validation">
-              {{ getValidationMessage('dueDate') }}
-            </div>
-            }
+            <input type="date" id="dueDate" formControlName="dueDate">
           </div>
         </div>
       </div>
@@ -182,11 +164,6 @@
           </div>
           }
 
-          @if (isFieldInvalid('assignedTo')) {
-          <div class="speech-bubble assignedto-validation">
-            {{ getValidationMessage('assignedTo') }}
-          </div>
-          }
         </div>
 
         <!-- Category -->
@@ -197,11 +174,6 @@
             <option value="User Story">User Story</option>
             <option value="Technical Task">Technical Task</option>
           </select>
-          @if (isFieldInvalid('category')) {
-          <div class="speech-bubble category-validation">
-            {{ getValidationMessage('category') }}
-          </div>
-          }
         </div>
 
         <!-- Subtasks -->
@@ -210,10 +182,7 @@
           @for (control of subtaskControls; track $index) {
           <div class="input-group">
             <div class="subtasks">
-              <input type="text" [formControl]="control" placeholder="Add new subtask" [ngClass]="{
-                    'valid-field': control.valid && control.touched,
-                    'invalid-field': control.invalid && control.touched
-                  }">
+              <input type="text" [formControl]="control" placeholder="Add new subtask">
               @if (subtaskControls.length > 1) {
               <button type="button" class="minus-icon" (click)="removeSubtask($index)">−</button>
               }

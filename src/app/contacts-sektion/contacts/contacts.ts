@@ -1,6 +1,3 @@
-/**
- * Component to manage and display user contacts with overlay integration.
- */
 import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
