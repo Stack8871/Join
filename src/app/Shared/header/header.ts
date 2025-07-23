@@ -96,8 +96,11 @@ export class Header {
 
   /** Logs out the current user. */
   logout() {
-    this.authService.logout();
-    this.showDropdown = false; // Close dropdown after logout
+    this.authService.logout()
+      .then(() => {
+        this.showDropdown = false; // Close dropdown after logout
+        this.router.navigate([''], { queryParams: { fromLogout: 'true' } });
+      });
   }
 
   /** Close dropdown when clicking outside */
@@ -105,7 +108,7 @@ export class Header {
   onDocumentClick(event: Event) {
     const target = event.target as HTMLElement;
     const isInsideDropdown = target.closest('.circle-user') || target.closest('.dropdown-menu');
-    
+
     if (!isInsideDropdown) {
       // Clear timeout and close immediately on click outside
       if (this.dropdownTimeout) {

@@ -6,7 +6,7 @@ export class LogoAnimation {
   private initialPosition = { top: 0, left: 0 };
   private finalPosition = { top: 0, left: 0 };
 
-  private static hasPlayed = false;
+  static hasPlayed = false;
 
   private state: AnimationState = AnimationState.Idle;
 

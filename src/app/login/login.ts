@@ -5,6 +5,7 @@ import {LoginService} from './login.service';
 import {AuthService} from '../Shared/firebase/firebase-services/auth.service';
 import {RouterModule, Router} from '@angular/router';
 import {LogoAnimation} from './logo-animation';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class Login implements OnInit {
     private loginService: LoginService,
     private authService: AuthService,
     private logoAnimation: LogoAnimation,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   /** Logs in the user with email and password. */
@@ -79,13 +81,25 @@ export class Login implements OnInit {
 
   /** Initializes login animation after page load. */
   ngOnInit(): void {
-    const triggerAnimation = () => {
-      this.isLoading = false;
-      setTimeout(() => {
-        this.logoAnimation.initAnimation(() => this.showLoginCard = true);
-      }, 100);
-    };
-    window.addEventListener('load', () => setTimeout(triggerAnimation, 500));
-    setTimeout(triggerAnimation, 5000);
+    // Check if user is coming from logout
+    this.route.queryParams.subscribe(params => {
+      if (params['fromLogout'] === 'true') {
+        // Skip animation and show login card immediately
+        this.isLoading = false;
+        this.showLoginCard = true;
+        // Mark animation as played to prevent it from running later
+        LogoAnimation.hasPlayed = true;
+      } else {
+        // Normal animation flow for regular page load
+        const triggerAnimation = () => {
+          this.isLoading = false;
+          setTimeout(() => {
+            this.logoAnimation.initAnimation(() => this.showLoginCard = true);
+          }, 100);
+        };
+        window.addEventListener('load', () => setTimeout(triggerAnimation, 500));
+        setTimeout(triggerAnimation, 5000);
+      }
+    });
   }
 }
