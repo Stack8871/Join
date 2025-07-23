@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, OnDestroy} from '@angular/core';
 import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop, CdkDragPlaceholder, moveItemInArray, transferArrayItem,} from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -224,13 +224,13 @@ export class ManageTask implements OnInit, OnDestroy {
   getPriorityIcon(priority: string): string {
     switch (priority.toLowerCase()) {
       case 'low':
-        return '/icons/prio-low.svg';
+        return 'icons/prio-low.svg';
       case 'medium':
-        return '/icons/prio-medium.svg';
+        return 'icons/prio-medium.svg';
       case 'urgent':
-        return '/icons/prio-urgent.svg';
+        return 'icons/prio-urgent.svg';
       default:
-        return '/icons/prio-medium.svg'; // Fallback
+        return 'icons/prio-medium.svg'; // Fallback
     }
   }
 

@@ -139,15 +139,15 @@ export class TaskDetail implements OnInit {
    * @returns Der Pfad zum entsprechenden Icon
    */
   getPriorityIcon(priority: string): string {
-    switch (priority.toLowerCase()) {
-      case 'low':
-        return '/icons/prio-low.svg';
-      case 'medium':
-        return '/icons/prio-medium.svg';
-         case 'urgent':
-        return '/icons/prio-urgent.svg';
+    switch (priority) {
+      case 'Low':
+        return 'icons/prio-low.svg';
+      case 'Medium':
+        return 'icons/prio-medium.svg';
+      case 'Urgent':
+        return 'icons/prio-urgent.svg';
       default:
-        return '/icons/prio-medium.svg'; // Fallback
+        return 'icons/prio-medium.svg'; // Fallback
     }
   }
 

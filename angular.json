@@ -26,7 +26,28 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public/icons",
+                "output": "icons"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/icons-white",
+                "output": "icons-white"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/font",
+                "output": "font"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/img",
+                "output": "img"
+              },
+              {
+                "glob": "*",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
@@ -38,6 +59,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

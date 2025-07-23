@@ -2,14 +2,13 @@
   <div class="contact-container">
     <button class="add-contact-btn" (click)="addNewContact()">
       <span>Add new contact</span>
-      <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
+      <img src="icons-white/person_add.svg" alt="check" class="new-contact-icon" />
     </button>
     @if (firebase.ContactsList.length > 0)
     {
     <div class="contact-list">
       @for ( letter of groupedKeys; track letter) {
       <div class="group-header">{{ letter }}</div>
-
       @for ( contact of groupedContacts[letter]; track contact.id; let i = $index) {
       <div class="contact-item" (click)="selectedContacts(letter, i)">
         <div class="circle" [style.backgroundColor]="getColor(contact.name)">
@@ -20,7 +19,7 @@
             {{ contact.name }}
             @if (contact.isLoggedInUser) {
               <span class="logged-in-badge" title="This is you">
-                <img src="/icons/person.svg" alt="You" />
+                <img src="icons/person.svg" alt="You" />
               </span>
             }
           </div>
@@ -35,7 +34,7 @@
   <section class="contacts-detail-container">
     <div class="back-btn">
       <button (click)="goBackToList()">
-        <img src="/icons/arrow-left.svg" alt="">
+        <img src="icons/arrow-left.svg" alt="">
       </button>
     </div>
     <div class="contacts-info-container">
@@ -98,10 +97,9 @@
   </ng-template>
   <div class="mobile-btn-add-contact">
       <button (click)="addNewContact()">
-    <img src="/icons-white/person_add.svg" alt="check" />
+    <img src="icons-white/person_add.svg" alt="check" />
   </button>
   </div>
-
   @if (showDeleteConfirm) {
   <div class="delete-confirm-overlay">
     <div class="delete-dialog">
