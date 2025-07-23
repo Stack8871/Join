@@ -1,6 +1,6 @@
 <app-loading-spinner></app-loading-spinner>
 
-@if (isLoggedIn && currentRoute !== '' && currentRoute !== 'sign-up' || currentRoute === 'imprint' || currentRoute === 'privacy') {
+@if ((isLoggedIn && currentRoute !== '' && currentRoute !== 'sign-up') || (isLoggedIn && (currentRoute === 'imprint' || currentRoute === 'privacy'))) {
   <div class="wrapper">
     <div class="aside">
       <aside>
