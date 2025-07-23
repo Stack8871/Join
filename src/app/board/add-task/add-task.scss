@@ -2,6 +2,7 @@
 
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
+  
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
@@ -11,11 +12,44 @@
     }
   }
 }
-.vertical-divider {
-  width: 1px;
-  background-color: $color-light-gray;
-  @media (max-width: 768px) {
-  display:none;
+.left-side{
+ display:flex;
+ flex-direction: column;
+  gap:$spacing-sm;
+  
+}
+.right-side{
+ display:flex;
+ flex-direction: column;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+  margin-bottom:$spacing-base;
+  @media (width < 860px){
+    width:99svw;
+  }
+  label {
+    font-size: var(--font-size-base);
+    color: $color-text-heading;
+    width: 100%;
+    margin-bottom:$spacing-xs;
+  }
+  .validation-message {
+    color: #ff0000;
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+  }
+}
+.input-group {
+  display: block;
+  & label {
+    display: block;
+  }
+  &select{
+    display: block;
+    width:400px;
   }
 }
 .date-input {
@@ -51,14 +85,49 @@ img {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  cursor: pointer;
+  cursor: pointer;    
+
+}
+.task-container{
+  width: 880px;
+  padding: 5%;  
+  overflow: auto;
+  @media(width < 860px){
+    height: 89svh;
+    width: 85svw;
+  }
+}
+  .task-heading{
+    padding-bottom:3%;
+  }
+.priority-icon {
+  margin-left:$spacing-sm;
+  padding-top:2px;
+}
+.button-group {
+  margin-top: $spacing-base;
+
+  .submit-btn {
+    padding: 12px 24px;
+    background-color: $color-primary;
+    color: $color-white;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $color-subtask-bar;
+      box-shadow: $card-shadow;
+    }
+  }
 }
 .subtasks{
   border: 1px solid $color-light-gray;
   border-radius: $spacing-2xs;
   background:$color-white;
   display:flex;
-  width: 100%;
   & input{
     max-width:390px;
     border:0px solid transparent;
@@ -80,6 +149,7 @@ img {
   margin:0;
   padding-right: 5%;
 }
+
 select {
   font: inherit;
   line-height: 1.5em;
@@ -89,6 +159,7 @@ select {
   border-radius: $spacing-2xs;
   border:1px solid $color-light-gray;
 }
+
 select.minimal {
   display: inline-block;
   appearance: none;
@@ -111,15 +182,20 @@ select.minimal {
     1px 1.5em;
   background-repeat: no-repeat;
 }
+
 select.minimal:focus {
   border-color: $color-light-gray;
   outline: 0;
 }
-
+/* Multiselect: Zeilenhöhe und Scrollbar */
 select.minimal[multiple] {
-  height: 120px; 
+  height: 120px; /* Feste Höhe statt 100% */
   overflow-y: auto;
+  /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
+  
+
 }
+/* Option-Styles */
 select.minimal option {
   padding: 12px 16px;
   border-radius: 4px;
@@ -130,6 +206,8 @@ select.minimal option {
   background: $color-white;
   color: $color-text-heading;
   border: none;
+  
+  /* Styling für bessere Lesbarkeit */
   &:checked {
     background: $color-primary !important;
     color: white !important;
@@ -141,6 +219,8 @@ select.minimal option {
     color: $color-text-heading !important;
   }
 }
+
+/* Multi-Select Styling für bessere Darstellung */
 select.minimal[multiple] option {
   padding: 10px 16px;
   display: flex;
@@ -164,6 +244,7 @@ select.minimal[multiple] option {
     font-weight: 600;
   }
 }
+/* Optional: Hover- und Selected-Effekt */
 select.minimal option:checked,
 select.minimal option:hover {
   background: #e0e7ff;
@@ -173,6 +254,8 @@ select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
+
+/* Assigned Contacts Display Styles */
 .assigned-contacts-display {
   margin-top: 12px;
   
@@ -183,6 +266,7 @@ select:-moz-focusring {
     margin-bottom: 8px;
     display: block;
   }
+  
   .contacts-list {
     display: flex;
     flex-wrap: wrap;
@@ -216,5 +300,11 @@ select:-moz-focusring {
         font-weight: 400;
       }
     }
+  }
+}
+.horizontal-line{
+  border-right: 1px solid $color-light-gray;
+  @media (width < 769px) {
+    display:none;
   }
 }
