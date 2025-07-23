@@ -373,6 +373,7 @@ justify-content: space-between;
 }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
+  margin:0 6%;
   @media (width < 780px){
     display:none;
   }

@@ -58,6 +58,7 @@ img {
   border-radius: $spacing-2xs;
   background:$color-white;
   display:flex;
+  width: 100%;
   & input{
     max-width:390px;
     border:0px solid transparent;

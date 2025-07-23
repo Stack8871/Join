@@ -169,25 +169,6 @@ padding: 4%;
 .card-wrapper{
   max-width: 85svw;
 }
-.left-side{
- display:flex;
- flex-direction: column;
-  gap:$spacing-sm;
-  padding-right:3%;
-  @media (width < 740px){
-    width:100%;
-      padding-right:0%;
-  }
-}
-.right-side{
- display:flex;
- flex-direction: column;
-  padding-left:3%;
-  @media (width < 740px){
-    width:100%;
-      padding-left:0%;
-  }
-}
 .justify-start{
   justify-content: flex-start;
 }
