@@ -55,9 +55,11 @@ export class ContactsOverlay implements OnInit {
       });
     }
 
-    // Always mark the phone field as touched when the overlay appears
-    // This will ensure the field is red from the start
-    this.form.get('phone')?.markAsTouched();
+    // Only mark the phone field as touched when showPhoneValidationError is true
+    // This ensures validation errors only show for newly registered users
+    if (this.showPhoneValidationError) {
+      this.form.get('phone')?.markAsTouched();
+    }
   }
   /** Deletes contact by ID */
   deleteItem(contactId: string) {

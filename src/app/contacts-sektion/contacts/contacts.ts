@@ -194,7 +194,7 @@ export class Contacts implements OnInit, OnDestroy {
     });
   }
 
-  /** Groups contacts by their first name's first letter */
+  /** Groups contacts by their first name's first letter and sorts alphabetically within each group */
   private groupContactsByFirstLetter(contacts: ContactsInterface[]): { [letter: string]: ContactsInterface[] } {
     const grouped: { [letter: string]: ContactsInterface[] } = {};
     for (const contact of contacts) {
@@ -202,6 +202,12 @@ export class Contacts implements OnInit, OnDestroy {
       if (!grouped[letter]) grouped[letter] = [];
       grouped[letter].push(contact);
     }
+
+    // Sort contacts within each letter group alphabetically
+    for (const letter in grouped) {
+      grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     return grouped;
   }
 
