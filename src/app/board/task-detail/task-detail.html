@@ -11,7 +11,7 @@
         <div class="task-detail-title">
           <h3> {{ selectedTask.title }}</h3>
         </div>
-        <div class="description">{{ selectedTask.description }} </div>
+        <div class="description margin-top">{{ selectedTask.description }} </div>
         <div class="flex column small-gap margin-top">
           <div class="flex small-gap">
             <h4>due date:</h4>
@@ -30,7 +30,7 @@
             <div>
               <h4>Assigned to</h4>
             </div>
-            <div class="flex column small-gap">
+            <div class="flex column small-gap margin-top">
               @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
                 @for (contactId of selectedTask.assignedTo; track contactId) {
                   <div class="flex assigned-to">
