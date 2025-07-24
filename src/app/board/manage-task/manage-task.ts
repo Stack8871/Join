@@ -34,6 +34,7 @@ export class ManageTask implements OnInit, OnDestroy {
   tasks: TaskInterface[] = [];
   searchTerm: string = '';
   filteredColumns: any[] = [];
+  noTasksFound: boolean = false;
   private editOverlayListener?: (event: any) => void;
   canCreateTask = false;
   canEditTask = false;
@@ -274,9 +275,14 @@ export class ManageTask implements OnInit, OnDestroy {
     this.searchTerm = searchTerm;
     if (!searchTerm || searchTerm.trim() === '') {
       this.filteredColumns = [...this.columns];
+      this.noTasksFound = false;
       return;
     }
 
     this.filteredColumns = this.filterService.filterColumns([...this.columns], searchTerm);
+
+    // Check if any tasks were found after filtering
+    const hasAnyTasks = this.filteredColumns.some(column => column.tasks.length > 0);
+    this.noTasksFound = !hasAnyTasks;
   }
 }

@@ -97,6 +97,7 @@ export class TaskDetail implements OnInit {
         return;
       }
       this.firebase.deleteTaskFromDatabase(taskId);
+      this.close.emit();
     }
 
 

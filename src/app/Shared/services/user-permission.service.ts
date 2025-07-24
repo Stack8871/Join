@@ -26,9 +26,10 @@ export class UserPermissionService {
    * @returns Observable<boolean> that emits true if the user can create items
    */
   canCreate(): Observable<boolean> {
-    return this.isGuest().pipe(
-      map(isGuest => !isGuest) // Only non-guests can create
-    );
+    return new Observable<boolean>(observer => {
+      observer.next(true); // All users (including guests) can create
+      observer.complete();
+    });
   }
 
   /**
@@ -36,8 +37,9 @@ export class UserPermissionService {
    * @returns Observable<boolean> that emits true if the user can delete items
    */
   canDelete(): Observable<boolean> {
-    return this.isGuest().pipe(
-      map(isGuest => !isGuest) // Only non-guests can delete
-    );
+    return new Observable<boolean>(observer => {
+      observer.next(true); // All users (including guests) can delete
+      observer.complete();
+    });
   }
 }

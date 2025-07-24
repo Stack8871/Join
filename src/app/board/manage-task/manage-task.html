@@ -71,9 +71,16 @@
     </div>
     }
   </div>
-  
+
+  @if (noTasksFound && searchTerm.trim() !== '') {
+    <div class="no-tasks-found-message">
+      <p>No tasks found with the search term "{{ searchTerm }}"</p>
+    </div>
+  }
+
   @if (isSelected && selectedTask) {
     <div class="overlay">
       <app-task-detail [selectedTask]="selectedTask" (close)="closeOverlay()"></app-task-detail>
     </div>
   }
+</div>

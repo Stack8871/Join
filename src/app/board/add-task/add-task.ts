@@ -38,12 +38,27 @@ constructor(private fb: FormBuilder) {
     status:'todo',
     title: ['', Validators.required],
     description: ['', Validators.required],
-    dueDate: ['', Validators.required],
+    dueDate: ['', [Validators.required, this.dateNotInPastValidator()]],
     priority: ['', Validators.required],
     assignedTo: [[], Validators.required],
     category: ['', Validators.required],
     subtasks: this.fb.array([this.fb.control('', Validators.required)])
   });
+}
+
+// Custom validator to check if date is not in the past
+dateNotInPastValidator() {
+  return (control: FormControl): {[key: string]: any} | null => {
+    const selectedDate = new Date(control.value);
+    // Set hours, minutes, seconds, and milliseconds to 0 for today's date to compare only the date part
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      return { 'pastDate': true };
+    }
+    return null;
+  };
 }
 
 get subtasks(): FormArray {
@@ -134,6 +149,9 @@ removeSubtask(index: number) {
     if (field.errors['required']) {
       return 'This field is required';
     }
+    if (field.errors['pastDate']) {
+      return 'Due date cannot be in the past';
+    }
     return 'Invalid input';
   }
 
@@ -223,6 +241,14 @@ removeSubtask(index: number) {
 
     if (hasEmptyRequiredFields) {
       this.success.show('Please fill out all required fields marked with *', 3000);
+      return;
+    }
+
+    // Check if due date is in the past
+    const dueDateControl = this.form.get('dueDate');
+    if (dueDateControl?.errors?.['pastDate']) {
+      dueDateControl.markAsTouched();
+      this.success.show('Due date cannot be in the past', 3000);
       return;
     }
 

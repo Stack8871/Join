@@ -159,7 +159,24 @@ h4{
   background-color: rgba(0, 0, 0, 0.03);
   margin: 10px 0;
   @include center-column;
-  min-height: 250px;
+}
+
+.no-tasks-found-message {
+  color: $color-primary;
+  text-align: center;
+  padding: $spacing-lg;
+  margin-top: $spacing-lg;
+  background-color: $color-bg-card;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  p {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+  }
 }
 
   .assigned-to{

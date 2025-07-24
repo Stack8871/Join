@@ -23,7 +23,11 @@
         <div class="form-group">
           <label for="dueDate">Due Date <span class="required-asterisk">*</span></label>
           <div class="input-group">
-            <input type="date" id="dueDate" formControlName="dueDate">
+            <input type="date" id="dueDate" formControlName="dueDate"
+                   [ngClass]="{'invalid': isFieldInvalid('dueDate')}">
+            <div *ngIf="isFieldInvalid('dueDate')" class="validation-error">
+              {{ getValidationMessage('dueDate') }}
+            </div>
           </div>
         </div>
       </div>
