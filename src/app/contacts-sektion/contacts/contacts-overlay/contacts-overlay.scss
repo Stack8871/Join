@@ -1,12 +1,13 @@
 @use 'index' as *;
 .overlay-container {
       display: flex;
-      max-width: 90svw;
+      max-width: 960px;
       background: transparent;
      border-radius: 10px;
       overflow: hidden;
       @media (width < 769px){
       max-height:90svh;
+      width:79svw;
       }
     }
 
@@ -22,9 +23,6 @@
   }
 }
 
-.form-content{
-  margin-top:10%;
-}
 .subheadline {
   position: relative;
   display: inline-block;
@@ -210,38 +208,38 @@
         flex-direction: column;
       }
       .contact-avatar {
-        position:absolute;
-        left:38%;
-        top:-11%;
-        z-index:100;
-        @include center;
-        width: 80px;
-        height: 80px;
-        background-color: $color-light-gray;
+        width:100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        margin-bottom:1rem;
+      }
+      .avatar-content{
+        display: grid;
+        position:relative;
+        width:95px;
+        height:95px;
+        background:$color-medium-gray;
         border-radius: 50%;
-        img {
-          min-width: 30px;
-          min-height: 30px;
-          width: 60%;
-          height: 60%;
+        justify-content: center;
+        align-items: center;
+        & img{
+          width:60px;
+          height: 60px;
+          position: relative;
         }
-        @media (width > 980px){
-          position:relative;
-          left: 0;
-          top: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-          height: 100px;
-          z-index:1;
-          padding:2%;
-          margin: 0 6%;
-          img {
-          width: 70%;
-          height: 70%;
+      @media (width < 769px){
+        postition:absolute;
+        top:-70px;
+        left:0;
+        z-index:800;
+        height:75px;
+        width:75px;
+        img{
+          width:50px;
+          height: 50px;
+          margin-bottom:4px;
         }
-
         }
       }
     }
