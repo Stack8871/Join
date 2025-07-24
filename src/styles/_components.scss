@@ -116,9 +116,7 @@ a:hover, button:hover{
   display: inline-block;
   margin:$spacing-sm;
   height:90%;
-  @media(width < 700px){
-    display:none;
-  }
+  border-right: 0px solid $color-subtask-bar;
 
   &::after {
   content: "";
@@ -141,7 +139,7 @@ a:hover, button:hover{
     border-bottom: 0px solid $color-subtask-bar;
   }
 }
-@media (width < 490px){
+@media (width < 450px){
   .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }

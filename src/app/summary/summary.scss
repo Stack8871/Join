@@ -82,11 +82,12 @@
     gap:$spacing-2xl;
 }
 .tasks-overview{
+    flex:1;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 1fr 1fr;
     gap: $spacing-sm;
     padding: $spacing-2xs;
-    max-width: 440px;
+    max-width:440px;
     @media (width < 620px){
         width:100%;
     }
@@ -110,15 +111,20 @@
   }
 }
 .summary-header {
-  display: flex;
-  flex-wrap: wrap;
-  width:100ch;
-  align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     margin-bottom: $spacing-3xl;
     height:60px;
     @media (width < 450px){
         width: 30ch;
     }
+}
+.urgent-span-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:$spacing-base;
+    padding:0 $spacing-lg
 }
 
 .greeting {
