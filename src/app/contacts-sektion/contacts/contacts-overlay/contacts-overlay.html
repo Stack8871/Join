@@ -19,12 +19,26 @@
                     </div>
                     <form [formGroup]="form" (ngSubmit)="submit()">
                         <div class="form-content">
-                            <div class="input-group">
-                                <input type="text" placeholder="Name" formControlName="name" />
+                            <div class="input-group"
+                                [class.error]="form.get('name')?.invalid && (form.get('name')?.touched || showNameValidationError)">
+                                @if (form.get('name')?.invalid && (form.get('name')?.touched || showNameValidationError)) {
+                                <div class="speech-bubble">
+                                    please enter name
+                                </div>
+                                }
+                                <input type="text" placeholder="Name" formControlName="name"
+                                    [class.error-input]="form.get('name')?.invalid && (form.get('name')?.touched || showNameValidationError)" />
                                 <img src="icons/person.svg" alt="person" />
                             </div>
-                            <div class="input-group">
-                                <input type="email" placeholder="Email" formControlName="email" />
+                            <div class="input-group"
+                                [class.error]="form.get('email')?.invalid && (form.get('email')?.touched || showEmailValidationError)">
+                                @if (form.get('email')?.invalid && (form.get('email')?.touched || showEmailValidationError)) {
+                                <div class="speech-bubble">
+                                    please enter valid email
+                                </div>
+                                }
+                                <input type="email" placeholder="Email" formControlName="email"
+                                    [class.error-input]="form.get('email')?.invalid && (form.get('email')?.touched || showEmailValidationError)" />
                                 <img src="icons/mail.svg" alt="mail" />
                             </div>
                             <div class="input-group"
@@ -43,7 +57,7 @@
                                 @if (isEditMode && contactId) {
                                     <button type="button" class="cancel-btn btn" (click)="promptDelete(contactId)">Delete</button>
                                 }
-                                <button type="submit" class="create-btn btn">
+                                <button type="submit" class="create-btn btn" [disabled]="form.invalid" [class.disabled]="form.invalid">
                                     {{ isEditMode ? 'Save' : 'Create' }}
                                     <span class="check">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" viewBox="0 0 16 13" fill="none">

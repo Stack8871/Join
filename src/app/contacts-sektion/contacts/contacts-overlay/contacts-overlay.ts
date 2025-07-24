@@ -30,7 +30,9 @@ export class ContactsOverlay implements OnInit {
     phone: ['', Validators.required]
   });
 
-  // Flag to show phone validation error
+  // Flags to show validation errors
+  showNameValidationError = false;
+  showEmailValidationError = false;
   showPhoneValidationError = false;
 
   /** Checks if form is in edit mode. */
@@ -92,8 +94,24 @@ export class ContactsOverlay implements OnInit {
   /**
    * Submits the form data to Firestore.
    * Shows success message and closes overlay.
+   * Validates form before submission.
    */
   async submit() {
+    // Check if form is valid
+    if (this.form.invalid) {
+      // Set validation flags to show error messages
+      this.showNameValidationError = true;
+      this.showEmailValidationError = true;
+      this.showPhoneValidationError = true;
+
+      // Mark all fields as touched to trigger validation visuals
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.get(key)?.markAsTouched();
+      });
+
+      return; // Stop execution if form is invalid
+    }
+
     const value = this.form.getRawValue();
     if (this.isEditMode && this.contactToEdit?.id) {
       await this.firebase.editContactsToDatabase(this.contactToEdit.id, value as ContactsInterface);
