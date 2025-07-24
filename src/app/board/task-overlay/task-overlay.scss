@@ -15,21 +15,20 @@
 .left-side{
  display:flex;
  flex-direction: column;
-  gap:$spacing-sm;
   
 }
 .right-side{
  display:flex;
  flex-direction: column;
 }
-.form-group {
+/* .form-group {
   display: flex;
   flex-direction: column;
   max-width: 440px;
   margin-bottom:$spacing-base;
   @media (width < 860px){
     width:99svw;
-  }
+  } */
   label {
     font-size: var(--font-size-base);
     color: $color-text-heading;
@@ -41,7 +40,7 @@
     font-size: var(--font-size-sm);
     margin-top: 4px;
   }
-}
+
 .input-group {
   display: block;
   & label {
@@ -93,7 +92,7 @@ img {
   padding: 5%;  
   overflow: auto;
   @media(width < 860px){
-    height: 89svh;
+    height: 85svh;
     width: 85svw;
   }
 }

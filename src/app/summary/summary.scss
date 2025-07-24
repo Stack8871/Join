@@ -12,6 +12,11 @@
         color:$color-white;
     }
 }
+@media ( width < 360px){
+    .task-step-text span{
+        font-size: var(--font-size-sm);
+    }
+}
 .circle-primary-color{
     background: $color-primary;
     & svg{

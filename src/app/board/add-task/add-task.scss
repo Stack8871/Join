@@ -15,34 +15,31 @@
 .left-side{
  display:flex;
  flex-direction: column;
-  gap:$spacing-sm;
+/*   gap:$spacing-sm; */
 
 }
 .right-side{
  display:flex;
  flex-direction: column;
 }
-.form-group {
+/* .form-group {
   display: flex;
   flex-direction: column;
   max-width: 440px;
   margin-bottom:$spacing-base;
-  @media (width < 860px){
-    width:99svw;
-  }
   label {
     font-size: var(--font-size-base);
     color: $color-text-heading;
     width: 100%;
     margin-bottom:$spacing-xs;
-  }
+  } */
   .validation-message {
     color: #ff0000;
     font-size: var(--font-size-sm);
     margin-top: 4px;
   }
-}
-.input-group {
+
+/* .input-group {
   display: block;
   & label {
     display: block;
@@ -51,7 +48,7 @@
     display: block;
     width:400px;
   }
-}
+} */
 .date-input {
   position: relative;
   input {
