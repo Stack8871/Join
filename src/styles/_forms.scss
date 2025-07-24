@@ -22,6 +22,7 @@ margin-top:$spacing-base;
   flex-direction: column;
   max-width: 440px;
   margin-bottom:$spacing-base;
+  width:100%;
 
 
   label {
@@ -72,9 +73,7 @@ justify-content: space-between;
 }
 
 .input-group {
-  position: relative;
       width: 100%;
-
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
@@ -93,11 +92,11 @@ justify-content: space-between;
     padding-left: 12px;
   } */
 }
-@media (width < 767px){
+/* @media (width < 767px){
   .button-group {
   flex-direction: column;
   }
-}
+} */
 
 .button-group {
   max-width: 440px;

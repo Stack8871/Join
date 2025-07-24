@@ -221,8 +221,8 @@ h5{
 // Category styling with dynamic colors
 .category {
   padding: 4px 12px;
-  border-radius: 4px;
-  font-size: var(--font-size-sm);
+  border-radius: $spacing-sm;
+  font-size: var(--font-size-base);
   font-weight: 500;
   color: $color-white;
   display: inline-block;

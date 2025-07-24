@@ -53,6 +53,9 @@ a:hover, button:hover{
 }
 .big-card-padding{
   padding:$spacing-2xl;
+  @media (width < 767px) {
+      padding:0;
+  }
 }
 
 .section-overlay{
@@ -219,7 +222,7 @@ a:hover, button:hover{
   }
 }
 
-@media (max-width: 767px) {
+@media (width < 767px) {
   .ai-center{
     align-items: center;
   }
@@ -230,7 +233,7 @@ a:hover, button:hover{
     gap:$spacing-base;
   }
   .small-gap{
-        gap:$spacing-sm;
+    gap:$spacing-sm;
   }
   .rounded-submenu{
   display:flex;

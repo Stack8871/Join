@@ -8,12 +8,12 @@
   flex-wrap:wrap;
 }
 .grid-board{
-  display:grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-  width: 75svw;
-  max-width:1100px;
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    max-width: 1440px;
 }
+
 .card{
   border-radius: $card-radius;
   padding: $small-card-padding;
