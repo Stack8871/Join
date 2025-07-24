@@ -285,3 +285,74 @@ h5{
   color: $color-text-secondary;
   text-align: center;
 }
+
+// Subtask hover actions styling
+.subtask-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  position: relative;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    
+    .subtask-actions {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.subtask-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.subtask-actions {
+  display: flex;
+  gap: $spacing-xs;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  margin-left: $spacing-sm;
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: all 0.2s ease;
+  }
+  
+  &.edit-icon {
+    color: $color-primary;
+    
+    &:hover {
+
+      color: $color-subtask-bar;
+      transform: scale(1.1);
+    }
+  }
+  
+  &.delete-icon {
+    color: $color-primary;
+    
+    &:hover {
+      color: $color-subtask-bar;
+      transform: scale(1.1);
+    }
+  }
+}
