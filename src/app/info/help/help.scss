@@ -3,6 +3,7 @@
 @use 'typography' as *;
 
 .help-container {
+  position: relative;
   max-width: 80svw;
   margin: 0 0 0 2rem;
   padding: 2rem;
@@ -101,6 +102,12 @@
   h3 {
     color: $color-subtask-bar;
   }
+}
+
+.close-sign {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: $color-primary;
 }
 
 .help-footer {
