@@ -338,11 +338,13 @@ position: sticky;
     text-align: left;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: $spacing-2xs;
+    padding-right:$spacing-xs;
     .logged-in-badge-detail {
       font-size: 16px;
       color: $color-primary;
       font-weight: normal;
+      
     }
   }
 }
