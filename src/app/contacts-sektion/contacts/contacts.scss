@@ -134,12 +134,12 @@
     color: $color-white;
     border: 1px solid $color-primary;
     width:100%;
+    @media (width < 700px){
+      display:none;
+    }
     & span{
       margin-right:$spacing-base;
     }
-  .mobile & {
-    display: none;
-  }
 
   &:hover {
    background-color: #29ABE2;
