@@ -25,6 +25,7 @@ export class TaskOverlay implements OnInit{
 
   // Custom dropdown state
   isDropdownOpen = false;
+  isCategoryDropdownOpen = false;
 
 form: FormGroup;
 
@@ -163,6 +164,15 @@ removeSubtask(index: number) {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  toggleCategoryDropdown(): void {
+    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
+  }
+
+  selectCategory(category: string): void {
+    this.form.get('category')?.setValue(category);
+    this.isCategoryDropdownOpen = false;
+  }
+
   toggleContact(contactId: string): void {
     const currentValue = this.form.get('assignedTo')?.value || [];
     const index = currentValue.indexOf(contactId);
@@ -189,6 +199,7 @@ removeSubtask(index: number) {
     const target = event.target as HTMLElement;
     if (!target.closest('.custom-select-wrapper')) {
       this.isDropdownOpen = false;
+      this.isCategoryDropdownOpen = false;
     }
   }
 

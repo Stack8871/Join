@@ -196,17 +196,41 @@
         <!-- Category -->
         <div class="form-group">
           <label for="category">Category <span class="required-asterisk">*</span></label>
-          <div class="select-wrapper">
-            <select class="minimal" name="category" formControlName="category" required aria-placeholder="Select category">
-              <option value="User Story">User Story</option>
-              <option value="Technical Task">Technical Task</option>
-            </select>
-            <span class="select-arrow">
-              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 5.5L11.5 1L12.5 2L7 7.5L1.5 2L2.5 1L7 5.5Z" fill="currentColor"/>
-              </svg>
-            </span>
+          
+          <!-- Custom Single-Select Dropdown -->
+          <div class="custom-select-wrapper">
+            <div class="custom-select-header" (click)="toggleCategoryDropdown()"
+                 [class.open]="isCategoryDropdownOpen">
+              <span class="placeholder">
+                @if (form.get('category')?.value) {
+                  {{ form.get('category')?.value }}
+                } @else {
+                  Select category
+                }
+              </span>
+              <span class="dropdown-arrow">
+                <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 5.5L11.5 1L12.5 2L7 7.5L1.5 2L2.5 1L7 5.5Z" fill="currentColor"/>
+                </svg>
+              </span>
+            </div>
+
+            @if (isCategoryDropdownOpen) {
+            <div class="custom-select-dropdown">
+              <div class="category-option"
+                   [class.selected]="form.get('category')?.value === 'User Story'"
+                   (click)="selectCategory('User Story')">
+                <span>User Story</span>
+              </div>
+              <div class="category-option"
+                   [class.selected]="form.get('category')?.value === 'Technical Task'"
+                   (click)="selectCategory('Technical Task')">
+                <span>Technical Task</span>
+              </div>
+            </div>
+            }
           </div>
+          
           @if (isFieldInvalid('category')) {
           <div class="speech-bubble">
             {{ getValidationMessage('category') }}
