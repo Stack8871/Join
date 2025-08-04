@@ -1,10 +1,9 @@
 @use 'index' as *;
 *{
     word-wrap: break-word;
-    word-break: break-word;
+/*     word-break: break-word; */
     overflow-wrap: break-word;
-    hyphens: auto;
-    max-width: 100%;
+/*     max-width: 100%; */
 }
 .wrapper {
   display:flex;
@@ -31,7 +30,7 @@ header {
 }
 @media (width > 950px){
   .content-container{
-    width: calc(100% - 232px);
+    width: calc(100% - 194px);
   }
 }
 .content{

@@ -12,6 +12,24 @@
     }
   }
 }
+.form-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form-add-task-content{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  width:725px;
+  gap: 1rem;
+}
+.form-grid{
+  display: flex;
+  flex-wrap: wrap;
+}
 .left-side{
  display:flex;
  flex-direction: column;
@@ -64,8 +82,6 @@ img {
 
 }
 .task-container{
-  width: 880px;
-  padding: 5%;
   overflow: auto;
   @media(width < 860px){
     height: 89svh;
