@@ -1,12 +1,14 @@
 @use 'index' as *;
 .overlay-container {
       display: flex;
-      max-width: 90svw;
+      max-width: 960px;
       background: transparent;
      border-radius: 10px;
       overflow: hidden;
       @media (width < 769px){
       max-height:90svh;
+      width:79svw;
+      overflow: auto;
       }
     }
 
@@ -22,9 +24,6 @@
   }
 }
 
-.form-content{
-  margin-top:10%;
-}
 .subheadline {
   position: relative;
   display: inline-block;
@@ -81,15 +80,12 @@
 }
 .left-content {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
   gap: $spacing-md;
-  height:100%;
-  padding:3rem 0;
-  @media(width < 769px){
-    padding:0 2rem;
-  }
+  height:100%; 
+  padding:1rem;
+  margin-top
   .underline {
     position: relative;
     bottom: 3px;
@@ -99,6 +95,7 @@
 
     &.mobile {
       margin-top: 10px;
+     
     }
   }
   .logo-White {
@@ -137,7 +134,10 @@
 
   .input-group {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px $color-light-gray solid;
+    border-radius: $spacing-2xs;
+     padding:3px; 
 
     &.error {
       input {
@@ -150,7 +150,9 @@
     }
 
     input {
-      padding-right: 35px; /* Add padding to make room for the icon on the right */
+      padding-right: 0px; /* Add padding to make room for the icon on the right */
+      border:0px transparent solid;
+      width: 200px;
     }
 
     img {
@@ -205,43 +207,46 @@
       justify-content: center;
       align-items: center;
       flex:1;
+      gap:2rem;
       padding: 2rem;
       @media (width < 980px){
         flex-direction: column;
       }
       .contact-avatar {
-        position:absolute;
-        left:38%;
-        top:-11%;
-        z-index:100;
-        @include center;
-        width: 80px;
-        height: 80px;
-        background-color: $color-light-gray;
+        width:100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        @media (width < 769px){
+          height:40px;
+        }
+      }
+      .avatar-content{
+        display: grid;
+        position:relative;
+        width:95px;
+        height:95px;
+        background:$color-medium-gray;
         border-radius: 50%;
-        img {
-          min-width: 30px;
-          min-height: 30px;
-          width: 60%;
-          height: 60%;
+        justify-content: center;
+        align-items: center;
+        & img{
+          width:40px;
+          height: 40px;
+          position: relative;
         }
-        @media (width > 980px){
-          position:relative;
-          left: 0;
-          top: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 200px;
-          height: 100px;
-          z-index:1;
-          padding:2%;
-          margin: 0 6%;
-          img {
-          width: 70%;
-          height: 70%;
+      @media (width < 769px){
+        postition:absolute;
+        top:-70px;
+        left:0;
+        z-index:800;
+        height:75px;
+        width:75px;
+        img{
+          width:40px;
+          height: 40px;
+          margin-bottom:4px;
         }
-
         }
       }
     }

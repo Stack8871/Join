@@ -15,40 +15,18 @@
 .left-side{
  display:flex;
  flex-direction: column;
-/*   gap:$spacing-sm; */
 
 }
 .right-side{
  display:flex;
  flex-direction: column;
 }
-/* .form-group {
-  display: flex;
-  flex-direction: column;
-  max-width: 440px;
-  margin-bottom:$spacing-base;
-  label {
-    font-size: var(--font-size-base);
-    color: $color-text-heading;
-    width: 100%;
-    margin-bottom:$spacing-xs;
-  } */
   .validation-message {
     color: #ff0000;
     font-size: var(--font-size-sm);
     margin-top: 4px;
   }
 
-/* .input-group {
-  display: block;
-  & label {
-    display: block;
-  }
-  &select{
-    display: block;
-    width:400px;
-  }
-} */
 .date-input {
   position: relative;
   input {
@@ -125,6 +103,7 @@ img {
   border-radius: $spacing-2xs;
   background:$color-white;
   display:flex;
+  width:350px;
   & input{
     max-width:390px;
     border:0px solid transparent;

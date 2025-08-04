@@ -114,14 +114,14 @@ a:hover, button:hover{
 .line-seperator {
   position: relative;
   display: inline-block;
-  margin:$spacing-sm;
-  height:90%;
-  border-right: 0px solid $color-subtask-bar;
+  margin:$spacing-xs;
+  height:100%;
+
 
   &::after {
   content: "";
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 0;
   height: 99%;
   border-right: 3px solid $color-subtask-bar;
@@ -139,7 +139,7 @@ a:hover, button:hover{
     border-bottom: 0px solid $color-subtask-bar;
   }
 }
-@media (width < 450px){
+@media (width < 330px){
   .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }

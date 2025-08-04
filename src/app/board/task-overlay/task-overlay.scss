@@ -92,7 +92,7 @@ img {
   padding: 5%;  
   overflow: auto;
   @media(width < 860px){
-    height: 85svh;
+    height: 80svh;
     width: 85svw;
   }
 }
@@ -167,24 +167,175 @@ select.minimal {
   cursor: pointer;
   height: 100%;
   font-size: var(--font-size-base);
-  background-image:
-    linear-gradient(45deg, transparent 50%, $color-medium-gray 50%),
-    linear-gradient(135deg, $color-medium-gray 50%, transparent 50%),
-    linear-gradient(to right, $color-light-gray);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-  background-repeat: no-repeat;
+  background: none; // Entferne das alte CSS-Arrow
+  width: 100%;
+  padding-right: 40px; // Platz für das SVG-Arrow
 }
 
 select.minimal:focus {
   border-color: $color-light-gray;
   outline: 0;
+}
+
+// Einheitliches Select-Container Styling
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  
+  .select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: $color-medium-gray;
+    transition: color 0.2s ease;
+    
+    svg {
+      width: 14px;
+      height: 8px;
+    }
+  }
+  
+  select:focus + .select-arrow {
+    color: $color-primary;
+  }
+}
+
+// Custom Multi-Select Dropdown Styling
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-xs $spacing-sm;
+  border: 1px solid $color-light-gray;
+  border-radius: $spacing-2xs;
+  background: white;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  transition: border-color 0.2s ease;
+  
+  &:hover {
+    border-color: $color-medium-gray;
+  }
+  
+  &.open {
+    border-color: $color-primary;
+    
+    .dropdown-arrow {
+      transform: rotate(180deg);
+      color: $color-primary;
+    }
+  }
+  
+  .placeholder {
+    flex: 1;
+    color: $color-text-primary;
+  }
+  
+  .dropdown-arrow {
+    color: $color-medium-gray;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    
+    svg {
+      width: 14px;
+      height: 8px;
+    }
+  }
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid $color-light-gray;
+  border-top: none;
+  border-radius: 0 0 $spacing-2xs $spacing-2xs;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-xs $spacing-sm;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(42, 54, 71, 0.05);
+  }
+  
+  &.selected {
+    background-color: rgba(42, 54, 71, 0.1);
+  }
+}
+
+// Category Option Styling (ähnlich wie Contact Option)
+.category-option {
+  display: flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(42, 54, 71, 0.05);
+  }
+  
+  &.selected {
+    background-color: rgba(42, 54, 71, 0.1);
+    font-weight: 500;
+  }
+  
+  span {
+    font-size: var(--font-size-base);
+    color: $color-text-primary;
+  }
+}
+
+.contact-option-content {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex: 1;
+}
+
+.circle-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.contact-name {
+  font-size: var(--font-size-base);
+  color: $color-text-primary;
+}
+
+.checkbox-indicator {
+  color: $color-primary;
+  font-weight: bold;
+  font-size: 16px;
 }
 /* Multiselect: Zeilenhöhe und Scrollbar */
 select.minimal[multiple] {
@@ -274,12 +425,7 @@ select:-moz-focusring {
     .contact-item-display {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      background-color: #f8f9fa;
-      border-radius: 20px;
-      border: 1px solid #e9ecef;
-      
+      gap: 3px;
       .circle {
         width: 32px;
         height: 32px;
