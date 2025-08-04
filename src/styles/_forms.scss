@@ -32,6 +32,9 @@ margin-top:$spacing-base;
     width: 100%;
     margin-bottom:$spacing-xs;
   }
+
+.required-asterisk {
+  color: $color-accent-urgent;
 }
 .input-group {
   display: block;

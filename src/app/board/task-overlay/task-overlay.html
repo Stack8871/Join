@@ -195,7 +195,7 @@
         <!-- Category -->
         <div class="form-group">
           <label for="category">Category <span class="required-asterisk">*</span></label>
-          
+
           <!-- Custom Single-Select Dropdown -->
           <div class="custom-select-wrapper">
             <div class="custom-select-header" (click)="toggleCategoryDropdown()"
@@ -229,7 +229,7 @@
             </div>
             }
           </div>
-          
+
           @if (isFieldInvalid('category')) {
           <div class="speech-bubble">
             {{ getValidationMessage('category') }}
