@@ -77,21 +77,7 @@ justify-content: space-between;
     height: 1.25rem;
     margin-right:$spacing-base;
   }
-
-  /* Old validation message style - replaced by global style */
-  /* .validation-message {
-    color: $color-accent-urgent;
-    font-size: var(--font-size-sm);
-    margin-top: 4px;
-    padding-left: 12px;
-  } */
 }
-/* @media (width < 767px){
-  .button-group {
-  flex-direction: column;
-  }
-} */
-
 .button-group {
   max-width: 440px;
   gap: 1.25rem;
@@ -152,6 +138,7 @@ justify-content: space-between;
     border: 1px solid $color-light-gray;
     border-radius: $spacing-2xs;
     font-size: var(--font-size-base);
+    font-family: $font-family-base;
     &:focus {
       outline: none;
       border-color: $color-subtask-bar;

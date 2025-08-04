@@ -10,7 +10,7 @@
 .sidebar {
   @include center-column;
   justify-content: space-around;
-  max-width: 232px;
+  width: 232px;
   background:$color-primary;
   height: 100svh;
 }
