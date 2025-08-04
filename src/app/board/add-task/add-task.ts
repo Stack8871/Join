@@ -31,6 +31,9 @@ export class AddTask implements OnInit{
   // Custom dropdown state
   isDropdownOpen = false;
 
+  // Track which subtask is being edited
+  editingSubtaskIndex: number | null = null;
+
 form: FormGroup;
 
 constructor(private fb: FormBuilder) {
@@ -72,13 +75,42 @@ get subtaskControls(): FormControl[] {
 
 addSubtask() {
   const subtasks = this.form.get('subtasks') as FormArray;
-  subtasks.push(this.fb.control('', Validators.required));
+  const currentValue = subtasks.at(subtasks.length - 1).value;
+
+  // Only add the current subtask to the list if it has a value
+  if (currentValue && currentValue.trim() !== '') {
+    // Add a new empty control for the next subtask
+    subtasks.push(this.fb.control('', Validators.required));
+  } else {
+    // If the current input is empty, show a message or focus on it
+    this.success.show('Please enter a subtask before adding a new one', 2000);
+  }
 }
 
 removeSubtask(index: number) {
   const subtasks = this.form.get('subtasks') as FormArray;
   if (subtasks.length > 1) {
     subtasks.removeAt(index);
+  }
+}
+
+// Start editing a subtask
+editSubtask(index: number) {
+  this.editingSubtaskIndex = index;
+  // We need to wait for the input to be rendered before focusing it
+  setTimeout(() => {
+    const inputElement = document.getElementById('edit-subtask-' + index) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.focus();
+    }
+  }, 0);
+}
+
+// Save the edited subtask
+saveEditedSubtask(event?: KeyboardEvent) {
+  // If Enter key was pressed or method was called without an event (blur)
+  if (!event || event.key === 'Enter') {
+    this.editingSubtaskIndex = null;
   }
 }
 

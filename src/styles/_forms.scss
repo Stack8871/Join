@@ -5,8 +5,9 @@
 
 .form-content{
   display:flex;
-flex-wrap: wrap;
+  flex-wrap: wrap;
   gap:1rem;
+  justify-content: space-between;
 }
 .flex-required{
 margin-top:$spacing-base;
@@ -384,9 +385,9 @@ justify-content: space-between;
 }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
-  margin:0 6%;
+  margin:0 20px;
   @media (width < 1000px){
-    margin:0 2%;
+    margin:0 10px;
   }
   @media (width < 859px){
     display:none;
