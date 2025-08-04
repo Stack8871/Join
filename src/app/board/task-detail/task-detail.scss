@@ -32,6 +32,8 @@
 
 .task-detail-title{
     font-size: var(--font-size-2xl);
+    max-height: 420px;
+    overflow-y: auto;
 }
 
 .task-detail-card{
@@ -52,7 +54,6 @@ h5{
 
 .assigned-to{
     align-items: center;
-    margin-bottom: $spacing-base;
 }
 
 .ckeckbox-subtask{
@@ -99,7 +100,7 @@ h5{
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .btn {
@@ -304,6 +305,10 @@ h5{
       visibility: visible;
     }
   }
+}
+
+.subtask-container{
+  margin:$spacing-base 0;
 }
 
 .subtask-content {
