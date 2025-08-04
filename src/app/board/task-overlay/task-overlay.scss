@@ -2,7 +2,7 @@
 
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
-  
+
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
@@ -15,7 +15,7 @@
 .left-side{
  display:flex;
  flex-direction: column;
-  
+
 }
 .right-side{
  display:flex;
@@ -66,7 +66,7 @@
       display: none;
     }
     &:hover {
-      border-color: $color-subtask-bar;
+      border-color: $color-primary-dark;
     }
     &:focus {
       border-color: $color-primary;
@@ -84,12 +84,12 @@ img {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  cursor: pointer;    
+  cursor: pointer;
 
 }
 .task-container{
   width: 880px;
-  padding: 5%;  
+  padding: 5%;
   overflow: auto;
   @media(width < 860px){
     height: 80svh;
@@ -117,7 +117,7 @@ img {
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $color-subtask-bar;
+      background-color: $color-primary-dark;
       box-shadow: $card-shadow;
     }
   }
@@ -182,7 +182,7 @@ select.minimal:focus {
   position: relative;
   display: inline-block;
   width: 100%;
-  
+
   .select-arrow {
     position: absolute;
     right: 12px;
@@ -191,13 +191,13 @@ select.minimal:focus {
     pointer-events: none;
     color: $color-medium-gray;
     transition: color 0.2s ease;
-    
+
     svg {
       width: 14px;
       height: 8px;
     }
   }
-  
+
   select:focus + .select-arrow {
     color: $color-primary;
   }
@@ -220,31 +220,31 @@ select.minimal:focus {
   cursor: pointer;
   font-size: var(--font-size-base);
   transition: border-color 0.2s ease;
-  
+
   &:hover {
     border-color: $color-medium-gray;
   }
-  
+
   &.open {
     border-color: $color-primary;
-    
+
     .dropdown-arrow {
       transform: rotate(180deg);
       color: $color-primary;
     }
   }
-  
+
   .placeholder {
     flex: 1;
     color: $color-text-primary;
   }
-  
+
   .dropdown-arrow {
     color: $color-medium-gray;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    
+
     svg {
       width: 14px;
       height: 8px;
@@ -274,11 +274,11 @@ select.minimal:focus {
   padding: $spacing-xs $spacing-sm;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  
+
   &:hover {
     background-color: rgba(42, 54, 71, 0.05);
   }
-  
+
   &.selected {
     background-color: rgba(42, 54, 71, 0.1);
   }
@@ -291,16 +291,16 @@ select.minimal:focus {
   padding: $spacing-xs $spacing-sm;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  
+
   &:hover {
     background-color: rgba(42, 54, 71, 0.05);
   }
-  
+
   &.selected {
     background-color: rgba(42, 54, 71, 0.1);
     font-weight: 500;
   }
-  
+
   span {
     font-size: var(--font-size-base);
     color: $color-text-primary;
@@ -342,7 +342,7 @@ select.minimal[multiple] {
   height: 120px; /* Feste Höhe statt 100% */
   overflow-y: auto;
   /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
-  
+
 
 }
 /* Option-Styles */
@@ -356,14 +356,14 @@ select.minimal option {
   background: $color-white;
   color: $color-text-heading;
   border: none;
-  
+
   /* Styling für bessere Lesbarkeit */
   &:checked {
     background: $color-primary !important;
     color: white !important;
     font-weight: 500;
   }
-  
+
   &:hover:not(:checked) {
     background: #f0f0f0 !important;
     color: $color-text-heading !important;
@@ -377,7 +377,7 @@ select.minimal[multiple] option {
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  
+
   &::before {
     content: '';
     width: 24px;
@@ -408,7 +408,7 @@ select:-moz-focusring {
 /* Assigned Contacts Display Styles */
 .assigned-contacts-display {
   margin-top: 12px;
-  
+
   label {
     font-size: 14px;
     font-weight: 500;
@@ -416,12 +416,12 @@ select:-moz-focusring {
     margin-bottom: 8px;
     display: block;
   }
-  
+
   .contacts-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    
+
     .contact-item-display {
       display: flex;
       align-items: center;
@@ -438,7 +438,7 @@ select:-moz-focusring {
         font-size: 12px;
         flex-shrink: 0;
       }
-      
+
       .contact-name {
         font-size: 14px;
         color:$color-medium-gray;

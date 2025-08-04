@@ -263,7 +263,7 @@ h4{
   .priority-indicator {
     font-size: 12px;
     font-weight: 500;
-    color: $color-subtask-bar;
+    color: $color-primary;
     @include center-row-not-justify;
     gap: 4px;
     overflow: hidden;

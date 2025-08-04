@@ -42,14 +42,16 @@
       display: none;
     }
     &:hover {
-      border-color: $color-subtask-bar;
+      border-color: $color-primary-dark;
     }
     &:focus {
       border-color: $color-primary;
       box-shadow: 0 0 0 2px rgba(41, 171, 226, 0.2);
     }
     &::placeholder {
-      color: $color-light-gray;
+      color: $color-placeholder;
+      font-family: $font-family-base;
+      font-size: var(--font-size-base);
     }
   }
 }
@@ -93,7 +95,7 @@ img {
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $color-subtask-bar;
+      background-color: $color-primary-dark;
       box-shadow: $card-shadow;
     }
   }

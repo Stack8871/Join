@@ -325,7 +325,17 @@ justify-content: space-between;
   }
 
   &.selected {
-    background-color: rgba(41, 171, 226, 0.1);
+    background-color: $color-primary;
+    color: $color-white;
+
+    .contact-name {
+      color: $color-white;
+    }
+
+    .checkbox-indicator {
+      color: $color-white;
+      border-color: $color-white;
+    }
   }
 }
 
@@ -354,6 +364,13 @@ justify-content: space-between;
   color: $color-primary;
   font-weight: bold;
   font-size: 16px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .priority-icon {
   margin-left:$spacing-sm;
@@ -373,7 +390,7 @@ justify-content: space-between;
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $color-subtask-bar;
+      background-color: $color-primary-dark;
       box-shadow: $card-shadow;
     }
   }
