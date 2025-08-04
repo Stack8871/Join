@@ -4,6 +4,7 @@
 /*     word-break: break-word; */
     overflow-wrap: break-word;
 /*     max-width: 100%; */
+font-family: $font-family-base;
 }
 .wrapper {
   display:flex;
@@ -30,7 +31,7 @@ header {
 }
 @media (width > 950px){
   .content-container{
-    width: calc(100% - 194px);
+    width: calc(100% - 232px);
   }
 }
 .content{

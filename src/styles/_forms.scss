@@ -138,6 +138,7 @@ justify-content: space-between;
     border: 1px solid $color-light-gray;
     border-radius: $spacing-2xs;
     font-size: var(--font-size-base);
+    font-family: $font-family-base;
     &:focus {
       outline: none;
       border-color: $color-subtask-bar;

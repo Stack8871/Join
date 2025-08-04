@@ -12,6 +12,20 @@
         color:$color-white;
     }
 }
+.line-seperator-summery{
+    position: relative;
+    display: inline-block;
+    margin: clamp(0.5rem, 0.4821rem + 0.0893vw, 0.5625rem);
+    height: 100%;
+    &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 99%;
+    border-right: 3px solid #29abe2;
+    }
+}
 @media ( width < 360px){
     .task-step-text span{
         font-size: var(--font-size-sm);
