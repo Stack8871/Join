@@ -21,6 +21,9 @@
   background: $color-bg-card;
   gap: $spacing-sm;
   margin:$spacing-sm 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .add-task-btn{
   display:inline-block;
@@ -50,12 +53,32 @@ h4{
   color:$color-primary;
   font-size: var(--font-size-base);
 }
+.task-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+
+  h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
 .description{
   color:$color-gray;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .subtask-progress{
   align-items: center;
   gap: $spacing-xs;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .category{
   border-radius: $card-radius;
@@ -63,6 +86,11 @@ h4{
   font-size: var(--font-size-sm);
   color:$color-white;
   font-weight: 500;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // Dynamic category colors
@@ -209,6 +237,9 @@ h4{
   .assigned-contacts {
     gap: 4px;
     @include center-row-not-justify;
+    overflow: hidden;
+    max-width: 100%;
+    flex-wrap: nowrap;
   }
 
   .circle-initials {
@@ -235,6 +266,10 @@ h4{
     color: $color-subtask-bar;
     @include center-row-not-justify;
     gap: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 
   .priority-icon-small {

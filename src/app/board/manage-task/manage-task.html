@@ -41,9 +41,9 @@
           @for (task of col.tasks; track task.id) {
           <div class="card flex column" cdkDrag (click)="selectTask(task)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ task.category }}</span></div>
-            <div class="task-title"><h4> {{ task.title }}</h4></div>
-            <div class="description">{{ task.description }}</div>
+            <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
+            <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
+            <div class="description">{{ truncateText(task.description) }}</div>
             @if (task.subtasks && task.subtasks.length > 0) {
               <div class="progress-bar-container">
                 <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
@@ -54,7 +54,7 @@
             }
             <div class="flex space-between align-center">
                 <div class="flex assigned-contacts">
-                    @for (contactId of task.assignedTo; track contactId) {
+                    @for (contactId of limitArray(task.assignedTo); track contactId) {
                       <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
                         {{ getInitials(getContactName(contactId)) }}
                       </div>

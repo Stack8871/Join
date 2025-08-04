@@ -285,4 +285,24 @@ export class ManageTask implements OnInit, OnDestroy {
     const hasAnyTasks = this.filteredColumns.some(column => column.tasks.length > 0);
     this.noTasksFound = !hasAnyTasks;
   }
+
+  /**
+   * Truncates text to 20 characters and adds ellipsis if needed
+   * @param text - The text to truncate
+   * @returns Truncated text with ellipsis if needed
+   */
+  truncateText(text: string): string {
+    if (!text) return '';
+    return text.length > 20 ? text.substring(0, 20) + '...' : text;
+  }
+
+  /**
+   * Limits an array to a maximum of 5 items
+   * @param array - The array to limit
+   * @returns Limited array with maximum 5 items
+   */
+  limitArray(array: any[]): any[] {
+    if (!array) return [];
+    return array.slice(0, 5);
+  }
 }

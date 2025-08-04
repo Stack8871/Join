@@ -1,5 +1,33 @@
 @use 'index' as *;
 
+.overlay-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.card-wrapper {
+  max-width: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.card {
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.big-card {
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 .task-container {
   width: 100%;
   height: 100%;
@@ -13,7 +41,7 @@
 
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
-  
+
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
@@ -32,11 +60,29 @@
 
 .task-detail-title{
     font-size: var(--font-size-2xl);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+
+    h3 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .task-detail-card{
     max-width: 550px;
     margin:0 $spacing-base;
+}
+
+.description {
+    color: $color-gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 h4{
@@ -53,6 +99,9 @@ h5{
 .assigned-to{
     align-items: center;
     margin-bottom: $spacing-base;
+    overflow: hidden;
+    max-width: 100%;
+    display: flex;
 }
 
 .ckeckbox-subtask{
@@ -140,23 +189,25 @@ h5{
 
 // Checkbox styling (zurück zum Original)
 .checkbox-container{
-  display: flex; 
-  position: relative; 
-  box-sizing: border-box; 
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
   padding: 0 10px;
   border: 1px solid transparent;
   border-radius: 0;
   height: 30px;
   align-items: center;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .custom-checkbox {
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none; 
+  appearance: none;
   width: 22px;
   height: 22px;
-  background: url('https://join-5-1183.developerakademie.net/angular-projects/join/icons/checkbox.svg') no-repeat; 
+  background: url('https://join-5-1183.developerakademie.net/angular-projects/join/icons/checkbox.svg') no-repeat;
   background-size: 20px;
   border: 1px solid transparent;
   margin: 0;
@@ -180,6 +231,11 @@ h5{
   cursor: pointer;
   font-size: var(--font-size-base);
   color: $color-text-primary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 30px);
+  display: inline-block;
 }
 .custom-checkbox > input{
   padding:0;
@@ -204,6 +260,10 @@ h5{
   font-size: var(--font-size-base);
   font-weight: 500;
   color: $color-text-primary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .small-gap {
@@ -226,6 +286,10 @@ h5{
   font-weight: 500;
   color: $color-white;
   display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .category-userstory {
@@ -284,4 +348,8 @@ h5{
   font-size: var(--font-size-sm);
   color: $color-text-secondary;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
