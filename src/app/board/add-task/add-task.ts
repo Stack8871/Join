@@ -308,6 +308,28 @@ saveEditedSubtask(event?: KeyboardEvent) {
   }
 
   cancel() {
+    // Reset form to initial values
+    this.form.reset({
+      status: 'todo',
+      priority: 'medium',
+      assignedTo: [],
+      subtasks: ['']
+    });
+
+    // Reset form array for subtasks
+    const subtasks = this.form.get('subtasks') as FormArray;
+    while (subtasks.length > 0) {
+      subtasks.removeAt(0);
+    }
+    subtasks.push(this.fb.control('', Validators.required));
+
+    // Reset other state variables
+    this.isDropdownOpen = false;
+    this.editingSubtaskIndex = null;
+    this.isEditMode = false;
+    this.taskToEdit = undefined;
+
+    // Close the overlay
     document.dispatchEvent(new CustomEvent('closeOverlay'));
   }
 }
