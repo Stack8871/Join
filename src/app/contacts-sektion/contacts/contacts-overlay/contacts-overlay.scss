@@ -83,9 +83,9 @@
   flex-direction: column;
   flex-wrap: wrap;
   gap: $spacing-md;
-  height:100%; 
+  height:100%;
   padding:1rem;
-  margin-top
+  margin-top: 0;
   .underline {
     position: relative;
     bottom: 3px;
@@ -95,7 +95,7 @@
 
     &.mobile {
       margin-top: 10px;
-     
+
     }
   }
   .logo-White {
@@ -137,7 +137,7 @@
     margin-bottom: 0.5rem;
     border: 1px $color-light-gray solid;
     border-radius: $spacing-2xs;
-     padding:3px; 
+     padding:3px;
 
     &.error {
       input {
@@ -236,7 +236,7 @@
           position: relative;
         }
       @media (width < 769px){
-        postition:absolute;
+        position:absolute;
         top:-70px;
         left:0;
         z-index:800;
