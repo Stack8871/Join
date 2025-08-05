@@ -38,8 +38,9 @@ h2, h3, h4{
 }
 h3{
   color:$color-primary;
-  @media (width < 620px){
-    font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
+  @media (width < 527px){
+    font-size: var(--font-size-md);
   }
 }
 

@@ -30,7 +30,7 @@
             <div>
               <h4>Assigned to</h4>
             </div>
-            <div class="flex column small-gap margin-top">
+            <div class="flex column assigned-to-container small-gap margin-top">
               @if (selectedTask.assignedTo && selectedTask.assignedTo.length > 0) {
                 @for (contactId of selectedTask.assignedTo; track contactId) {
                   <div class="flex assigned-to">

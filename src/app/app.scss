@@ -27,9 +27,10 @@ header {
 .content-container{
   display: flex;
   flex-direction: column;
+  width: 100svw;
 
 }
-@media (width > 950px){
+@media (width > 960px){
   .content-container{
     width: calc(100% - 232px);
   }
