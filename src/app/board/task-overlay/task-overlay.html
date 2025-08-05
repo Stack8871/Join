@@ -153,7 +153,7 @@
                   <div class="circle-small" [style.backgroundColor]="getColor(contact.name)">
                     {{ getInitials(contact.name) }}
                   </div>
-<!--                   <span class="contact-name">{{ contact.name }}</span> -->
+                  <span class="contact-name">{{ contact.name }}</span>
                 </div>
                 <div class="checkbox-indicator">
                   @if (isContactSelected(contact.id)) {
@@ -238,24 +238,26 @@
         </div>
 
         <!-- Subtasks -->
-        <div class="form-group">
+        <div class="form-group ">
           <label for="subtask">Subtasks</label>
-          @for (control of subtaskControls; track $index) {
-          <div class="input-group">
-            <div class="subtasks">
-              <input type="text" [formControl]="control" placeholder="Add new subtask" [ngClass]="{
-                    'valid-field': control.valid && control.touched,
-                    'invalid-field': control.invalid && control.touched
-                  }">
-              @if (subtaskControls.length > 1) {
-              <button type="button" class="minus-icon" (click)="removeSubtask($index)">−</button>
-              }
-              @if ($index === subtaskControls.length - 1) {
-              <button type="button" class="plus-icon" (click)="addSubtask()">+</button>
-              }
-            </div>
+          <div class="subtasks-container">
+            @for (control of subtaskControls; track $index) {
+              <div class="input-group">
+                <div class="subtasks">
+                  <input type="text" [formControl]="control" placeholder="Add new subtask" [ngClass]="{
+                        'valid-field': control.valid && control.touched,
+                        'invalid-field': control.invalid && control.touched
+                      }">
+                  @if (subtaskControls.length > 1) {
+                  <button type="button" class="minus-icon" (click)="removeSubtask($index)">−</button>
+                  }
+                  @if ($index === subtaskControls.length - 1) {
+                  <button type="button" class="plus-icon" (click)="addSubtask()">+</button>
+                  }
+                </div>
+              </div>
+            }
           </div>
-          }
         </div>
 
         <!-- Buttons -->

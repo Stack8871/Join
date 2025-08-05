@@ -15,11 +15,13 @@
 .left-side{
  display:flex;
  flex-direction: column;
+ width:100%;
 
 }
 .right-side{
  display:flex;
  flex-direction: column;
+ width: 100%;;
 }
 /* .form-group {
   display: flex;
@@ -90,12 +92,13 @@ img {
 
 }
 .task-container{
-  width: 880px;
-  padding: 5%;
-  overflow: auto;
+    max-width: 1200px;
+    width: 90svw;
+    padding: 3%;
+    overflow: auto;
+    height: 95svh;
   @media(width < 860px){
-    height: 80svh;
-    width: 85svw;
+    width: 89svw;
   }
 }
   .task-heading{
@@ -123,6 +126,10 @@ img {
       box-shadow: $card-shadow;
     }
   }
+}
+.subtasks-container{
+  max-height:120px;
+  overflow:auto;
 }
 .subtasks{
   border: 1px solid $color-light-gray;
@@ -277,14 +284,20 @@ select.minimal:focus {
   cursor: pointer;
   transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: rgba(42, 54, 71, 0.05);
+  &:hover{
+    background-color: rgba(42, 54, 71, 0.9);
+    color:$color-white
   }
 
   &.selected {
-    background-color: rgba(42, 54, 71, 0.1);
+    background-color: rgba(42, 54, 71, 0.9);
+    color:$color-white;
   }
 }
+.contact-option:hover * {
+  color:$color-white;
+}
+
 
 // Category Option Styling (ähnlich wie Contact Option)
 .category-option {
