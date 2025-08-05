@@ -45,7 +45,7 @@ margin-top:$spacing-base;
 }
 
 .btn{
-  border-radius: 0.5rem;
+  border-radius: 0.625rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: var(--font-size-base);
   border-color: transparent;
@@ -86,7 +86,7 @@ justify-content: space-between;
   cursor: pointer;
 
   button {
-    border-radius: 0.5rem;
+  border-radius: 0.625rem;
     font-size: var(--font-size-base);
     cursor: pointer;
     transition: all 0.2s ease;

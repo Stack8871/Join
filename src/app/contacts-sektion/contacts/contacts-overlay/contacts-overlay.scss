@@ -51,6 +51,7 @@
   width: 85svw;
   max-width: 1220px;
   height:45svh;
+  min-height:460px;
 @media(width < 769px){
   flex-direction: column;
   height:100%;

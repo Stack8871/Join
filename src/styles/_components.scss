@@ -2,6 +2,8 @@
 @use 'spacing' as *;
 @use 'typography' as *;
 @use 'mixins' as *;
+
+
 $card-radius: 0.625rem;
 $small-card-padding: 1rem;
 $big-small-card-padding: 4.3%;
@@ -52,7 +54,7 @@ a:hover, button:hover{
   padding:$spacing-base;
 }
 .big-card-padding{
-  padding:$spacing-2xl;
+  padding:$spacing-md;
   @media (width < 767px) {
       padding:0;
   }
@@ -192,7 +194,7 @@ a:hover, button:hover{
   cursor: pointer;
 }
 .btn{
-  border-radius: 0.5rem;
+border-radius:0.625rem ;
   padding: 0.5rem 2.5rem 0.5rem 1rem;
   font-size: var(--font-size-base);
   border-color: transparent;

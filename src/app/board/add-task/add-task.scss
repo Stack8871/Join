@@ -32,9 +32,18 @@
 }
 .left-side{
  display:flex;
- flex-direction: column;
+ flex-direction: column;  
  width: 100%;
  max-width: 440px;
+ @media (width < 1280px){
+  width: 100%;
+ }
+}
+.horizontal-line{
+  border-right: 1px solid $color-light-gray;
+  @media (width < 1279px) {
+    display:none;
+  }
 }
 .right-side{
  display:flex;
@@ -296,12 +305,6 @@ select:-moz-focusring {
         font-weight: 400;
       }
     }
-  }
-}
-.horizontal-line{
-  border-right: 1px solid $color-light-gray;
-  @media (width < 769px) {
-    display:none;
   }
 }
 

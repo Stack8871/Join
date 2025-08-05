@@ -193,6 +193,7 @@
   padding: 4%;
   flex-direction: column;
   overflow-y: auto;
+  height: calc(100svh - 110px);
 }
 
 .add-task-heading {
@@ -230,4 +231,7 @@
   & h1 {
     text-align: center;
   }
+}
+.big-border-radius{
+    border-radius:$spacing-xl;
 }
