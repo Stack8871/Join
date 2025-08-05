@@ -132,7 +132,7 @@ justify-content: space-between;
   }
 }
 
-  input, textarea {
+  input, textarea, select {
     width: 100%;
     max-width:440px;
     padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
@@ -152,6 +152,14 @@ justify-content: space-between;
       border-color: $color-accent-urgent;
       background-color: rgba(244, 67, 54, 0.05);
     }
+  }
+
+  .validation-error {
+    color: $color-accent-urgent;
+    font-size: 0.85rem;
+    margin-top: $spacing-2xs;
+    display: block;
+    text-align: left;
   }
   .add-icon{
     border-radius:$card-radius;

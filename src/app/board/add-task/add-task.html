@@ -7,7 +7,11 @@
         <div class="form-group">
           <div class="input-group column">
             <label for="title">Title <span class="required-asterisk">*</span></label>
-            <input type="text" id="title" formControlName="title" placeholder="Enter a title">
+            <input type="text" id="title" formControlName="title" placeholder="Enter a title"
+                   [ngClass]="{'invalid-field': isFieldInvalid('title')}">
+            <div *ngIf="isFieldInvalid('title')" class="validation-error">
+              {{ getValidationMessage('title') }}
+            </div>
           </div>
         </div>
 
@@ -22,9 +26,9 @@
         <!-- Due Date -->
         <div class="form-group">
           <label for="dueDate">Due Date <span class="required-asterisk">*</span></label>
-          <div class="input-group date-input">
+          <div class="input-group column date-input">
             <input type="date" id="dueDate" formControlName="dueDate"
-                   [ngClass]="{'invalid': isFieldInvalid('dueDate')}">
+                   [ngClass]="{'invalid-field': isFieldInvalid('dueDate')}">
             <div *ngIf="isFieldInvalid('dueDate')" class="validation-error">
               {{ getValidationMessage('dueDate') }}
             </div>
@@ -172,11 +176,16 @@
         <!-- Category -->
         <div class="form-group">
           <label for="category">Category <span class="required-asterisk">*</span></label>
-          <select class="minimal" name="category" formControlName="category" required aria-placeholder="Select category">
-
-            <option value="User Story">User Story</option>
-            <option value="Technical Task">Technical Task</option>
-          </select>
+          <div class="input-group column">
+            <select class="minimal" name="category" formControlName="category" required aria-placeholder="Select category"
+                   [ngClass]="{'invalid-field': isFieldInvalid('category')}">
+              <option value="User Story">User Story</option>
+              <option value="Technical Task">Technical Task</option>
+            </select>
+            <div *ngIf="isFieldInvalid('category')" class="validation-error">
+              {{ getValidationMessage('category') }}
+            </div>
+          </div>
         </div>
 
         <!-- Subtasks -->

@@ -7,7 +7,7 @@
     <section>
         <div class="dashboard-container">
             <div class="tasks-overview">
-                <div class="card card-circle-content task-step-text flex hover-scale-btn">
+                <div class="card card-circle-content task-step-text flex hover-scale-btn" (click)="navigateToBoard('todo')">
                     <span class="circle circle-primary-color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                             <path
@@ -19,7 +19,7 @@
                         <span>To-do</span>
                     </div>
                 </div>
-                <div class="card card-circle-content task-step-text hover-scale-btn">
+                <div class="card card-circle-content task-step-text hover-scale-btn" (click)="navigateToBoard('done')">
                     <span class="circle circle-primary-color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" viewBox="0 0 16 13" fill="none">
                             <path
@@ -34,7 +34,7 @@
                 </div>
                 <div class="card grid-col-span-2 hover-scale-btn">
                     <div class="card-circle-content urgent-span-grid">
-                        <div class="urgent-circle flex ai-center">
+                        <div class="urgent-circle flex ai-center" (click)="navigateToUrgentTasks()">
                             <span class="circle circle-urgent-color">
                                 <svg width="21" height="15" viewBox="0 0 21 15" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -74,13 +74,13 @@
                             <span>Tasks in Board</span>
                         </div>
                     </div>
-                    <div class="card task-step-text hover-scale-btn">
+                    <div class="card task-step-text hover-scale-btn" (click)="navigateToBoard('inProgress')">
                         <div class="flex column ai-center">
                             <h4>{{ inProgressCount }}</h4>
                             <span>Tasks in Progress</span>
                         </div>
                     </div>
-                    <div class="card task-step-text hover-scale-btn">
+                    <div class="card task-step-text hover-scale-btn" (click)="navigateToBoard('feedback')">
                         <div class="flex column ai-center">
                             <h4>{{ feedbackCount }}</h4>
                             <span>Awaiting Feedback</span>

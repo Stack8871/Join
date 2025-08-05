@@ -12,6 +12,7 @@ import { TaskFilterService } from './task-filter';
 import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-task',
@@ -26,6 +27,7 @@ export class ManageTask implements OnInit, OnDestroy {
   private taskOverlayService = inject(TaskOverlayService);
   private userPermissionService = inject(UserPermissionService);
   private success = inject(SuccessServices);
+  private route = inject(ActivatedRoute);
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
@@ -39,6 +41,8 @@ export class ManageTask implements OnInit, OnDestroy {
   canCreateTask = false;
   canEditTask = false;
   canDeleteTask = false;
+  highlightStatus: string | null = null;
+  highlightedTaskIds: string[] = [];
 
 
   columns = [
@@ -54,6 +58,9 @@ export class ManageTask implements OnInit, OnDestroy {
       this.tasks = tasks;
       this.updateColumns();
       this.filteredColumns = [...this.columns];
+
+      // Check for highlight parameter after tasks are loaded
+      this.checkForHighlightParameter();
     });
 
     // Check if user has permission to create/edit tasks
@@ -73,6 +80,74 @@ export class ManageTask implements OnInit, OnDestroy {
       this.editTask(event.detail.task);
     };
     document.addEventListener('openEditOverlay', this.editOverlayListener);
+  }
+
+  /**
+   * Checks for the 'highlight' or 'highlightUrgent' query parameter and highlights tasks accordingly
+   */
+  checkForHighlightParameter() {
+    this.route.queryParams.subscribe(params => {
+      const highlightStatus = params['highlight'];
+      const highlightUrgent = params['highlightUrgent'];
+
+      if (highlightStatus) {
+        this.highlightStatus = highlightStatus;
+        this.highlightTasksByStatus(highlightStatus);
+      } else if (highlightUrgent === 'true') {
+        this.highlightUrgentTasks();
+      }
+    });
+  }
+
+  /**
+   * Highlights tasks with the specified status by adding a CSS class
+   * @param status - The status of tasks to highlight ('todo', 'inProgress', 'feedback', 'done')
+   */
+  highlightTasksByStatus(status: string) {
+    // Find all tasks with the specified status
+    const tasksToHighlight = this.tasks.filter(task => task.status === status);
+
+    // Store the IDs of tasks to highlight
+    this.highlightedTaskIds = tasksToHighlight.map(task => task.id || '').filter(id => id !== '');
+
+    // Apply the highlight effect
+    setTimeout(() => {
+      this.applyHighlightEffect();
+    }, 100); // Small delay to ensure DOM is ready
+  }
+
+  /**
+   * Highlights urgent tasks by adding a CSS class
+   */
+  highlightUrgentTasks() {
+    // Find all tasks with urgent priority
+    const urgentTasks = this.tasks.filter(task => task.priority?.toLowerCase() === 'urgent');
+
+    // Store the IDs of tasks to highlight
+    this.highlightedTaskIds = urgentTasks.map(task => task.id || '').filter(id => id !== '');
+
+    // Apply the highlight effect
+    setTimeout(() => {
+      this.applyHighlightEffect();
+    }, 100); // Small delay to ensure DOM is ready
+  }
+
+  /**
+   * Applies a flash/highlight effect to the tasks
+   */
+  applyHighlightEffect() {
+    // Add highlight class to tasks
+    this.highlightedTaskIds.forEach(taskId => {
+      const taskElement = document.getElementById(`task-${taskId}`);
+      if (taskElement) {
+        taskElement.classList.add('highlight-task');
+
+        // Remove the highlight class after animation completes
+        setTimeout(() => {
+          taskElement.classList.remove('highlight-task');
+        }, 2000); // 2 seconds for the animation
+      }
+    });
   }
 
   ngOnDestroy() {

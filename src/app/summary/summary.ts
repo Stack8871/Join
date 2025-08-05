@@ -5,6 +5,7 @@ import { TaskInterface } from '../interfaces/task-interface';
 import { Observable } from 'rxjs';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -18,6 +19,7 @@ export class summary implements OnInit {
   private taskService = inject(TaskService);
   private authService = inject(AuthService);
   private datePipe = inject(DatePipe);
+  private router = inject(Router);
   tasks$!: Observable<TaskInterface[]>;
   urgentTasks$!: Observable<TaskInterface[]>;
   tasks: TaskInterface[] = [];
@@ -120,5 +122,28 @@ export class summary implements OnInit {
     } else {
       this.greeting = 'Good evening';
     }
+  }
+
+  /**
+   * Navigates to the board view and highlights tasks with the specified status
+   * @param status - The status of tasks to highlight ('todo', 'inProgress', 'feedback', 'done')
+   */
+  navigateToBoard(status: 'todo' | 'inProgress' | 'feedback' | 'done') {
+    this.router.navigate(['/board'], {
+      queryParams: {
+        highlight: status
+      }
+    });
+  }
+
+  /**
+   * Navigates to the board view and highlights urgent tasks
+   */
+  navigateToUrgentTasks() {
+    this.router.navigate(['/board'], {
+      queryParams: {
+        highlightUrgent: 'true'
+      }
+    });
   }
 }

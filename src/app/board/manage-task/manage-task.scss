@@ -277,3 +277,24 @@ h4{
     height: 16px;
     object-fit: contain;
   }
+
+  /* Highlight animation for tasks */
+  @keyframes task-highlight {
+    0% {
+      box-shadow: 0 0 0 0 rgba(42, 54, 71, 0.4);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(42, 54, 71, 0);
+      transform: scale(1.05);
+      background-color: rgba(42, 54, 71, 0.1);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(42, 54, 71, 0);
+      transform: scale(1);
+    }
+  }
+
+  .highlight-task {
+    animation: task-highlight 2s ease-in-out;
+  }

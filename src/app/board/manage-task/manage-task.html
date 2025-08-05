@@ -39,7 +39,7 @@
           </div>
           }
           @for (task of col.tasks; track task.id) {
-          <div class="card flex column" cdkDrag (click)="selectTask(task)">
+          <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
             <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
