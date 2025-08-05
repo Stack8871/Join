@@ -10,7 +10,7 @@
 .grid-board{
     display: grid;
     gap: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     max-width: 1440px;
 }
 
@@ -21,9 +21,6 @@
   background: $color-bg-card;
   gap: $spacing-sm;
   margin:$spacing-sm 0;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 .add-task-btn{
   display:inline-block;
@@ -53,32 +50,25 @@ h4{
   color:$color-primary;
   font-size: var(--font-size-base);
 }
-.task-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
 
+.task-title {
   h4 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100%;
+    line-height: 1.4;
+    margin: 0;
   }
 }
+
 .description{
   color:$color-gray;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
+/*   word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word; */
+  line-height: 1.4;
 }
 .subtask-progress{
   align-items: center;
   gap: $spacing-xs;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
 }
 .category{
   border-radius: $card-radius;
@@ -86,11 +76,6 @@ h4{
   font-size: var(--font-size-sm);
   color:$color-white;
   font-weight: 500;
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 // Dynamic category colors
@@ -235,11 +220,26 @@ h4{
 
   // Contact initials styling for task cards
   .assigned-contacts {
-    gap: 4px;
+    gap: 2px;
+    margin-right:$spacing-xs;
     @include center-row-not-justify;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     max-width: 100%;
     flex-wrap: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    
+    /* Add padding for better touch scrolling */
+    padding: 2px 0;
   }
 
   .circle-initials {
@@ -263,13 +263,9 @@ h4{
   .priority-indicator {
     font-size: 12px;
     font-weight: 500;
-    color: $color-primary;
+    color: $color-subtask-bar;
     @include center-row-not-justify;
     gap: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
   }
 
   .priority-icon-small {

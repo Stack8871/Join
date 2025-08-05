@@ -51,16 +51,6 @@
                 <h4>Subtasks:</h4>
               </div>
               @if (selectedTask.subtasks && selectedTask.subtasks.length > 0) {
-                <!-- Progressbar für Subtasks -->
-<!--                 <div class="subtask-progress-section">
-                  <div class="progress-bar-container">
-                    <div class="progress-bar" [style.width.%]="getSubtaskProgress()"></div>
-                  </div>
-                  <div class="progress-text">
-                    {{ getCompletedSubtasks() }}/{{ selectedTask.subtasks.length }} Subtasks completed
-                  </div>
-                </div> -->
-
                 <!-- Subtask-Liste -->
                 @for (subtask of selectedTask.subtasks; track $index) {
                  <div class="checkbox-container subtask-item">
