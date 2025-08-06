@@ -15,13 +15,21 @@
 .left-side{
  display:flex;
  flex-direction: column;
- width:100%;
+ width:38%;
+ @media (width < 850px){
+   width: 100%;
+ }
 
 }
 .right-side{
  display:flex;
  flex-direction: column;
- width: 100%;;
+ gap:$spacing-base;
+ width:40%;
+ @media (width < 850px){
+   width: 100%;
+ }
+
 }
 /* .form-group {
   display: flex;
@@ -96,9 +104,10 @@ img {
     width: 90svw;
     padding: 3%;
     overflow: auto;
-    height: 95svh;
+    height: 90svh;
   @media(width < 860px){
     width: 89svw;
+    padding: 7%;
   }
 }
   .task-heading{

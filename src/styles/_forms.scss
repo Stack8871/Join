@@ -22,7 +22,7 @@ margin-top:$spacing-base;
   display: flex;
   flex-direction: column;
   max-width: 440px;
-  margin-bottom:$spacing-base;
+/*   margin-bottom:$spacing-base; */
   width:100%;
 
 
@@ -153,7 +153,9 @@ justify-content: space-between;
       background-color: rgba(244, 67, 54, 0.05);
     }
   }
-
+textarea{
+  height:110px;
+}
   .validation-error {
     color: $color-accent-urgent;
     font-size: 0.85rem;

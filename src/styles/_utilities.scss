@@ -179,6 +179,9 @@
   display: flex;
   gap: 1rem;
   max-width: 440px;
+ @media (width < 420px){
+   flex-direction: column;
+ }
 }
 
 .add-task-container {
