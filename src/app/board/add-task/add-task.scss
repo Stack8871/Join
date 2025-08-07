@@ -50,6 +50,7 @@
  flex-direction: column;
  width: 100%;
  max-width: 440px;
+ gap:$spacing-base;
 }
   .validation-message {
     color: #ff0000;

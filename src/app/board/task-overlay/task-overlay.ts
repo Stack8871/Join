@@ -35,7 +35,7 @@ constructor(private fb: FormBuilder) {
     title: ['', Validators.required],
     description: ['', Validators.required],
     dueDate: ['', Validators.required],
-    priority: ['', Validators.required],
+    priority: ['medium', Validators.required],
     assignedTo: [[], Validators.required],
     category: ['', Validators.required],
     subtasks: this.fb.array([this.fb.control('', Validators.required)])

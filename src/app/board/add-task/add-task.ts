@@ -30,6 +30,7 @@ export class AddTask implements OnInit{
 
   // Custom dropdown state
   isDropdownOpen = false;
+  isCategoryDropdownOpen = false;
 
   // Track which subtask is being edited
   editingSubtaskIndex: number | null = null;
@@ -218,9 +219,19 @@ saveEditedSubtask(event?: KeyboardEvent) {
     return this.ContactsList.find(contact => contact.id === contactId);
   }
 
+
   // Custom dropdown methods
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleCategoryDropdown(): void {
+    this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
+  }
+
+  selectCategory(category: string): void {
+    this.form.get('category')?.setValue(category);
+    this.isCategoryDropdownOpen = false;
   }
 
   toggleContact(contactId: string): void {
