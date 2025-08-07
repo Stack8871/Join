@@ -104,10 +104,11 @@ img {
     width: 90svw;
     padding: 3%;
     overflow: auto;
-    height: 90svh;
+    min-height: 40svh;
   @media(width < 860px){
     width: 89svw;
     padding: 7%;
+    height:90svh;
   }
 }
   .task-heading{
