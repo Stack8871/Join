@@ -75,6 +75,141 @@ h4{
   white-space: nowrap;
   max-width: 100%;
 }
+
+// Mobile Task Slider
+@media (width < 768px) {
+  .grid-board {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .column {
+    position: relative;
+  }
+  
+  .drop-list {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  // Hide desktop layout on mobile
+  .desktop-task-list {
+    display: none;
+  }
+  
+  .mobile-task-slider {
+    display: flex;
+    transition: transform 0.3s ease;
+    gap: $spacing-sm;
+    padding: 0 $spacing-sm;
+    touch-action: pan-x; // Enable horizontal touch gestures
+  }
+  
+  .mobile-task-slider .card {
+    flex: 0 0 250px; // Fixed width for each card
+    margin: 0;
+    scroll-snap-align: start;
+    user-select: none; // Prevent text selection during swipe
+  }
+  
+  .slider-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+    padding: $spacing-xs 0;
+  }
+  
+  .slider-arrow {
+    background: $color-primary;
+    color: $color-white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    
+    &:hover:not(:disabled) {
+      background: $color-primary-dark;
+      transform: scale(1.1);
+    }
+    
+    &:disabled {
+      background: $color-light-gray;
+      color: $color-medium-gray;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.6;
+    }
+  }
+  
+  .slider-dots {
+    display: flex;
+    gap: $spacing-xs;
+  }
+  
+  .slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-light-gray;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    
+    &.active {
+      background: $color-primary;
+    }
+    
+    &:hover {
+      background: $color-primary-dark;
+    }
+  }
+  
+  .column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+    
+    h4 {
+      margin: 0;
+    }
+  }
+  
+  .task-counter {
+    color: $color-medium-gray;
+    font-size: var(--font-size-sm);
+    font-weight: normal;
+  }
+}
+
+// Desktop: Hide mobile elements
+@media (width >= 768px) {
+  .mobile-task-slider {
+    display: none;
+  }
+  
+  .slider-navigation {
+    display: none;
+  }
+  
+  .desktop-task-list {
+    display: block;
+  }
+  
+  .task-counter {
+    display: none;
+  }
+}
+
 .category{
   border-radius: $card-radius;
   padding: $spacing-2xs;

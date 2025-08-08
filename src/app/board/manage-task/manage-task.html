@@ -23,8 +23,13 @@
   <div class="grid-board">
     @for (col of filteredColumns; track col.id) {
     <div class="column">
-        <div class="flex space-between">
-          <h4>{{ col.title }}</h4> <button class=" add-icon"(click)="addNewTask()">+</button></div>
+        <div class="column-header">
+          <div class="flex space-between" style="width: 100%;">
+            <h4>{{ col.title }}</h4> 
+            <span class="task-counter">{{ col.tasks.length }} tasks</span>
+            <button class="add-icon" (click)="addNewTask()">+</button>
+          </div>
+        </div>
         <div
           cdkDropList
           [cdkDropListData]="col.tasks"
@@ -37,35 +42,102 @@
           <div class="empty-column-message">
             No tasks yet. Drag tasks here.
           </div>
-          }
-          @for (task of col.tasks; track task.id) {
-          <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
-            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
-            <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
-            <div class="description">{{ truncateText(task.description) }}</div>
-            @if (task.subtasks && task.subtasks.length > 0) {
-              <div class="progress-bar-container">
-                <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
-              </div>
-              <div class="flex subtask-progress">
-                <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
-              </div>
-            }
-            <div class="flex space-between align-center">
-                <div class="flex assigned-contacts">
-                    @for (contactId of limitArray(task.assignedTo); track contactId) {
-                      <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
-                        {{ getInitials(getContactName(contactId)) }}
-                      </div>
-                    }
-              </div>
-              <div class="priority-indicator">
-                <span>{{ task.priority }}</span>
-                <img [src]="getPriorityIcon(task.priority)" [alt]="task.priority + ' priority'" class="priority-icon-small">
+          } @else {
+          <!-- Desktop: Vertical Layout -->
+          <div class="desktop-task-list">
+            @for (task of col.tasks; track task.id) {
+            <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
+              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+              <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
+              <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
+              <div class="description">{{ truncateText(task.description) }}</div>
+              @if (task.subtasks && task.subtasks.length > 0) {
+                <div class="progress-bar-container">
+                  <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
+                </div>
+                <div class="flex subtask-progress">
+                  <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
+                </div>
+              }
+              <div class="flex space-between align-center">
+                  <div class="flex assigned-contacts">
+                      @for (contactId of limitArray(task.assignedTo); track contactId) {
+                        <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
+                          {{ getInitials(getContactName(contactId)) }}
+                        </div>
+                      }
+                </div>
+                <div class="priority-indicator">
+                  <span>{{ task.priority }}</span>
+                  <img [src]="getPriorityIcon(task.priority)" [alt]="task.priority + ' priority'" class="priority-icon-small">
+                </div>
               </div>
             </div>
+            }
           </div>
+          
+          <!-- Mobile: Horizontal Slider -->
+          <div class="mobile-task-slider" 
+               [style.transform]="'translateX(' + getMobileSliderTransform(col.id) + 'px)'"
+               (touchstart)="onTouchStart($event)"
+               (touchend)="onTouchEnd($event, col.id)"
+               #mobileSlider>
+            @for (task of col.tasks; track task.id) {
+            <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
+              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+              <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
+              <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
+              <div class="description">{{ truncateText(task.description) }}</div>
+              @if (task.subtasks && task.subtasks.length > 0) {
+                <div class="progress-bar-container">
+                  <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
+                </div>
+                <div class="flex subtask-progress">
+                  <span>{{ getCompletedSubtasks(task) }}/{{ task.subtasks.length }} Subtasks</span>
+                </div>
+              }
+              <div class="flex space-between align-center">
+                  <div class="flex assigned-contacts">
+                      @for (contactId of limitArray(task.assignedTo); track contactId) {
+                        <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
+                          {{ getInitials(getContactName(contactId)) }}
+                        </div>
+                      }
+                </div>
+                <div class="priority-indicator">
+                  <span>{{ task.priority }}</span>
+                  <img [src]="getPriorityIcon(task.priority)" [alt]="task.priority + ' priority'" class="priority-icon-small">
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+          
+          <!-- Mobile Navigation -->
+          @if (col.tasks.length > 1) {
+          <div class="slider-navigation">
+            <button class="slider-arrow" 
+                    (click)="previousTask(col.id)"
+                    [disabled]="getCurrentTaskIndex(col.id) === 0">
+              ‹
+            </button>
+            
+            <div class="slider-dots">
+              @for (task of col.tasks; track $index) {
+              <div class="slider-dot"
+                   [class.active]="getCurrentTaskIndex(col.id) === $index"
+                   (click)="goToTask(col.id, $index)">
+              </div>
+              }
+            </div>
+            
+            <button class="slider-arrow"
+                    (click)="nextTask(col.id)"
+                    [disabled]="getCurrentTaskIndex(col.id) === col.tasks.length - 1">
+              ›
+            </button>
+          </div>
+          }
           }
         </div>
     </div>

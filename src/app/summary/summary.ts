@@ -1,10 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TaskService } from '../Shared/firebase/firebase-services/task-service';
 import { TaskInterface } from '../interfaces/task-interface';
 import { Observable } from 'rxjs';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
