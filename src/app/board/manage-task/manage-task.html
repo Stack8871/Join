@@ -116,12 +116,6 @@
           <!-- Mobile Navigation -->
           @if (col.tasks.length > 1) {
           <div class="slider-navigation">
-            <button class="slider-arrow" 
-                    (click)="previousTask(col.id)"
-                    [disabled]="getCurrentTaskIndex(col.id) === 0">
-              ‹
-            </button>
-            
             <div class="slider-dots">
               @for (task of col.tasks; track $index) {
               <div class="slider-dot"
@@ -130,12 +124,6 @@
               </div>
               }
             </div>
-            
-            <button class="slider-arrow"
-                    (click)="nextTask(col.id)"
-                    [disabled]="getCurrentTaskIndex(col.id) === col.tasks.length - 1">
-              ›
-            </button>
           </div>
           }
           }
