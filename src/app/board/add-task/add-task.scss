@@ -1,8 +1,6 @@
 @use "index" as *;
-
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
-
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
@@ -39,12 +37,6 @@
   width: 100%;
  }
 }
-.horizontal-line{
-  border-right: 1px solid $color-light-gray;
-  @media (width < 1279px) {
-    display:none;
-  }
-}
 .right-side{
  display:flex;
  flex-direction: column;
@@ -57,7 +49,6 @@
     font-size: var(--font-size-sm);
     margin-top: 4px;
   }
-
 .date-input {
   position: relative;
   input {
@@ -94,7 +85,6 @@ img {
   width: 20px;
   height: 20px;
   cursor: pointer;
-
 }
 .task-container{
   overflow: auto;
@@ -106,29 +96,6 @@ img {
   .task-heading{
     padding-bottom:3%;
   }
-.priority-icon {
-  margin-left:$spacing-sm;
-  padding-top:2px;
-}
-.button-group {
-  margin-top: $spacing-base;
-
-  .submit-btn {
-    padding: 12px 24px;
-    background-color: $color-primary;
-    color: $color-white;
-    border: none;
-    border-radius: 8px;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $color-primary-dark;
-      box-shadow: $card-shadow;
-    }
-  }
-}
 .subtasks{
   border: 1px solid $color-light-gray;
   border-radius: $spacing-2xs;
@@ -157,7 +124,6 @@ img {
   margin:0;
   padding-right: 5%;
 }
-
 select {
   font: inherit;
   line-height: 1.5em;
@@ -169,7 +135,6 @@ select {
   width: 100%;
   max-width: 440px;
 }
-
 select.minimal {
   display: inline-block;
   appearance: none;
@@ -192,7 +157,6 @@ select.minimal {
     1px 1.5em;
   background-repeat: no-repeat;
 }
-
 select.minimal:focus {
   border-color: $color-light-gray;
   outline: 0;
@@ -201,9 +165,6 @@ select.minimal:focus {
 select.minimal[multiple] {
   height: 120px; /* Feste Höhe statt 100% */
   overflow-y: auto;
-  /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
-
-
 }
 /* Option-Styles */
 select.minimal option {
@@ -216,20 +177,17 @@ select.minimal option {
   background: $color-white;
   color: $color-text-heading;
   border: none;
-
   /* Styling für bessere Lesbarkeit */
   &:checked {
     background: $color-primary !important;
     color: white !important;
     font-weight: 500;
   }
-
   &:hover:not(:checked) {
     background: #f0f0f0 !important;
     color: $color-text-heading !important;
   }
 }
-
 /* Multi-Select Styling für bessere Darstellung */
 select.minimal[multiple] option {
   padding: 10px 16px;
@@ -237,7 +195,6 @@ select.minimal[multiple] option {
   align-items: center;
   gap: 8px;
   min-height: 44px;
-
   &::before {
     content: '';
     width: 24px;
@@ -264,11 +221,9 @@ select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
-
 /* Assigned Contacts Display Styles */
 .assigned-contacts-display {
   margin-top: 12px;
-
   label {
     font-size: 14px;
     font-weight: 500;
@@ -276,17 +231,14 @@ select:-moz-focusring {
     margin-bottom: 8px;
     display: block;
   }
-
   .contacts-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-
     .contact-item-display {
       display: flex;
       align-items: center;
       gap: 3px;
-
       .circle {
         width: 32px;
         height: 32px;
@@ -299,7 +251,6 @@ select:-moz-focusring {
         font-size: 12px;
         flex-shrink: 0;
       }
-
       .contact-name {
         font-size: 14px;
         color:$color-medium-gray;
@@ -308,11 +259,9 @@ select:-moz-focusring {
     }
   }
 }
-
 /* Subtasks List Display Styles */
 .subtasks-list-display {
   margin-top: 12px;
-
   label {
     font-size: 14px;
     font-weight: 500;
@@ -320,7 +269,6 @@ select:-moz-focusring {
     margin-bottom: 8px;
     display: block;
   }
-
   .subtasks-list {
     display: flex;
     flex-direction: column;
@@ -328,7 +276,6 @@ select:-moz-focusring {
     max-width: 440px;
     margin-top: 8px;
   }
-
   .subtask-item {
     display: flex;
     align-items: center;
@@ -336,12 +283,10 @@ select:-moz-focusring {
     padding: 8px 12px;
     background-color: #f8f9fa;
     border-radius: 4px;
-
     &:hover {
       background-color: #f0f0f0;
     }
   }
-
   .subtask-content {
     display: flex;
     align-items: center;
@@ -349,13 +294,11 @@ select:-moz-focusring {
     overflow: hidden;
     max-width: calc(100% - 30px);
   }
-
   .subtask-bullet {
     color: $color-primary;
     font-size: 18px;
     line-height: 1;
   }
-
   .subtask-text {
     font-size: 14px;
     color: $color-text-primary;
@@ -363,7 +306,6 @@ select:-moz-focusring {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   .subtask-actions {
     display: flex;
     align-items: center;
@@ -371,40 +313,33 @@ select:-moz-focusring {
     opacity: 0;
     transition: opacity 0.2s ease;
   }
-
   .subtask-item:hover .subtask-actions {
     opacity: 1;
   }
-
   .action-icon {
     cursor: pointer;
     color: $color-medium-gray;
     display: flex;
     align-items: center;
     justify-content: center;
-
     &:hover {
       color: $color-primary;
     }
-
     svg {
       fill: currentColor;
     }
   }
-
   /* Subtask Edit Mode Styles */
   .subtask-edit-container {
     width: 100%;
     padding: 0;
   }
-
   .subtask-edit-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
     position: relative;
   }
-
   .subtask-edit-input {
     width: 100%;
     padding: 8px 12px;
@@ -414,12 +349,10 @@ select:-moz-focusring {
     color: $color-text-primary;
     background-color: $color-white;
     outline: none;
-
     &:focus {
       border-bottom: 2px solid #8fd0ed;
     }
   }
-
   .subtask-edit-actions {
     display: flex;
     align-items: center;

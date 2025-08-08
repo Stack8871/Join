@@ -6,8 +6,8 @@
         <!-- Title -->
         <div class="form-group">
           <div class="input-group">
-            <label for="title">Title <span class="required-asterisk">*</span></label>
-            <input type="text" id="title" formControlName="title" placeholder="Enter a title"
+            <label for="task-overlay-title">Title <span class="required-asterisk">*</span></label>
+            <input type="text" id="task-overlay-title" formControlName="title" placeholder="Enter a title"
               [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}">
             @if (isFieldInvalid('title')) {
             <div class="speech-bubble">
@@ -21,7 +21,7 @@
         <div class="form-group">
           <label for="description">Description</label>
           <div class="input-group">
-            <textarea id="description" formControlName="description" placeholder="Enter a description"
+            <textarea id="task-overlay-description" formControlName="description" placeholder="Enter a description"
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"></textarea>
             @if (isFieldInvalid('description')) {
             <div class="speech-bubble">
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label for="dueDate">Due Date <span class="required-asterisk">*</span></label>
           <div class="input-group">
-            <input type="date" id="dueDate" formControlName="dueDate"
+            <input type="date" id="task-overlay-dueDate" formControlName="dueDate"
               [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}">
             @if (isFieldInvalid('dueDate')) {
             <div class="speech-bubble">
@@ -55,14 +55,14 @@
               <span>Urgent</span>
               <span class="priority-icon">
                 <svg width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_371_3831)">
+                  <g clip-path="url(#task-overlay-urgent-clip)">
                     <path
                       d="M19.5708 14.755C19.3361 14.7554 19.1076 14.6805 18.9187 14.5414L10.6666 8.45824L2.4146 14.5414C2.29874 14.627 2.16716 14.6889 2.02736 14.7237C1.88756 14.7584 1.74228 14.7653 1.59981 14.7439C1.45734 14.7226 1.32048 14.6734 1.19703 14.5992C1.07359 14.525 0.965978 14.4272 0.880349 14.3114C0.79472 14.1957 0.732748 14.0642 0.697971 13.9245C0.663194 13.7848 0.656294 13.6396 0.677664 13.4973C0.720823 13.2097 0.876514 12.9511 1.11049 12.7783L10.0146 6.20786C10.2033 6.06826 10.4319 5.99292 10.6666 5.99292C10.9014 5.99292 11.13 6.06826 11.3187 6.20786L20.2228 12.7783C20.4087 12.9153 20.5466 13.1074 20.6168 13.3272C20.6869 13.5471 20.6858 13.7835 20.6135 14.0027C20.5411 14.2219 20.4014 14.4126 20.2141 14.5477C20.0269 14.6828 19.8017 14.7554 19.5708 14.755Z" />
                     <path
                       d="M19.5708 9.00581C19.3361 9.00621 19.1076 8.93136 18.9187 8.79226L10.6667 2.7091L2.4146 8.79226C2.18063 8.96507 1.88754 9.03793 1.59981 8.9948C1.31209 8.95167 1.05329 8.7961 0.880353 8.5623C0.707418 8.3285 0.63451 8.03563 0.677669 7.74811C0.720828 7.4606 0.876518 7.20199 1.11049 7.02919L10.0146 0.45871C10.2033 0.319119 10.4319 0.243774 10.6667 0.243774C10.9014 0.243774 11.13 0.319119 11.3187 0.45871L20.2228 7.02919C20.4087 7.1661 20.5466 7.35822 20.6168 7.5781C20.6869 7.79797 20.6858 8.03438 20.6135 8.25356C20.5412 8.47274 20.4014 8.6635 20.2141 8.79859C20.0269 8.93368 19.8017 9.0062 19.5708 9.00581Z" />
                   </g>
                   <defs>
-                    <clipPath id="clip0_371_3831">
+                    <clipPath id="task-overlay-urgent-clip">
                       <rect width="20" height="14.5098" fill="white" transform="translate(0.666504 0.245117)" />
                     </clipPath>
                   </defs>
@@ -77,10 +77,10 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/">
                   <g>
                     <g>
-                      <clipPath id="_clip1">
+                      <clipPath id="task-overlay-medium-clip">
                         <rect x="0.667" y="0.245" width="20" height="14.51" />
                       </clipPath>
-                      <g clip-path="url(#_clip1)">
+                      <g clip-path="url(#task-overlay-medium-clip)">
                         <g transform="matrix(0.991674,0,0,1,-0.181842,3.30832)">
                           <path
                             d="M19.76,7.917L1.951,7.917C1.661,7.917 1.382,7.801 1.176,7.594C0.971,7.387 0.855,7.106 0.855,6.813C0.855,6.521 0.971,6.24 1.176,6.033C1.382,5.826 1.661,5.709 1.951,5.709L19.76,5.709C20.05,5.709 20.329,5.826 20.535,6.033C20.74,6.24 20.856,6.521 20.856,6.813C20.856,7.106 20.74,7.387 20.535,7.594C20.329,7.801 20.05,7.917 19.76,7.917Z" />
@@ -101,10 +101,10 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
                   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                   <g>
-                    <clipPath id="_clip1">
+                    <clipPath id="task-overlay-low-clip">
                       <rect x="0.667" y="0.245" width="20" height="14.51" />
                     </clipPath>
-                    <g clip-path="url(#_clip1)">
+                    <g clip-path="url(#task-overlay-low-clip)">
                       <g transform="matrix(-1,1.22465e-16,-1.22465e-16,-1,21.3341,14.9998)">
                         <path
                           d="M19.571,14.755C19.336,14.755 19.108,14.681 18.919,14.541L10.667,8.458L2.415,14.541C2.299,14.627 2.167,14.689 2.027,14.724C1.888,14.758 1.742,14.765 1.6,14.744C1.457,14.723 1.32,14.673 1.197,14.599C1.074,14.525 0.966,14.427 0.88,14.311C0.795,14.196 0.733,14.064 0.698,13.925C0.663,13.785 0.656,13.64 0.678,13.497C0.721,13.21 0.877,12.951 1.11,12.778L10.015,6.208C10.203,6.068 10.432,5.993 10.667,5.993C10.901,5.993 11.13,6.068 11.319,6.208L20.223,12.778C20.409,12.915 20.547,13.107 20.617,13.327C20.687,13.547 20.686,13.784 20.613,14.003C20.541,14.222 20.401,14.413 20.214,14.548C20.027,14.683 19.802,14.755 19.571,14.755Z" />

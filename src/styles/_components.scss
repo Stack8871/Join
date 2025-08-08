@@ -2,14 +2,11 @@
 @use 'spacing' as *;
 @use 'typography' as *;
 @use 'mixins' as *;
-
-
 $card-radius: 0.625rem;
 $small-card-padding: 1rem;
 $big-small-card-padding: 4.3%;
 $card-shadow: 0 5px 6px rgba(0, 0, 0, 0.07);
 $header-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
-
 $button-primary-bg: $color-primary;
 $button-primary-hover: $color-primary-dark;
 $button-primary-text: $color-white;
@@ -18,14 +15,11 @@ $button-secondary-border: $color-primary;
 $button-secondary-text: $color-primary;
 $button-radius: 0.8rem;
 $button-height: 3rem;
-
 $button-cancel-bg: transparent;
 $button-cancel-border: $color-primary;
 $button-cancel-text: $color-primary;
-
 $button-confirm-bg: $color-primary;
 $button-confirm-text: $color-white;
-
 $input-border: $color-border;
 $input-radius: 0.5rem;
 a:hover, button:hover{
@@ -41,7 +35,6 @@ a:hover, button:hover{
   z-index:9999;
   @include center;
 }
-
 .card{
   border-radius: $card-radius;
   padding: $small-card-padding;
@@ -59,7 +52,6 @@ a:hover, button:hover{
       padding:0;
   }
 }
-
 .section-overlay{
   position: fixed;
   top: 0;
@@ -72,7 +64,6 @@ a:hover, button:hover{
   animation: slideInFromRight 0.3s ease-out forwards;
   backdrop-filter: blur(2px);
   padding:0 3rem;
-
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
@@ -82,15 +73,13 @@ a:hover, button:hover{
     }
   }
 }
-
 .circle-size-big{
     width: 6rem;
     height: 6rem;
     border-radius: 50%;
     border: 3px solid $color-white;
     color: $color-white;
-    display: flex
-;
+    display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-xl);
@@ -99,27 +88,22 @@ a:hover, button:hover{
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
     text-shadow: 0 5px 6px rgba(0, 0, 0, 0.07);
 }
-
 .close-btn {
   position: absolute;
   top: 30px;
   right: 1.25rem;
   cursor: pointer;
   z-index:998;
-
   img {
     width: 24px;
     height: 24px;
   }
 }
-
-.line-seperator {
+.line-separator {
   position: relative;
   display: inline-block;
   margin:$spacing-xs;
   height:100%;
-
-
   &::after {
   content: "";
   position: absolute;
@@ -145,11 +129,10 @@ a:hover, button:hover{
   .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }
-  .line-seperator{
+  .line-separator{
     border-right: 0px solid $color-subtask-bar;
     display: none;
   }
-
 }
 .circle {
   width: 40px;
@@ -193,14 +176,6 @@ a:hover, button:hover{
   font-size: var(--font-size-sm);
   cursor: pointer;
 }
-.btn{
-border-radius:0.625rem ;
-  padding: 0.5rem 2.5rem 0.5rem 1rem;
-  font-size: var(--font-size-base);
-  border-color: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 .primary{
   background: $button-primary-bg;
   color:$color-white;
@@ -210,18 +185,6 @@ border-radius:0.625rem ;
     box-shadow:$card-shadow;
   }
 }
-
-.ghost-btn{
-  background: $button-cancel-bg;
-  border: 1px solid $button-cancel-border;
-  color: $button-cancel-text;
-  &:hover{
-    box-shadow:$card-shadow;
-    color:$color-subtask-bar;
-    border: 1px solid $color-subtask-bar;
-  }
-}
-
 @media (width < 767px) {
   .ai-center{
     align-items: center;
@@ -246,12 +209,10 @@ border-radius:0.625rem ;
     display:none;
   }
 }
-
 @media (width > 767px){
   .rounded-submenu {
     display:none;
   }
-
   .subheadline {
     position: relative;
     display: inline-block;

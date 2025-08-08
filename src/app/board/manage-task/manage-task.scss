@@ -13,7 +13,6 @@
     grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
     max-width: 1440px;
 }
-
 .card{
   border-radius: $card-radius;
   padding: $small-card-padding;
@@ -37,14 +36,11 @@
 .add-task-plus{
   padding: 0;
 }
-
-
 /* Add cursor pointer and hover effect for draggable cards */
 .card[cdkDrag] {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .card[cdkDrag]:hover {
   transform: scale(1.02);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
@@ -58,7 +54,6 @@ h4{
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
-
   h4 {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -92,12 +87,10 @@ h4{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 // Dynamic category colors
 .category-userstory {
   background-color: $color-badge-userstory;
 }
-
 .category-technical {
   background-color: $color-badge-technical;
 }
@@ -108,7 +101,7 @@ h4{
 .user-story-clr{
     background:$color-badge-userstory;
 }
-.tecnical-clr{
+.technical-clr{
     background:$color-medium-gray;
 }
 .position-absolute{
@@ -153,31 +146,25 @@ h4{
   transform: rotate(3deg);
   cursor: grabbing;
 }
-
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
 .example-box:last-child {
   border: none;
 }
-
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
 .example-custom-placeholder {
   background: #ccc;
   border: dotted 3px #999;
   min-height: 60px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
 .drop-list {
   min-height: 100px;
   padding: 10px 0;
 }
-
 .empty-column-message {
   text-align: center;
   padding: 20px;
@@ -188,7 +175,6 @@ h4{
   margin: 10px 0;
   @include center-column;
 }
-
 .no-tasks-found-message {
   color: $color-primary;
   text-align: center;
@@ -200,13 +186,11 @@ h4{
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-
   p {
     font-size: var(--font-size-lg);
     font-weight: 500;
   }
 }
-
   .assigned-to{
     align-items: center;
     margin-bottom: $spacing-base;
@@ -232,7 +216,6 @@ h4{
   .rounded{
     border-radius: 50%;
   }
-
   // Contact initials styling for task cards
   .assigned-contacts {
     gap: 4px;
@@ -241,7 +224,6 @@ h4{
     max-width: 100%;
     flex-wrap: nowrap;
   }
-
   .circle-initials {
     width: 32px;
     height: 32px;
@@ -255,11 +237,9 @@ h4{
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     border: 2px solid $color-white;
   }
-
   .circle-initials:not(:first-child) {
     margin-left: -13px;
   }
-
   .priority-indicator {
     font-size: 12px;
     font-weight: 500;
@@ -277,7 +257,6 @@ h4{
     height: 16px;
     object-fit: contain;
   }
-
   /* Highlight animation for tasks */
   @keyframes task-highlight {
     0% {
@@ -294,7 +273,6 @@ h4{
       transform: scale(1);
     }
   }
-
   .highlight-task {
     animation: task-highlight 2s ease-in-out;
   }

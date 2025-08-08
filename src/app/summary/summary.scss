@@ -10,7 +10,7 @@
         color:$color-white;
     }
 }
-.line-seperator-summery{
+.line-separator-summery{
     position: relative;
     display: inline-block;
     margin: clamp(0.5rem, 0.4821rem + 0.0893vw, 0.5625rem);
@@ -25,7 +25,7 @@
     }
 }
     @media (width < 455px){
-    .line-seperator-summery {
+    .line-separator-summery {
         display:none;
         }
         
@@ -70,7 +70,7 @@
     }
 }
 // .hover-scale-btn is now defined in _utilities.scss
-.summery-card{
+.summary-card{
     gap: $spacing-3xl;
 }
 .card-circle-content > *:hover{
@@ -111,9 +111,7 @@
     }
 
 }
-.margin-bottom{
-    margin-bottom: $spacing-5xl;
-}
+
 .dashboard-container {
   display: flex;
   gap: 4rem;
@@ -164,7 +162,7 @@
         display:none;
     }
 }
-.line-seperator-summary {
+.line-separator-summary {
   position: relative;
   display: inline-block;
   margin:$spacing-sm;
@@ -196,7 +194,7 @@
   .underline-summery:before{
       border-bottom: 3px solid $color-subtask-bar;
   }
-  .line-seperator-summary{
+  .line-separator-summary{
     border-right: 0px solid $color-subtask-bar;
     display: none;
   }
