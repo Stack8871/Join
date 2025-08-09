@@ -1,5 +1,4 @@
 import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
@@ -11,6 +10,7 @@ import { BreakpointObserverHandler } from '../contacts-services/Contacts-breakpo
 import { TaskService } from '../../Shared/firebase/firebase-services/task-service';
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contacts',

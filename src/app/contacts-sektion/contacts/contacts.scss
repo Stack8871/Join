@@ -1,5 +1,4 @@
 @use 'index' as *;
-
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
 
@@ -12,7 +11,6 @@
     }
   }
 }
-
 .contacts-page-container {
     display: flex;
     flex-direction: row;
@@ -67,7 +65,7 @@
   .mobile & {
     width: 100%;
     margin-bottom: $spacing-base;
-    height: calc(100svh - 189px);
+/*     height: calc(100svh - 189px); */
     border-radius: 0;
     box-sizing: border-box;
   }
@@ -373,7 +371,6 @@ position: sticky;
   color: $color-white;
   text-shadow: $card-shadow;
   background: $color-gray;
-
   &:hover{
     background: $color-medium-gray;
   color: $color-white;
