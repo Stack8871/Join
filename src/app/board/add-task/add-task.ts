@@ -8,6 +8,7 @@ import { Firebase } from '../../Shared/firebase/firebase-services/firebase-servi
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -37,7 +38,7 @@ export class AddTask implements OnInit{
 
 form: FormGroup;
 
-constructor(private fb: FormBuilder) {
+constructor(private fb: FormBuilder, private router: Router) {
   this.form = this.fb.group({
     status:'todo',
     title: ['', Validators.required],
@@ -310,12 +311,15 @@ saveEditedSubtask(event?: KeyboardEvent) {
     if (this.isEditMode && this.taskToEdit?.id) {
       await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
       this.success.show('Task updated');
+      document.dispatchEvent(new CustomEvent('closeOverlay'));
     } else {
-      await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
+      const newId = await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
       this.success.show('Task added');
+      try {
+        document.dispatchEvent(new CustomEvent('closeOverlay'));
+      } catch {}
+      this.router.navigate(['/board'], { queryParams: { highlightTaskId: newId } });
     }
-
-    document.dispatchEvent(new CustomEvent('closeOverlay'));
   }
 
   cancel() {

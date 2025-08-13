@@ -12,7 +12,7 @@ import { TaskFilterService } from './task-filter';
 import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-task',
@@ -28,6 +28,8 @@ export class ManageTask implements OnInit, OnDestroy {
   private userPermissionService = inject(UserPermissionService);
   private success = inject(SuccessServices);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private paramsSubscribed = false;
   tasks$!: Observable<TaskInterface[]>;
   firebase = inject(Firebase);
   isEdited = false;
@@ -90,11 +92,28 @@ export class ManageTask implements OnInit, OnDestroy {
    * Checks for the 'highlight' or 'highlightUrgent' query parameter and highlights tasks accordingly
    */
   checkForHighlightParameter() {
+    if (this.paramsSubscribed) {
+      return;
+    }
+    this.paramsSubscribed = true;
+
     this.route.queryParams.subscribe(params => {
       const highlightStatus = params['highlight'];
       const highlightUrgent = params['highlightUrgent'];
+      const highlightTaskId = params['highlightTaskId'];
 
-      if (highlightStatus) {
+      if (highlightTaskId) {
+        // Highlight only the newly created task by id
+        this.highlightedTaskIds = [highlightTaskId];
+        setTimeout(() => {
+          this.applyHighlightEffect();
+        }, 100);
+
+        // Remove the highlightTaskId from URL to prevent re-triggering on future updates
+        setTimeout(() => {
+          this.router.navigate([], { queryParams: { highlightTaskId: null }, queryParamsHandling: 'merge' });
+        }, 2200);
+      } else if (highlightStatus) {
         this.highlightStatus = highlightStatus;
         this.highlightTasksByStatus(highlightStatus);
       } else if (highlightUrgent === 'true') {
@@ -140,7 +159,11 @@ export class ManageTask implements OnInit, OnDestroy {
    * Applies a flash/highlight effect to the tasks
    */
   applyHighlightEffect() {
-    // Add highlight class to tasks
+    // Remove any existing highlight classes to avoid re-highlighting older tasks
+    const highlighted = document.querySelectorAll('.highlight-task');
+    highlighted.forEach(el => el.classList.remove('highlight-task'));
+
+    // Add highlight class only to current target tasks
     this.highlightedTaskIds.forEach(taskId => {
       const taskElement = document.getElementById(`task-${taskId}`);
       if (taskElement) {
@@ -429,7 +452,7 @@ export class ManageTask implements OnInit, OnDestroy {
   nextTask(columnId: string): void {
     const column = this.filteredColumns.find(col => col.id === columnId);
     if (!column) return;
-    
+
     const currentIndex = this.mobileSliderPositions[columnId] || 0;
     if (currentIndex < column.tasks.length - 1) {
       this.mobileSliderPositions[columnId] = currentIndex + 1;
@@ -444,7 +467,7 @@ export class ManageTask implements OnInit, OnDestroy {
   goToTask(columnId: string, index: number): void {
     const column = this.filteredColumns.find(col => col.id === columnId);
     if (!column) return;
-    
+
     if (index >= 0 && index < column.tasks.length) {
       this.mobileSliderPositions[columnId] = index;
     }

@@ -27,13 +27,8 @@ export class ContactsOverlay implements OnInit {
   form = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', Validators.required]
+    phone: ['', [Validators.pattern(/^[+]?[\d\s()-]{6,20}$/)]]
   });
-
-  // Flags to show validation errors
-  showNameValidationError = false;
-  showEmailValidationError = false;
-  showPhoneValidationError = false;
 
   /** Checks if form is in edit mode. */
   get isEditMode(): boolean {
@@ -56,13 +51,42 @@ export class ContactsOverlay implements OnInit {
         phone: this.contactToEdit.phone
       });
     }
-
-    // Only mark the phone field as touched when showPhoneValidationError is true
-    // This ensures validation errors only show for newly registered users
-    if (this.showPhoneValidationError) {
-      this.form.get('phone')?.markAsTouched();
-    }
   }
+
+  private hasFieldState(fieldName: string, shouldBeValid: boolean): boolean {
+    const control = this.form.get(fieldName);
+    if (!control) {
+      return false;
+    }
+    const touched = control.dirty || control.touched;
+    return touched && (shouldBeValid ? control.valid : control.invalid);
+  }
+
+  isFieldValid(fieldName: string): boolean {
+    return this.hasFieldState(fieldName, true);
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    return this.hasFieldState(fieldName, false);
+  }
+
+  getValidationMessage(fieldName: string): string {
+    const field = this.form.get(fieldName);
+    if (!field?.errors || !(field.dirty || field.touched)) {
+      return '';
+    }
+    if (field.errors['required']) {
+      return 'This field is required';
+    }
+    if (field.errors['email']) {
+      return 'Please enter a valid email address';
+    }
+    if (field.errors['pattern']) {
+      return 'Please enter a valid phone number';
+    }
+    return 'Invalid input';
+  }
+
   /** Deletes contact by ID */
   deleteItem(contactId: string) {
     this.firebase.deleteContactsFromDatabase(contactId);
@@ -97,19 +121,10 @@ export class ContactsOverlay implements OnInit {
    * Validates form before submission.
    */
   async submit() {
-    // Check if form is valid
     if (this.form.invalid) {
-      // Set validation flags to show error messages
-      this.showNameValidationError = true;
-      this.showEmailValidationError = true;
-      this.showPhoneValidationError = true;
-
-      // Mark all fields as touched to trigger validation visuals
-      Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.markAsTouched();
-      });
-
-      return; // Stop execution if form is invalid
+      this.form.markAllAsTouched();
+      this.success.show('Please fix the errors in the form', 3000);
+      return;
     }
 
     const value = this.form.getRawValue();

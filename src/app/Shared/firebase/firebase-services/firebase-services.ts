@@ -81,8 +81,9 @@ export class Firebase implements OnDestroy {
     };
   }
 
-  async addTaskToDatabase(tasks: TaskInterface) {
-    await addDoc(collection(this.firestore, 'tasks'), tasks);
+  async addTaskToDatabase(tasks: TaskInterface): Promise<string> {
+    const docRef = await addDoc(collection(this.firestore, 'tasks'), tasks);
+    return docRef.id;
   }
 
   async editTaskToDatabase(id: string, editedTasks: TaskInterface) {
