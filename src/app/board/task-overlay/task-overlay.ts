@@ -83,6 +83,8 @@ removeSubtask(index: number) {
         this.taskToEdit.subtasks.forEach(subtask => {
           subtasksArray.push(this.fb.control(subtask.title, Validators.required));
         });
+        // Ensure there is always an empty control at the end to serve as input row
+        subtasksArray.push(this.fb.control('', Validators.required));
       } else {
         // Add at least one empty subtask
         subtasksArray.push(this.fb.control('', Validators.required));

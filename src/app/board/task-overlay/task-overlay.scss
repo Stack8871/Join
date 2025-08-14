@@ -477,3 +477,82 @@ select:-moz-focusring {
     display:none;
   }
 }
+
+
+/* Subtasks List Display (overlay) */
+.subtasks-list-display {
+  margin-top: 12px;
+  .subtasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 440px;
+    margin-top: 8px;
+    max-height: 96px; /* fits ~2 items + gap; from 3+ enable inner scroll */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-right: 4px; /* prevent content under scrollbar */
+  }
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+  .subtask-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    max-width: calc(100% - 30px);
+  }
+  .subtask-bullet {
+    color: $color-primary;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .subtask-text {
+    font-size: 14px;
+    color: $color-text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .subtask-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .subtask-item:hover .subtask-actions {
+    opacity: 1;
+  }
+  .action-icon {
+    cursor: pointer;
+    color: $color-medium-gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      color: $color-primary;
+    }
+    svg {
+      fill: currentColor;
+    }
+  }
+}
+
+/* Keep the add-subtask input visible at top while list scrolls */
+.subtasks.add-subtask {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: $color-white;
+}

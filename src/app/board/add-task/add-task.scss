@@ -275,6 +275,11 @@ select:-moz-focusring {
     gap: 8px;
     max-width: 440px;
     margin-top: 8px;
+    max-height: 96px; /* fits ~2 items + gap; from 3+ enable inner scroll */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-right: 4px; /* prevent content under scrollbar */
   }
   .subtask-item {
     display: flex;
