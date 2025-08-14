@@ -25,29 +25,36 @@
     <div class="column">
         <div class="column-header">
           <div class="flex space-between" style="width: 100%;">
-            <h4>{{ col.title }}</h4> 
+            <h4>{{ col.title }}</h4>
             <span class="task-counter">{{ col.tasks.length }} tasks</span>
             <button class="add-icon" (click)="addNewTask()">+</button>
           </div>
         </div>
         <div
-          cdkDropList
-          [cdkDropListData]="col.tasks"
-          [cdkDropListConnectedTo]="connectedDropLists"
           class="drop-list"
-          (cdkDropListDropped)="drop($event)"
           [id]="col.id"
           >
           @if (col.tasks.length === 0) {
-          <div class="empty-column-message">
-            No tasks yet. Drag tasks here.
+          <div class="empty-column-message"
+               cdkDropList
+               [id]="col.id + '-list'"
+               [cdkDropListData]="col.tasks"
+               [cdkDropListConnectedTo]="dropListIds"
+               [cdkDropListDisabled]="!canEditTask"
+               (cdkDropListDropped)="onDrop($event, col.id)">
+            No tasks yet.
           </div>
           } @else {
           <!-- Desktop: Vertical Layout -->
-          <div class="desktop-task-list">
+          <div class="desktop-task-list"
+               cdkDropList
+               [id]="col.id + '-list'"
+               [cdkDropListData]="col.tasks"
+               [cdkDropListConnectedTo]="dropListIds"
+               [cdkDropListDisabled]="!canEditTask"
+               (cdkDropListDropped)="onDrop($event, col.id)">
             @for (task of col.tasks; track task.id) {
-            <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
-              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="card flex column" cdkDrag [cdkDragDisabled]="!canEditTask" [cdkDragData]="task" (cdkDragStarted)="isDragging=true" (cdkDragEnded)="isDragging=false" (click)="!isDragging && selectTask(task)" [id]="'task-' + task.id">
               <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
               <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
               <div class="description">{{ truncateText(task.description) }}</div>
@@ -75,16 +82,15 @@
             </div>
             }
           </div>
-          
+
           <!-- Mobile: Horizontal Slider -->
-          <div class="mobile-task-slider" 
+          <div class="mobile-task-slider"
                [style.transform]="'translateX(' + getMobileSliderTransform(col.id) + 'px)'"
                (touchstart)="onTouchStart($event)"
                (touchend)="onTouchEnd($event, col.id)"
                #mobileSlider>
             @for (task of col.tasks; track task.id) {
-            <div class="card flex column" cdkDrag (click)="selectTask(task)" [id]="'task-' + task.id">
-              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="card flex column" (click)="selectTask(task)" [id]="'task-' + task.id">
               <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
               <div class="task-title"><h4> {{ truncateText(task.title) }}</h4></div>
               <div class="description">{{ truncateText(task.description) }}</div>
@@ -112,7 +118,7 @@
             </div>
             }
           </div>
-          
+
           <!-- Mobile Navigation -->
           @if (col.tasks.length > 1) {
           <div class="slider-navigation">

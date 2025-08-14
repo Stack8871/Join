@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, OnDestroy} from '@angular/core';
-import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop, CdkDragPlaceholder, moveItemInArray, transferArrayItem,} from '@angular/cdk/drag-drop';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -13,11 +12,13 @@ import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder, FormsModule, TaskDetail],
+  imports: [CommonModule, MatProgressBarModule, FormsModule, TaskDetail, DragDropModule],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
@@ -45,6 +46,8 @@ export class ManageTask implements OnInit, OnDestroy {
   canDeleteTask = false;
   highlightStatus: string | null = null;
   highlightedTaskIds: string[] = [];
+  dropListIds: string[] = [];
+  isDragging = false;
 
   // Mobile slider state
   private mobileSliderPositions: { [columnId: string]: number } = {};
@@ -64,6 +67,8 @@ export class ManageTask implements OnInit, OnDestroy {
       this.tasks = tasks;
       this.updateColumns();
       this.filteredColumns = [...this.columns];
+      // Initialize connected drop list ids for drag & drop
+      this.dropListIds = ['todoList-list', 'progressList-list', 'feedbackList-list', 'doneList-list'];
 
       // Check for highlight parameter after tasks are loaded
       this.checkForHighlightParameter();
@@ -200,52 +205,7 @@ export class ManageTask implements OnInit, OnDestroy {
     }
   }
 
-  get connectedDropLists(): string[] {
-    return this.columns.map(col => col.id);
-  }
 
-  drop(event: CdkDragDrop<TaskInterface[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-
-      const task = event.container.data[event.currentIndex];
-      if (task && task.id) {
-        let newStatus: 'todo' | 'inProgress' | 'feedback' | 'done';
-
-        switch (event.container.id) {
-          case 'todoList':
-            newStatus = 'todo';
-            break;
-          case 'progressList':
-            newStatus = 'inProgress';
-            break;
-          case 'feedbackList':
-            newStatus = 'feedback';
-            break;
-          case 'doneList':
-            newStatus = 'done';
-            break;
-          default:
-            return;
-        }
-
-        task.status = newStatus;
-        // Note: We allow all users (including guests) to drag and drop tasks as it's a form of "clicking" mentioned in requirements
-        this.firebase.editTaskToDatabase(task.id, task);
-      }
-    }
-  }
   selectTask(task: TaskInterface) {
     if (!task) return;
     this.isSelected = true;
@@ -514,6 +474,76 @@ export class ManageTask implements OnInit, OnDestroy {
         // Swipe right - previous task
         this.previousTask(columnId);
       }
+    }
+  }
+
+  // Drag & Drop handlers
+  onDrop(event: CdkDragDrop<TaskInterface[]>, targetColumnId: string): void {
+    if (!this.canEditTask) {
+      this.success.show('You do not have permission to edit tasks', 3000);
+      return;
+    }
+
+    if (event.previousContainer === event.container) {
+      // Reorder within the same column (UI only)
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // Do not call updateColumns() here to preserve the current UI ordering
+      if (this.searchTerm && this.searchTerm.trim() !== '') {
+        // Re-apply filter to ensure indices/dots remain consistent
+        this.applyFilter(this.searchTerm);
+      }
+    } else {
+      // Move between columns
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      const movedTask = event.container.data[event.currentIndex];
+      const newStatus = this.mapColumnIdToStatus(targetColumnId);
+
+      if (movedTask && movedTask.id && newStatus) {
+        // Update local object for immediate UI feedback
+        movedTask.status = newStatus as any;
+
+        // Keep local source of truth in sync so updateColumns() reflects the move
+        const idx = this.tasks.findIndex(t => t.id === movedTask.id);
+        if (idx > -1) {
+          this.tasks[idx] = { ...this.tasks[idx], status: newStatus } as TaskInterface;
+        }
+
+        const updatedTask: TaskInterface = { ...movedTask, status: newStatus } as TaskInterface;
+        this.firebase
+          .editTaskToDatabase(movedTask.id, updatedTask)
+          .then(() => {
+            // Rebuild columns from updated tasks
+            this.updateColumns();
+            if (this.searchTerm && this.searchTerm.trim() !== '') {
+              this.applyFilter(this.searchTerm);
+            }
+          })
+          .catch((error) => {
+            console.error('Failed to update task status:', error);
+            this.success.show('Failed to move task. Please try again.', 3000);
+          });
+      }
+    }
+  }
+
+  private mapColumnIdToStatus(columnId: string): string {
+    switch (columnId) {
+      case 'todoList':
+        return 'todo';
+      case 'progressList':
+        return 'inProgress';
+      case 'feedbackList':
+        return 'feedback';
+      case 'doneList':
+        return 'done';
+      default:
+        return '';
     }
   }
 }
