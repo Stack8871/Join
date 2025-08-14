@@ -189,10 +189,11 @@ export class ManageTask implements OnInit, OnDestroy {
   }
 
   updateColumns() {
-    this.columns[0].tasks = this.tasks.filter(t => t.status === 'todo');
-    this.columns[1].tasks = this.tasks.filter(t => t.status === 'inProgress');
-    this.columns[2].tasks = this.tasks.filter(t => t.status === 'feedback');
-    this.columns[3].tasks = this.tasks.filter(t => t.status === 'done');
+    // Group by status
+    this.columns[0].tasks = this.tasks.filter(t => t.status === 'todo').sort(this.sortByOrderThenTitle);
+    this.columns[1].tasks = this.tasks.filter(t => t.status === 'inProgress').sort(this.sortByOrderThenTitle);
+    this.columns[2].tasks = this.tasks.filter(t => t.status === 'feedback').sort(this.sortByOrderThenTitle);
+    this.columns[3].tasks = this.tasks.filter(t => t.status === 'done').sort(this.sortByOrderThenTitle);
 
     // Reset mobile slider positions when columns update
     this.resetMobileSliderPositions();
@@ -477,6 +478,69 @@ export class ManageTask implements OnInit, OnDestroy {
     }
   }
 
+  // Ordering helpers
+  private sortByOrderThenTitle = (a: TaskInterface, b: TaskInterface) => {
+    const ao = a.order;
+    const bo = b.order;
+    const aHas = typeof ao === 'number';
+    const bHas = typeof bo === 'number';
+    if (aHas && bHas) {
+      if (ao === bo) {
+        const at = (a.title || '').toLowerCase();
+        const bt = (b.title || '').toLowerCase();
+        if (at < bt) return -1;
+        if (at > bt) return 1;
+        const aid = a.id || '';
+        const bid = b.id || '';
+        return aid.localeCompare(bid);
+      }
+      return (ao as number) - (bo as number);
+    }
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    const at = (a.title || '').toLowerCase();
+    const bt = (b.title || '').toLowerCase();
+    if (at < bt) return -1;
+    if (at > bt) return 1;
+    const aid = a.id || '';
+    const bid = b.id || '';
+    return aid.localeCompare(bid);
+  };
+
+  private getColumnIdFromDropListId(listId: string): string {
+    return listId.endsWith('-list') ? listId.slice(0, -5) : listId;
+  }
+
+  private reindexColumnOrders(columnId: string, columnTasks: TaskInterface[]): void {
+    const status = this.mapColumnIdToStatus(columnId);
+    columnTasks.forEach((t, idx) => {
+      t.order = idx;
+      if (status) {
+        (t as any).status = status;
+      }
+      const i = this.tasks.findIndex(tt => tt.id === t.id);
+      if (i > -1) {
+        this.tasks[i] = { ...this.tasks[i], order: t.order, status: (t as any).status } as TaskInterface;
+      }
+    });
+    this.persistTasks(columnTasks.filter(t => t && t.id));
+  }
+
+  private persistTasks(tasks: TaskInterface[]): void {
+    tasks.forEach(t => {
+      if (t.id) {
+        this.firebase.editTaskToDatabase(t.id, t as TaskInterface).catch(err => {
+          console.error('Failed to persist task order:', err);
+        });
+      }
+    });
+  }
+
+  private getMaxOrderForStatus(status: string): number {
+    const ordered = this.tasks.filter(t => t.status === status && typeof t.order === 'number') as TaskInterface[];
+    return ordered.length ? Math.max(...ordered.map(t => (t.order as number))) : -1;
+  }
+
   // Drag & Drop handlers
   onDrop(event: CdkDragDrop<TaskInterface[]>, targetColumnId: string): void {
     if (!this.canEditTask) {
@@ -484,16 +548,24 @@ export class ManageTask implements OnInit, OnDestroy {
       return;
     }
 
+    const isFiltered = !!(this.searchTerm && this.searchTerm.trim() !== '');
+
     if (event.previousContainer === event.container) {
-      // Reorder within the same column (UI only)
+      // Reorder within the same column (UI)
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      // Do not call updateColumns() here to preserve the current UI ordering
-      if (this.searchTerm && this.searchTerm.trim() !== '') {
-        // Re-apply filter to ensure indices/dots remain consistent
+
+      if (!isFiltered) {
+        // Persist sequential order only when not filtered
+        this.reindexColumnOrders(targetColumnId, event.container.data);
+        this.updateColumns();
+      } else {
+        // Keep UI consistent under filter
         this.applyFilter(this.searchTerm);
       }
     } else {
       // Move between columns
+      const sourceColumnId = this.getColumnIdFromDropListId(event.previousContainer.id);
+
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -514,20 +586,27 @@ export class ManageTask implements OnInit, OnDestroy {
           this.tasks[idx] = { ...this.tasks[idx], status: newStatus } as TaskInterface;
         }
 
-        const updatedTask: TaskInterface = { ...movedTask, status: newStatus } as TaskInterface;
-        this.firebase
-          .editTaskToDatabase(movedTask.id, updatedTask)
-          .then(() => {
-            // Rebuild columns from updated tasks
-            this.updateColumns();
-            if (this.searchTerm && this.searchTerm.trim() !== '') {
+        if (!isFiltered) {
+          // Reindex and persist both columns when not filtered
+          if (sourceColumnId) {
+            this.reindexColumnOrders(sourceColumnId, event.previousContainer.data as TaskInterface[]);
+          }
+          this.reindexColumnOrders(targetColumnId, event.container.data as TaskInterface[]);
+          this.updateColumns();
+        } else {
+          // Persist only status change when filtered
+          const updatedTask: TaskInterface = { ...movedTask, status: newStatus } as TaskInterface;
+          this.firebase
+            .editTaskToDatabase(movedTask.id, updatedTask)
+            .then(() => {
+              this.updateColumns();
               this.applyFilter(this.searchTerm);
-            }
-          })
-          .catch((error) => {
-            console.error('Failed to update task status:', error);
-            this.success.show('Failed to move task. Please try again.', 3000);
-          });
+            })
+            .catch((error) => {
+              console.error('Failed to update task status:', error);
+              this.success.show('Failed to move task. Please try again.', 3000);
+            });
+        }
       }
     }
   }

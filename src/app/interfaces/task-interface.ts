@@ -1,5 +1,5 @@
 export interface TaskInterface {
-  id?:string;
+  id?: string;
   status: 'todo' | 'inProgress' | 'feedback' | 'done';
   title: string;
   description: string;
@@ -8,4 +8,5 @@ export interface TaskInterface {
   priority: 'low' | 'medium' | 'urgent';
   assignedTo: string[];
   subtasks?: { title: string; done: boolean }[];
+  order?: number; // Persistent ordering within its column
 }

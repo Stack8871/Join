@@ -96,6 +96,7 @@ export class Firebase implements OnDestroy {
       assignedTo: editedTasks.assignedTo,
       category: editedTasks.category,
       subtasks: editedTasks.subtasks,
+      order: editedTasks.order !== undefined ? editedTasks.order : null,
     });
   }
 
