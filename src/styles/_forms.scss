@@ -48,6 +48,12 @@ margin-top:$spacing-base;
   margin-right:$spacing-base;
   }
 }
+
+/* Stack elements vertically when using `.column` modifier and left-align validation */
+.input-group.column {
+  flex-direction: column;
+  align-items: stretch; /* ensures children (including .validation-error) span full width */
+}
 .btn{
   border-radius: 0.625rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
@@ -361,4 +367,11 @@ justify-content: space-between;
   @media (width < 859px){
     display:none;
   }
+}
+
+
+/* Validation state for custom select header to mirror inputs */
+.custom-select-header.invalid-field {
+  border-color: $color-accent-urgent;
+  background-color: rgba(244, 67, 54, 0.05);
 }

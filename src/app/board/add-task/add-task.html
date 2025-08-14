@@ -180,11 +180,12 @@
         <!-- Category -->
         <div class="form-group">
           <label for="category">Category <span class="required-asterisk">*</span></label>
-          
+
           <!-- Custom Single-Select Dropdown -->
           <div class="custom-select-wrapper">
             <div class="custom-select-header" (click)="toggleCategoryDropdown()"
-                 [class.open]="isCategoryDropdownOpen">
+                 [class.open]="isCategoryDropdownOpen"
+                 [ngClass]="{'invalid-field': isFieldInvalid('category')}">
               <span class="placeholder">
                 @if (form.get('category')?.value) {
                   {{ form.get('category')?.value }}
@@ -214,12 +215,10 @@
             </div>
             }
           </div>
-          
-          @if (isFieldInvalid('category')) {
-          <div class="speech-bubble">
+
+          <div *ngIf="isFieldInvalid('category')" class="validation-error">
             {{ getValidationMessage('category') }}
           </div>
-          }
         </div>
 
         <!-- Subtasks -->
