@@ -78,6 +78,11 @@ h4{
 
 // Mobile Task Slider
 @media (width < 768px) {
+  .container {
+    /* Add space for fixed bottom mobile nav so last column isn't overlapped */
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
   .grid-board {
     display: flex;
     flex-direction: column;
