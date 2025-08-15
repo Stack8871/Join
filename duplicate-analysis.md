@@ -74,7 +74,7 @@
 ### Noch zu beheben:
 
 #### Rechtschreibfehler in Klassennamen (Niedrige Priorität):
-1. `.line-seperator` → sollte `.line-separator` sein
+1. `.line-separator` → sollte `.line-separator` sein
 2. `.summery-card` → sollte `.summary-card` sein  
 3. `.tecnical-clr` → sollte `.technical-clr` sein
 
