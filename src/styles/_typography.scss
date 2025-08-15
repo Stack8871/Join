@@ -18,6 +18,7 @@ html {
     $max: $type-base-max * math.pow($type-scale-max, $power);
     --font-size-#{$step}: #{clamped($min, $max)};
   }
+  --font-size-base:1rem;
 }
 a{
     color:$color-subtask-bar;

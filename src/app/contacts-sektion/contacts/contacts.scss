@@ -254,7 +254,7 @@ position: sticky;
   flex: 1;
   overflow: hidden;
   .name {
-    font-size: $spacing-base;
+    font-size: 1rem;
     margin-bottom: 0.25rem;
     color: $color-black;
     display: flex;
@@ -278,7 +278,7 @@ position: sticky;
     }
   }
   .email, .phone {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #6c757d;
     margin-bottom: 0.15rem;
     white-space: nowrap;
@@ -352,7 +352,7 @@ position: sticky;
     gap: $spacing-2xs;
     padding-right:$spacing-xs;
     .logged-in-badge-detail {
-      font-size: 16px;
+      font-size: 1rwm;
       color: $color-primary;
       font-weight: normal;
 
