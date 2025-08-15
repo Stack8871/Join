@@ -32,7 +32,7 @@ a.nav-item {
     align-items: center;
     margin-bottom: 0;
     padding:0.5rem 0;
-    font-size:0.5rem;
+    font-size:var(--font-size-base);
     border-radius: $spacing-sm;
     height:100%;
   }
@@ -59,7 +59,7 @@ a.nav-item {
 }
 .nav-text {
   flex: 1;
-  font-size:var(--font-size-sm);
+  font-size:var(--font-size-base);
   
   &.mobile {
     display: block;

@@ -191,7 +191,7 @@ h4{
 
   .task-counter {
     color: $color-medium-gray;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     font-weight: normal;
   }
 }
@@ -218,7 +218,7 @@ h4{
 .category{
   border-radius: $card-radius;
   padding: $spacing-2xs;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   color:$color-white;
   font-weight: 500;
   display: inline-block;

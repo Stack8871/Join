@@ -47,7 +47,7 @@
   }
   .validation-message {
     color: #ff0000;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     margin-top: 4px;
   }
 
@@ -348,7 +348,7 @@ select.minimal:focus {
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   flex-shrink: 0;
 }
 
