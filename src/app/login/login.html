@@ -28,7 +28,7 @@
               #emailInput="ngModel"
               [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
             />
-            <img src="icons/mail.svg" alt="person" />
+            <img src="/icons/mail.svg" alt="person" />
           </div>
           <div class="validation-message" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
             <span *ngIf="emailInput.errors?.['required']">Email is required.</span>
@@ -45,7 +45,7 @@
               #passwordInput="ngModel"
               [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
             />
-            <img src="icons/lock.svg" alt="person" />
+            <img src="/icons/lock.svg" alt="person" />
           </div>
           <div class="validation-message" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
             <span *ngIf="passwordInput.errors?.['required']">Password is required.</span>

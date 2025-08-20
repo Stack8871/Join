@@ -323,13 +323,13 @@ export class ManageTask implements OnInit, OnDestroy {
   getPriorityIcon(priority: string): string {
     switch (priority.toLowerCase()) {
       case 'low':
-        return 'icons/prio-low.svg';
+        return '/icons/prio-low.svg';
       case 'medium':
-        return 'icons/prio-medium.svg';
+        return '/icons/prio-medium.svg';
       case 'urgent':
-        return 'icons/prio-urgent.svg';
+        return '/icons/prio-urgent.svg';
       default:
-        return 'icons/prio-medium.svg'; // Fallback
+        return '/icons/prio-medium.svg'; // Fallback
     }
   }
 

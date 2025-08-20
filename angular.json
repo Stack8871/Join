@@ -37,7 +37,7 @@
               {
                 "glob": "**/*",
                 "input": "public/font",
-                "output": "font"
+                "output": "/font"
               },
               {
                 "glob": "**/*",
@@ -59,7 +59,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/angular-projects/join/",
+              "baseHref": "/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

@@ -175,13 +175,13 @@ export class TaskDetail implements OnInit {
   getPriorityIcon(priority: string): string {
     switch (priority) {
       case 'Low':
-        return 'icons/prio-low.svg';
+        return '/icons/prio-low.svg';
       case 'Medium':
-        return 'icons/prio-medium.svg';
+        return '/icons/prio-medium.svg';
       case 'Urgent':
-        return 'icons/prio-urgent.svg';
+        return '/icons/prio-urgent.svg';
       default:
-        return 'icons/prio-medium.svg'; // Fallback
+        return '/icons/prio-medium.svg'; // Fallback
     }
   }
 

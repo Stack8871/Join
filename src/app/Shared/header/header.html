@@ -1,26 +1,23 @@
 @if (breakpointObserver.isMobile()) {
   <div class="site-header">
-    <img class="Logo-White" src="icons/join-logo.svg" alt="logo" />
+    <img class="Logo-White" src="/icons/join-logo.svg" alt="logo" />
     <div class="circle-section">
       <div class="circle-help">
         <a routerLink="/help"><span>?</span></a>
       </div>
       <div class="circle-user"
-           (mouseenter)="showDropdownMenu()"
-           (mouseleave)="hideDropdownMenu()">
+           (click)="toggleDropdown()">
         @if (user) {
-          <a href="#" class="small-padding" title="{{ user.email }}">
+          <span class="small-padding" title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
-          </a>
+          </span>
         } @else {
-          <a href="#"></a>
+          <span></span>
         }
 
         <!-- Dropdown Menu -->
         @if (showDropdown) {
           <div class="dropdown-menu"
-               (mouseenter)="showDropdownMenu()"
-               (mouseleave)="hideDropdownMenu()"
                (click)="$event.stopPropagation()">
             <a class="dropdown-item" routerLink="/imprint" (click)="closeDropdown()">
               <span>Imprint</span>
@@ -45,8 +42,7 @@
         <a routerLink="/help"><span>?</span></a>
       </div>
       <div class="circle-user"
-           (mouseenter)="showDropdownMenu()"
-           (click)="hideDropdownMenu()">
+           (click)="toggleDropdown()">
         @if (user) {
           <span href="#"  title="{{ user.email }}">
             {{ user.email.slice(0, 2) }}
@@ -58,8 +54,6 @@
         <!-- Dropdown Menu -->
         @if (showDropdown) {
           <div class="dropdown-menu"
-               (mouseenter)="showDropdownMenu()"
-               (mouseleave)="hideDropdownMenu()"
                (click)="$event.stopPropagation()">
             <a class="dropdown-item" routerLink="/imprint" (click)="closeDropdown()">
               <span>Imprint</span>

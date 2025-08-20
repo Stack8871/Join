@@ -2,7 +2,7 @@
     <header class="flex center-row">
         <div class="flex header-content">
             <div>
-                <img src="icons/join-logo.svg" alt="">
+                <img src="/icons/join-logo.svg" alt="">
             </div>
             <div>
                 <span class="margin-right">Already have an account?</span>
@@ -26,7 +26,7 @@
                     #nameInput="ngModel"
                     [class.invalid-input]="nameInput.invalid && (nameInput.dirty || nameInput.touched)"
                   />
-                  <img src="icons/person.svg" alt="person" />
+                  <img src="/icons/person.svg" alt="person" />
                 </div>
                 @if (nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
                   <div class="validation-message">
@@ -50,7 +50,7 @@
                     #emailInput="ngModel"
                     [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
                   />
-                  <img src="icons/mail.svg" alt="person" />
+                  <img src="/icons/mail.svg" alt="person" />
                 </div>
                 @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
                   <div class="validation-message">
@@ -74,7 +74,7 @@
                     #passwordInput="ngModel"
                     [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
                   />
-                  <img src="icons/lock.svg" alt="person" />
+                  <img src="/icons/lock.svg" alt="person" />
                 </div>
                 @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
                   <div class="validation-message">
@@ -97,7 +97,7 @@
                     #confirmPasswordInput="ngModel"
                     [class.invalid-input]="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)"
                   />
-                  <img src="icons/lock.svg" alt="person" />
+                  <img src="/icons/lock.svg" alt="person" />
                 </div>
                 @if ((confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)) {
                   <div class="validation-message">

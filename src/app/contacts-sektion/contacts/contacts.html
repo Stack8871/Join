@@ -2,7 +2,7 @@
   <div class="contact-container">
     <button *ngIf="canCreateContact" class="add-contact-btn" (click)="addNewContact()">
       <span>Add new contact</span>
-      <img src="icons-white/person_add.svg" alt="check" class="new-contact-icon" />
+      <img src="/img/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
     </button>
     @if (firebase.ContactsList.length > 0)
     {
@@ -19,7 +19,7 @@
             {{ contact.name }}
             @if (contact.isLoggedInUser) {
               <span class="logged-in-badge" title="This is you">
-                <img src="icons/person.svg" alt="You" />
+                <img src="/icons/person.svg" alt="You" />
               </span>
             }
           </div>
@@ -34,7 +34,7 @@
   <section class="contacts-detail-container">
     <div class="back-btn">
       <button (click)="goBackToList()">
-        <img src="icons/arrow-left.svg" alt="">
+        <img src="/icons/arrow-left.svg" alt="">
       </button>
     </div>
     <div class="contacts-info-container">
@@ -97,7 +97,7 @@
   </ng-template>
   <div *ngIf="canCreateContact" class="mobile-btn-add-contact">
       <button (click)="addNewContact()">
-    <img src="icons-white/person_add.svg" alt="check" />
+    <img src="/img/icons-white/person_add.svg" alt="check" />
   </button>
   </div>
   @if (showDeleteConfirm) {
