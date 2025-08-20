@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy} from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
-export class ManageTask implements OnInit, OnDestroy {
+export class ManageTask implements OnInit, AfterViewInit, OnDestroy {
   public TaskService = inject(TaskService);
   private filterService = inject(TaskFilterService);
   private taskOverlayService = inject(TaskOverlayService);
@@ -182,10 +182,26 @@ export class ManageTask implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit() {
+    // Add scroll listeners to update dot navigation
+    setTimeout(() => {
+      this.columns.forEach(col => {
+        const taskList = document.querySelector(`#${col.id}-list`) as HTMLElement;
+        if (taskList) {
+          taskList.addEventListener('scroll', () => {
+            this.getCurrentVisibleTaskIndex(col.id);
+          });
+        }
+      });
+    }, 100);
+  }
+
   ngOnDestroy() {
     if (this.editOverlayListener) {
       document.removeEventListener('openEditOverlay', this.editOverlayListener);
     }
+    // Restore body scroll when component is destroyed
+    document.body.style.overflow = '';
   }
 
   updateColumns() {
@@ -212,11 +228,15 @@ export class ManageTask implements OnInit, OnDestroy {
     this.isSelected = true;
     this.selectedTask = { ...task };
     this.taskId = task.id;
+    // Prevent body scroll when overlay is open
+    document.body.style.overflow = 'hidden';
   }
 
   closeOverlay() {
     this.isSelected = false;
     this.selectedTask = undefined;
+    // Restore body scroll when overlay is closed
+    document.body.style.overflow = '';
   }
 
     addNewTask() {
@@ -475,6 +495,54 @@ export class ManageTask implements OnInit, OnDestroy {
         // Swipe right - previous task
         this.previousTask(columnId);
       }
+    }
+  }
+
+  /**
+   * Gets the currently visible task index based on scroll position
+   * @param columnId - The ID of the column
+   * @returns Current visible task index
+   */
+  getCurrentVisibleTaskIndex(columnId: string): number {
+    const taskList = document.querySelector(`#${columnId}-list`) as HTMLElement;
+    if (!taskList) {
+      return this.mobileSliderPositions[columnId] || 0;
+    }
+
+    const cardWidth = 250; // Must match CSS
+    const gap = 16; // Must match CSS gap
+    const scrollLeft = taskList.scrollLeft;
+    const index = Math.round(scrollLeft / (cardWidth + gap));
+    
+    // Update stored position
+    this.mobileSliderPositions[columnId] = index;
+    
+    return index;
+  }
+
+  /**
+   * Scrolls to a specific task in the mobile view
+   * @param columnId - The ID of the column
+   * @param index - The target task index
+   */
+  scrollToTask(columnId: string, index: number): void {
+    const column = this.filteredColumns.find(col => col.id === columnId);
+    if (!column || index < 0 || index >= column.tasks.length) return;
+
+    // Store the position for dot navigation
+    this.mobileSliderPositions[columnId] = index;
+
+    // Find the task list container
+    const taskList = document.querySelector(`#${columnId}-list`) as HTMLElement;
+    if (taskList) {
+      const cardWidth = 250; // Must match CSS
+      const gap = 16; // Must match CSS gap
+      const scrollPosition = index * (cardWidth + gap);
+      
+      taskList.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
     }
   }
 

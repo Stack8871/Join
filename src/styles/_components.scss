@@ -34,6 +34,8 @@ a:hover, button:hover{
   background-color: #242424b6;
   z-index:9999;
   @include center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .card{
   border-radius: $card-radius;

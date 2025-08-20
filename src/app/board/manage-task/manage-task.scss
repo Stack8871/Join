@@ -98,24 +98,67 @@ h4{
     overflow: hidden;
   }
 
-  // Hide desktop layout on mobile
+  // Desktop task list becomes horizontal slider on mobile
   .desktop-task-list {
-    display: none;
-  }
-
-  .mobile-task-slider {
     display: flex;
-    transition: transform 0.3s ease;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     gap: $spacing-sm;
     padding: 0 $spacing-sm;
-    touch-action: pan-x; // Enable horizontal touch gestures
+    scroll-behavior: smooth;
+    
+    // Enable touch scrolling
+    -webkit-overflow-scrolling: touch;
+    
+    // Hide scrollbar
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  .mobile-task-slider .card {
+  .desktop-task-list .card {
     flex: 0 0 250px; // Fixed width for each card
     margin: 0;
     scroll-snap-align: start;
-    user-select: none; // Prevent text selection during swipe
+  }
+
+  // Remove mobile slider since we're using desktop list
+  .mobile-task-slider {
+    display: none;
+  }
+
+  // Show mobile dot navigation only on small screens
+  .mobile-dot-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: $spacing-sm;
+    padding: $spacing-xs 0;
+  }
+
+  .slider-dots {
+    display: flex;
+    gap: $spacing-xs;
+  }
+
+  .slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-light-gray;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.active {
+      background: $color-primary;
+      transform: scale(1.2);
+    }
+
+    &:hover {
+      background: $color-medium-gray;
+    }
   }
 
   .slider-navigation {
@@ -203,6 +246,10 @@ h4{
   }
 
   .slider-navigation {
+    display: none;
+  }
+
+  .mobile-dot-navigation {
     display: none;
   }
 
@@ -409,9 +456,6 @@ h4{
 }
 .cdk-drag-placeholder > * {
   opacity: 0;
-}
-.desktop-task-list.cdk-drop-list-dragging {
-  /* removed visual outline/background to avoid double borders */
 }
 
 /* Ensure single indicator in empty columns while dragging */
