@@ -9,9 +9,11 @@
             <label for="add-task-title">Title <span class="required-asterisk">*</span></label>
             <input type="text" id="add-task-title" formControlName="title" placeholder="Enter a title"
                    [ngClass]="{'invalid-field': isFieldInvalid('title')}">
-            <div *ngIf="isFieldInvalid('title')" class="validation-error">
+            @if (isFieldInvalid('title')) {
+            <div class="validation-error">
               {{ getValidationMessage('title') }}
             </div>
+            }
           </div>
         </div>
 
@@ -29,9 +31,11 @@
           <div class="input-group column date-input">
             <input type="date" id="add-task-dueDate" formControlName="dueDate"
                    [ngClass]="{'invalid-field': isFieldInvalid('dueDate')}">
-            <div *ngIf="isFieldInvalid('dueDate')" class="validation-error">
+            @if (isFieldInvalid('dueDate')) {
+            <div class="validation-error">
               {{ getValidationMessage('dueDate') }}
             </div>
+            }
           </div>
         </div>
       </div>
@@ -216,9 +220,11 @@
             }
           </div>
 
-          <div *ngIf="isFieldInvalid('category')" class="validation-error">
+          @if (isFieldInvalid('category')) {
+          <div class="validation-error">
             {{ getValidationMessage('category') }}
           </div>
+          }
         </div>
 
         <!-- Subtasks -->

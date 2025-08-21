@@ -28,9 +28,11 @@
                                         <input id="contact-name" type="text" placeholder="Enter name" formControlName="name" />
                                         <img src="icons/person.svg" alt="person" />
                                     </div>
-                                    <div *ngIf="isFieldInvalid('name')" class="validation-error">
+                                    @if (isFieldInvalid('name')) {
+                                    <div class="validation-error">
                                         {{ getValidationMessage('name') }}
                                     </div>
+                                    }
                                 </div>
                                 <div class="form-group">
                                     <label for="contact-email">Email</label>
@@ -38,9 +40,11 @@
                                         <input id="contact-email" type="email" placeholder="Enter email" formControlName="email" />
                                         <img src="icons/mail.svg" alt="mail" />
                                     </div>
-                                    <div *ngIf="isFieldInvalid('email')" class="validation-error">
+                                    @if (isFieldInvalid('email')) {
+                                    <div class="validation-error">
                                         {{ getValidationMessage('email') }}
                                     </div>
+                                    }
                                 </div>
                                 <div class="form-group">
                                     <label for="contact-phone">Phone</label>
@@ -48,9 +52,11 @@
                                         <input id="contact-phone" type="tel" placeholder="Enter phone" formControlName="phone" />
                                         <img src="icons/call.svg" alt="phone" />
                                     </div>
-                                    <div *ngIf="isFieldInvalid('phone')" class="validation-error">
+                                    @if (isFieldInvalid('phone')) {
+                                    <div class="validation-error">
                                         {{ getValidationMessage('phone') }}
                                     </div>
+                                    }
                                 </div>
                                 <div class="button-group justify-end">
                                     @if (isEditMode && contactId) {

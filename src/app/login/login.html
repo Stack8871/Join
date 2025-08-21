@@ -29,10 +29,12 @@
             />
             <img src="/icons/mail.svg" alt="person" />
           </div>
-          <div class="validation-message" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-            <span *ngIf="emailInput.errors?.['required']">Email is required.</span>
-            <span *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</span>
+          @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+          <div class="validation-message">
+            @if (emailInput.errors?.['required']) {<span>Email is required.</span>}
+            @if (emailInput.errors?.['email']) {<span>Please enter a valid email address.</span>}
           </div>
+          }
           <div class="input-group justify-end">
             <input
               type="password"
@@ -45,9 +47,11 @@
             />
             <img src="/icons/lock.svg" alt="person" />
           </div>
-          <div class="validation-message" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-            <span *ngIf="passwordInput.errors?.['required']">Password is required.</span>
+          @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+          <div class="validation-message">
+            @if (passwordInput.errors?.['required']) {<span>Password is required.</span>}
           </div>
+          }
           @if (errorMessage) {
             <div class="error-message">
               {{ errorMessage }}
