@@ -5,7 +5,8 @@
     align-items: center;
 }
 .login-content{
-    max-width: 652px;
+    width: 90svw;
+    max-width: 490px;
 }
 .single-wrapper{
   display: flex;
@@ -13,13 +14,13 @@
   height:100dvh;
 }
 header{
-    max-height: 65px;
+    max-height: 150px;
     display: flex;
     justify-content: space-between;
     width: 100dvw;
     padding:$spacing-3xl;
     & img{
-        max-height: 50px;
+        max-height: 121px;
     }
 }
 .header-content{
@@ -46,8 +47,8 @@ footer{
     content: "";
     position: absolute;
     bottom: -8px; // Abstand zur Schrift
-    left: 43%;
-    width: 15%;
+    left: 19%;
+    width: 66%;
     border-bottom: 3px solid $color-subtask-bar;
   }
 }
@@ -59,6 +60,7 @@ footer{
     flex-direction: column;
     gap: $spacing-xs;
     justify-content: center;
+    width:100%;
 }
 .footer-content{
     display: flex;
@@ -90,6 +92,7 @@ footer{
 .checkbox-group {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: $spacing-xs;
     margin: $spacing-xs 0;
 
@@ -126,4 +129,31 @@ footer{
     button:not([disabled]) {
         opacity: 1;
     }
+}
+.login-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+  padding:$spacing-2xl $spacing-4xl;
+}
+.signup-mobile, .signup-desktop{
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-base;
+  margin-top: $spacing-base;
+}
+  .signup-mobile{
+    display:none;
+  }
+    .signup-desktop{
+    display:flex;
+  }
+@media (width < 520px){
+  .signup-mobile{
+    display:flex;
+  }
+    .signup-desktop{
+    display:none;
+  }
 }

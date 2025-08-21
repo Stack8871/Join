@@ -50,19 +50,18 @@ padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
   }
 }
 
+.input-border-radius{
+  border: 1px $color-light-gray solid;
+  border-radius: $spacing-2xs;
+  padding:3px;
+}
+
 /* Stack elements vertically when using `.column` modifier and left-align validation */
 .input-group.column {
   flex-direction: column;
   align-items: stretch; /* ensures children (including .validation-error) span full width */
 }
-.btn{
-  border-radius: 0.625rem;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  font-size: var(--font-size-base);
-  border-color: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+
 .justify-space-between{
 justify-content: space-between;
 }
@@ -74,56 +73,6 @@ justify-content: space-between;
     box-shadow:$card-shadow;
     color:$color-subtask-bar;
     border: 1px solid $color-subtask-bar;
-  }
-}
-.button-group {
-  max-width: 440px;
-  gap: 1.25rem;
-  display: flex;
-  cursor: pointer;
-  button {
-  border-radius: 0.625rem;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: $spacing-base;
-    &.cancel-btn {
-      background-color: $color-white;
-      color: $color-primary;
-      border: 1px solid $color-primary;
-      &:hover {
-        box-shadow:$card-shadow;
-        color: $color-subtask-bar;
-        border: 1px solid $color-subtask-bar;
-      }
-    }
-    &.create-btn {
-      background-color: $color-primary;
-      color: $color-white;
-      border: 1px solid $color-primary;
-      &:hover {
-        background-color: $color-subtask-bar;
-        border-color: $color-subtask-bar;
-        box-shadow:$card-shadow;
-      }
-    }
-  }
-}
-.close-btn {
-  position: absolute;
-  top: 30px;
-  right: 1.25rem;
-  cursor: pointer;
-  padding: $spacing-xs $spacing-sm;
-  z-index:998;
-  &:hover{
-    background: $color-light-gray;
-    opacity: 0.5;
-    border-radius: 50%;
-  }
-  img {
-    width: 24px;
-    height: 24px;
   }
 }
   input, textarea, select {
@@ -163,35 +112,6 @@ justify-content: space-between;
   }
     .search-container button{
   display:flex;
-}
-.delete-confirm-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000;
-}
-.delete-dialog {
-  background: $color-primary;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 320px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  text-align: center;
-   color: $color-white;
-}
-.button-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-.btn.cancel {
-  background: $color-light-gray;
-}
-.btn.delete {
-  background: #e53935;
-  color: $color-white;
 }
 .justify-end{
   justify-content: flex-end;
@@ -341,24 +261,6 @@ justify-content: space-between;
   align-items: center;
   justify-content: center;
 }
-.priority-icon {
-  margin-left:$spacing-sm;
-  padding-top:2px;
-}
-  .submit-btn {
-    padding: 12px 24px;
-    background-color: $color-primary;
-    color: $color-white;
-    border: none;
-    border-radius: 8px;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    &:hover {
-      background-color: $color-primary-dark;
-      box-shadow: $card-shadow;
-    }
-  }
 .horizontal-line{
   border-right: 1px solid $color-light-gray;
   margin:0 20px;
@@ -369,7 +271,6 @@ justify-content: space-between;
     display:none;
   }
 }
-
 
 /* Validation state for custom select header to mirror inputs */
 .custom-select-header.invalid-field {

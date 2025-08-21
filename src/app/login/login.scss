@@ -1,11 +1,12 @@
 @use 'index' as *;
 .login-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .login-content{
-  max-width: 652px;
+    width: 90svw;
+    max-width: 490px;
 }
 .single-wrapper{
   display: flex;
@@ -13,27 +14,30 @@
   height:100dvh;
 }
 header{
-  max-height: 140px;
-  display: flex;
-  justify-content: space-between;
-  width: 100dvw;
-  padding:$spacing-3xl;
+    max-height: 150px;
+    display: flex;
+    justify-content: space-between;
+    width: 100dvw;
+    padding:$spacing-3xl;
+    & img{
+        max-height: 121px;
+    }
 }
 .header-content{
-  width:1440px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: $spacing-base;
+    width:1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-base;
 }
-main{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height:calc(100svh - 205px);
-}
+ main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:calc(100svh - 130px);
+} 
 footer{
-  height:65px;
+    height:65px;
 }
 .subline {
   position: relative;
@@ -43,8 +47,8 @@ footer{
     content: "";
     position: absolute;
     bottom: -8px; // Abstand zur Schrift
-    left: 33%;
-    width: 35%;
+    left: 19%;
+    width: 65%;
     border-bottom: 3px solid $color-subtask-bar;
   }
 }
@@ -56,6 +60,7 @@ footer{
   flex-direction: column;
   gap: $spacing-xs;
   justify-content: center;
+  width:100%;
 }
 .footer-content{
   display: flex;
@@ -74,7 +79,7 @@ footer{
 }
 
 .img-start {
-  margin-top: $spacing-base;
+max-height:70px;
 }
 
 .hidden {
@@ -92,4 +97,31 @@ footer{
   color: #ff3d00;
   text-align: center;
   margin-top: 10px;
+}
+.login-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+  padding:$spacing-2xl $spacing-3xl;
+}
+.signup-mobile, .signup-desktop{
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-base;
+  margin-top: $spacing-base;
+}
+  .signup-mobile{
+    display:none;
+  }
+    .signup-desktop{
+    display:flex;
+  }
+@media (width < 520px){
+  .signup-mobile{
+    display:flex;
+  }
+    .signup-desktop{
+    display:none;
+  }
 }

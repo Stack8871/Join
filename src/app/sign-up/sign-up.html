@@ -6,13 +6,13 @@
             </div>
             <div>
                 <span class="margin-right">Already have an account?</span>
-                <button class="btn primary" routerLink="/">Back to Login</button>
+                <button class="btn primary" routerLink="/login">Back to Login</button>
             </div>
         </div>
     </header>
     <main class="login-container">
         <div class="login-content">
-            <div class="card big-card">
+            <div class="card big-border-radius login-card">
                 <h1 class="margin-bottom subline">Sign up</h1>
               <form class="flex form-container" (ngSubmit)="signUp()" #signupForm="ngForm">
                 <div class="input-group justify-end">
@@ -136,8 +136,11 @@
               @if (errorMessage) {
                 <p class="error">{{ errorMessage }}</p>
               }
-
             </div>
+            <div class="signup-mobile">
+                <span class="margin-right">Already have an account?</span>
+                <button class="btn primary" routerLink="/login">Back to Login</button>
+          </div>
         </div>
     </main>
     <footer class="flex center-row">

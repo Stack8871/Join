@@ -1,21 +1,20 @@
 <div class="single-wrapper" [class.hidden]="isLoading">
-  <header class="flex center-row">
-    <div class="flex header-content center-row">
-      <div>
-        <img class="img-start" src="icons/join-logo.svg" alt="" />
+      <header class="flex center-row">
+        <div class="flex header-content">
+          <div>
+              <img src="/icons/join-logo.svg" alt="">
+          </div>
+          <div class="signup-desktop">
+            <span>Not a Join user yet?</span>
+            <button class="btn primary" routerLink="/sign-up">Sign up</button>
+          </div>
       </div>
-      <div>
-        <span class="margin-right">Not a Join user yet?</span>
-        <button class="btn primary" routerLink="/sign-up">Sign up</button>
-      </div>
-    </div>
-  </header>
+    </header>
 
   <main class="login-container">
     <div class="login-content" [class.hidden]="!showLoginCard">
-      <div class="card big-card">
-        <h1 class="margin-bottom subline">Login</h1>
-
+      <div class="card login-card big-border-radius">
+        <h1 class="margin-bottom subline">Log in</h1>
         <form class="flex form-container" (ngSubmit)="login()" #loginForm="ngForm">
           <div class="input-group justify-end">
             <input
@@ -34,7 +33,6 @@
             <span *ngIf="emailInput.errors?.['required']">Email is required.</span>
             <span *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</span>
           </div>
-
           <div class="input-group justify-end">
             <input
               type="password"
@@ -50,13 +48,11 @@
           <div class="validation-message" *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
             <span *ngIf="passwordInput.errors?.['required']">Password is required.</span>
           </div>
-
           @if (errorMessage) {
             <div class="error-message">
               {{ errorMessage }}
             </div>
           }
-
           <div class="button-group justify-center">
             <button type="submit" class="btn create-btn" [disabled]="loginForm.invalid">Log in</button>
             <button type="button" class="btn cancel-btn" (click)="guestLogin()">Guest Log in</button>
@@ -64,10 +60,11 @@
         </form>
       </div>
     </div>
+    <div class="signup-mobile">
+      <span>Not a Join user yet?</span>
+      <button class="btn primary" routerLink="/sign-up">Sign up</button>
+    </div>
   </main>
-
-
-
   <footer class="flex center-row">
     <div class="footer-content">
       <a routerLink="/privacy">Privacy Policy</a> <a routerLink="/imprint">Imprint</a>
