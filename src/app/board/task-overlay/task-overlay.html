@@ -21,7 +21,7 @@
         <div class="form-group">
           <label for="description">Description</label>
           <div class="input-group">
-            <textarea id="task-overlay-description" formControlName="description" placeholder="Enter a description"
+            <textarea class="textarea-form-group" id="task-overlay-description" formControlName="description" placeholder="Enter a description"
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"></textarea>
             @if (isFieldInvalid('description')) {
             <div class="speech-bubble">

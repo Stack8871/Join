@@ -9,7 +9,6 @@
   justify-content: space-between;
 }
 .flex-required{
-margin-top:$spacing-base;
 padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
 }
 .priority{
@@ -28,6 +27,9 @@ padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
     width: 100%;
     margin-bottom:$spacing-xs;
   }
+}
+.form-group-height{
+  height:96px;
 }
 .input-group {
   display: block;
@@ -74,6 +76,9 @@ justify-content: space-between;
     color:$color-subtask-bar;
     border: 1px solid $color-subtask-bar;
   }
+}
+.textarea-form-group{
+ margin-bottom: $spacing-lg;
 }
   input, textarea, select {
     width: 100%;
