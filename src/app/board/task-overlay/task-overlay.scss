@@ -103,13 +103,16 @@ img {
     max-width: 900px;
     width: 90svw;
     padding: 3%;
-    overflow: auto;
     min-height: 40svh;
   @media(width < 860px){
     width: 89svw;
     padding: 7%;
     height:90svh;
   }
+}
+.task-content{
+  overflow: auto;
+  height:100%;
 }
   .task-heading{
     padding-bottom:3%;

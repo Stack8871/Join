@@ -73,7 +73,7 @@
   max-width: 1440px;
   padding: 4%;
   @media (width < 960px) {
-    max-width:99svw;
+    max-width:98svw;
   }
 }
 .margin-top {
@@ -227,15 +227,15 @@
 }
 .button-group {
 /*   max-width: 440px; */
-  gap: 1.25rem;
   display: flex;
-  cursor: pointer;
+  gap: 1.25rem;
+  justify-content: center;
+  margin-bottom: 1rem;
   button {
   border-radius: 0.625rem;
     font-size: var(--font-size-base);
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-top: $spacing-base;
     &.cancel-btn {
       background-color: $color-white;
       color: $color-primary;
