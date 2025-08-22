@@ -15,7 +15,7 @@
 .left-side{
  display:flex;
  flex-direction: column;
- width:38%;
+/*  width:38%; */
  @media (width < 850px){
    width: 100%;
  }
@@ -25,7 +25,7 @@
  display:flex;
  flex-direction: column;
  gap:$spacing-base;
- width:40%;
+/*  width:40%; */
  @media (width < 850px){
    width: 100%;
  }
@@ -100,7 +100,7 @@ img {
 
 }
 .task-container{
-    max-width: 1200px;
+    max-width: 900px;
     width: 90svw;
     padding: 3%;
     overflow: auto;
@@ -113,6 +113,7 @@ img {
 }
   .task-heading{
     padding-bottom:3%;
+    padding-left:5.4%;
   }
 .priority-icon {
   margin-left:$spacing-sm;
@@ -147,7 +148,7 @@ img {
   background:$color-white;
   display:flex;
   & input{
-    max-width:390px;
+/*     max-width:390px; */
     border:0px solid transparent;
   }
   & button{
@@ -219,89 +220,6 @@ select.minimal:focus {
 
   select:focus + .select-arrow {
     color: $color-primary;
-  }
-}
-
-// Custom Multi-Select Dropdown Styling
-.custom-select-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.custom-select-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-xs $spacing-sm;
-  border: 1px solid $color-light-gray;
-  border-radius: $spacing-2xs;
-  background: white;
-  cursor: pointer;
-  font-size: var(--font-size-base);
-  transition: border-color 0.2s ease;
-
-  &:hover {
-    border-color: $color-medium-gray;
-  }
-
-  &.open {
-    border-color: $color-primary;
-
-    .dropdown-arrow {
-      transform: rotate(180deg);
-      color: $color-primary;
-    }
-  }
-
-  .placeholder {
-    flex: 1;
-    color: $color-text-primary;
-  }
-
-  .dropdown-arrow {
-    color: $color-medium-gray;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-
-    svg {
-      width: 14px;
-      height: 8px;
-    }
-  }
-}
-
-.custom-select-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border: 1px solid $color-light-gray;
-  border-top: none;
-  border-radius: 0 0 $spacing-2xs $spacing-2xs;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.contact-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-xs $spacing-sm;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover{
-    background-color: rgba(42, 54, 71, 0.9);
-    color:$color-white
-  }
-
-  &.selected {
-    background-color: rgba(42, 54, 71, 0.9);
-    color:$color-white;
   }
 }
 .contact-option:hover * {

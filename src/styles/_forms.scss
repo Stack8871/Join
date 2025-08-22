@@ -6,7 +6,8 @@
   display:flex;
   flex-wrap: wrap;
   gap:1rem;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  width: 100%;
 }
 .flex-required{
 padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
@@ -19,7 +20,7 @@ padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
 .form-group {
   display: flex;
   flex-direction: column;
-  max-width: 440px;
+/*   max-width: 440px; */
   width:100%;
   label {
     font-size: var(--font-size-base);
@@ -82,7 +83,7 @@ justify-content: space-between;
 }
   input, textarea, select {
     width: 100%;
-    max-width:440px;
+/*     max-width:440px; */
     padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
     border: 1px solid $color-light-gray;
     border-radius: $spacing-2xs;
@@ -150,68 +151,88 @@ justify-content: space-between;
     }
   }
 }
-/* Custom Multi-Select Dropdown Styles */
+
+// Custom Multi-Select Dropdown Styling
 .custom-select-wrapper {
   position: relative;
   width: 100%;
-  max-width: 440px;
 }
+
 .custom-select-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: $spacing-xs $spacing-base;
+  justify-content: space-between;
+  padding: $spacing-xs $spacing-sm;
   border: 1px solid $color-light-gray;
   border-radius: $spacing-2xs;
-  background: $color-white;
+  background: white;
   cursor: pointer;
   font-size: var(--font-size-base);
   transition: border-color 0.2s ease;
+
   &:hover {
-    border-color: $color-subtask-bar;
+    border-color: $color-medium-gray;
   }
+
   &.open {
     border-color: $color-primary;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+
+    .dropdown-arrow {
+      transform: rotate(180deg);
+      color: $color-primary;
+    }
   }
+
   .placeholder {
-    color: $color-text-heading;
+    flex: 1;
+    color: $color-text-primary;
   }
+
   .dropdown-arrow {
-    font-size: 12px;
-    width:12px;
-  background-image:
-    linear-gradient(45deg, transparent 50%, $color-medium-gray 50%),
-    linear-gradient(135deg, $color-medium-gray 50%, transparent 50%),
-    linear-gradient(to right, $color-light-gray);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-  background-repeat: no-repeat;
-  }
-  &.open .dropdown-arrow {
-    transform: rotate(180deg);
+    color: $color-medium-gray;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 14px;
+      height: 8px;
+    }
   }
 }
+
 .custom-select-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: $color-white;
-  border: 1px solid $color-primary;
+  background: white;
+  border: 1px solid $color-light-gray;
   border-top: none;
   border-radius: 0 0 $spacing-2xs $spacing-2xs;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
-  box-shadow: $card-shadow;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-xs $spacing-sm;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover{
+    background-color: rgba(42, 54, 71, 0.9);
+    color:$color-white
+  }
+
+  &.selected {
+    background-color: rgba(42, 54, 71, 0.9);
+    color:$color-white;
+  }
 }
 .contact-option, .category-option {
   display: flex;

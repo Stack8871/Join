@@ -114,7 +114,6 @@
             </button>
           </div>
         </div>
-        <!-- Assigned To -->
         <div class="form-group">
           <label for="assignedTo">Assigned to</label>
 
@@ -161,7 +160,7 @@
             }
           </div>
 
-          <!-- Anzeige der zugewiesenen Kontakte mit Initialen -->
+          <!-- Display of assigned contacts with initials -->
           @if (form.get('assignedTo')?.value && form.get('assignedTo')?.value.length > 0) {
           <div class="assigned-contacts-display">
             <label>Selected contacts:</label>
@@ -179,6 +178,11 @@
           </div>
           }
 
+          @if (isFieldInvalid('assignedTo')) {
+          <div class="validation-error">
+            {{ getValidationMessage('assignedTo') }}
+          </div>
+          }
         </div>
 
         <!-- Category -->
@@ -188,8 +192,7 @@
           <!-- Custom Single-Select Dropdown -->
           <div class="custom-select-wrapper">
             <div class="custom-select-header" (click)="toggleCategoryDropdown()"
-                 [class.open]="isCategoryDropdownOpen"
-                 [ngClass]="{'invalid-field': isFieldInvalid('category')}">
+                 [class.open]="isCategoryDropdownOpen">
               <span class="placeholder">
                 @if (form.get('category')?.value) {
                   {{ form.get('category')?.value }}

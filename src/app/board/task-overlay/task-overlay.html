@@ -10,7 +10,7 @@
             <input type="text" id="task-overlay-title" formControlName="title" placeholder="Enter a title"
               [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}">
             @if (isFieldInvalid('title')) {
-            <div class="speech-bubble">
+            <div class="validation-error">
               {{ getValidationMessage('title') }}
             </div>
             }
@@ -24,7 +24,7 @@
             <textarea class="textarea-form-group" id="task-overlay-description" formControlName="description" placeholder="Enter a description"
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"></textarea>
             @if (isFieldInvalid('description')) {
-            <div class="speech-bubble">
+            <div class="validation-error">
               {{ getValidationMessage('description') }}
             </div>
             }
@@ -38,7 +38,7 @@
             <input type="date" id="task-overlay-dueDate" formControlName="dueDate"
               [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}">
             @if (isFieldInvalid('dueDate')) {
-            <div class="speech-bubble">
+            <div class="validation-error">
               {{ getValidationMessage('dueDate') }}
             </div>
             }
@@ -47,7 +47,7 @@
       </div>
       <div class="horizontal-line">&nbsp;</div>
       <div class="right-side">
-        <div class="form-group">
+        <div class="form-group form-group-height">
           <label>Priority</label>
           <div class="priority-buttons">
             <button type="button" class="priority-btn urgent"
@@ -167,7 +167,7 @@
             }
           </div>
 
-          <!-- Anzeige der zugewiesenen Kontakte mit Initialen -->
+          <!-- Display of assigned contacts with initials -->
           @if (form.get('assignedTo')?.value && form.get('assignedTo')?.value.length > 0) {
           <div class="assigned-contacts-display">
             <label>Selected contacts:</label>
@@ -186,14 +186,14 @@
           }
 
           @if (isFieldInvalid('assignedTo')) {
-          <div class="speech-bubble">
+          <div class="validation-error">
             {{ getValidationMessage('assignedTo') }}
           </div>
           }
         </div>
 
         <!-- Category -->
-        <div class="form-group">
+        <div class="form-group form-group-height">
           <label for="category">Category <span class="required-asterisk">*</span></label>
 
           <!-- Custom Single-Select Dropdown -->
@@ -231,7 +231,7 @@
           </div>
 
           @if (isFieldInvalid('category')) {
-          <div class="speech-bubble">
+          <div class="validation-error">
             {{ getValidationMessage('category') }}
           </div>
           }
@@ -288,9 +288,9 @@
           </button>
         </div>
       </div>
-        <div>
-          <span><span class="required-asterisk">*</span> This field is required</span>
-        </div>
+    </div>
+    <div>
+      <span><span class="required-asterisk">*</span> This field is required</span>
     </div>
   </form>
 </div>

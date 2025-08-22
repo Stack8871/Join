@@ -261,6 +261,7 @@ saveEditedSubtask(event?: KeyboardEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('.custom-select-wrapper')) {
       this.isDropdownOpen = false;
+      this.isCategoryDropdownOpen = false;
     }
   }
 

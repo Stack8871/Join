@@ -161,7 +161,7 @@
 .priority-buttons {
   display: flex;
   gap: 1rem;
-  max-width: 440px;
+/*   max-width: 440px; */
  @media (width < 420px){
    flex-direction: column;
  }
@@ -226,7 +226,7 @@
   transition: all 0.2s ease;
 }
 .button-group {
-  max-width: 440px;
+/*   max-width: 440px; */
   gap: 1.25rem;
   display: flex;
   cursor: pointer;
