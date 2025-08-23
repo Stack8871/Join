@@ -73,7 +73,7 @@
   max-width: 1440px;
   padding: 4%;
   @media (width < 960px) {
-    max-width:98svw;
+    max-width:95svw;
   }
 }
 .margin-top {
@@ -162,7 +162,7 @@
   display: flex;
   gap: 1rem;
 /*   max-width: 440px; */
- @media (width < 420px){
+ @media (width < 435px){
    flex-direction: column;
  }
 }

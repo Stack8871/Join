@@ -51,7 +51,7 @@
     padding: 0 $spacing-md;
     box-shadow: $card-shadow;
     background:$color-white;
-    height: calc(100svh - 146px);
+    height: calc(100svh - 65px);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -186,7 +186,10 @@ position: sticky;
   }
 .contact-list {
   min-height: 100px;
-  max-height: 92svh;
+  height: calc(100svh - 65px);
+@media (width < 949px){
+    max-height: 80svh;
+}
   overflow-y: auto;
   padding-bottom:$spacing-2xl;
   scrollbar-width: none;
