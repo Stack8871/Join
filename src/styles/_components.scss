@@ -103,37 +103,45 @@ a:hover, button:hover{
 }
 .line-separator {
   position: relative;
-  display: inline-block;
-  margin:$spacing-xs;
-  height:100%;
+  margin: 0 $spacing-xs;
+  height: 100%;
+  min-height: 40px;
+  
   &::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 99%;
-  border-right: 3px solid $color-subtask-bar;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 60%;
+    width: 3px;
+    background-color: $color-subtask-bar;
+    border-radius: 2px;
+    @media (width < 873px) {
+    background-color: transparent;
+    }
   }
 }
-.underline{
+
+.underline {
   position: relative;
   display: inline-block;
+  
   &::before {
     content: "";
     position: absolute;
-    bottom: -8px;
+    bottom: -6px;
     left: 0;
     width: 35%;
-    border-bottom: 0px solid $color-subtask-bar;
-  }
-}
-@media (width < 330px){
-  .underline:before{
-      border-bottom: 3px solid $color-subtask-bar;
-  }
-  .line-separator{
-    border-right: 0px solid $color-subtask-bar;
+    height: 3px;
+    background-color: $color-subtask-bar;
+    border-radius: 2px;
     display: none;
+    
+    @media (width < 873px) {
+      display: block;
+
+    }
   }
 }
 .circle {

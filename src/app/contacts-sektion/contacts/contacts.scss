@@ -14,9 +14,9 @@
 .contacts-page-container {
     display: flex;
     flex-direction: row;
-    gap:8%;
-    @media(width < 1100px){
-      gap:2%;
+    gap:4%;
+    @media(width > 1280px){
+      gap:8%;
     }
   &.mobile {
     flex-direction: column;
@@ -92,31 +92,108 @@
 .contacts-info-container {
   display: flex;
   flex-wrap: wrap;
-  width:auto;
+  width: auto;
   align-items: center;
   margin-bottom: $spacing-3xl;
-  .mobile & {
-    margin-left: 0;
-    align-items: center;
-    h1{
-      margin-right:1rem;
+  
+  h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: $color-black;
+    margin: 0;
+    margin-right: $spacing-base;
+  }
+  
+  .line-separator {
+    display: none;
+    margin: 0 $spacing-base;
+    
+    @media (width > 902px) {
+      display: block;
     }
-    h2 {
-      font-size: var(--font-size-xl);
-      font-weight: bold;
+    @media (width > 949px) {
+      display: none;
+      &::after{
+        background-color:transparent;
+      }
+    }
+    @media (width > 1128px) {
+      display: block;
+    }
+    @media (width > 1180px) {
+    display: block;
+          &::after{
+      background-color:$color-subtask-bar;
+    }
+  }
+  }
+  
+  h3 {
+    font-size: var(--font-size-md);
+    color: $color-primary;
+    font-weight: 400;
+    margin: 0;
+    position: relative;
+    
+    @media (width < 902px) {
+      width: 100%;
+      margin-top: $spacing-xs;
+      padding-left: 0;
+      
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 90px;
+        height: 3px;
+        background-color: $color-subtask-bar;
+        border-radius: 2px;
+      }
+    }
+    @media (width > 949px) {
+      &::before{
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 90px;
+        height: 3px;
+        background-color: $color-subtask-bar;
+        border-radius: 2px;
+      }
+    }
+        @media (width > 1179px) {
+      &::before{
+        background-color: transparent;
+        border-radius: 2px;
+      }
+    }
+  }
 
+  .mobile & {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+      margin-right: 0;
+      margin-bottom: $spacing-2xs;
     }
+    
     h3 {
-      font-size: var(--font-size-base);
+      font-size: var(--font-size-md);
       font-weight: $font-weight-regular;
     }
   }
+
   h2 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: $color-black;
     margin: 0;
   }
+  
   .contacts-info-line {
     margin: 0;
     img {
@@ -125,12 +202,6 @@
       top: 19px;
       display: block;
     }
-  }
-  h3 {
-    font-size: var(--font-size-md);
-    color: $color-primary;
-    padding-top: 6px;
-    font-weight:400;
   }
 }
 .add-contact-btn {
