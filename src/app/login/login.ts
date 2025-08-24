@@ -81,9 +81,14 @@ export class Login implements OnInit {
 
   /** Initializes login animation after page load. */
   ngOnInit(): void {
-    // Check if user is coming from logout
+    // Check if user is coming from logout, internal navigation, or if animation already played
     this.route.queryParams.subscribe(params => {
-      if (params['fromLogout'] === 'true') {
+      const skipAnimation = params['fromLogout'] === 'true' || 
+                           params['skipAnimation'] === 'true' ||
+                           LogoAnimation.hasPlayed ||
+                           this.isInternalNavigation();
+      
+      if (skipAnimation) {
         // Skip animation and show login card immediately
         this.isLoading = false;
         this.showLoginCard = true;
@@ -101,5 +106,17 @@ export class Login implements OnInit {
         setTimeout(triggerAnimation, 5000);
       }
     });
+  }
+
+  /**
+   * Checks if this is an internal navigation (not a fresh page load)
+   */
+  private isInternalNavigation(): boolean {
+    // Check if we have a referrer from the same origin
+    const referrer = document.referrer;
+    const currentOrigin = window.location.origin;
+    
+    // If there's a referrer from the same domain, it's likely internal navigation
+    return !!(referrer && referrer.startsWith(currentOrigin));
   }
 }

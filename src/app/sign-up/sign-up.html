@@ -4,9 +4,9 @@
             <div>
                 <img src="/icons/join-logo.svg" alt="">
             </div>
-            <div>
+            <div class="signup-desktop">
                 <span class="margin-right">Already have an account?</span>
-                <button class="btn primary" routerLink="/login">Back to Login</button>
+                <button class="btn primary" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">Back to Login</button>
             </div>
         </div>
     </header>
@@ -139,7 +139,7 @@
             </div>
             <div class="signup-mobile">
                 <span class="margin-right">Already have an account?</span>
-                <button class="btn primary" routerLink="/login">Back to Login</button>
+                <button class="btn primary" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">Back to Login</button>
           </div>
         </div>
     </main>

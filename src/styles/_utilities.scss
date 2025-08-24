@@ -73,7 +73,7 @@
   max-width: 1440px;
   padding: 4%;
   @media (width < 960px) {
-    max-width:95svw;
+    max-width:97svw;
   }
 }
 .margin-top {
@@ -231,6 +231,9 @@
   gap: 1.25rem;
   justify-content: center;
   margin-bottom: 1rem;
+  @media (width < 336px){
+    flex-direction: column;
+  }
   button {
   border-radius: 0.625rem;
     font-size: var(--font-size-base);
