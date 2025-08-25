@@ -1,0 +1,127 @@
+/* Contact Items and Lists */
+@use 'index' as *;
+
+.contact-list {
+  min-height: 100px;
+  height: calc(100svh - 65px);
+  
+  @media (width < 949px) {
+    max-height: 80svh;
+  }
+  
+  overflow-y: auto;
+  padding-bottom: $spacing-2xl;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mobile & {
+    max-height: calc(100vh - 160px);
+  }
+  
+  p {
+    color: #6c757d;
+    text-align: center;
+    padding: $spacing-base 0;
+    font-style: italic;
+  }
+}
+
+.group-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $color-black;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-radius: 8px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:hover {
+    background-color: #f8f9fa;
+    border-radius: $spacing-xs;
+  }
+  
+  &.selected {
+    background-color: $color-primary;
+    
+    .name {
+      color: $color-white;
+    }
+  }
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: $spacing-base;
+  margin-right: $spacing-base;
+  flex-shrink: 0;
+  box-shadow: $header-shadow;
+  text-shadow: $card-shadow;
+}
+
+.info {
+  flex: 1;
+  overflow: hidden;
+  
+  .name {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: $color-black;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logged-in-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-primary;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+
+      img {
+        width: 12px;
+        height: 12px;
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+  
+  .email, .phone {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+  
+  .email {
+    color: $color-subtask-bar;
+  }
+}
