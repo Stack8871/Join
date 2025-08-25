@@ -159,14 +159,7 @@ export class TaskDetail implements OnInit {
    * @returns Die entsprechende CSS-Klasse
    */
   getCategoryClass(category: string): string {
-    switch (category.toLowerCase()) {
-      case 'user story':
-        return 'category-userstory';
-      case 'technical task':
-        return 'category-technical';
-      default:
-        return 'category-default';
-    }
+    return `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
   }
 
   /**

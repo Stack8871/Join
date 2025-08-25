@@ -297,6 +297,11 @@ export class ManageTask implements OnInit, AfterViewInit, OnDestroy {
     this.selectedTask = undefined;
   }
 
+  /**
+   * Bestimmt die CSS-Klasse für eine Kategorie
+   * @param category - Die Kategorie der Task
+   * @returns Die entsprechende CSS-Klasse
+   */
   getCategoryClass(category: string): string {
     return `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
   }
@@ -343,6 +348,8 @@ export class ManageTask implements OnInit, AfterViewInit, OnDestroy {
     };
     return iconMap[priority] || '/icons/prio-medium.svg';
   }
+
+  
 
   getCurrentVisibleTaskIndex(columnId: string): number {
     return this.mobileSliderService.getCurrentTaskIndex(columnId);

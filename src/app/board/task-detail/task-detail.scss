@@ -1,5 +1,4 @@
 @use 'index' as *;
-
 .task-container {
   width: 100%;
   height: 100%;
@@ -225,11 +224,11 @@ h5{
   display: inline-block;
 }
 
-.category-userstory {
+.category-user-story {
   background-color: $color-badge-userstory;
 }
 
-.category-technical {
+.category-technical-task {
   background-color: $color-badge-technical;
 }
 
