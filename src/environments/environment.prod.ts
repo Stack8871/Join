@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    // Fügen Sie hier Ihre Firebase-Production-Konfiguration ein
-    // apiKey: "your-prod-api-key",
-    // authDomain: "your-prod-project.firebaseapp.com",
-    // projectId: "your-prod-project-id",
-    // storageBucket: "your-prod-project.appspot.com",
-    // messagingSenderId: "123456789",
-    // appId: "your-prod-app-id"
+    // Insert your Firebase configuration here, if available
+ // apiKey: "your-api-key",
+ // authDomain: "your-project.firebaseapp.com",
+ // projectId: "your-project-id",
+ // storageBucket: "your-project.appspot.com",
+ // messagingSenderId: "123456789",
+ // appId: "your-app-id"
   }
 };
