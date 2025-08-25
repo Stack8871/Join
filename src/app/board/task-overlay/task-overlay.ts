@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnInit, HostListener } from '@angular/core';
+import { Component, Input, inject, OnInit, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { ContactsInterface } from '../../interfaces/contacts-interface';
   styleUrl: './task-overlay.scss'
 })
 
-export class TaskOverlay implements OnInit{
+export class TaskOverlay implements OnInit, OnChanges{
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
   private firebase = inject(Firebase);
@@ -65,13 +65,25 @@ removeSubtask(index: number) {
 
   public isEditMode = false;
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
+      console.log('taskToEdit changed:', changes['taskToEdit'].currentValue);
+      this.initializeEditMode();
+    }
+  }
+
   ngOnInit() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
     });
 
-    // Beispiel: Setze Edit-Mode, wenn ein Task zum Bearbeiten übergeben wird
+    // Setze Edit-Mode basierend auf taskToEdit - wichtig: nach dem contacts laden
+    this.initializeEditMode();
+  }
+
+  private initializeEditMode() {
     this.isEditMode = !!this.taskToEdit;
+    console.log('TaskOverlay initializeEditMode - isEditMode:', this.isEditMode, 'taskToEdit:', this.taskToEdit);
 
     if (this.isEditMode && this.taskToEdit) {
       // Clear existing subtasks
@@ -206,6 +218,8 @@ removeSubtask(index: number) {
   }
 
   async submit() {
+    console.log('Submit called - isEditMode:', this.isEditMode, 'taskToEdit:', this.taskToEdit);
+    
     // Check if required fields are filled
     const requiredFields = ['title', 'dueDate', 'category'];
     let hasEmptyRequiredFields = false;
@@ -224,23 +238,53 @@ removeSubtask(index: number) {
     }
 
     const value = this.form.getRawValue();
+    console.log('Form raw value:', value);
 
     // Convert subtasks from string array to object array
+    // Wenn im Edit-Modus, behalte den done-Status der ursprünglichen Subtasks bei
+    let processedSubtasks = [];
+    if (value.subtasks) {
+      const filteredSubtasks = value.subtasks.filter((subtask: string) => subtask.trim() !== '');
+      
+      if (this.isEditMode && this.taskToEdit?.subtasks) {
+        // Im Edit-Modus: behalte den done-Status bei
+        processedSubtasks = filteredSubtasks.map((subtaskTitle: string, index: number) => {
+          const originalSubtask = this.taskToEdit!.subtasks![index];
+          return {
+            title: subtaskTitle,
+            done: originalSubtask ? originalSubtask.done : false
+          };
+        });
+      } else {
+        // Im Create-Modus: alle sind auf false
+        processedSubtasks = filteredSubtasks.map((subtaskTitle: string) => ({
+          title: subtaskTitle,
+          done: false
+        }));
+      }
+    }
+
     const processedValue = {
       ...value,
-      subtasks: value.subtasks?.filter((subtask: string) => subtask.trim() !== '')
-        .map((subtask: string) => ({
-          title: subtask,
-          done: false
-        })) || []
+      subtasks: processedSubtasks
     };
 
-    if (this.isEditMode && this.taskToEdit?.id) {
-      await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
-      this.success.show('Task updated');
-    } else {
-      await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
-      this.success.show('Task added');
+    console.log('Processed value:', processedValue);
+
+    try {
+      if (this.isEditMode && this.taskToEdit?.id) {
+        console.log('Editing task with ID:', this.taskToEdit.id);
+        await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
+        this.success.show('Task updated successfully!', 2000);
+      } else {
+        console.log('Creating new task');
+        await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
+        this.success.show('Task created successfully!', 2000);
+      }
+    } catch (error) {
+      console.error('Error saving task:', error);
+      this.success.show('Error saving task. Please try again.', 3000);
+      return;
     }
 
     document.dispatchEvent(new CustomEvent('closeOverlay'));
