@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'index' as *;
 .login-container{
     display: flex;
@@ -114,7 +115,7 @@ footer{
             text-decoration: underline;
 
             &:hover {
-                color: darken($color-primary, 10%);
+                color: color.adjust($color-primary, $lightness: -10%);
             }
         }
     }

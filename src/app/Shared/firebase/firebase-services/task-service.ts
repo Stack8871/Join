@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { TaskInterface } from '../../../interfaces/task-interface';
 import { Observable } from 'rxjs';
-import { collectionData, Firestore, collection, doc, deleteDoc, query, where, orderBy } from '@angular/fire/firestore';
+import { collectionData, Firestore, collection, doc, deleteDoc, updateDoc, query, where, orderBy } from '@angular/fire/firestore';
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { UserInitialsServices } from '../../services/user-initials-services';
 
@@ -78,6 +78,22 @@ export class TaskService {
       console.log('Task successfully deleted!');
     } catch (error) {
       console.error('Error deleting task: ', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Updates the status of a task
+   * @param taskId The ID of the task to update
+   * @param status The new status
+   */
+  async updateTaskStatus(taskId: string, status: 'todo' | 'inProgress' | 'feedback' | 'done'): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await updateDoc(taskRef, { status });
+      console.log('Task status successfully updated!');
+    } catch (error) {
+      console.error('Error updating task status: ', error);
       throw error;
     }
   }

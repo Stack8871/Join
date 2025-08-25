@@ -41,7 +41,7 @@
                [cdkDropListData]="col.tasks"
                [cdkDropListConnectedTo]="dropListIds"
                [cdkDropListDisabled]="!canEditTask"
-               (cdkDropListDropped)="onDrop($event, col.id)">
+               (cdkDropListDropped)="onDrop($event)">
             No tasks yet.
           </div>
           } @else {
@@ -52,7 +52,7 @@
                [cdkDropListData]="col.tasks"
                [cdkDropListConnectedTo]="dropListIds"
                [cdkDropListDisabled]="!canEditTask"
-               (cdkDropListDropped)="onDrop($event, col.id)">
+               (cdkDropListDropped)="onDrop($event)">
             @for (task of col.tasks; track task.id) {
             <div class="card flex column" cdkDrag [cdkDragDisabled]="!canEditTask" [cdkDragData]="task" (cdkDragStarted)="isDragging=true" (cdkDragEnded)="isDragging=false" (click)="!isDragging && selectTask(task)" [id]="'task-' + task.id">
               <div class=""><span class="category" [ngClass]="getCategoryClass(task.category)"> {{ truncateText(task.category) }}</span></div>
@@ -68,9 +68,9 @@
               }
               <div class="flex space-between align-center">
                   <div class="flex assigned-contacts">
-                      @for (contactId of limitArray(task.assignedTo); track contactId) {
-                        <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId))">
-                          {{ getInitials(getContactName(contactId)) }}
+                      @for (contactId of limitArray(task.assignedTo); track contactId; let i = $index) {
+                        <div class="circle-initials" [style.backgroundColor]="getColor(getContactName(contactId + ''))">
+                          {{ getInitials(getContactName(contactId + '')) }}
                         </div>
                       }
                 </div>

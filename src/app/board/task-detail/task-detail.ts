@@ -30,18 +30,20 @@ export class TaskDetail implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.initializeData();
+  }
+
+  private initializeData() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
     });
 
-    // Check if user has permission to delete tasks
-    this.userPermissionService.canDelete().subscribe(canDelete => {
+    this.userPermissionService.canDelete().subscribe((canDelete: boolean) => {
       this.canDeleteTask = canDelete;
     });
 
-    // Check if user has permission to create/edit tasks
-    this.userPermissionService.canCreate().subscribe(canCreate => {
-      this.canEditTask = canCreate;
+    this.userPermissionService.canCreate().subscribe((canEdit: boolean) => {
+      this.canEditTask = canEdit;
     });
   }
 

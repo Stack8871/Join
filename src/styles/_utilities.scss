@@ -328,3 +328,19 @@
   .delete-dialog p{
     margin-bottom:$spacing-lg;
   }
+  .category-userstory {
+  background-color: $color-badge-userstory;
+}
+.category-technical {
+  background-color: $color-badge-technical;
+}
+
+.category-default {
+  background-color: $color-primary;
+}
+.user-story-clr{
+    background:$color-badge-userstory;
+}
+.technical-clr{
+    background:$color-medium-gray;
+}

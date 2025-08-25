@@ -258,13 +258,15 @@ position: sticky;
 .contact-list {
   min-height: 100px;
   height: calc(100svh - 65px);
-@media (width < 949px){
-    max-height: 80svh;
-}
   overflow-y: auto;
   padding-bottom:$spacing-2xl;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  
+@media (width < 949px){
+    max-height: 80svh;
+}
+  
   &::-webkit-scrollbar {
     display: none;
   }
