@@ -7,6 +7,10 @@ import {RouterModule, Router} from '@angular/router';
 import {LogoAnimation} from './logo-animation';
 import {ActivatedRoute} from '@angular/router';
 
+/**
+ * Login component for user authentication
+ * Handles user login with email/password and guest login functionality
+ */
 @Component({
   selector: 'app-login',
   standalone: true,

@@ -6,6 +6,10 @@ import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
+/**
+ * Summary component displaying task statistics and overview
+ * Shows counts of tasks by status, priority and upcoming deadlines
+ */
 @Component({
   selector: 'app-summary',
   standalone: true,

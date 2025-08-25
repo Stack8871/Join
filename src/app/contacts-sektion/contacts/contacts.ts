@@ -12,6 +12,10 @@ import { UserPermissionService } from '../../Shared/services/user-permission.ser
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Contacts component for managing contact information
+ * Displays, edits, creates and deletes contacts with responsive design
+ */
 @Component({
   selector: 'app-contacts',
   imports: [CommonModule, FormsModule, ContactsOverlay],

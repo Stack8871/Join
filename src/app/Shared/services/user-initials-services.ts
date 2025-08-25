@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service for generating user initials and color assignments
+ * Provides consistent color assignment and initial generation for user names
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -31,9 +35,9 @@ export class UserInitialsServices {
   private colorIndex = 0;
 
   /**
-   * Generiert Initialen aus einem Namen
-   * @param name - Der vollständige Name
-   * @returns Die Initialen (max. 2 Zeichen)
+   * Generates initials from a full name
+   * @param name - The full name
+   * @returns The initials (max. 2 characters)
    */
   getInitials(name: string): string {
     if (!name || name.trim() === '') {
@@ -57,10 +61,10 @@ export class UserInitialsServices {
   }
 
   /**
-   * Generiert eine konsistente Farbe für einen Namen
-   * @param name - Der Name des Mitarbeiters/Kontakts
-   * @param email - Optional: E-Mail für zusätzliche Eindeutigkeit
-   * @returns Eine Hex-Farbe
+   * Generates a consistent color for a name
+   * @param name - The employee/contact name
+   * @param email - Optional email for additional uniqueness
+   * @returns A hex color code
    */
   getColor(name: string, email?: string): string {
     if (!name || name.trim() === '') {
@@ -84,7 +88,7 @@ export class UserInitialsServices {
   }
 
   /**
-   * Setzt die Farbzuweisungen zurück (für Tests oder Reset)
+   * Resets color assignments (for tests or reset)
    */
   resetColorAssignments(): void {
     this.colorAssignments.clear();
@@ -92,13 +96,10 @@ export class UserInitialsServices {
   }
 
   /**
-   * Gibt alle verfügbaren Farben zurück
-
-  /**
-   * Generiert sowohl Initialen als auch Farbe für einen Namen
-   * @param name - Der Name
-   * @param email - Optional: E-Mail für eindeutige Farbzuweisung
-   * @returns Objekt mit initials und color
+   * Generates both initials and color for a name
+   * @param name - The name
+   * @param email - Optional email for unique color assignment
+   * @returns Object with initials and color properties
    */
   getUserDisplay(name: string, email?: string): { initials: string; color: string } {
     return {
@@ -108,9 +109,9 @@ export class UserInitialsServices {
   }
 
   /**
-   * Erstellt ein Array von Display-Objekten für mehrere Namen
-   * @param contacts - Array von Objekten mit name und optional email
-   * @returns Array von Objekten mit initials und color
+   * Creates an array of display objects for multiple names
+   * @param contacts - Array of objects with name and optional email
+   * @returns Array of objects with initials, color, name and email properties
    */
   getMultipleUserDisplays(contacts: Array<{ name: string; email?: string }>): { name: string; initials: string; color: string; email?: string }[] {
     return contacts.map(contact => ({
@@ -122,8 +123,8 @@ export class UserInitialsServices {
   }
 
   /**
-   * Gibt alle verfügbaren Farben zurück
-   * @returns Array der verfügbaren Farben
+   * Returns all available colors
+   * @returns Array of available color codes
    */
   getAvailableColors(): string[] {
     return [...this.colors];

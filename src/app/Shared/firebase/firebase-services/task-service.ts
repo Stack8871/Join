@@ -5,25 +5,29 @@ import { collectionData, Firestore, collection, doc, deleteDoc, updateDoc, query
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { UserInitialsServices } from '../../services/user-initials-services';
 
+/**
+ * Service for handling task-related operations with Firebase Firestore
+ * Provides CRUD operations for tasks and related data
+ */
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   firestore: Firestore = inject(Firestore);
 
   constructor(private userInitialsServices: UserInitialsServices) {}
 
-/**
-   * Generiert Initialen aus einem Namen
-   * @param name - Der vollständige Name
-   * @returns Die Initialen
+  /**
+   * Generates initials from a name
+   * @param name - The full name
+   * @returns The initials
    */
   getInitials(name: string): string {
     return this.userInitialsServices.getInitials(name);
   }
 
   /**
-   * Generiert eine konsistente Farbe für einen Namen
-   * @param name - Der Name des Mitarbeiters
-   * @returns Eine Hex-Farbe
+   * Generates a consistent color for a name
+   * @param name - The employee name
+   * @returns A hex color code
    */
   getColor(name: string): string {
     return this.userInitialsServices.getColor(name);
@@ -59,8 +63,8 @@ export class TaskService {
 
   /**
    * Gets a reference to a single task document
-   * @param colId Collection ID
-   * @param docId Document ID
+   * @param colId - Collection ID
+   * @param docId - Document ID
    * @returns Document reference
    */
   getSingleTask(colId: string, docId: string) {
@@ -69,7 +73,8 @@ export class TaskService {
 
   /**
    * Deletes a task from the database
-   * @param taskId The ID of the task to delete
+   * @param taskId - The ID of the task to delete
+   * @throws Will throw an error if the deletion fails
    */
   async deleteTaskFromDatabase(taskId: string): Promise<void> {
     try {
@@ -84,8 +89,9 @@ export class TaskService {
 
   /**
    * Updates the status of a task
-   * @param taskId The ID of the task to update
-   * @param status The new status
+   * @param taskId - The ID of the task to update
+   * @param status - The new status
+   * @throws Will throw an error if the update fails
    */
   async updateTaskStatus(taskId: string, status: 'todo' | 'inProgress' | 'feedback' | 'done'): Promise<void> {
     try {
