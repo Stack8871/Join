@@ -140,7 +140,7 @@ img {
 }
 .subtasks{
   border: 1px solid $color-light-gray;
-  border-radius: $spacing-2xs;
+  border-radius: $spacing-xs;
   background:$color-white;
   display:flex;
   & input{
@@ -171,7 +171,7 @@ select {
   padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
   appearance: none;
   -moz-appearance: none;
-  border-radius: $spacing-2xs;
+  border-radius: $spacing-xs;
   border:1px solid $color-light-gray;
 }
 

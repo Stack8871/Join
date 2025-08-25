@@ -54,7 +54,7 @@ padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
 }
 .input-border-radius{
   border: 1px $color-light-gray solid;
-  border-radius: $spacing-2xs;
+  border-radius: $spacing-xs;
   padding:3px;
 }
 /* Stack elements vertically when using `.column` modifier and left-align validation */
@@ -83,7 +83,7 @@ justify-content: space-between;
 /*     max-width:440px; */
     padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
     border: 1px solid $color-light-gray;
-    border-radius: $spacing-2xs;
+    border-radius: $spacing-xs;
     font-size: var(--font-size-base);
     font-family: $font-family-base;
     &:focus {
@@ -159,7 +159,7 @@ justify-content: space-between;
   justify-content: space-between;
   padding: $spacing-xs $spacing-sm;
   border: 1px solid $color-light-gray;
-  border-radius: $spacing-2xs;
+  border-radius: $spacing-xs;
   background: white;
   cursor: pointer;
   font-size: var(--font-size-base);
@@ -198,7 +198,7 @@ justify-content: space-between;
   background: white;
   border: 1px solid $color-light-gray;
   border-top: none;
-  border-radius: 0 0 $spacing-2xs $spacing-2xs;
+  border-radius: 0 0 $spacing-xs $spacing-xs;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
