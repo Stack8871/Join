@@ -3,17 +3,14 @@
 @use 'typography' as *;
 
 .privacy-container {
-  max-width: 90svw;
+  max-width: 80svw;
   margin: 0 0 0 2rem;
   padding: 2rem;
   color: $color-text-heading;
-  height:calc(100svh - 66px);
 
   @media (max-width: $breakpoint-md) {
     padding: 1.5rem;
     margin: 0 0 0 1.5rem;
-    height: calc(100svh - 146px);
-    overflow: auto;
   }
 
   @media (max-width: $breakpoint-sm) {
