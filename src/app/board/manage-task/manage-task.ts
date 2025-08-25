@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, inject, OnInit, OnDestroy} from '@angular/core';
+import { Observable } from 'rxjs';
 import { Firebase } from '../../Shared/firebase/firebase-services/firebase-services';
 import { CommonModule } from '@angular/common';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -9,22 +9,12 @@ import { TaskInterface } from '../../interfaces/task-interface';
 import { TaskDetail } from '../task-detail/task-detail';
 import { TaskFilterService } from './task-filter';
 import { TaskOverlayService } from '../../Shared/firebase/firebase-services/task-overlay.service';
+import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { TaskHighlightService } from './services/task-highlight.service';
-import { TaskColumnService } from './services/task-column.service';
-import { MobileSliderService } from './services/mobile-slider.service';
-import { TaskSearchService } from './services/task-search.service';
-import { TaskDragDropService } from './services/task-dragdrop.service';
-import { TaskNavigationService } from './services/task-navigation.service';
-import { TaskPermissionService } from './services/task-permission.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-/**
- * Main component for managing tasks with drag & drop functionality
- * Handles task display, filtering, search, and CRUD operations
- * @component ManageTask
- */
 @Component({
   selector: 'app-manage-task',
   standalone: true,
@@ -32,155 +22,73 @@ import { TaskPermissionService } from './services/task-permission.service';
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })
-export class ManageTask implements OnInit, AfterViewInit, OnDestroy {
-  // Core dependencies
+export class ManageTask implements OnInit, OnDestroy {
   public TaskService = inject(TaskService);
-  firebase = inject(Firebase);
-  
-  // Services
   private filterService = inject(TaskFilterService);
   private taskOverlayService = inject(TaskOverlayService);
+  private userPermissionService = inject(UserPermissionService);
   private success = inject(SuccessServices);
-  private taskHighlightService = inject(TaskHighlightService);
-  private taskColumnService = inject(TaskColumnService);
-  private mobileSliderService = inject(MobileSliderService);
-  private taskSearchService = inject(TaskSearchService);
-  private taskDragDropService = inject(TaskDragDropService);
-  private taskNavigationService = inject(TaskNavigationService);
-  private taskPermissionService = inject(TaskPermissionService);
-  
-  // State
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private paramsSubscribed = false;
   tasks$!: Observable<TaskInterface[]>;
+  firebase = inject(Firebase);
+  isEdited = false;
+  isSelected = false;
+  taskId?: string ='';
   tasks: TaskInterface[] = [];
   searchTerm: string = '';
   filteredColumns: any[] = [];
   noTasksFound: boolean = false;
-  isEdited = false;
-  isSelected = false;
-  taskId?: string = '';
-  selectedTask?: TaskInterface;
-  isDragging = false;
-  
   private editOverlayListener?: (event: any) => void;
-  private subscriptions: Subscription[] = [];
-  
-  // Delegated properties
-  get canCreateTask() { return this.taskPermissionService.canCreateTask; }
-  get canEditTask() { return this.taskPermissionService.canEditTask; }
-  get canDeleteTask() { return this.taskPermissionService.canDeleteTask; }
-  get highlightStatus() { return this.taskHighlightService.highlightStatus; }
-  get highlightedTaskIds() { return this.taskHighlightService.highlightedTaskIds; }
-  get columns() { return this.taskColumnService.columns; }
-  get dropListIds() { return this.taskDragDropService.getDropListIds(); }
+  canCreateTask = false;
+  canEditTask = false;
+  canDeleteTask = false;
+  highlightStatus: string | null = null;
+  highlightedTaskIds: string[] = [];
+  dropListIds: string[] = [];
+  isDragging = false;
 
-  /**
-   * Component initialization lifecycle hook
-   * Sets up tasks, permissions, navigation and event listeners
-   */
+  // Mobile slider state
+  private mobileSliderPositions: { [columnId: string]: number } = {};
+  private touchStartX: number = 0;
+  private touchEndX: number = 0;
+
+  columns = [
+    { title: 'To Do', id: 'todoList', tasks: [] as TaskInterface[] },
+    { title: 'In Progress', id: 'progressList', tasks: [] as TaskInterface[] },
+    { title: 'Await Feedback', id: 'feedbackList', tasks: [] as TaskInterface[] },
+    { title: 'Done', id: 'doneList', tasks: [] as TaskInterface[] }
+  ];
+
   ngOnInit() {
-    this.initializeTasks();
-    this.initializePermissions();
-    this.initializeNavigation();
-    this.setupEditOverlayListener();
-    
-    // Temporary fix: Reset task statuses if they're all "feedback"
-    this.fixTaskStatuses();
-  }
-
-  /**
-   * Temporary fix to redistribute tasks if too many are in feedback status
-   * @private
-   */
-  private fixTaskStatuses(): void {
-    // Wait a bit for tasks to load, then check if they need fixing
-    setTimeout(() => {
-      const feedbackTasks = this.tasks.filter(task => task.status === 'feedback');
-      if (feedbackTasks.length >= 6) { // If most tasks are in feedback, reset them
-        console.log('Detected too many tasks in feedback status. Resetting...');
-        this.resetTaskStatuses();
-      }
-    }, 1000);
-  }
-
-  /**
-   * Resets tasks from feedback status to evenly distribute across all columns
-   * @private
-   */
-  private resetTaskStatuses(): void {
-    const statusOptions: ('todo' | 'inProgress' | 'feedback' | 'done')[] = ['todo', 'inProgress', 'feedback', 'done'];
-    let statusIndex = 0;
-
-    this.tasks.forEach((task, index) => {
-      if (task.id && task.status === 'feedback') {
-        // Distribute tasks evenly across all statuses
-        const newStatus = statusOptions[statusIndex];
-        statusIndex = (statusIndex + 1) % statusOptions.length;
-        
-        console.log(`Resetting task "${task.title}" from feedback to ${newStatus}`);
-        this.TaskService.updateTaskStatus(task.id, newStatus).catch(error => {
-          console.error('Failed to reset task status:', error);
-        });
-      }
-    });
-  }
-
-  /**
-   * AfterViewInit lifecycle hook
-   * Initializes mobile slider functionality
-   */
-  ngAfterViewInit() {
-    this.mobileSliderService.initializeSliders();
-  }
-
-  /**
-   * Component cleanup lifecycle hook
-   * Unsubscribes from observables and removes event listeners
-   */
-  ngOnDestroy() {
-    this.cleanupSubscriptions();
-    this.removeEditOverlayListener();
-  }
-
-  /**
-   * Initializes tasks and sets up task observables
-   * @private
-   */
-  private initializeTasks(): void {
     this.tasks$ = this.TaskService.getTasks();
-    const subscription = this.tasks$.subscribe(tasks => {
-      console.log('Tasks received from Observable:', tasks.length, tasks);
+    this.tasks$.subscribe(tasks => {
       this.tasks = tasks;
-      this.taskColumnService.updateColumns(tasks);
-      this.updateFilteredColumns();
+      this.updateColumns();
+      this.filteredColumns = [...this.columns];
+      // Initialize connected drop list ids for drag & drop (both desktop and mobile)
+      this.dropListIds = [
+        'todoList-list', 'progressList-list', 'feedbackList-list', 'doneList-list',
+        'todoList-mobile-list', 'progressList-mobile-list', 'feedbackList-mobile-list', 'doneList-mobile-list'
+      ];
+
+      // Check for highlight parameter after tasks are loaded
+      this.checkForHighlightParameter();
     });
-    this.subscriptions.push(subscription);
-  }
 
-  /**
-   * Sets up user permissions and authentication
-   * @private
-   */
-  private initializePermissions(): void {
-    this.taskPermissionService.initializePermissions();
-  }
+    // Check if user has permission to create/edit tasks
+    this.userPermissionService.canCreate().subscribe(canCreate => {
+      this.canCreateTask = canCreate;
+      this.canEditTask = canCreate;
+    });
 
-  /**
-   * Initializes navigation and route parameter subscriptions
-   * @private
-   */
-  private initializeNavigation(): void {
-    const subscription = this.taskNavigationService.subscribeToRouteParams(
-      (status: string) => this.highlightTasksByStatus(status),
-      () => this.highlightUrgentTasks()
-    );
-    this.subscriptions.push(subscription);
-  }
+    // Check if user has permission to delete tasks
+    this.userPermissionService.canDelete().subscribe(canDelete => {
+      this.canDeleteTask = canDelete;
+    });
 
-  /**
-   * Sets up event listener for edit overlay functionality
-   * @private
-   */
-  private setupEditOverlayListener(): void {
+    // Event-Listener für Edit-Overlay
     this.editOverlayListener = (event: any) => {
       this.selectedTask = event.detail.task;
       this.editTask(event.detail.task);
@@ -189,371 +97,602 @@ export class ManageTask implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Removes edit overlay event listener
-   * @private
+   * Checks for the 'highlight' or 'highlightUrgent' query parameter and highlights tasks accordingly
    */
-  private removeEditOverlayListener(): void {
+  checkForHighlightParameter() {
+    if (this.paramsSubscribed) {
+      return;
+    }
+    this.paramsSubscribed = true;
+
+    this.route.queryParams.subscribe(params => {
+      const highlightStatus = params['highlight'];
+      const highlightUrgent = params['highlightUrgent'];
+      const highlightTaskId = params['highlightTaskId'];
+
+      if (highlightTaskId) {
+        // Highlight only the newly created task by id
+        this.highlightedTaskIds = [highlightTaskId];
+        setTimeout(() => {
+          this.applyHighlightEffect();
+        }, 100);
+
+        // Remove the highlightTaskId from URL to prevent re-triggering on future updates
+        setTimeout(() => {
+          this.router.navigate([], { queryParams: { highlightTaskId: null }, queryParamsHandling: 'merge' });
+        }, 2200);
+      } else if (highlightStatus) {
+        this.highlightStatus = highlightStatus;
+        this.highlightTasksByStatus(highlightStatus);
+      } else if (highlightUrgent === 'true') {
+        this.highlightUrgentTasks();
+      }
+    });
+  }
+
+  /**
+   * Highlights tasks with the specified status by adding a CSS class
+   * @param status - The status of tasks to highlight ('todo', 'inProgress', 'feedback', 'done')
+   */
+  highlightTasksByStatus(status: string) {
+    // Find all tasks with the specified status
+    const tasksToHighlight = this.tasks.filter(task => task.status === status);
+
+    // Store the IDs of tasks to highlight
+    this.highlightedTaskIds = tasksToHighlight.map(task => task.id || '').filter(id => id !== '');
+
+    // Apply the highlight effect
+    setTimeout(() => {
+      this.applyHighlightEffect();
+    }, 100); // Small delay to ensure DOM is ready
+  }
+
+  /**
+   * Highlights urgent tasks by adding a CSS class
+   */
+  highlightUrgentTasks() {
+    // Find all tasks with urgent priority
+    const urgentTasks = this.tasks.filter(task => task.priority?.toLowerCase() === 'urgent');
+
+    // Store the IDs of tasks to highlight
+    this.highlightedTaskIds = urgentTasks.map(task => task.id || '').filter(id => id !== '');
+
+    // Apply the highlight effect
+    setTimeout(() => {
+      this.applyHighlightEffect();
+    }, 100); // Small delay to ensure DOM is ready
+  }
+
+  /**
+   * Applies a flash/highlight effect to the tasks
+   */
+  applyHighlightEffect() {
+    // Remove any existing highlight classes to avoid re-highlighting older tasks
+    const highlighted = document.querySelectorAll('.highlight-task');
+    highlighted.forEach(el => el.classList.remove('highlight-task'));
+
+    // Add highlight class only to current target tasks
+    this.highlightedTaskIds.forEach(taskId => {
+      const taskElement = document.getElementById(`task-${taskId}`);
+      if (taskElement) {
+        taskElement.classList.add('highlight-task');
+
+        // Remove the highlight class after animation completes
+        setTimeout(() => {
+          taskElement.classList.remove('highlight-task');
+        }, 2000); // 2 seconds for the animation
+      }
+    });
+  }
+
+  ngOnDestroy() {
     if (this.editOverlayListener) {
       document.removeEventListener('openEditOverlay', this.editOverlayListener);
     }
   }
 
-  /**
-   * Cleans up all subscriptions to prevent memory leaks
-   * @private
-   */
-  private cleanupSubscriptions(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
+  updateColumns() {
+    // Group by status
+    this.columns[0].tasks = this.tasks.filter(t => t.status === 'todo').sort(this.sortByOrderThenTitle);
+    this.columns[1].tasks = this.tasks.filter(t => t.status === 'inProgress').sort(this.sortByOrderThenTitle);
+    this.columns[2].tasks = this.tasks.filter(t => t.status === 'feedback').sort(this.sortByOrderThenTitle);
+    this.columns[3].tasks = this.tasks.filter(t => t.status === 'done').sort(this.sortByOrderThenTitle);
 
-  /**
-   * Applies filter to tasks based on search term
-   * @param searchTerm - The search term to filter tasks by
-   */
-  applyFilter(searchTerm: string): void {
-    this.searchTerm = searchTerm;
-    this.updateFilteredColumns();
-  }
+    // Reset mobile slider positions when columns update
+    this.resetMobileSliderPositions();
 
-  /**
-   * Handles search input changes
-   */
-  onSearchChanged(): void {
-    this.updateFilteredColumns();
-  }
-
-  /**
-   * Updates filtered columns based on current search criteria
-   * @private
-   */
-  private updateFilteredColumns(): void {
-    const filteredTasks = this.taskSearchService.filterTasks(this.tasks, this.searchTerm);
-    const result = this.taskSearchService.updateFilteredColumns(
-      this.taskColumnService.columns, 
-      filteredTasks, 
-      this.searchTerm
-    );
-    this.filteredColumns = result.filteredColumns;
-    this.noTasksFound = result.noTasksFound;
-    
-    console.log('Updated filtered columns:', this.filteredColumns.map(col => ({ 
-      id: col.id, 
-      title: col.title, 
-      taskCount: col.tasks.length,
-      tasks: col.tasks.map((t: TaskInterface) => t.title)
-    })));
-  }
-
-  /**
-   * Handles drag and drop operations for tasks
-   * @param event - The CDK drop event containing drag and drop information
-   */
-  onDrop(event: CdkDragDrop<TaskInterface[]>): void {
-    if (event.previousContainer === event.container) {
-      // Moving within the same column - no database update needed
-      // Just update the local array order
-      const columnTasks = [...event.container.data];
-      const movedTask = columnTasks[event.previousIndex];
-      columnTasks.splice(event.previousIndex, 1);
-      columnTasks.splice(event.currentIndex, 0, movedTask);
-      
-      // Update the specific column
-      const column = this.taskColumnService.columns.find(col => 
-        col.id + '-list' === event.container.id
-      );
-      if (column) {
-        column.tasks = columnTasks;
-        this.updateFilteredColumns();
-      }
+    // Apply current filter to updated columns
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      this.applyFilter(this.searchTerm);
     } else {
-      // Moving between different columns
-      const task = event.previousContainer.data[event.previousIndex];
-      const newStatus = this.getStatusFromDropId(event.container.id);
-      
-      if (task.id && newStatus) {
-        console.log('Updating task status:', task.id, 'from', task.status, 'to', newStatus);
-        console.log('Container ID:', event.container.id);
-        console.log('Previous Container ID:', event.previousContainer.id);
-        
-        // Update the database first, let the Observable handle UI updates
-        this.TaskService.updateTaskStatus(task.id, newStatus).then(() => {
-          console.log('Task status updated successfully');
-          // The Observable subscription will automatically update the UI
-        }).catch((error: any) => {
-          console.error('Failed to update task status:', error);
-          this.success.show('Failed to move task. Please try again.', 3000);
-        });
-      }
+      this.filteredColumns = [...this.columns];
     }
   }
 
-  /**
-   * Opens add task overlay
-   */
-  addNewTask(): void {
-    this.taskOverlayService.openOverlay();
-  }
 
-  /**
-   * Highlights tasks with specific status
-   * @param status - The task status to highlight
-   */
-  highlightTasksByStatus(status: string): void {
-    this.taskHighlightService.highlightTasksByStatus(status);
-  }
-
-  /**
-   * Highlights tasks with urgent priority
-   */
-  highlightUrgentTasks(): void {
-    this.taskHighlightService.highlightUrgentTasks(this.tasks);
-  }
-
-  /**
-   * Opens edit overlay for a specific task
-   * @param task - The task to edit
-   */
-  editTask(task: TaskInterface): void {
-    if (task.id) {
-      this.taskOverlayService.openOverlay(task);
-    }
-  }
-
-  /**
-   * Deletes a task from the database
-   * @param taskId - The ID of the task to delete
-   */
-  deleteTask(taskId: string): void {
-    this.TaskService.deleteTaskFromDatabase(taskId);
-    this.success.show('Task deleted successfully', 2000);
-  }
-
-  /**
-   * Shows previous task in mobile slider for a specific column
-   * @param columnId - The ID of the column
-   */
-  showPreviousTask(columnId: string): void {
-    this.mobileSliderService.showPreviousTask(columnId);
-  }
-
-  /**
-   * Shows next task in mobile slider for a specific column
-   * @param columnId - The ID of the column
-   */
-  showNextTask(columnId: string): void {
-    this.mobileSliderService.showNextTask(columnId);
-  }
-
-  /**
-   * Shows task at specific index in mobile slider
-   * @param columnId - The ID of the column
-   * @param index - The index of the task to show
-   */
-  showTaskAtIndex(columnId: string, index: number): void {
-    this.mobileSliderService.showTaskAtIndex(columnId, index);
-  }
-
-  /**
-   * Gets current task index for mobile slider
-   * @param columnId - The ID of the column
-   * @returns The current task index
-   */
-  getCurrentTaskIndex(columnId: string): number {
-    return this.mobileSliderService.getCurrentTaskIndex(columnId);
-  }
-
-  /**
-   * Resets mobile slider positions for all columns
-   */
-  resetMobileSliderPositions(): void {
-    this.mobileSliderService.resetPositions();
-  }
-
-  /**
-   * Handles touch start events for mobile slider
-   * @param event - The touch event
-   * @param columnId - The ID of the column
-   */
-  onTouchStart(event: TouchEvent, columnId: string): void {
-    this.mobileSliderService.onTouchStart(event, columnId);
-  }
-
-  /**
-   * Handles touch end events for mobile slider
-   * @param event - The touch event
-   * @param columnId - The ID of the column
-   */
-  onTouchEnd(event: TouchEvent, columnId: string): void {
-    this.mobileSliderService.onTouchEnd(event, columnId);
-  }
-
-  /**
-   * Checks if a task is currently highlighted
-   * @param taskId - The ID of the task to check
-   * @returns True if the task is highlighted, false otherwise
-   */
-  isHighlighted(taskId: string): boolean {
-    return this.taskHighlightService.highlightedTaskIds.includes(taskId);
-  }
-
-  /**
-   * Checks if a column has tasks to display
-   * @param columnId - The ID of the column to check
-   * @returns True if the column has tasks, false otherwise
-   */
-  hasTasksToShow(columnId: string): boolean {
-    return this.taskColumnService.hasTasksToShow(columnId);
-  }
-
-  /**
-   * Selects a task for detailed view
-   * @param task - The task to select
-   */
-  selectTask(task: TaskInterface): void {
-    this.selectedTask = task;
+  selectTask(task: TaskInterface) {
+    if (!task) return;
     this.isSelected = true;
+    this.selectedTask = { ...task };
+    this.taskId = task.id;
   }
 
-  /**
-   * Closes the task overlay and deselects current task
-   */
-  closeOverlay(): void {
+  closeOverlay() {
     this.isSelected = false;
     this.selectedTask = undefined;
   }
 
-  /**
-   * Determines the CSS class for a task category
-   * @param category - The task category
-   * @returns The corresponding CSS class
-   */
-  getCategoryClass(category: string): string {
-    return `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
-  }
+    addNewTask() {
+      if (!this.canCreateTask) {
+        this.success.show('You do not have permission to create tasks', 3000);
+        return;
+      }
+      this.taskOverlayService.openOverlay(); // kein Parameter = "Add Mode"
+    };
+
+    editTask(tasks: TaskInterface) {
+      if (!this.canEditTask) {
+        this.success.show('You do not have permission to edit tasks', 3000);
+        return;
+      }
+      this.taskOverlayService.openOverlay(tasks); // übergibt Task als `taskToEdit`
+    };
+
+    deleteItem(taskId: string) {
+      if (!this.canDeleteTask) {
+        this.success.show('You do not have permission to delete tasks', 3000);
+        return;
+      }
+      this.firebase.deleteTaskFromDatabase(taskId);
+    }
+
+  selectedTasksIndex?: number;
+  selectedTask?: TaskInterface;
 
   /**
-   * Truncates text to a specified maximum length
-   * @param text - The text to truncate
-   * @param maxLength - Maximum length before truncation (default: 30)
-   * @returns The truncated text with ellipsis if needed
-   */
-  truncateText(text: string, maxLength: number = 30): string {
-    if (!text) return '';
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-  }
-
-  /**
-   * Calculates the progress percentage of subtasks
-   * @param task - The task to calculate progress for
-   * @returns Progress percentage (0-100)
-   */
-  getSubtaskProgress(task: TaskInterface): number {
-    if (!task.subtasks || task.subtasks.length === 0) return 0;
-    const completed = task.subtasks.filter(subtask => subtask.done).length;
-    return (completed / task.subtasks.length) * 100;
-  }
-
-  /**
-   * Gets the number of completed subtasks
-   * @param task - The task to count completed subtasks for
-   * @returns Number of completed subtasks
-   */
-  getCompletedSubtasks(task: TaskInterface): number {
-    if (!task.subtasks) return 0;
-    return task.subtasks.filter(subtask => subtask.done).length;
-  }
-
-  /**
-   * Limits an array to a specified number of elements
-   * @param array - The array to limit
-   * @param limit - Maximum number of elements (default: 3)
-   * @returns Limited array
-   */
-  limitArray<T>(array: T[], limit: number = 3): T[] {
-    return array ? array.slice(0, limit) : [];
-  }
-
-  /**
-   * Gets the color for a contact based on their name
-   * @param name - The contact name
-   * @returns Color string
-   */
-  getColor(name: string): string {
-    return this.TaskService.getColor(name);
-  }
-
-  /**
-   * Gets the initials from a contact name
-   * @param name - The contact name
-   * @returns Initials string
+   * Generiert Initialen aus einem Namen
+   * @param name - Der vollständige Name
+   * @returns Die Initialen
    */
   getInitials(name: string): string {
     return this.TaskService.getInitials(name);
   }
 
   /**
-   * Gets the contact name by contact ID
-   * @param contactId - The contact ID to look up
-   * @returns The contact name or the ID if not found
+   * Generiert eine konsistente Farbe für einen Namen
+   * @param name - Der Name des Mitarbeiters
+   * @returns Eine Hex-Farbe
+   */
+  getColor(name: string): string {
+    return this.TaskService.getColor(name);
+  }
+
+  /**
+   * Findet den Namen eines Kontakts anhand der ID
+   * @param contactId - Die ID des Kontakts
+   * @returns Der Name des Kontakts oder leerer String
    */
   getContactName(contactId: string): string {
-    if (!contactId) return '';
     const contact = this.firebase.ContactsList.find(c => c.id === contactId);
-    return contact ? contact.name : contactId;
+    return contact ? contact.name : '';
   }
 
   /**
-   * Gets the priority icon path for a given priority level
-   * @param priority - The priority level (low, medium, urgent)
-   * @returns Path to the priority icon
+   * Berechnet den Fortschritt der Subtasks als Prozent
+   * @param task - Das Task-Objekt
+   * @returns Prozentfortschritt (0-100)
+   */
+  getSubtaskProgress(task: TaskInterface): number {
+    if (!task.subtasks || task.subtasks.length === 0) {
+      return 100;
+    }
+    const completed = task.subtasks.filter(subtask => subtask.done).length;
+    return Math.round((completed / task.subtasks.length) * 100);
+  }
+
+  /**
+   * Zählt die abgeschlossenen Subtasks
+   * @param task - Das Task-Objekt
+   * @returns Anzahl der abgeschlossenen Subtasks
+   */
+  getCompletedSubtasks(task: TaskInterface): number {
+    if (!task.subtasks || task.subtasks.length === 0) {
+      return 0;
+    }
+    return task.subtasks.filter(subtask => subtask.done).length;
+  }
+
+  /**
+   * Bestimmt die CSS-Klasse für eine Kategorie
+   * @param category - Die Kategorie der Task
+   * @returns Die entsprechende CSS-Klasse
+   */
+  getCategoryClass(category: string): string {
+    switch (category.toLowerCase()) {
+      case 'user story':
+        return 'category-userstory';
+      case 'technical task':
+        return 'category-technical';
+      default:
+        return 'category-default';
+    }
+  }
+
+  /**
+   * Bestimmt das Icon-Pfad für eine Priorität
+   * @param priority - Die Priorität der Task (Low, Medium, High)
+   * @returns Der Pfad zum entsprechenden Icon
    */
   getPriorityIcon(priority: string): string {
-    const iconMap: { [key: string]: string } = {
-      'low': '/icons/prio-low.svg',
-      'medium': '/icons/prio-medium.svg',
-      'urgent': '/icons/prio-urgent.svg'
-    };
-    return iconMap[priority] || '/icons/prio-medium.svg';
+    switch (priority.toLowerCase()) {
+      case 'low':
+        return 'icons/prio-low.svg';
+      case 'medium':
+        return 'icons/prio-medium.svg';
+      case 'urgent':
+        return 'icons/prio-urgent.svg';
+      default:
+        return 'icons/prio-medium.svg'; // Fallback
+    }
   }
 
   /**
-   * Gets the current visible task index for mobile slider
-   * @param columnId - The column ID
+   * Applies filter to columns based on search term
+   * @param searchTerm The search term to filter by
+   */
+  applyFilter(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filteredColumns = [...this.columns];
+      this.noTasksFound = false;
+      return;
+    }
+
+    this.filteredColumns = this.filterService.filterColumns([...this.columns], searchTerm);
+
+    // Check if any tasks were found after filtering
+    const hasAnyTasks = this.filteredColumns.some(column => column.tasks.length > 0);
+    this.noTasksFound = !hasAnyTasks;
+  }
+
+  /**
+   * Truncates text to 20 characters and adds ellipsis if needed
+   * @param text - The text to truncate
+   * @returns Truncated text with ellipsis if needed
+   */
+  truncateText(text: string): string {
+    if (!text) return '';
+    return text.length > 20 ? text.substring(0, 20) + '...' : text;
+  }
+
+  /**
+   * Limits an array to a maximum of 5 items
+   * @param array - The array to limit
+   * @returns Limited array with maximum 5 items
+   */
+  limitArray(array: any[]): any[] {
+    if (!array) return [];
+    return array.slice(0, 5);
+  }
+
+  // Mobile Slider Methods
+
+  /**
+   * Gets the current transform value for the mobile slider
+   * @param columnId - The ID of the column
+   * @returns Transform value in pixels
+   */
+  getMobileSliderTransform(columnId: string): number {
+    const currentIndex = this.mobileSliderPositions[columnId] || 0;
+    const cardWidth = 250; // Must match the CSS card width
+    const gap = 16; // Must match the CSS gap (spacing-sm)
+    return -(currentIndex * (cardWidth + gap));
+  }
+
+  /**
+   * Gets the current task index for a column
+   * @param columnId - The ID of the column
+   * @returns Current task index
+   */
+  getCurrentTaskIndex(columnId: string): number {
+    return this.mobileSliderPositions[columnId] || 0;
+  }
+
+  /**
+   * Gets the currently visible task index (alias for mobile compatibility)
+   * @param columnId - The ID of the column
    * @returns Current visible task index
    */
   getCurrentVisibleTaskIndex(columnId: string): number {
-    return this.mobileSliderService.getCurrentTaskIndex(columnId);
+    return this.getCurrentTaskIndex(columnId);
   }
 
   /**
-   * Scrolls to a specific task in mobile slider
-   * @param columnId - The column ID
-   * @param index - The task index to scroll to
+   * Scrolls to a specific task in the mobile view
+   * @param columnId - The ID of the column
+   * @param index - The index of the task to scroll to
    */
   scrollToTask(columnId: string, index: number): void {
-    this.mobileSliderService.showTaskAtIndex(columnId, index);
+    this.showTaskAtIndex(columnId, index);
+    
+    // Actually scroll to the task in the mobile view
+    const mobileList = document.querySelector(`[id="${columnId}-mobile-list"]`);
+    if (mobileList) {
+      const taskCard = mobileList.querySelector(`#mobile-task-${this.getTaskIdByIndex(columnId, index)}`);
+      if (taskCard) {
+        taskCard.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest', 
+          inline: 'start' 
+        });
+      }
+    }
   }
 
   /**
-   * Maps drop container ID to task status
-   * @param containerId - The drop container ID
-   * @returns The corresponding task status
-   * @private
+   * Gets the task ID by index for a specific column
+   * @param columnId - The ID of the column
+   * @param index - The index of the task
+   * @returns Task ID or empty string if not found
    */
-  private getStatusFromDropId(containerId: string): 'todo' | 'inProgress' | 'feedback' | 'done' {
-    console.log('Getting status from container ID:', containerId);
-    const cleanId = containerId.replace('-list', '');
-    console.log('Clean ID:', cleanId);
+  private getTaskIdByIndex(columnId: string, index: number): string {
+    const column = this.filteredColumns.find(col => col.id === columnId);
+    return column && column.tasks[index] ? column.tasks[index].id : '';
+  }
+
+  /**
+   * Shows a specific task at the given index
+   * @param columnId - The ID of the column
+   * @param index - The index of the task to show
+   */
+  showTaskAtIndex(columnId: string, index: number): void {
+    // Update the mobile slider position
+    this.mobileSliderPositions[columnId] = index;
     
-    const statusMap: { [key: string]: 'todo' | 'inProgress' | 'feedback' | 'done' } = {
-      'todoList': 'todo',
-      'progressList': 'inProgress',
-      'feedbackList': 'feedback', 
-      'doneList': 'done'
-    };
-    
-    const result = statusMap[cleanId] || 'todo';
-    console.log('Mapped status:', result);
-    return result;
+    // Scroll to the specific task
+    setTimeout(() => {
+      const mobileList = document.querySelector(`[id="${columnId}-mobile-list"]`);
+      if (mobileList) {
+        const taskCard = mobileList.querySelector(`#mobile-task-${this.getTaskIdByIndex(columnId, index)}`);
+        if (taskCard) {
+          taskCard.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'nearest', 
+            inline: 'start' 
+          });
+        }
+      }
+    }, 50);
+  }
+
+  /**
+   * Navigates to the previous task in the slider
+   * @param columnId - The ID of the column
+   */
+  previousTask(columnId: string): void {
+    const currentIndex = this.mobileSliderPositions[columnId] || 0;
+    if (currentIndex > 0) {
+      this.mobileSliderPositions[columnId] = currentIndex - 1;
+    }
+  }
+
+  /**
+   * Navigates to the next task in the slider
+   * @param columnId - The ID of the column
+   */
+  nextTask(columnId: string): void {
+    const column = this.filteredColumns.find(col => col.id === columnId);
+    if (!column) return;
+
+    const currentIndex = this.mobileSliderPositions[columnId] || 0;
+    if (currentIndex < column.tasks.length - 1) {
+      this.mobileSliderPositions[columnId] = currentIndex + 1;
+    }
+  }
+
+  /**
+   * Navigates directly to a specific task index
+   * @param columnId - The ID of the column
+   * @param index - The target task index
+   */
+  goToTask(columnId: string, index: number): void {
+    const column = this.filteredColumns.find(col => col.id === columnId);
+    if (!column) return;
+
+    if (index >= 0 && index < column.tasks.length) {
+      this.mobileSliderPositions[columnId] = index;
+    }
+  }
+
+  /**
+   * Resets all mobile slider positions to the first task
+   */
+  private resetMobileSliderPositions(): void {
+    this.mobileSliderPositions = {};
+  }
+
+  /**
+   * Handles touch start event for swipe gestures
+   * @param event - Touch event
+   */
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.touches[0].clientX;
+  }
+
+  /**
+   * Handles touch end event for swipe gestures
+   * @param event - Touch event
+   * @param columnId - The ID of the column
+   */
+  onTouchEnd(event: TouchEvent, columnId: string): void {
+    this.touchEndX = event.changedTouches[0].clientX;
+    this.handleSwipeGesture(columnId);
+  }
+
+  /**
+   * Processes swipe gesture and navigates tasks accordingly
+   * @param columnId - The ID of the column
+   */
+  private handleSwipeGesture(columnId: string): void {
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const swipeDistance = this.touchStartX - this.touchEndX;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swipe left - next task
+        this.nextTask(columnId);
+      } else {
+        // Swipe right - previous task
+        this.previousTask(columnId);
+      }
+    }
+  }
+
+  // Ordering helpers
+  private sortByOrderThenTitle = (a: TaskInterface, b: TaskInterface) => {
+    const ao = a.order;
+    const bo = b.order;
+    const aHas = typeof ao === 'number';
+    const bHas = typeof bo === 'number';
+    if (aHas && bHas) {
+      if (ao === bo) {
+        const at = (a.title || '').toLowerCase();
+        const bt = (b.title || '').toLowerCase();
+        if (at < bt) return -1;
+        if (at > bt) return 1;
+        const aid = a.id || '';
+        const bid = b.id || '';
+        return aid.localeCompare(bid);
+      }
+      return (ao as number) - (bo as number);
+    }
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    const at = (a.title || '').toLowerCase();
+    const bt = (b.title || '').toLowerCase();
+    if (at < bt) return -1;
+    if (at > bt) return 1;
+    const aid = a.id || '';
+    const bid = b.id || '';
+    return aid.localeCompare(bid);
+  };
+
+  private getColumnIdFromDropListId(listId: string): string {
+    return listId.endsWith('-list') ? listId.slice(0, -5) : listId;
+  }
+
+  private reindexColumnOrders(columnId: string, columnTasks: TaskInterface[]): void {
+    const status = this.mapColumnIdToStatus(columnId);
+    columnTasks.forEach((t, idx) => {
+      t.order = idx;
+      if (status) {
+        (t as any).status = status;
+      }
+      const i = this.tasks.findIndex(tt => tt.id === t.id);
+      if (i > -1) {
+        this.tasks[i] = { ...this.tasks[i], order: t.order, status: (t as any).status } as TaskInterface;
+      }
+    });
+    this.persistTasks(columnTasks.filter(t => t && t.id));
+  }
+
+  private persistTasks(tasks: TaskInterface[]): void {
+    tasks.forEach(t => {
+      if (t.id) {
+        this.firebase.editTaskToDatabase(t.id, t as TaskInterface).catch(err => {
+          console.error('Failed to persist task order:', err);
+        });
+      }
+    });
+  }
+
+  private getMaxOrderForStatus(status: string): number {
+    const ordered = this.tasks.filter(t => t.status === status && typeof t.order === 'number') as TaskInterface[];
+    return ordered.length ? Math.max(...ordered.map(t => (t.order as number))) : -1;
+  }
+
+  // Drag & Drop handlers
+  onDrop(event: CdkDragDrop<TaskInterface[]>, targetColumnId: string): void {
+    if (!this.canEditTask) {
+      this.success.show('You do not have permission to edit tasks', 3000);
+      return;
+    }
+
+    const isFiltered = !!(this.searchTerm && this.searchTerm.trim() !== '');
+
+    if (event.previousContainer === event.container) {
+      // Reorder within the same column (UI)
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      if (!isFiltered) {
+        // Persist sequential order only when not filtered
+        this.reindexColumnOrders(targetColumnId, event.container.data);
+        this.updateColumns();
+      } else {
+        // Keep UI consistent under filter
+        this.applyFilter(this.searchTerm);
+      }
+    } else {
+      // Move between columns
+      const sourceColumnId = this.getColumnIdFromDropListId(event.previousContainer.id);
+
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      const movedTask = event.container.data[event.currentIndex];
+      const newStatus = this.mapColumnIdToStatus(targetColumnId);
+
+      if (movedTask && movedTask.id && newStatus) {
+        // Update local object for immediate UI feedback
+        movedTask.status = newStatus as any;
+
+        // Keep local source of truth in sync so updateColumns() reflects the move
+        const idx = this.tasks.findIndex(t => t.id === movedTask.id);
+        if (idx > -1) {
+          this.tasks[idx] = { ...this.tasks[idx], status: newStatus } as TaskInterface;
+        }
+
+        if (!isFiltered) {
+          // Reindex and persist both columns when not filtered
+          if (sourceColumnId) {
+            this.reindexColumnOrders(sourceColumnId, event.previousContainer.data as TaskInterface[]);
+          }
+          this.reindexColumnOrders(targetColumnId, event.container.data as TaskInterface[]);
+          this.updateColumns();
+        } else {
+          // Persist only status change when filtered
+          const updatedTask: TaskInterface = { ...movedTask, status: newStatus } as TaskInterface;
+          this.firebase
+            .editTaskToDatabase(movedTask.id, updatedTask)
+            .then(() => {
+              this.updateColumns();
+              this.applyFilter(this.searchTerm);
+            })
+            .catch((error) => {
+              console.error('Failed to update task status:', error);
+              this.success.show('Failed to move task. Please try again.', 3000);
+            });
+        }
+      }
+    }
+  }
+
+  private mapColumnIdToStatus(columnId: string): string {
+    switch (columnId) {
+      case 'todoList':
+        return 'todo';
+      case 'progressList':
+        return 'inProgress';
+      case 'feedbackList':
+        return 'feedback';
+      case 'doneList':
+        return 'done';
+      default:
+        return '';
+    }
   }
 }
