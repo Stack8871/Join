@@ -1,13 +1,34 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service for handling logo animation effects during application startup.
+ * Manages logo positioning, animation states, and provides smooth transitions
+ * for enhanced user experience during app initialization.
+ * 
+ * @example
+ * ```typescript
+ * constructor(private logoAnimation: LogoAnimation) {
+ *   this.logoAnimation.initAnimation(() => {
+ *     console.log('Animation completed');
+ *   });
+ * }
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class LogoAnimation {
+  /** Reference to the logo DOM element */
   private logoElement: HTMLImageElement | null = null;
+  
+  /** Initial position coordinates for animation start */
   private initialPosition = { top: 0, left: 0 };
+  
+  /** Final position coordinates for animation end */
   private finalPosition = { top: 0, left: 0 };
 
+  /** Static flag to track if animation has already been played */
   static hasPlayed = false;
 
+  /** Current animation state */
   private state: AnimationState = AnimationState.Idle;
 
   /**

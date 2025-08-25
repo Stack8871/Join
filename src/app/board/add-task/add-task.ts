@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
   styleUrl: './add-task.scss'
 })
 
-
 export class AddTask implements OnInit{
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
@@ -219,7 +218,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
   getContactById(contactId: string): ContactsInterface | undefined {
     return this.ContactsList.find(contact => contact.id === contactId);
   }
-
 
   // Custom dropdown methods
   toggleDropdown(): void {

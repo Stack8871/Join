@@ -10,6 +10,15 @@ import { LoadingSpinner } from './login/loading-spinner';
 import { MobileWelcomeService } from './mobile-welcome/mobile-welcome.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
+/**
+ * Main application component that serves as the root of the Angular application.
+ * Handles authentication state, route navigation, and responsive mobile/desktop behavior.
+ * 
+ * @example
+ * ```html
+ * <app-root></app-root>
+ * ```
+ */
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, SectionSidebar, Header, CommonModule, LoadingSpinner],
@@ -17,10 +26,19 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrl: './app.scss'
 })
 export class App {
+  /** Application title */
   protected title = 'join';
+  
+  /** Flag indicating if user is currently logged in */
   isLoggedIn = false;
+  
+  /** Current active route path */
   currentRoute = '';
+  
+  /** Service for handling mobile welcome screen logic */
   private mobileWelcomeService = inject(MobileWelcomeService);
+  
+  /** Service for observing responsive breakpoints */
   private breakpointObserver = inject(BreakpointObserver);
 
   /**
@@ -51,7 +69,12 @@ export class App {
     });
   }
 
-  private handleSuccessfulLogin() {
+  /**
+   * Handles successful login by redirecting to appropriate route based on device type.
+   * Mobile users are redirected to welcome screen, desktop users go directly to summary.
+   * @private
+   */
+  private handleSuccessfulLogin(): void {
     const isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     
     if (isMobile) {

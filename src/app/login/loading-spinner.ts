@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
+/**
+ * Loading spinner component that displays during application initialization.
+ * Shows a spinner animation with loading text while the app is loading.
+ * 
+ * @example
+ * ```html
+ * <app-loading-spinner></app-loading-spinner>
+ * ```
+ */
 @Component({
   selector: 'app-loading-spinner',
   standalone: true,

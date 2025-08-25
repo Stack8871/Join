@@ -1,5 +1,16 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service for generating consistent colors based on string input.
+ * Primarily used for creating unique background colors for user initials and contact avatars.
+ * 
+ * @example
+ * ```typescript
+ * constructor(private colorService: ColorService) {
+ *   const userColor = this.colorService.generateColorByString('John Doe');
+ * }
+ * ```
+ */
 @Injectable({
   providedIn: 'root'
 })

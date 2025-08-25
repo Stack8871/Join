@@ -11,6 +11,17 @@ import { AuthGuard } from './Shared/guards/auth.guard';
 import { AddTask } from './board/add-task/add-task';
 import { MobileWelcome } from './mobile-welcome/mobile-welcome';
 
+/**
+ * Application routing configuration defining all available routes and their associated components.
+ * Includes authentication guards for protected routes and fallback redirects.
+ * 
+ * @example
+ * ```typescript
+ * const router = Router.createRouter([
+ *   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
+ * ]);
+ * ```
+ */
 export const routes: Routes = [
   { path: '', component: Login},
   { path: 'login', component: Login},

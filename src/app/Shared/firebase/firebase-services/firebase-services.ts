@@ -15,12 +15,33 @@ import {
 import { ContactsInterface } from '../../../interfaces/contacts-interface';
 import { TaskInterface } from '../../../interfaces/task-interface';
 
+/**
+ * Firebase service that provides centralized access to Firestore operations.
+ * Handles CRUD operations for contacts and tasks with real-time data synchronization.
+ * 
+ * @example
+ * ```typescript
+ * constructor(private firebase: Firebase) {
+ *   // Access contacts list
+ *   console.log(this.firebase.ContactsList);
+ * }
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class Firebase implements OnDestroy {
+  /** Injected Firestore instance */
   private firestore = inject(Firestore);
+  
+  /** Unsubscribe function for real-time listeners */
   private unsubscribe: Unsubscribe = () => {};
+  
+  /** Real-time synchronized contacts list */
   ContactsList: ContactsInterface[] = [];
 
+  /**
+   * Creates an instance of Firebase service.
+   * Sets up real-time listener for contacts collection with automatic synchronization.
+   */
   constructor() {
     try {
       const contactsRef = query(collection(this.firestore, 'contacts'), orderBy('name'));

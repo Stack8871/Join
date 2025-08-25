@@ -9,6 +9,15 @@ import {BreakpointObserverService} from './breakpoint.observer';
 import {SignUpService} from '../../sign-up/sign-up.service';
 import {SignUp} from '../../sign-up/sign-up';
 
+/**
+ * Header component that provides navigation, user authentication, and responsive behavior.
+ * Includes login/signup forms, user dropdown menu, and mobile-responsive functionality.
+ * 
+ * @example
+ * ```html
+ * <app-header></app-header>
+ * ```
+ */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -17,15 +26,39 @@ import {SignUp} from '../../sign-up/sign-up';
   styleUrl: './header.scss'
 })
 export class Header {
+  /** User email for login form */
   email = '';
+  
+  /** User password for login form */
   password = '';
+  
+  /** Error message for failed authentication attempts */
   errorMessage = '';
+  
+  /** Flag to show/hide login form */
   showLogin = false;
+  
+  /** Flag to show/hide signup form */
   showSignUp = false;
+  
+  /** Flag to show/hide user dropdown menu */
   showDropdown = false;
+  
+  /** Current authenticated user object */
   user: any;
+  
+  /** Timeout reference for dropdown auto-hide functionality */
   private dropdownTimeout: any;
 
+  /**
+   * Creates an instance of Header component.
+   * Sets up authentication state monitoring and service subscriptions.
+   * @param loginService - Service for handling login operations
+   * @param authService - Service for authentication state management
+   * @param signUpService - Service for handling user registration
+   * @param breakpointObserver - Service for responsive breakpoint detection
+   * @param router - Angular router for navigation
+   */
   constructor(
     private loginService: LoginService,
     private authService: AuthService,

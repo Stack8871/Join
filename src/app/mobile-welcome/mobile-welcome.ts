@@ -3,6 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
 
+/**
+ * Mobile welcome screen component that displays a personalized greeting after user login.
+ * Shows user-specific welcome message with time-based greeting and auto-redirects to summary.
+ * 
+ * @example
+ * ```html
+ * <app-mobile-welcome></app-mobile-welcome>
+ * ```
+ */
 @Component({
   selector: 'app-mobile-welcome',
   standalone: true,
@@ -11,12 +20,22 @@ import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
   styleUrl: './mobile-welcome.scss'
 })
 export class MobileWelcome implements OnInit, OnDestroy {
+  /** Authentication service for user data */
   private authService = inject(AuthService);
+  
+  /** Router service for navigation */
   private router = inject(Router);
   
+  /** Current authenticated user object */
   currentUser: any = null;
+  
+  /** Time-based greeting message (Good morning, Good afternoon, etc.) */
   greeting = '';
+  
+  /** Extracted user name for personalized greeting */
   userName = '';
+  
+  /** Flag to control component visibility during transitions */
   isVisible = true;
 
   ngOnInit() {

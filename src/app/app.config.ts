@@ -5,6 +5,15 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { routes } from './app.routes';
 import { getAuth } from 'firebase/auth';
 
+/**
+ * Application configuration that provides all necessary services and providers
+ * for the Angular application including Firebase integration, routing, and zone configuration.
+ * 
+ * @example
+ * ```typescript
+ * bootstrapApplication(AppComponent, appConfig);
+ * ```
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

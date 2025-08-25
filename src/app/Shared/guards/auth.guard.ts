@@ -3,10 +3,27 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTr
 import { Observable, map, take, of } from 'rxjs';
 import { AuthService } from '../firebase/firebase-services/auth.service';
 
+/**
+ * Authentication guard that protects routes from unauthorized access.
+ * Redirects unauthenticated users to login page while allowing access to public routes.
+ * 
+ * @example
+ * ```typescript
+ * const routes: Routes = [
+ *   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
+ * ];
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
+  /** List of routes that don't require authentication */
   private publicRoutes: string[] = ['/privacy', '/imprint'];
 
+  /**
+   * Creates an instance of AuthGuard.
+   * @param authService - Service for handling authentication state
+   * @param router - Angular router for navigation
+   */
   constructor(private authService: AuthService, private router: Router) {}
 
   /**
