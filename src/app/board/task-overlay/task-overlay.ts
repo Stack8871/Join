@@ -67,7 +67,7 @@ removeSubtask(index: number) {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
-      console.log('taskToEdit changed:', changes['taskToEdit'].currentValue);
+      // Task to edit changed, initialize edit mode
       this.initializeEditMode();
     }
   }
@@ -83,7 +83,7 @@ removeSubtask(index: number) {
 
   private initializeEditMode() {
     this.isEditMode = !!this.taskToEdit;
-    console.log('TaskOverlay initializeEditMode - isEditMode:', this.isEditMode, 'taskToEdit:', this.taskToEdit);
+    // Initialize edit mode based on taskToEdit presence
 
     if (this.isEditMode && this.taskToEdit) {
       // Clear existing subtasks
@@ -218,7 +218,7 @@ removeSubtask(index: number) {
   }
 
   async submit() {
-    console.log('Submit called - isEditMode:', this.isEditMode, 'taskToEdit:', this.taskToEdit);
+    // Form submission started
     
     // Check if required fields are filled
     const requiredFields = ['title', 'dueDate', 'category'];
@@ -238,7 +238,7 @@ removeSubtask(index: number) {
     }
 
     const value = this.form.getRawValue();
-    console.log('Form raw value:', value);
+    // Processing form value
 
     // Convert subtasks from string array to object array
     // Wenn im Edit-Modus, behalte den done-Status der ursprünglichen Subtasks bei
@@ -269,20 +269,20 @@ removeSubtask(index: number) {
       subtasks: processedSubtasks
     };
 
-    console.log('Processed value:', processedValue);
+    // Form value processed and ready for save
 
     try {
       if (this.isEditMode && this.taskToEdit?.id) {
-        console.log('Editing task with ID:', this.taskToEdit.id);
+        // Editing existing task
         await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
         this.success.show('Task updated successfully!', 2000);
       } else {
-        console.log('Creating new task');
+        // Creating new task
         await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
         this.success.show('Task created successfully!', 2000);
       }
     } catch (error) {
-      console.error('Error saving task:', error);
+      // Error handling already managed by try-catch
       this.success.show('Error saving task. Please try again.', 3000);
       return;
     }

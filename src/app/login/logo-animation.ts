@@ -47,7 +47,7 @@ export class LogoAnimation {
     this.logoElement = document.querySelector('.img-start') as HTMLImageElement;
 
     if (!this.logoElement) {
-      console.error('Logo element not found');
+      // Logo element not found
       this.resetState();
       onComplete?.();
       return;

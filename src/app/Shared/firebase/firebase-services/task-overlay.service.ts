@@ -14,7 +14,7 @@ export class TaskOverlayService {
   private overlay = inject(Overlay);
 
   openOverlay(taskToEdit?: TaskInterface) {
-    console.log('TaskOverlayService openOverlay called with taskToEdit:', taskToEdit);
+    // Opening overlay with task to edit
     
     const config = new OverlayConfig({
       hasBackdrop: true,
@@ -32,7 +32,7 @@ export class TaskOverlayService {
 
     // ❗ WICHTIG: Task übergeben, wenn Edit-Modus
     if (taskToEdit) {
-      console.log('Setting taskToEdit on component instance:', taskToEdit);
+      // Setting task to edit on component instance
       componentRef.instance.taskToEdit = taskToEdit;
       // Force change detection to ensure the component updates
       componentRef.changeDetectorRef.detectChanges();

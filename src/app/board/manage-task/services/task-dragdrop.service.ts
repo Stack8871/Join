@@ -61,7 +61,6 @@ export class TaskDragDropService {
   ): void {
     const draggedTask = event.item.data as TaskInterface;
     if (!draggedTask || !draggedTask.id) {
-      console.error('Invalid task data in drag event');
       return;
     }
 
@@ -94,7 +93,6 @@ export class TaskDragDropService {
     const newStatus = this.mapColumnIdToStatus(targetColumnId);
     
     if (!newStatus) {
-      console.error('Invalid target column:', targetColumnId);
       return;
     }
 
@@ -132,7 +130,7 @@ export class TaskDragDropService {
         );
       })
       .catch((error) => {
-        console.error('Error moving task:', error);
+        // Error handling already managed by try-catch
         successService.show('Failed to move task. Please try again.', 3000);
       });
   }
@@ -198,7 +196,7 @@ export class TaskDragDropService {
     Promise.all(updatePromises)
       .then(() => successService.show('Tasks reordered successfully!', 2000))
       .catch((error) => {
-        console.error('Error reordering tasks:', error);
+        // Error handling already managed by try-catch
         successService.show('Failed to reorder tasks.', 3000);
       });
   }

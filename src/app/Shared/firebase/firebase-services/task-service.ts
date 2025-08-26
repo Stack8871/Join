@@ -80,9 +80,9 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await deleteDoc(taskRef);
-      console.log('Task successfully deleted!');
+      // Task successfully deleted
     } catch (error) {
-      console.error('Error deleting task: ', error);
+      // Error handling already managed by try-catch
       throw error;
     }
   }
@@ -97,9 +97,9 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { status });
-      console.log('Task status successfully updated!');
+      // Task status successfully updated
     } catch (error) {
-      console.error('Error updating task status: ', error);
+      // Error handling already managed by try-catch
       throw error;
     }
   }

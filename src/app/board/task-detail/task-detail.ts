@@ -114,9 +114,9 @@ export class TaskDetail implements OnInit {
       // Task erfolgreich gelöscht - Overlay schließen
       this.close.emit();
       // Optional: Erfolgs-Nachricht anzeigen
-      console.log('Task erfolgreich gelöscht!');
+      // Task successfully deleted
     } catch (error) {
-      console.error('Fehler beim Löschen der Task:', error);
+      // Error handling already managed by try-catch
       alert('Fehler beim Löschen der Aufgabe. Bitte versuchen Sie es erneut.');
     }
   }
@@ -208,11 +208,11 @@ export class TaskDetail implements OnInit {
       // Task in der Datenbank aktualisieren
       // Note: We allow guests to toggle subtasks as it's a form of "clicking" mentioned in requirements
       await this.firebase.editTaskToDatabase(this.selectedTask.id!, this.selectedTask);
-      console.log('Subtask status updated successfully');
+      // Subtask status updated successfully
     } catch (error) {
       // Bei Fehler den Status zurücksetzen
       subtask.done = !subtask.done;
-      console.error('Error updating subtask status:', error);
+      // Error handling already managed by try-catch
     }
   }
 
