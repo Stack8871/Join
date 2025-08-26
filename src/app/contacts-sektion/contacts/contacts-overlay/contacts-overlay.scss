@@ -5,9 +5,9 @@
       background: transparent;
       overflow: hidden;
       @media (width < 769px){
-      max-height:90svh;
-      width:79svw;
-      overflow: auto;
+      max-height:94svh;
+      width:85svw;
+      overflow:hidden;
       }
     }
 
@@ -221,6 +221,7 @@
       padding: 2rem;
       @media (width < 980px){
         flex-direction: column;
+        gap:0rem;
       }
       .contact-avatar {
         width:50%;
