@@ -49,7 +49,7 @@
     right: -100%;
     width: 100%;
     height: calc(100svh - 150px);
-    background: white;
+    background: transparent;
     z-index: 100;
     transition: right 0.3s ease-out;
     padding: $spacing-base;
@@ -58,6 +58,8 @@
   }
 
   .mobile.show-details & {
+    top:-30px;
+    position:relative;
     right: 0;
     animation: slideInFromRight 0.3s ease-out;
   }
@@ -220,7 +222,7 @@
   }
 }
 .add-contact-btn {
-    display:flex;
+    display:grid;
     justify-content: center;
     align-items: center;
     margin-top: $spacing-base;
@@ -249,22 +251,22 @@
   }
 }
 .mobile-btn-add-contact{
-position: sticky;
-    z-index: 100;
-    bottom:18%;
-    left:85svw;
-    width: 50px;
-    height: 50px;
-    padding:5px 14px;
-    display: flex;
-    border-radius: 50%;
-    justify-content: center;
-    background: $color-primary;
-    & button{
-      border:none;
-      background:transparent;
-    }
+  position: absolute;
+  z-index: 900;
+  top:67svh;
+  left:83svw;
+  width: 50px;
+  height: 50px;
+  padding:5px 14px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  background: $color-primary;
+  & button{
+    border:none;
+    background:transparent;
   }
+}
   @media (width > 700px){
       .mobile-btn-add-contact{
         display: none;

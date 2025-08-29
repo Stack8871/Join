@@ -3,7 +3,7 @@
     @if (canCreateContact) {
     <button class="add-contact-btn" (click)="addNewContact()">
       <span>Add new contact</span>
-      <img src="img/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
+      <img src="icons-white/person_add.svg" alt="check" class="new-contact-icon" />
     </button>
     }
     @if (firebase.ContactsList.length > 0)
@@ -101,13 +101,6 @@
       <app-contact-overlay></app-contact-overlay>
     </div>
   </ng-template>
-  @if (canCreateContact) {
-  <div class="mobile-btn-add-contact">
-      <button (click)="addNewContact()">
-    <img src="img/icons-white/person_add.svg" alt="check" />
-  </button>
-  </div>
-  }
   @if (showDeleteConfirm) {
   <div class="delete-confirm-overlay">
     <div class="delete-dialog">
@@ -120,3 +113,10 @@
   </div>
   }
 </div>
+  @if (canCreateContact) {
+  <div class="mobile-btn-add-contact">
+      <button (click)="addNewContact()">
+    <img src="icons-white/person_add.svg" alt="check" />
+  </button>
+  </div>
+  }
