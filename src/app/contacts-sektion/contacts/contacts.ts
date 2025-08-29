@@ -111,7 +111,18 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Returns to the contact list in mobile view */
   goBackToList() {
-    this.showMobileDetails = false;
+    // Add slide-out animation before hiding details
+    const detailContainer = document.querySelector('.contacts-detail-container');
+    if (detailContainer) {
+      detailContainer.classList.add('slide-out');
+      // Wait for animation to complete before hiding
+      setTimeout(() => {
+        this.showMobileDetails = false;
+        detailContainer.classList.remove('slide-out');
+      }, 300);
+    } else {
+      this.showMobileDetails = false;
+    }
   }
 
   /** Saves the edited contact to database */

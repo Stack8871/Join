@@ -9,6 +9,7 @@ import { SuccessServices } from '../../Shared/firebase/firebase-services/success
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 import { UserPermissionService } from '../../Shared/services/user-permission.service';
 import { Router } from '@angular/router';
+import { BreakpointObserverService } from '../../Shared/header/breakpoint.observer';
 
 @Component({
   selector: 'app-add-task',
@@ -23,10 +24,14 @@ export class AddTask implements OnInit{
   private taskService = inject(TaskService);
   private firebase = inject(Firebase);
   private userPermissionService = inject(UserPermissionService);
+  breakpointService = inject(BreakpointObserverService);
   public ContactsList: ContactsInterface[] = [];
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
   canCreateTask = false;
+
+  // Flag to track whether task form is being shown in mobile view
+  showMobileTaskForm = true;
 
   // Custom dropdown state
   isDropdownOpen = false;

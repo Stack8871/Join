@@ -1,22 +1,26 @@
 @use 'index' as *;
-.overlay-container {
-      display: flex;
-      max-width: 960px;
-      background: transparent;
-      overflow: hidden;
-      @media (width < 769px){
-      max-height:94svh;
-      width:85svw;
-      overflow:hidden;
-      }
-    }
 
-.form-slide{
+.overlay-container {
+  display: flex;
+  max-width: 960px;
+  background: transparent;
+  overflow: hidden;
+
+  @media (width < 769px) {
+    max-height: 94svh;
+    width: 85svw;
+    overflow: hidden;
+  }
+}
+
+.form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
+
   @keyframes slideInFromRight {
     0% {
       transform: translateX(100%);
     }
+
     100% {
       transform: translateX(0);
     }
@@ -36,26 +40,30 @@
     border-bottom: 3px solid $color-subtask-bar;
   }
 }
-.update-edit{
-  width:100%;
-  margin-left:4%;
-  @media(width < 900px){
-    margin-left:0;
+
+.update-edit {
+  width: 100%;
+  margin-left: 4%;
+
+  @media(width < 900px) {
+    margin-left: 0;
   }
 }
+
 .card-wrapper {
   flex-direction: row;
   position: relative;
   @include center;
   width: 85svw;
   max-width: 1220px;
-  height:35rem;
-  min-height:455px;
-@media(width < 769px){
-  flex-direction: column;
-  height:100%;
-  width:100%;
-}
+  height: 35rem;
+  min-height: 455px;
+
+  @media(width < 769px) {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
 
   &.mobile {
     flex-direction: column;
@@ -65,28 +73,31 @@
     border-radius: 0;
   }
 }
+
 .left-container {
   position: relative;
-  flex:43%;
+  flex: 43%;
   background-color: $color-primary;
-    @include center;
-    height: 100%;
-    padding:3rem;
-@media(width < 769px){
-  flex:1;
-  width:100%;
-  padding: 2rem 0 4rem 0;
+  @include center;
+  height: 100%;
+  padding: 3rem;
+
+  @media(width < 769px) {
+    flex: 1;
+    width: 100%;
+    padding: 2rem 0 4rem 0;
+  }
 }
-}
+
 .left-content {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   gap: $spacing-md;
-  height:100%;
-  padding:1rem;
-  margin-top
-  .underline {
+  height: 100%;
+  padding: 1rem;
+
+  margin-top .underline {
     position: relative;
     bottom: 3px;
     left: 0;
@@ -98,28 +109,35 @@
 
     }
   }
+
   .logo-White {
     position: relative;
     max-width: 4.2rem;
     max-height: 4.2rem;
 
-    @media(width < 769px){
-      margin-top:0;
+    @media(width < 769px) {
+      margin-top: 0;
     }
+
     &.mobile {
       display: none;
-       }
-  };
+    }
+  }
+
+  ;
+
   h2 {
     color: $color-white;
     font-size: var(--font-size-2xl);
   }
+
   h3 {
     color: $color-white;
     font-size: var(--font-size-md);
     font-weight: 300;
   }
 }
+
 .right-container {
   flex: 57%;
   position: relative;
@@ -127,17 +145,17 @@
   @include center;
   height: 100%;
 
-@media(width < 769px){
-  flex:1;
-  width:100%;
-}
+  @media(width < 769px) {
+    flex: 1;
+    width: 100%;
+  }
 
   .input-group {
     position: relative;
     margin-bottom: 0.5rem;
     border: 1px $color-light-gray solid;
     border-radius: $spacing-xs;
-     padding:3px;
+    padding: 3px;
 
     &.invalid-field {
       border-color: $color-accent-urgent;
@@ -155,8 +173,9 @@
     }
 
     input {
-      padding-right: 0px; /* Add padding to make room for the icon on the right */
-      border:0px transparent solid;
+      padding-right: 0px;
+      /* Add padding to make room for the icon on the right */
+      border: 0px transparent solid;
       width: 200px;
     }
 
@@ -201,63 +220,72 @@
     input.invalid-field {
       background-color: transparent !important;
     }
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex: 1;
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1;
 
     &.mobile {
       display: block;
       left: 0;
     }
+
     .contact-form {
       display: flex;
-     flex-direction: row;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
-      flex:1;
-      gap:2rem;
+      flex: 1;
+      gap: 2rem;
       padding: 2rem;
-      @media (width < 980px){
+
+      @media (width < 980px) {
         flex-direction: column;
-        gap:0rem;
+        gap: 0rem;
       }
+
       .contact-avatar {
-        width:50%;
+        width: 50%;
         display: grid;
         justify-content: center;
         align-items: center;
-        @media (width < 769px){
-          height:40px;
+
+        @media (width < 769px) {
+          height: 40px;
         }
       }
-      .avatar-content{
+
+      .avatar-content {
         display: grid;
-        position:relative;
-        width:95px;
-        height:95px;
-        background:$color-medium-gray;
+        position: relative;
+        width: 95px;
+        height: 95px;
+        background: $color-medium-gray;
         border-radius: 50%;
         justify-content: center;
         align-items: center;
-        & img{
-          width:40px;
+
+        & img {
+          width: 40px;
           height: 40px;
           position: relative;
         }
-      @media (width < 769px){
-        postition:absolute;
-        top:-70px;
-        left:0;
-        z-index:800;
-        height:75px;
-        width:75px;
-        img{
-          width:40px;
-          height: 40px;
-          margin-bottom:4px;
-        }
+
+        @media (width < 769px) {
+          postition: absolute;
+          top: -70px;
+          left: 0;
+          z-index: 800;
+          height: 75px;
+          width: 75px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 4px;
+          }
         }
       }
     }
@@ -267,7 +295,9 @@
 /* Button styling for disabled state */
 .button-group {
   .btn {
-    &.disabled, &[disabled] {
+
+    &.disabled,
+    &[disabled] {
       opacity: 0.6;
       cursor: not-allowed;
       background-color: #ccc;

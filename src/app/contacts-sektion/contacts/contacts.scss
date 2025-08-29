@@ -11,6 +11,19 @@
     }
   }
 }
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.slide-out {
+  animation: slideOutToRight 0.3s ease-out forwards;
+}
 .contacts-page-container {
     display: flex;
     flex-direction: row;
@@ -31,20 +44,22 @@
     flex-direction: column;
     margin-top:7%;
    .mobile & {
-    position: relative;
-    top: -100px;
-    right: auto;
+    position: fixed;
+    top: 40px;
+    right: -100%;
     width: 100%;
-    margin-top: $spacing-base;
-    display: none;
+    height: calc(100svh - 150px);
+    background: white;
+    z-index: 100;
+    transition: right 0.3s ease-out;
+    padding: $spacing-base;
+    box-sizing: border-box;
+    overflow-y: auto;
   }
 
   .mobile.show-details & {
-    display: block;
-    height: calc(100svh - 189px);
-    padding: $spacing-base;
-    margin-top: 38%;
-    box-sizing: border-box;
+    right: 0;
+    animation: slideInFromRight 0.3s ease-out;
   }
 }
 .contact-container {

@@ -1,10 +1,10 @@
-import {Component, Input, inject, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ContactsInterface} from '../../../interfaces/contacts-interface';
-import {Firebase} from '../../../Shared/firebase/firebase-services/firebase-services';
-import {SuccessServices} from '../../../Shared/firebase/firebase-services/success-services';
-import {OverlayService} from '../../../Shared/firebase/firebase-services/overlay-services';
+import { Component, Input, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ContactsInterface } from '../../../interfaces/contacts-interface';
+import { Firebase } from '../../../Shared/firebase/firebase-services/firebase-services';
+import { SuccessServices } from '../../../Shared/firebase/firebase-services/success-services';
+import { OverlayService } from '../../../Shared/firebase/firebase-services/overlay-services';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -39,8 +39,8 @@ export class ContactsOverlay implements OnInit {
   get contactId(): string | undefined {
     return this.contactToEdit?.id;
   }
-    showDeleteConfirm = false;
-    pendingDeleteId: string | null = null;
+  showDeleteConfirm = false;
+  pendingDeleteId: string | null = null;
 
   /** Initializes the form with contact data if in edit mode. */
   ngOnInit() {

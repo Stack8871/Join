@@ -1,4 +1,4 @@
-<div class="add-task-container form-slide ">
+<div class="add-task-container" [class.mobile]="breakpointService.isMobile()" [class.show-task-form]="showMobileTaskForm">
   <div class="task-content">
     <h1 class="task-heading">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</h1>
     <form [formGroup]="form" (ngSubmit)="submit()">
