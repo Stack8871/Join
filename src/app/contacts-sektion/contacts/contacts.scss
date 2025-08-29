@@ -33,6 +33,7 @@
     }
   &.mobile {
     flex-direction: column;
+    top:3px;
     left: 0;
     padding: 0;
     margin-top: 0;
@@ -286,7 +287,7 @@ position: absolute;
     display: none;
   }
   .mobile & {
-    max-height: calc(100vh - 160px);
+    max-height: calc(100vh - 150px);
   }
   p {
     color: #6c757d;

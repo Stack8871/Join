@@ -7,7 +7,7 @@
   overflow: hidden;
 
   @media (width < 769px) {
-    max-height: 94svh;
+    max-height: 96svh;
     width: 85svw;
     overflow: hidden;
   }
@@ -85,7 +85,7 @@
   @media(width < 769px) {
     flex: 1;
     width: 100%;
-    padding: 2rem 0 4rem 0;
+    padding: 2rem 0 3rem 0;
   }
 }
 
