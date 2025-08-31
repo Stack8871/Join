@@ -22,6 +22,9 @@ header{
     padding:$spacing-3xl;
     & img{
         max-height: 121px;
+                @media (width < 519px){
+            height:50px;
+        }
     }
 }
 .header-content{

@@ -166,7 +166,11 @@ footer{
     display: flex;
     gap:$spacing-4xl;
     align-items: center;
+    justify-content: center;
     width:100%;
+    @media ( width < 519px){
+            justify-content: flex-start;
+    }
     & button{
         background: $color-white;
         border:1px solid $color-white;
