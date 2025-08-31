@@ -13,8 +13,14 @@
     <main class="login-container">
         <div class="login-content">
             <div class="card big-border-radius login-card">
-                <h1 class="margin-bottom subline">Sign up</h1>
-              <form class="flex form-container" (ngSubmit)="signUp()" #signupForm="ngForm">
+              <div class="back-to-login">
+                <button routerLink="/login" [queryParams]="{skipAnimation: 'true'}">
+                  <img src="icons/arrow-left.svg" alt="">
+                </button>
+                <h1 class="subline">Sign up</h1>
+              </div>
+              
+              <form class="flex form-container margin-top-big" (ngSubmit)="signUp()" #signupForm="ngForm">
                 <div class="input-group justify-end">
                   <input
                     type="text"
@@ -137,10 +143,6 @@
                 <p class="error">{{ errorMessage }}</p>
               }
             </div>
-            <div class="signup-mobile">
-                <span class="margin-right">Already have an account?</span>
-                <button class="btn primary" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">Back to Login</button>
-          </div>
         </div>
     </main>
     <footer class="flex center-row">

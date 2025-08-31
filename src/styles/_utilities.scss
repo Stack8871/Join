@@ -79,6 +79,9 @@
 .margin-top {
   margin-top: $spacing-base;
 }
+.margin-top-big {
+  margin-top: $spacing-xl;
+}
 // Hover utilities
 .hover-scale-btn:hover {
   transform: scale(1.1, 1.1);

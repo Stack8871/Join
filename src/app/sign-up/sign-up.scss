@@ -23,6 +23,9 @@ header{
     padding:$spacing-3xl;
     & img{
         max-height: 121px;
+        @media (width < 519px){
+            height:50px;
+        }
     }
 }
 .header-content{
@@ -158,4 +161,14 @@ footer{
     .signup-desktop{
     display:none;
   }
+}
+.back-to-login{
+    display: flex;
+    gap:$spacing-4xl;
+    align-items: center;
+    width:100%;
+    & button{
+        background: $color-white;
+        border:1px solid $color-white;
+    }
 }
