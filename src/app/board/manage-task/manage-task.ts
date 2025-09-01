@@ -15,7 +15,6 @@ import { UserPermissionService } from '../../Shared/services/user-permission.ser
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ActivatedRoute, Router } from '@angular/router';
 
-// New Services
 import { TaskColumnService } from './services/task-column-manager.service';
 import { TaskUIHelperService } from './services/task-ui.service';
 import { TaskHighlightService } from './services/task-highlight.service';
@@ -34,7 +33,6 @@ import { TaskDragDropService } from './services/task-dragdrop.service';
 })
 export class ManageTask implements OnInit, OnDestroy {
   
-  // Injected Services
   public TaskService = inject(TaskService);
   public firebase = inject(Firebase);
   private filterService = inject(TaskFilterService);
@@ -44,14 +42,12 @@ export class ManageTask implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   
-  // New Services
   private columnService = inject(TaskColumnService);
   private uiHelper = inject(TaskUIHelperService);
   private highlightService = inject(TaskHighlightService);
   public mobileSlider = inject(MobileSliderService);
   private dragDropService = inject(TaskDragDropService);
 
-  // Component State
   tasks$!: Observable<TaskInterface[]>;
   tasks: TaskInterface[] = [];
   searchTerm: string = '';
@@ -59,23 +55,19 @@ export class ManageTask implements OnInit, OnDestroy {
   noTasksFound: boolean = false;
   columns: any[] = [];
   
-  // UI State
   isEdited = false;
   isSelected = false;
   taskId?: string = '';
   selectedTask?: TaskInterface;
   selectedTasksIndex?: number;
-  isDragging = false; // Diese Zeile hinzufügen
+  isDragging = false; 
   
-  // Permissions
   canCreateTask = false;
   canEditTask = false;
   canDeleteTask = false;
   
-  // Drag & Drop
   dropListIds: string[] = [];
   
-  // Event Listeners
   private editOverlayListener?: (event: any) => void;
   private paramsSubscribed = false;
 
@@ -185,7 +177,6 @@ export class ManageTask implements OnInit, OnDestroy {
     }
   }
 
-  // Task Actions
   selectTask(task: TaskInterface) {
     if (!task) return;
     this.isSelected = true;
@@ -222,7 +213,6 @@ export class ManageTask implements OnInit, OnDestroy {
     this.firebase.deleteTaskFromDatabase(taskId);
   }
 
-  // Filter Methods
   applyFilter(searchTerm: string) {
     this.searchTerm = searchTerm;
     if (!searchTerm || searchTerm.trim() === '') {
@@ -235,7 +225,6 @@ export class ManageTask implements OnInit, OnDestroy {
     this.noTasksFound = !this.filteredColumns.some(column => column.tasks.length > 0);
   }
 
-  // Helper Methods (delegated to services)
   getInitials(name: string): string {
     return this.TaskService.getInitials(name);
   }
@@ -249,7 +238,6 @@ export class ManageTask implements OnInit, OnDestroy {
     return contact ? contact.name : '';
   }
 
-  // UI Helper Methods (delegated to UIHelper Service)
   getCategoryClass(category: string): string {
     return this.uiHelper.getCategoryClass(category);
   }
@@ -274,7 +262,6 @@ export class ManageTask implements OnInit, OnDestroy {
     return this.uiHelper.getCompletedSubtasks(task);
   }
 
-  // Mobile Slider Methods (delegated)
   getCurrentTaskIndex(columnId: string): number {
     return this.mobileSlider.getCurrentTaskIndex(columnId);
   }
@@ -299,7 +286,6 @@ export class ManageTask implements OnInit, OnDestroy {
     this.mobileSlider.onTouchEnd(event, columnId, this.filteredColumns);
   }
 
-  // Drag & Drop (delegated)
   onDrop(event: CdkDragDrop<TaskInterface[]>, targetColumnId: string): void {
     this.dragDropService.handleDrop(
       event, 

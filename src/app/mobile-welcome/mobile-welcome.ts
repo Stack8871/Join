@@ -45,7 +45,6 @@ export class MobileWelcome implements OnInit, OnDestroy {
     this.setGreeting();
     this.getCurrentUser();
     
-    // Automatically redirect to summary after 3 seconds
     setTimeout(() => {
       this.hideAndRedirect();
     }, 3000);
@@ -55,7 +54,6 @@ export class MobileWelcome implements OnInit, OnDestroy {
    * Component cleanup when destroyed
    */
   ngOnDestroy() {
-    // Cleanup if necessary
   }
 
   /**
@@ -94,7 +92,6 @@ export class MobileWelcome implements OnInit, OnDestroy {
   private hideAndRedirect() {
     this.isVisible = false;
     
-    // Wait for fade-out animation, then redirect
     setTimeout(() => {
       this.router.navigate(['/summary']);
     }, 300);

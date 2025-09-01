@@ -5,7 +5,7 @@ $type-base-min: 16px;
 $type-base-max: 18px;
 $type-scale-min: 1.2;
 $type-scale-max: 1.333;
-$type-steps: "sm", "base", "md", "lg", "xl", "2xl", "3xl","4xl";
+$type-steps: "sm", "base", "md", "lg", "xl", "2xl", "3xl", "4xl";
 $type-base-index: list.index($type-steps, "base");
 
 $breakpoint-sm: 480px;
@@ -15,8 +15,6 @@ $breakpoint-xl: 1440px;
 
 $max-width: 1440px;
 
-// Farben
-// --------------------------------------------------
 
 $color-primary: #2a3647;
 $color-primary-dark: #1f2a3c8e;
@@ -29,7 +27,6 @@ $color-white: #fff;
 $color-black: #000000;
 $color-border: $color-gray;
 
-// Akzentfarben (Prioritäten & Labels)
 $color-accent-urgent: #ff0000;
 $color-accent-medium: #ffa800;
 $color-accent-low: #7ae229;
@@ -39,40 +36,32 @@ $color-subtask-bar: #29abe2;
 $color-muted: #6b6b6b;
 $color-error: #ff3d00;
 
-// Hintergründe
 $color-bg-light: $color-lighter-gray;
 $color-bg-sidebar: $color-primary;
 $color-bg-card: $color-white;
 $color-bg-overlay: rgba(0, 0, 0, 0.5);
 
-// Textfarben
 $color-text-heading: $color-black;
 $color-text-primary: $color-black;
 $color-text-muted: $color-muted;
 $color-text-subtask: $color-medium-gray;
 
-// Avatare (Beispiele)
 $color-avatar-1: #ff7a00;
 $color-avatar-2: #9327ff;
 $color-avatar-3: #6e52ff;
 $color-avatar-4: #00bee8;
 $color-avatar-5: #1fd7c1;
 
-// Modal Backgrounds
-$color-modal-left-bg: #2a3647;     // dunkelblauer Infobereich
-$color-modal-right-bg: $color-white;    // weißer Eingabebereich
+$color-modal-left-bg: #2a3647;
+$color-modal-right-bg: $color-white;
 
-// Input Background & Border
-$color-input-bg: #f5f5f5;          // leicht grauer Hintergrund (falls verwendet)
+$color-input-bg: #f5f5f5;
 $color-input-border: $color-gray;
 
-// Placeholder / Disabled Text
 $color-placeholder: #c5c5c5;
 
-// Icon Farben (optional – aktuell monochrom)
 $color-icon-muted: $color-muted;
 
-// Linkfarben (z. B. E-Mail)
 $color-link: #007cee;
 $color-link-hover: #003f8a;
 $color-text-secondary: $color-subtask-bar;

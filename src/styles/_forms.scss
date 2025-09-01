@@ -2,157 +2,188 @@
 @use 'spacing' as *;
 @use 'typography' as *;
 @use 'components' as *;
-.form-content{
-  display:flex;
+
+.form-content {
+  display: flex;
   flex-wrap: wrap;
-  gap:1rem;
+  gap: 1rem;
   justify-content: space-between;
   width: 100%;
 }
-.flex-required{
-padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
+
+.flex-required {
+  padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
 }
-.priority{
+
+.priority {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 0rem;
 }
+
 .form-group {
   display: flex;
   flex-direction: column;
-/*   max-width: 440px; */
-  width:100%;
+  width: 100%;
+
   label {
     font-size: var(--font-size-base);
     color: $color-text-heading;
     width: 100%;
-    margin-bottom:$spacing-xs;
+    margin-bottom: $spacing-xs;
   }
 }
-.form-group-height{
-  min-height:96px;
+
+.form-group-height {
+  min-height: 96px;
 }
+
 .input-group {
   display: block;
   width: 100%;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
+
   & label {
     display: block;
   }
-  &select{
+
+  &select {
     display: block;
-    width:400px;
+    width: 400px;
   }
+
   img {
-  position: absolute;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right:$spacing-base;
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: $spacing-base;
   }
 }
-.input-border-radius{
+
+.input-border-radius {
   border: 1px $color-light-gray solid;
   border-radius: $spacing-xs;
-  padding:3px;
+  padding: 3px;
 }
-/* Stack elements vertically when using `.column` modifier and left-align validation */
 .input-group.column {
   flex-direction: column;
-  align-items: stretch; /* ensures children (including .validation-error) span full width */
+  align-items: stretch;
 }
-.justify-space-between{
-justify-content: space-between;
+
+.justify-space-between {
+  justify-content: space-between;
 }
-.ghost-btn{
+
+.ghost-btn {
   background: $button-cancel-bg;
   border: 1px solid $button-cancel-border;
   color: $button-cancel-text;
-  &:hover{
-    box-shadow:$card-shadow;
-    color:$color-subtask-bar;
+
+  &:hover {
+    box-shadow: $card-shadow;
+    color: $color-subtask-bar;
     border: 1px solid $color-subtask-bar;
   }
 }
-.textarea-form-group{
- margin-bottom: $spacing-lg;
+
+.textarea-form-group {
+  margin-bottom: $spacing-lg;
 }
-  input, textarea, select {
-    width: 100%;
-/*     max-width:440px; */
-    padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
-    border: 1px solid $color-light-gray;
-    border-radius: $spacing-xs;
-    font-size: var(--font-size-base);
-    font-family: $font-family-base;
-    &:focus {
-      outline: none;
-      border-color: $color-subtask-bar;
-    }
-    &.valid-field {
-      border-color: #4CAF50;
-      background-color: rgba(76, 175, 80, 0.05);
-    }
-    &.invalid-field {
-      border-color: $color-accent-urgent;
-      background-color: rgba(244, 67, 54, 0.05);
-    }
+
+input,
+textarea,
+select {
+  width: 100%;
+  /*     max-width:440px; */
+  padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;
+  border: 1px solid $color-light-gray;
+  border-radius: $spacing-xs;
+  font-size: var(--font-size-base);
+  font-family: $font-family-base;
+
+  &:focus {
+    outline: none;
+    border-color: $color-subtask-bar;
   }
-  .validation-error {
-    color: $color-accent-urgent;
-    font-size: 0.85rem;
-    margin-top: $spacing-2xs;
-    display: block;
-    text-align: left;
+
+  &.valid-field {
+    border-color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.05);
   }
-  .add-icon{
-    border-radius:$card-radius;
-    padding: $spacing-2xs $spacing-xs;
-    border: 2px solid $color-primary;
-    background:transparent;
-    cursor: pointer;
+
+  &.invalid-field {
+    border-color: $color-accent-urgent;
+    background-color: rgba(244, 67, 54, 0.05);
   }
-    .search-container button{
-  display:flex;
 }
-.justify-end{
+
+.validation-error {
+  color: $color-accent-urgent;
+  font-size: 0.85rem;
+  margin-top: $spacing-2xs;
+  display: block;
+  text-align: left;
+}
+
+.add-icon {
+  border-radius: $card-radius;
+  padding: $spacing-2xs $spacing-xs;
+  border: 2px solid $color-primary;
+  background: transparent;
+  cursor: pointer;
+}
+
+.search-container button {
+  display: flex;
+}
+
+.justify-end {
   justify-content: flex-end;
 }
-.iconsbefore{
-  display:flex;
-  gap:$spacing-xs;
-  height:$spacing-base;
-  &:hover{
-    color:$color-subtask-bar;
+
+.iconsbefore {
+  display: flex;
+  gap: $spacing-xs;
+  height: $spacing-base;
+
+  &:hover {
+    color: $color-subtask-bar;
   }
 }
-  .iconsbefore svg {
-    fill: $color-primary;  // Standardfarbe
-    transition: fill 0.3s;
-  }
-  .iconsbefore:hover svg {
-    fill: $color-subtask-bar;  // Hover-Farbe (rot als Beispiel)
-  }
+
+.iconsbefore svg {
+  fill: $color-primary;
+  transition: fill 0.3s;
+}
+
+.iconsbefore:hover svg {
+  fill: $color-subtask-bar;
+}
+
 .check {
   & svg {
     fill: $color-white;
   }
+
   &.selected,
   &:hover {
     background-color: $color-accent-low;
     color: $color-white;
     border-color: $color-accent-low;
+
     & svg {
       fill: $color-white;
     }
   }
 }
-// Custom Multi-Select Dropdown Styling
+
 .custom-select-wrapper {
   position: relative;
   width: 100%;
 }
+
 .custom-select-header {
   display: flex;
   align-items: center;
@@ -168,28 +199,34 @@ justify-content: space-between;
   &:hover {
     border-color: $color-medium-gray;
   }
+
   &.open {
     border-color: $color-primary;
+
     .dropdown-arrow {
       transform: rotate(180deg);
       color: $color-primary;
     }
   }
+
   .placeholder {
     flex: 1;
     color: $color-text-primary;
   }
+
   .dropdown-arrow {
     color: $color-medium-gray;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
+
     svg {
       width: 14px;
       height: 8px;
     }
   }
 }
+
 .custom-select-dropdown {
   position: absolute;
   top: 100%;
@@ -205,42 +242,51 @@ justify-content: space-between;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.contact-option, .category-option {
+.contact-option,
+.category-option {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: $spacing-xs $spacing-base;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  &:hover{
+
+  &:hover {
     background-color: $color-primary;
-    color:$color-white;
+    color: $color-white;
+
     .contact-name {
       color: $color-white;
     }
+
     .checkbox-indicator {
       color: $color-white;
       border-color: $color-white;
     }
   }
+
   &.selected {
     background-color: $color-primary;
     color: $color-white;
+
     .contact-name {
       color: $color-white;
     }
+
     .checkbox-indicator {
       color: $color-white;
       border-color: $color-white;
     }
   }
 }
+
 .contact-option-content {
   display: flex;
   align-items: center;
   gap: $spacing-xs;
   flex: 1;
 }
+
 .circle-small {
   width: 24px;
   height: 24px;
@@ -254,6 +300,7 @@ justify-content: space-between;
   flex-shrink: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
+
 .checkbox-indicator {
   color: $color-primary;
   font-weight: bold;
@@ -266,17 +313,20 @@ justify-content: space-between;
   align-items: center;
   justify-content: center;
 }
-.horizontal-line{
+
+.horizontal-line {
   border-right: 1px solid $color-light-gray;
-  margin:0 20px;
-  @media (width <= 1287px){
-    margin:0 10px;
+  margin: 0 20px;
+
+  @media (width <=1287px) {
+    margin: 0 10px;
   }
-  @media (width <= 850px){
-    display:none;
+
+  @media (width <=850px) {
+    display: none;
   }
 }
-/* Validation state for custom select header to mirror inputs */
+
 .custom-select-header.invalid-field {
   border-color: $color-accent-urgent;
   background-color: rgba(244, 67, 54, 0.05);

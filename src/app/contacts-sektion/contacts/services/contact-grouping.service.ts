@@ -17,7 +17,6 @@ export class ContactGroupingService {
       grouped[firstLetter].push(contact);
     });
 
-    // Sort contacts within each group by name
     Object.keys(grouped).forEach(letter => {
       grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
     });

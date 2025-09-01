@@ -34,7 +34,7 @@
   &::before {
     content: "";
     position: absolute;
-    bottom: -8px; // Abstand zur Schrift
+    bottom: -8px; 
     left: 0;
     width: 25%;
     border-bottom: 3px solid $color-subtask-bar;
@@ -174,7 +174,6 @@
 
     input {
       padding-right: 0px;
-      /* Add padding to make room for the icon on the right */
       border: 0px transparent solid;
       width: 200px;
     }
@@ -216,7 +215,6 @@
 
   .right-content {
 
-    // Ensure inputs do not get red background inside contacts overlay
     input.invalid-field {
       background-color: transparent !important;
     }
@@ -291,8 +289,6 @@
     }
   }
 }
-
-/* Button styling for disabled state */
 .button-group {
   .btn {
 
@@ -306,7 +302,6 @@
       &:hover {
         background-color: #ccc;
       }
-
       .check {
         opacity: 0.5;
       }

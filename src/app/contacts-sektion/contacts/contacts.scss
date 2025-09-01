@@ -233,7 +233,7 @@
     color: $color-white;
     border: 1px solid $color-primary;
     width:100%;
-    @media (width < 700px){
+    @media (width < 701px){
       display:none;
     }
     & span{
@@ -266,7 +266,7 @@ position: absolute;
       background:transparent;
     }
   }
-  @media (width > 700px){
+  @media (width > 800px){
       .mobile-btn-add-contact{
         display: none;
       }

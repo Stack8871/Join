@@ -1,201 +1,241 @@
-
 @use 'index' as *;
-.task-step-text{
-    color:$color-primary;
+
+.task-step-text {
+    color: $color-primary;
     text-align: center;
-    & h4{
+
+    & h4 {
         font-size: var(--font-size-lg);
     }
-    &:hover{
-        color:$color-white;
+
+    &:hover {
+        color: $color-white;
     }
 }
-.line-separator-summery{
+
+.line-separator-summery {
     position: relative;
     display: inline-block;
     margin: clamp(0.5rem, 0.4821rem + 0.0893vw, 0.5625rem);
     height: 100%;
+
     &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 99%;
-    border-right: 3px solid #29abe2;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 99%;
+        border-right: 3px solid #29abe2;
     }
 }
-    @media (width < 455px){
+
+@media (width < 455px) {
     .line-separator-summery {
-        display:none;
-        }
-        
+        display: none;
     }
-@media ( width < 360px){
-    .task-step-text span{
+
+}
+
+@media (width < 360px) {
+    .task-step-text span {
         font-size: var(--font-size-base);
     }
 }
-.circle-primary-color{
+
+.circle-primary-color {
     background: $color-primary;
-    & svg{
-        fill: $color-gray;  // Standardfarbe
+
+    & svg {
+        fill: $color-gray;
         transition: fill 0.3s;
     }
- &:hover{
-    background: $color-white;
- }
+
+    &:hover {
+        background: $color-white;
+    }
 }
-.circle-urgent-color{
- background: $color-accent-urgent;
- 
+
+.circle-urgent-color {
+    background: $color-accent-urgent;
+
 }
-.card:hover{
+
+.card:hover {
     background: $color-primary;
-    & svg{
+
+    & svg {
         fill: $color-primary;
     }
-    }
-.card-circle-content{
-    display:flex;
-    flex-basis:100%;
+}
+
+.card-circle-content {
+    display: flex;
+    flex-basis: 100%;
     color: $color-primary;
     align-items: center;
     justify-content: center;
-    &:hover{
-        color:$color-white;
+
+    &:hover {
+        color: $color-white;
         transition-timing-function: ease-in-out;
-        & .circle-primary-color{
+
+        & .circle-primary-color {
             background: $color-white;
         }
     }
 }
-// .hover-scale-btn is now defined in _utilities.scss
-.summary-card{
+
+.summary-card {
     gap: $spacing-3xl;
 }
-.card-circle-content > *:hover{
-    h4, h5{
-        color:$color-white;
+
+.card-circle-content>*:hover {
+
+    h4,
+    h5 {
+        color: $color-white;
     }
 }
-.urgent-circle, .urgent-content {
+
+.urgent-circle,
+.urgent-content {
     min-width: 122px;
     text-align: center;
     align-items: center;
-    gap:$spacing-2xs;
+    gap: $spacing-2xs;
 }
-.urgent-content{
+
+.urgent-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    & h5{
+
+    & h5 {
         font-size: var(--font-size-base);
     }
 }
+
 .circle-urgent-color svg {
-        fill: $color-white;  
-    }
-.overview-gap{
-    gap:$spacing-2xl;
+    fill: $color-white;
 }
-.tasks-overview{
-    flex:1;
+
+.overview-gap {
+    gap: $spacing-2xl;
+}
+
+.tasks-overview {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-sm;
     padding: $spacing-2xs;
-    max-width:440px;
-    @media (width < 620px){
-        width:100%;
+    max-width: 440px;
+
+    @media (width < 620px) {
+        width: 100%;
     }
 
 }
 
 .dashboard-container {
-  display: flex;
-  gap: 4rem;
-  flex-wrap:wrap;
-  align-items: center;
-  & h4{
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-  }
-  & h3{
-    font-size: var(--font-size-2xl);
-    color:$color-subtask-bar;
-  }
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    & h4 {
+        font-size: var(--font-size-xl);
+        font-weight: 700;
+    }
+
+    & h3 {
+        font-size: var(--font-size-2xl);
+        color: $color-subtask-bar;
+    }
 }
+
 .summary-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: $spacing-3xl;
-    height:60px;
-    @media (width < 450px){
+    height: 60px;
+
+    @media (width < 450px) {
         width: 30ch;
     }
 }
-.urgent-span-grid{
+
+.urgent-span-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap:$spacing-base;
-    padding:0 $spacing-lg
+    gap: $spacing-base;
+    padding: 0 $spacing-lg
 }
 
 .greeting {
-  font-size: 1.5rem;
-  color: #2c3e50;
-  margin-top: 2rem;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-top: 2rem;
 }
-.overview-gap{
-    gap:$spacing-base;
+
+.overview-gap {
+    gap: $spacing-base;
 }
-.welcome{
-    height:100%;
-    display:flex;
+
+.welcome {
+    height: 100%;
+    display: flex;
     flex-direction: column;
-    & h4{
+
+    & h4 {
         font-weight: 300;
     }
-    @media(width < 720px){
-        display:none;
+
+    @media(width < 720px) {
+        display: none;
     }
 }
-.line-separator-summary {
-  position: relative;
-  display: inline-block;
-  margin:$spacing-sm;
-  height:90%;
-  border-right: 0px solid $color-subtask-bar;
 
-  &::after {
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0;
-  height: 99%;
-  border-right: 3px solid $color-subtask-bar;
-  }
-}
-.underline-summery{
-  position: relative;
-  display: inline-block;
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 35%;
-    border-bottom: 0px solid $color-subtask-bar;
-  }
-}
-@media (width < 450px){
-  .underline-summery:before{
-      border-bottom: 3px solid $color-subtask-bar;
-  }
-  .line-separator-summary{
+.line-separator-summary {
+    position: relative;
+    display: inline-block;
+    margin: $spacing-sm;
+    height: 90%;
     border-right: 0px solid $color-subtask-bar;
-    display: none;
-  }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        right: 0;
+        height: 99%;
+        border-right: 3px solid $color-subtask-bar;
+    }
+}
+
+.underline-summery {
+    position: relative;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 35%;
+        border-bottom: 0px solid $color-subtask-bar;
+    }
+}
+
+@media (width < 450px) {
+    .underline-summery:before {
+        border-bottom: 3px solid $color-subtask-bar;
+    }
+
+    .line-separator-summary {
+        border-right: 0px solid $color-subtask-bar;
+        display: none;
+    }
 }

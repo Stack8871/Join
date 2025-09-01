@@ -4,7 +4,6 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-content">
         <div class="left-side">
-          <!-- Title -->
           <div class="form-group form-group-height">
             <div class="input-group">
               <label for="task-overlay-title">Title <span class="required-asterisk">*</span></label>
@@ -17,8 +16,6 @@
               }
             </div>
           </div>
-
-          <!-- Description -->
           <div class="form-group">
             <label for="description">Description</label>
             <div class="input-group">
@@ -32,8 +29,6 @@
               }
             </div>
           </div>
-
-          <!-- Due Date -->
           <div class="form-group">
             <label for="dueDate">Due Date <span class="required-asterisk">*</span></label>
             <div class="input-group">
@@ -122,11 +117,8 @@
               </button>
             </div>
           </div>
-          <!-- Assigned To -->
           <div class="form-group">
             <label for="assignedTo">Assigned to</label>
-
-            <!-- Custom Multi-Select Dropdown -->
             <div class="custom-select-wrapper">
               <div class="custom-select-header" (click)="toggleDropdown()" [class.open]="isDropdownOpen">
                 <span class="placeholder">
@@ -166,8 +158,6 @@
               </div>
               }
             </div>
-
-            <!-- Display of assigned contacts with initials -->
             @if (form.get('assignedTo')?.value && form.get('assignedTo')?.value.length > 0) {
             <div class="assigned-contacts-display">
               <label>Selected contacts:</label>
@@ -191,12 +181,8 @@
             </div>
             }
           </div>
-
-          <!-- Category -->
           <div class="form-group form-group-height">
             <label for="category">Category <span class="required-asterisk">*</span></label>
-
-            <!-- Custom Single-Select Dropdown -->
             <div class="custom-select-wrapper">
               <div class="custom-select-header" (click)="toggleCategoryDropdown()"
                 [class.open]="isCategoryDropdownOpen">
@@ -227,15 +213,12 @@
               </div>
               }
             </div>
-
             @if (isFieldInvalid('category')) {
             <div class="validation-error">
               {{ getValidationMessage('category') }}
             </div>
             }
           </div>
-
-          <!-- Subtasks -->
           <div class="form-group">
             <label for="subtask">Subtasks</label>
             <div class="input-group">
@@ -275,8 +258,6 @@
             </div>
             }
           </div>
-
-          <!-- Buttons -->
           <div class="button-group justify-end">
             <button type="button" class="cancel-btn btn" (click)="cancel()">Cancel X</button>
             <button type="submit" class="create-btn btn">

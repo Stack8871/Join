@@ -1,7 +1,6 @@
 /* Task Overlay Base Styles */
 @use "index" as *;
 
-// Animation classes
 .form-slide {
   animation: slideInFromRight 0.3s ease-out forwards;
 
@@ -15,7 +14,6 @@
   }
 }
 
-// Layout containers
 .left-side {
   display: flex;
   flex-direction: column;
@@ -35,7 +33,6 @@
   }
 }
 
-// Base label styles
 label {
   font-size: var(--font-size-base);
   color: $color-text-heading;
@@ -43,7 +40,6 @@ label {
   margin-bottom: $spacing-xs;
 }
 
-// Validation message styles
 .validation-message {
   color: #ff0000;
   font-size: var(--font-size-base);

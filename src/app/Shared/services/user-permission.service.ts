@@ -11,7 +11,7 @@ import { Observable, map } from 'rxjs';
  * constructor(private permissionService: UserPermissionService) {
  *   this.permissionService.canCreate().subscribe(canCreate => {
  *     if (canCreate) {
- *       // Show create button
+ *       
  *     }
  *   });
  * }
@@ -34,7 +34,7 @@ export class UserPermissionService {
   isGuest(): Observable<boolean> {
     return this.authService.user$.pipe(
       map(user => {
-        if (!user) return true; // Consider not logged in users as guests
+        if (!user) return true; 
         return user.email === 'gast@join.de';
       })
     );
@@ -46,7 +46,7 @@ export class UserPermissionService {
    */
   canCreate(): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      observer.next(true); // All users (including guests) can create
+      observer.next(true); 
       observer.complete();
     });
   }
@@ -57,7 +57,7 @@ export class UserPermissionService {
    */
   canDelete(): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      observer.next(true); // All users (including guests) can delete
+      observer.next(true); 
       observer.complete();
     });
   }

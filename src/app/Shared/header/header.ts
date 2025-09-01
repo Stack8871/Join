@@ -101,7 +101,6 @@ export class Header {
 
   /** Shows the dropdown menu */
   showDropdownMenu() {
-    // Clear any pending timeout
     if (this.dropdownTimeout) {
       clearTimeout(this.dropdownTimeout);
       this.dropdownTimeout = null;
@@ -111,10 +110,9 @@ export class Header {
 
   /** Hides the dropdown menu with a small delay */
   hideDropdownMenu() {
-    // Add a small delay to allow moving between circle and dropdown
     this.dropdownTimeout = setTimeout(() => {
       this.showDropdown = false;
-    }, 220); // 150ms delay
+    }, 220); 
   }
 
   /** Toggles the dropdown menu */
@@ -131,7 +129,7 @@ export class Header {
   logout() {
     this.authService.logout()
       .then(() => {
-        this.showDropdown = false; // Close dropdown after logout
+        this.showDropdown = false; 
         this.router.navigate([''], { queryParams: { fromLogout: 'true' } });
       });
   }
@@ -143,7 +141,6 @@ export class Header {
     const isInsideDropdown = target.closest('.circle-user') || target.closest('.dropdown-menu');
 
     if (!isInsideDropdown) {
-      // Clear timeout and close immediately on click outside
       if (this.dropdownTimeout) {
         clearTimeout(this.dropdownTimeout);
         this.dropdownTimeout = null;

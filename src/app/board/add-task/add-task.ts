@@ -30,14 +30,11 @@ export class AddTask implements OnInit{
   @Input() contactToEdit?: ContactsInterface;
   canCreateTask = false;
 
-  // Flag to track whether task form is being shown in mobile view
   showMobileTaskForm = true;
 
-  // Custom dropdown state
   isDropdownOpen = false;
   isCategoryDropdownOpen = false;
 
-  // Track which subtask is being edited
   editingSubtaskIndex: number | null = null;
 
 form: FormGroup;
@@ -55,11 +52,9 @@ constructor(private fb: FormBuilder, private router: Router) {
   });
 }
 
-// Custom validator to check if date is not in the past
 dateNotInPastValidator() {
   return (control: FormControl): {[key: string]: any} | null => {
     const selectedDate = new Date(control.value);
-    // Set hours, minutes, seconds, and milliseconds to 0 for today's date to compare only the date part
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -75,7 +70,6 @@ get subtasks(): FormArray {
 }
 
 get subtaskControls(): FormControl[] {
-  // explizites Mapping, damit wirklich FormControl[] zurückgegeben wird
   return (this.form.get('subtasks') as FormArray).controls.map(c => c as FormControl);
 }
 
@@ -83,12 +77,9 @@ addSubtask() {
   const subtasks = this.form.get('subtasks') as FormArray;
   const currentValue = subtasks.at(subtasks.length - 1).value;
 
-  // Only add the current subtask to the list if it has a value
   if (currentValue && currentValue.trim() !== '') {
-    // Add a new empty control for the next subtask
     subtasks.push(this.fb.control('', Validators.required));
   } else {
-    // If the current input is empty, show a message or focus on it
     this.success.show('Please enter a subtask before adding a new one', 2000);
   }
 }
@@ -100,10 +91,8 @@ removeSubtask(index: number) {
   }
 }
 
-// Start editing a subtask
 editSubtask(index: number) {
   this.editingSubtaskIndex = index;
-  // We need to wait for the input to be rendered before focusing it
   setTimeout(() => {
     const inputElement = document.getElementById('edit-subtask-' + index) as HTMLInputElement;
     if (inputElement) {
@@ -112,9 +101,7 @@ editSubtask(index: number) {
   }, 0);
 }
 
-// Save the edited subtask
 saveEditedSubtask(event?: KeyboardEvent) {
-  // If Enter key was pressed or method was called without an event (blur)
   if (!event || event.key === 'Enter') {
     this.editingSubtaskIndex = null;
   }
@@ -127,26 +114,21 @@ saveEditedSubtask(event?: KeyboardEvent) {
       this.ContactsList = contacts;
     });
 
-    // Check if user has permission to create tasks
     this.userPermissionService.canCreate().subscribe(canCreate => {
       this.canCreateTask = canCreate;
     });
 
-    // Beispiel: Setze Edit-Mode, wenn ein Task zum Bearbeiten übergeben wird
     this.isEditMode = !!this.taskToEdit;
 
     if (this.isEditMode && this.taskToEdit) {
-      // Clear existing subtasks
       const subtasksArray = this.form.get('subtasks') as FormArray;
       subtasksArray.clear();
 
-      // Add subtasks from taskToEdit
       if (this.taskToEdit.subtasks && this.taskToEdit.subtasks.length > 0) {
         this.taskToEdit.subtasks.forEach(subtask => {
           subtasksArray.push(this.fb.control(subtask.title, Validators.required));
         });
       } else {
-        // Add at least one empty subtask
         subtasksArray.push(this.fb.control('', Validators.required));
       }
 
@@ -224,7 +206,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
     return this.ContactsList.find(contact => contact.id === contactId);
   }
 
-  // Custom dropdown methods
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -243,10 +224,8 @@ saveEditedSubtask(event?: KeyboardEvent) {
     const index = currentValue.indexOf(contactId);
 
     if (index > -1) {
-      // Contact is already selected, remove it
       currentValue.splice(index, 1);
     } else {
-      // Contact is not selected, add it
       currentValue.push(contactId);
     }
 
@@ -258,7 +237,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
     return currentValue.includes(contactId);
   }
 
-  // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event): void {
     const target = event.target as HTMLElement;
@@ -269,13 +247,11 @@ saveEditedSubtask(event?: KeyboardEvent) {
   }
 
   async submit() {
-    // Check if user has permission to create/edit tasks
     if (!this.canCreateTask) {
       this.success.show('You do not have permission to create or edit tasks', 3000);
       return;
     }
 
-    // Check if required fields are filled
     const requiredFields = ['title', 'dueDate', 'category'];
     let hasEmptyRequiredFields = false;
 
@@ -292,7 +268,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
       return;
     }
 
-    // Check if due date is in the past
     const dueDateControl = this.form.get('dueDate');
     if (dueDateControl?.errors?.['pastDate']) {
       dueDateControl.markAsTouched();
@@ -302,7 +277,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
 
     const value = this.form.getRawValue();
 
-    // Convert subtasks from string array to object array
     const processedValue = {
       ...value,
       subtasks: value.subtasks?.filter((subtask: string) => subtask.trim() !== '')
@@ -327,7 +301,6 @@ saveEditedSubtask(event?: KeyboardEvent) {
   }
 
   cancel() {
-    // Reset form to initial values
     this.form.reset({
       status: 'todo',
       priority: 'medium',
@@ -335,20 +308,17 @@ saveEditedSubtask(event?: KeyboardEvent) {
       subtasks: ['']
     });
 
-    // Reset form array for subtasks
     const subtasks = this.form.get('subtasks') as FormArray;
     while (subtasks.length > 0) {
       subtasks.removeAt(0);
     }
     subtasks.push(this.fb.control('', Validators.required));
 
-    // Reset other state variables
     this.isDropdownOpen = false;
     this.editingSubtaskIndex = null;
     this.isEditMode = false;
     this.taskToEdit = undefined;
 
-    // Close the overlay
     document.dispatchEvent(new CustomEvent('closeOverlay'));
   }
 }

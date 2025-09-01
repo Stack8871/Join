@@ -134,7 +134,6 @@ h5{
     border-radius: 50%;
 }
 
-// Checkbox styling (zurück zum Original)
 .checkbox-container{
   display: flex; 
   position: relative; 
@@ -214,7 +213,6 @@ h5{
   padding: $spacing-sm 0;
 }
 
-// Category styling with dynamic colors
 .category {
   padding: 4px 12px;
   border-radius: $spacing-sm;
@@ -236,7 +234,6 @@ h5{
   background-color: $color-primary;
 }
 
-// Priority styling with dynamic icons
 .priority-container {
   display: flex;
   align-items: center;
@@ -255,7 +252,6 @@ h5{
   object-fit: contain;
 }
 
-// Subtask progress bar styling
 .subtask-progress-section {
   margin: $spacing-sm 0;
 }
@@ -282,7 +278,6 @@ h5{
   text-align: center;
 }
 
-// Subtask hover actions styling
 .subtask-item {
   display: flex;
   align-items: center;

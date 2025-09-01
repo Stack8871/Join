@@ -47,14 +47,14 @@ footer{
   position: relative;
   display: inline-block;
 
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -8px; // Abstand zur Schrift
-    left: 19%;
-    width: 65%;
-    border-bottom: 3px solid $color-subtask-bar;
-  }
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 19%;
+      width: 65%;
+      border-bottom: 3px solid $color-subtask-bar;
+    }
 }
 .margin-right{
   margin-right:$spacing-base;

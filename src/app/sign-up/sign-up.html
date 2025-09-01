@@ -1,153 +1,124 @@
 <div class="single-wrapper">
-    <header class="flex center-row">
-        <div class="flex header-content">
-            <div>
-                <img src="icons/join-logo.svg" alt="">
-            </div>
-            <div class="signup-desktop">
-                <span class="margin-right">Already have an account?</span>
-                <button class="btn primary" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">Back to Login</button>
-            </div>
+  <header class="flex center-row">
+    <div class="flex header-content">
+      <div>
+        <img src="icons/join-logo.svg" alt="">
+      </div>
+      <div class="signup-desktop">
+        <span class="margin-right">Already have an account?</span>
+        <button class="btn primary" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">Back to Login</button>
+      </div>
+    </div>
+  </header>
+  <main class="login-container">
+    <div class="login-content">
+      <div class="card big-border-radius login-card">
+        <div class="back-to-login">
+          <button class="signup-mobile" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">
+            <img src="icons/arrow-left.svg" alt="">
+          </button>
+          <h1 class="subline">Sign up</h1>
         </div>
-    </header>
-    <main class="login-container">
-        <div class="login-content">
-            <div class="card big-border-radius login-card">
-              <div class="back-to-login">
-                <button  class="signup-mobile" routerLink="/login" [queryParams]="{skipAnimation: 'true'}">
-                  <img src="icons/arrow-left.svg" alt="">
-                </button>
-                <h1 class="subline">Sign up</h1>
-              </div>
-              
-              <form class="flex form-container margin-top-big" (ngSubmit)="signUp()" #signupForm="ngForm">
-                <div class="input-group justify-end">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    [(ngModel)]="name"
-                    required
-                    minlength="2"
-                    #nameInput="ngModel"
-                    [class.invalid-input]="nameInput.invalid && (nameInput.dirty || nameInput.touched)"
-                  />
-                  <img src="icons/person.svg" alt="person" />
-                </div>
-                @if (nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
-                  <div class="validation-message">
-                    @if (nameInput.errors?.['required']) {
-                      <span>Name is required.</span>
-                    }
-                    @if (nameInput.errors?.['minlength']) {
-                      <span>Name must be at least 2 characters long.</span>
-                    }
-                  </div>
-                }
 
-                <div class="input-group justify-end">
-                  <input
-                    type="email"
-                    placeholder="Enter your Email"
-                    name="email"
-                    [(ngModel)]="email"
-                    required
-                    email
-                    #emailInput="ngModel"
-                    [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
-                  />
-                  <img src="icons/mail.svg" alt="person" />
-                </div>
-                @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
-                  <div class="validation-message">
-                    @if (emailInput.errors?.['required']) {
-                      <span>Email is required.</span>
-                    }
-                    @if (emailInput.errors?.['email']) {
-                      <span>Please enter a valid email address.</span>
-                    }
-                  </div>
-                }
+        <form class="flex form-container margin-top-big" (ngSubmit)="signUp()" #signupForm="ngForm">
+          <div class="input-group justify-end">
+            <input type="text" placeholder="Name" name="name" [(ngModel)]="name" required minlength="2"
+              #nameInput="ngModel"
+              [class.invalid-input]="nameInput.invalid && (nameInput.dirty || nameInput.touched)" />
+            <img src="icons/person.svg" alt="person" />
+          </div>
+          @if (nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
+          <div class="validation-message">
+            @if (nameInput.errors?.['required']) {
+            <span>Name is required.</span>
+            }
+            @if (nameInput.errors?.['minlength']) {
+            <span>Name must be at least 2 characters long.</span>
+            }
+          </div>
+          }
+          <div class="input-group justify-end">
+            <input type="email" placeholder="Enter your Email" name="email" [(ngModel)]="email" required email
+              #emailInput="ngModel"
+              [class.invalid-input]="emailInput.invalid && (emailInput.dirty || emailInput.touched)" />
+            <img src="icons/mail.svg" alt="person" />
+          </div>
+          @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+          <div class="validation-message">
+            @if (emailInput.errors?.['required']) {
+            <span>Email is required.</span>
+            }
+            @if (emailInput.errors?.['email']) {
+            <span>Please enter a valid email address.</span>
+            }
+          </div>
+          }
 
-                <div class="input-group justify-end">
-                  <input
-                    type="password"
-                    placeholder="Enter your Password"
-                    name="password"
-                    [(ngModel)]="password"
-                    required
-                    minlength="6"
-                    #passwordInput="ngModel"
-                    [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
-                  />
-                  <img src="icons/lock.svg" alt="person" />
-                </div>
-                @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
-                  <div class="validation-message">
-                    @if (passwordInput.errors?.['required']) {
-                      <span>Password is required.</span>
-                    }
-                    @if (passwordInput.errors?.['minlength']) {
-                      <span>Password must be at least 6 characters long.</span>
-                    }
-                  </div>
-                }
+          <div class="input-group justify-end">
+            <input type="password" placeholder="Enter your Password" name="password" [(ngModel)]="password" required
+              minlength="6" #passwordInput="ngModel"
+              [class.invalid-input]="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" />
+            <img src="icons/lock.svg" alt="person" />
+          </div>
+          @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+          <div class="validation-message">
+            @if (passwordInput.errors?.['required']) {
+            <span>Password is required.</span>
+            }
+            @if (passwordInput.errors?.['minlength']) {
+            <span>Password must be at least 6 characters long.</span>
+            }
+          </div>
+          }
 
-                <div class="input-group justify-end">
-                  <input
-                    type="password"
-                    placeholder="Confirm your Password"
-                    name="confirmPassword"
-                    [(ngModel)]="confirmPassword"
-                    required
-                    #confirmPasswordInput="ngModel"
-                    [class.invalid-input]="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)"
-                  />
-                  <img src="icons/lock.svg" alt="person" />
-                </div>
-                @if ((confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)) {
-                  <div class="validation-message">
-                    @if (confirmPasswordInput.errors?.['required']) {
-                      <span>Please confirm your password.</span>
-                    }
-                    @if (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword) {
-                      <span>Passwords do not match.</span>
-                    }
-                  </div>
-                }
+          <div class="input-group justify-end">
+            <input type="password" placeholder="Confirm your Password" name="confirmPassword"
+              [(ngModel)]="confirmPassword" required #confirmPasswordInput="ngModel"
+              [class.invalid-input]="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched) || (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)" />
+            <img src="icons/lock.svg" alt="person" />
+          </div>
+          @if ((confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)) ||
+          (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword)) {
+          <div class="validation-message">
+            @if (confirmPasswordInput.errors?.['required']) {
+            <span>Please confirm your password.</span>
+            }
+            @if (passwordInput.valid && confirmPasswordInput.valid && password !== confirmPassword) {
+            <span>Passwords do not match.</span>
+            }
+          </div>
+          }
 
-                <div class="checkbox-group">
-                  <input
-                    type="checkbox"
-                    name="privacyPolicy"
-                    [(ngModel)]="privacyPolicyAccepted"
-                    required
-                    #privacyPolicyInput="ngModel"
-                  />
-                  <label for="privacyPolicy">You must accept the <a routerLink="/privacy" target="_blank">Privacy Policy</a></label>
-                </div>
-                @if (privacyPolicyInput.invalid && (privacyPolicyInput.dirty || privacyPolicyInput.touched)) {
-                  <div class="validation-message">
-                    @if (privacyPolicyInput.errors?.['required']) {
-                      <span>You must accept the privacy policy.</span>
-                    }
-                  </div>
-                }
+          <div class="checkbox-group">
+            <input type="checkbox" name="privacyPolicy" [(ngModel)]="privacyPolicyAccepted" required
+              #privacyPolicyInput="ngModel" />
+            <label for="privacyPolicy">You must accept the <a routerLink="/privacy" target="_blank">Privacy
+                Policy</a></label>
+          </div>
+          @if (privacyPolicyInput.invalid && (privacyPolicyInput.dirty || privacyPolicyInput.touched)) {
+          <div class="validation-message">
+            @if (privacyPolicyInput.errors?.['required']) {
+            <span>You must accept the privacy policy.</span>
+            }
+          </div>
+          }
 
-                <div class="button-group justify-center">
-                  <button type="submit" class="btn create-btn" [disabled]="signupForm.invalid || (password !== confirmPassword && password && confirmPassword) || !privacyPolicyAccepted">Sign up</button>
-                </div>
-              </form>
+          <div class="button-group justify-center">
+            <button type="submit" class="btn create-btn"
+              [disabled]="signupForm.invalid || (password !== confirmPassword && password && confirmPassword) || !privacyPolicyAccepted">Sign
+              up</button>
+          </div>
+        </form>
 
-              @if (errorMessage) {
-                <p class="error">{{ errorMessage }}</p>
-              }
-            </div>
-        </div>
-    </main>
-    <footer class="flex center-row">
-        <div class="footer-content">
-            <a routerLink="/privacy">Privacy Policy</a> <a routerLink="/imprint">Imprint</a>
-        </div>
-    </footer>
+        @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+        }
+      </div>
+    </div>
+  </main>
+  <footer class="flex center-row">
+    <div class="footer-content">
+      <a routerLink="/privacy">Privacy Policy</a> <a routerLink="/imprint">Imprint</a>
+    </div>
+  </footer>
 </div>

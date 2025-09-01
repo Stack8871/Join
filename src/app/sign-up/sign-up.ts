@@ -30,7 +30,6 @@ export class SignUp {
     }
     this.authService.register(this.email, this.password)
       .then(() => {
-        // User successfully registered
         this.navigateAfterSignUp();
       })
       .catch((err: Error) => this.errorMessage = err.message);

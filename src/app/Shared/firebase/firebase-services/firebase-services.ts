@@ -22,7 +22,7 @@ import { TaskInterface } from '../../../interfaces/task-interface';
  * @example
  * ```typescript
  * constructor(private firebase: Firebase) {
- *   // Access contacts list
+ *   
  *   console.log(this.firebase.ContactsList);
  * }
  * ```
@@ -61,11 +61,9 @@ export class Firebase implements OnDestroy {
           });
         },
         (error) => {
-          // Fehlerbehandlung optional
         }
       );
     } catch (error) {
-      // Fehlerbehandlung optional
     }
   }
 

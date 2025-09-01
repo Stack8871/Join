@@ -14,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
  * constructor(private authService: AuthService) {
  *   this.authService.user$.subscribe(user => {
  *     if (user) {
- *       // User is logged in
+ *       
  *     }
  *   });
  * }

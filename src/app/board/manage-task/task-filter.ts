@@ -39,22 +39,18 @@ export class TaskFilterService {
     const term = searchTerm.toLowerCase().trim();
 
     return columns.map(column => {
-      // First check if column title matches
       const titleMatches = column.title.toLowerCase().includes(term);
 
-      // Then filter tasks
       const filteredTasks = column.tasks.filter((task: TaskInterface) =>
         task.title?.toLowerCase().includes(term) ||
         task.description?.toLowerCase().includes(term) ||
         task.category?.toLowerCase().includes(term)
       );
 
-      // If column title matches, return all tasks in that column
       if (titleMatches) {
         return { ...column };
       }
 
-      // Otherwise return column with filtered tasks
       return { ...column, tasks: filteredTasks };
     });
   }

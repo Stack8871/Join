@@ -23,7 +23,6 @@ export class TaskOverlay implements OnInit, OnChanges{
   @Input() taskToEdit?: TaskInterface;
   @Input() contactToEdit?: ContactsInterface;
 
-  // Custom dropdown state
   isDropdownOpen = false;
   isCategoryDropdownOpen = false;
 
@@ -47,7 +46,6 @@ get subtasks(): FormArray {
 }
 
 get subtaskControls(): FormControl[] {
-  // explizites Mapping, damit wirklich FormControl[] zurückgegeben wird
   return (this.form.get('subtasks') as FormArray).controls.map(c => c as FormControl);
 }
 
@@ -67,7 +65,6 @@ removeSubtask(index: number) {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
-      // Task to edit changed, initialize edit mode
       this.initializeEditMode();
     }
   }
@@ -77,28 +74,22 @@ removeSubtask(index: number) {
       this.ContactsList = contacts;
     });
 
-    // Setze Edit-Mode basierend auf taskToEdit - wichtig: nach dem contacts laden
     this.initializeEditMode();
   }
 
   private initializeEditMode() {
     this.isEditMode = !!this.taskToEdit;
-    // Initialize edit mode based on taskToEdit presence
 
     if (this.isEditMode && this.taskToEdit) {
-      // Clear existing subtasks
       const subtasksArray = this.form.get('subtasks') as FormArray;
       subtasksArray.clear();
 
-      // Add subtasks from taskToEdit
       if (this.taskToEdit.subtasks && this.taskToEdit.subtasks.length > 0) {
         this.taskToEdit.subtasks.forEach(subtask => {
           subtasksArray.push(this.fb.control(subtask.title, Validators.required));
         });
-        // Ensure there is always an empty control at the end to serve as input row
         subtasksArray.push(this.fb.control('', Validators.required));
       } else {
-        // Add at least one empty subtask
         subtasksArray.push(this.fb.control('', Validators.required));
       }
 
@@ -173,7 +164,6 @@ removeSubtask(index: number) {
     return this.ContactsList.find(contact => contact.id === contactId);
   }
 
-  // Custom dropdown methods
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -192,10 +182,8 @@ removeSubtask(index: number) {
     const index = currentValue.indexOf(contactId);
 
     if (index > -1) {
-      // Contact is already selected, remove it
       currentValue.splice(index, 1);
     } else {
-      // Contact is not selected, add it
       currentValue.push(contactId);
     }
 
@@ -207,7 +195,6 @@ removeSubtask(index: number) {
     return currentValue.includes(contactId);
   }
 
-  // Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event): void {
     const target = event.target as HTMLElement;
@@ -218,9 +205,7 @@ removeSubtask(index: number) {
   }
 
   async submit() {
-    // Form submission started
     
-    // Check if required fields are filled
     const requiredFields = ['title', 'dueDate', 'category'];
     let hasEmptyRequiredFields = false;
 
@@ -238,16 +223,12 @@ removeSubtask(index: number) {
     }
 
     const value = this.form.getRawValue();
-    // Processing form value
 
-    // Convert subtasks from string array to object array
-    // Wenn im Edit-Modus, behalte den done-Status der ursprünglichen Subtasks bei
     let processedSubtasks = [];
     if (value.subtasks) {
       const filteredSubtasks = value.subtasks.filter((subtask: string) => subtask.trim() !== '');
       
       if (this.isEditMode && this.taskToEdit?.subtasks) {
-        // Im Edit-Modus: behalte den done-Status bei
         processedSubtasks = filteredSubtasks.map((subtaskTitle: string, index: number) => {
           const originalSubtask = this.taskToEdit!.subtasks![index];
           return {
@@ -256,7 +237,6 @@ removeSubtask(index: number) {
           };
         });
       } else {
-        // Im Create-Modus: alle sind auf false
         processedSubtasks = filteredSubtasks.map((subtaskTitle: string) => ({
           title: subtaskTitle,
           done: false
@@ -269,20 +249,16 @@ removeSubtask(index: number) {
       subtasks: processedSubtasks
     };
 
-    // Form value processed and ready for save
 
     try {
       if (this.isEditMode && this.taskToEdit?.id) {
-        // Editing existing task
         await this.firebase.editTaskToDatabase(this.taskToEdit.id, processedValue as TaskInterface);
         this.success.show('Task updated successfully!', 2000);
       } else {
-        // Creating new task
         await this.firebase.addTaskToDatabase(processedValue as TaskInterface);
         this.success.show('Task created successfully!', 2000);
       }
     } catch (error) {
-      // Error handling already managed by try-catch
       this.success.show('Error saving task. Please try again.', 3000);
       return;
     }

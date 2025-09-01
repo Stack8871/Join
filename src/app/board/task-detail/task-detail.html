@@ -51,7 +51,6 @@
                 <h4>Subtasks:</h4>
               </div>
               @if (selectedTask.subtasks && selectedTask.subtasks.length > 0) {
-                <!-- Subtask-Liste -->
                 @for (subtask of selectedTask.subtasks; track $index) {
                  <div class="checkbox-container subtask-item">
                     <div class="subtask-content">
@@ -65,8 +64,6 @@
                         {{ (typeof subtask === 'string') ? subtask : (subtask?.title || 'Subtask ' + ($index + 1)) }}
                       </label>
                     </div>
-                    
-                    <!-- Hover Icons für Edit/Delete -->
                     <div class="subtask-actions">
                       <div class="action-icon edit-icon" (click)="editTasks(selectedTask)" title="Task bearbeiten">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 19 19" fill="none">

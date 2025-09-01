@@ -1,11 +1,8 @@
 <div class="mobile-welcome-screen" [class.fade-out]="!isVisible">
   <div class="welcome-content">
-    <!-- Greeting -->
     <div class="greeting-section">
       <h1 class="greeting-text">{{ greeting }}</h1>
       <h2 class="user-name">{{ userName }}</h2>
-
-      <!-- Optional Skip Button -->
       <button class="skip-button" (click)="skip()">
         <span>Skip</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

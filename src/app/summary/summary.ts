@@ -65,7 +65,7 @@ export class summary implements OnInit {
         this.userName = user.displayName || user.email?.split('@')[0] || 'User';
       } else {
         this.userName = 'User';
-        this.isGuest = true; // Consider not logged in users as guests too
+        this.isGuest = true; 
       }
     });
     this.updateGreeting();
@@ -89,23 +89,19 @@ export class summary implements OnInit {
    * Uses the urgent tasks fetched directly from Firestore
    */
   updateUrgentTasksInfo() {
-    // Filter out 'done' tasks from the urgent count
     const activeUrgentTasks = this.urgentTasks.filter(t => t.status !== 'done');
     this.urgentCount = activeUrgentTasks.length;
     this.hasUrgentTasks = this.urgentCount > 0;
     this.hasUpcomingTasks = activeUrgentTasks.length > 0;
 
     if (this.hasUrgentTasks && activeUrgentTasks[0]?.dueDate) {
-      // The tasks are already sorted by due date from Firestore
       const nextDeadlineTask = activeUrgentTasks[0];
       const dueDate = new Date(nextDeadlineTask.dueDate);
 
       if (!isNaN(dueDate.getTime())) {
-        // Format the date using DatePipe
         const formattedDate = this.datePipe.transform(dueDate, 'MMMM d, yyyy');
         this.nextDueDate = formattedDate || '';
       } else {
-        // Fallback if date is invalid
         this.nextDueDate = 'Invalid date';
       }
     } else {

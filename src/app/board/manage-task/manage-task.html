@@ -45,7 +45,6 @@
             No tasks yet.
           </div>
           } @else {
-          <!-- Desktop: Vertical Layout -->
           <div class="desktop-task-list"
                cdkDropList
                [id]="col.id + '-list'"
@@ -82,8 +81,6 @@
             </div>
             }
           </div>
-
-          <!-- Mobile: Horizontal Scrollable Layout -->
           <div class="mobile-task-list"
                cdkDropList
                [id]="col.id + '-mobile-list'"
@@ -121,8 +118,6 @@
             </div>
             }
           </div>
-
-          <!-- Mobile Navigation Dots (only show on mobile and when multiple tasks) -->
           @if (col.tasks.length > 1) {
           <div class="mobile-dot-navigation">
             <div class="slider-dots">

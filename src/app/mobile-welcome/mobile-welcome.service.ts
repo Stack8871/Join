@@ -12,7 +12,6 @@ export class MobileWelcomeService {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   shouldShowMobileWelcome(): boolean {
-    // Prüfe ob mobile Ansicht UND noch nicht gezeigt
     const isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     const shouldShow = isMobile && !this.hasShownWelcome;
     
@@ -24,7 +23,6 @@ export class MobileWelcomeService {
   }
 
   resetWelcomeScreen() {
-    // Für Testing oder Logout - Reset des Welcome Screens
     this.hasShownWelcome = false;
   }
 

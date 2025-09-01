@@ -14,14 +14,12 @@ export class BreakpointObserverHandler implements OnDestroy {
   private breakpointSubscription: Subscription;
 
   constructor(private breakpointObserver: BreakpointObserver) {
-    // Breakpoint beobachten und isMobile-Signal aktualisieren
-    this.breakpointSubscription = this.breakpointObserver
-      .observe(['(max-width: 700px)'])
-      .subscribe(result => this.isMobile.set(result.matches));
+    this.breakpointSubscription = this.breakpointObserver.observe('(max-width: 800px)').subscribe(result => {
+      this.isMobile.set(result.matches);
+    });
   }
 
   ngOnDestroy(): void {
-    // Clean-up der Subscription
     if (this.breakpointSubscription) {
       this.breakpointSubscription.unsubscribe();
     }

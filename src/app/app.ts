@@ -52,7 +52,6 @@ export class App {
       const wasLoggedIn = this.isLoggedIn;
       this.isLoggedIn = !!user;
       
-      // Check if user just logged in on mobile
       if (!wasLoggedIn && this.isLoggedIn) {
         this.handleSuccessfulLogin();
       }
@@ -78,10 +77,8 @@ export class App {
     const isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     
     if (isMobile) {
-      // Mobile: Zeige Welcome Screen
       this.router.navigate(['/mobile-welcome']);
     } else {
-      // Desktop: Direkt zur Summary
       this.router.navigate(['/summary']);
     }
   }

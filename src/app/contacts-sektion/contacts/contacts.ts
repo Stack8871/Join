@@ -31,12 +31,10 @@ export class Contacts implements OnInit, OnDestroy {
   firebase = inject(Firebase);
   breakpointHandler = inject(BreakpointObserverHandler);
 
-  // Permission flags
   canCreateContact = false;
   canEditContact = false;
   canDeleteContact = false;
 
-  // Flag to track whether details are being shown in mobile view
   showMobileDetails = false;
 
   constructor() {}
@@ -103,7 +101,6 @@ export class Contacts implements OnInit, OnDestroy {
     const isCurrentUser = this.currentUserEmail ? contact.email === this.currentUserEmail : false;
     this.selectedContact = { ...contact, phone: contact.phone ?? '', isLoggedInUser: isCurrentUser };
 
-    // Show details in mobile view
     if (this.breakpointHandler.isMobile()) {
       this.showMobileDetails = true;
     }
@@ -111,11 +108,9 @@ export class Contacts implements OnInit, OnDestroy {
 
   /** Returns to the contact list in mobile view */
   goBackToList() {
-    // Add slide-out animation before hiding details
     const detailContainer = document.querySelector('.contacts-detail-container');
     if (detailContainer) {
       detailContainer.classList.add('slide-out');
-      // Wait for animation to complete before hiding
       setTimeout(() => {
         this.showMobileDetails = false;
         detailContainer.classList.remove('slide-out');
@@ -155,12 +150,10 @@ export class Contacts implements OnInit, OnDestroy {
   confirmDelete() {
     if (this.pendingDeleteId) {
       this.deleteItem(this.pendingDeleteId);
-      // Reset detail view if the deleted contact was selected
       if (this.pendingDeleteId === this.contactsId) {
         this.selectedContactsIndex = null;
         this.selectedContact = { id: '', name: '', email: '', phone: '', isLoggedInUser: false };
         this.contactsId = '';
-        // Reset mobile view state
         if (this.breakpointHandler.isMobile()) {
           this.showMobileDetails = false;
         }
@@ -186,10 +179,9 @@ export class Contacts implements OnInit, OnDestroy {
     });
     document.addEventListener('closeOverlay', this.closeOverlayListener);
 
-    // Initialize permission flags
     this.userPermissionService.canCreate().subscribe(canCreate => {
       this.canCreateContact = canCreate;
-      this.canEditContact = canCreate; // Use same permission for edit as create
+      this.canEditContact = canCreate; 
     });
 
     this.userPermissionService.canDelete().subscribe(canDelete => {
@@ -218,7 +210,6 @@ export class Contacts implements OnInit, OnDestroy {
       grouped[letter].push(contact);
     }
 
-    // Sort contacts within each letter group alphabetically
     for (const letter in grouped) {
       grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
     }

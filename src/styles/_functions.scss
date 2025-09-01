@@ -1,12 +1,10 @@
 @use "sass:math";
 @use "sass:map";
 
-// Converts a pixel value to a rem value.
 @function to-rems($px) {
   @return math.div($px, 16px) * 1rem;
 }
 
-// Rounds a number to a specified number of decimal places.
 @function rnd($number, $places: 0) {
   $n: 1;
   @if $places > 0 {
@@ -21,7 +19,6 @@ $media-breakpoints: (
   mobile: 375px,
   desktop: 1440px,
   large-desktop: 1800px,
-  // ...other values can go in here
 );
 
 $default-min-bp: map.get($media-breakpoints, mobile);

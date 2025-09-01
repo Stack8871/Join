@@ -54,18 +54,15 @@ export class TaskDetail implements OnInit {
   editTasks(task: TaskInterface | null) {
     if (!task) return;
 
-    // Check if user has permission to edit tasks
     if (!this.canEditTask) {
       this.success.show('You do not have permission to edit tasks', 3000);
       return;
     }
 
-    // Event für Edit-Overlay senden
     document.dispatchEvent(new CustomEvent('openEditOverlay', {
       detail: { task: task }
     }));
 
-    // Task-Detail-Overlay schließen
     this.close.emit();
   }
 
@@ -111,12 +108,8 @@ export class TaskDetail implements OnInit {
 
     try {
       await this.taskService.deleteTaskFromDatabase(taskId);
-      // Task erfolgreich gelöscht - Overlay schließen
       this.close.emit();
-      // Optional: Erfolgs-Nachricht anzeigen
-      // Task successfully deleted
     } catch (error) {
-      // Error handling already managed by try-catch
       alert('Fehler beim Löschen der Aufgabe. Bitte versuchen Sie es erneut.');
     }
   }
@@ -176,7 +169,7 @@ export class TaskDetail implements OnInit {
       case 'Urgent':
         return 'icons/prio-urgent.svg';
       default:
-        return 'icons/prio-medium.svg'; // Fallback
+        return 'icons/prio-medium.svg'; 
     }
   }
 
@@ -189,10 +182,8 @@ export class TaskDetail implements OnInit {
       return;
     }
 
-    // Sicherstellen, dass der Subtask ein Objekt ist
     let subtask = this.selectedTask.subtasks[subtaskIndex];
 
-    // Wenn der Subtask ein String ist, in ein Objekt umwandeln
     if (typeof subtask === 'string') {
       subtask = {
         title: subtask,
@@ -201,18 +192,12 @@ export class TaskDetail implements OnInit {
       this.selectedTask.subtasks[subtaskIndex] = subtask;
     }
 
-    // Status des Subtasks umschalten
     subtask.done = !subtask.done;
 
     try {
-      // Task in der Datenbank aktualisieren
-      // Note: We allow guests to toggle subtasks as it's a form of "clicking" mentioned in requirements
       await this.firebase.editTaskToDatabase(this.selectedTask.id!, this.selectedTask);
-      // Subtask status updated successfully
     } catch (error) {
-      // Bei Fehler den Status zurücksetzen
       subtask.done = !subtask.done;
-      // Error handling already managed by try-catch
     }
   }
 
@@ -226,9 +211,8 @@ export class TaskDetail implements OnInit {
     }
 
     const completedSubtasks = this.selectedTask.subtasks.filter(subtask => {
-      // Handle both string and object formats
       if (typeof subtask === 'string') {
-        return false; // Strings are considered not done
+        return false; 
       }
       return subtask.done;
     }).length;
@@ -244,9 +228,8 @@ export class TaskDetail implements OnInit {
     if (!this.selectedTask.subtasks) return 0;
 
     return this.selectedTask.subtasks.filter(subtask => {
-      // Handle both string and object formats
       if (typeof subtask === 'string') {
-        return false; // Strings are considered not done
+        return false; 
       }
       return subtask.done;
     }).length;

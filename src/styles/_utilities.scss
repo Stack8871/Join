@@ -1,70 +1,81 @@
-// Utility Classes - Centralized to avoid duplication
 @use 'variables' as *;
 @use 'spacing' as *;
 @use 'typography' as *;
 @use 'mixins' as *;
 @use 'components' as *;
+
 .flex {
   display: flex;
 }
+
 .flex-1 {
   flex: 1;
 }
+
 .column {
   flex-direction: column;
 }
+
 .row {
   flex-direction: row;
 }
 
-// Alignment utilities
 .space-between {
   justify-content: space-between;
 }
+
 .center {
   @include center;
 }
+
 .center-column {
   @include center-column;
 }
+
 .center-row {
   @include center-row;
 }
+
 .small-padding {
   padding: $spacing-xs $spacing-sm;
 }
-// Grid utilities
+
 .grid-col-span-2 {
   grid-column: span 2;
 }
-// Margin utilities (consolidating from component-specific files)
+
 .margin-bottom {
-  margin-bottom: $spacing-2xl; // Standard margin-bottom for login/sign-up
+  margin-bottom: $spacing-2xl;
 }
+
 .margin-bottom-large {
-  margin-bottom: $spacing-5xl; // Large margin-bottom for summary
+  margin-bottom: $spacing-5xl;
 }
-// Justify utilities
+
 .justify-center {
   justify-content: center;
 }
+
 .justify-space-between {
   justify-content: space-between;
 }
+
 .grid-3-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: var(--spacing-2xs);
+
   @media (width < 520px) {
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
   }
 }
+
 .grid-2-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(162px, 1fr));
   gap: var(--spacing-2xs);
 }
-// Container utilities
+
 .container {
   margin: var(--spacing-3xl);
   display: flex;
@@ -72,22 +83,26 @@
   flex-direction: column;
   max-width: 1440px;
   padding: 4%;
+
   @media (width < 960px) {
-    max-width:97svw;
+    max-width: 97svw;
   }
 }
+
 .margin-top {
   margin-top: $spacing-base;
 }
+
 .margin-top-big {
   margin-top: $spacing-xl;
 }
-// Hover utilities
+
 .hover-scale-btn:hover {
   transform: scale(1.1, 1.1);
   transform-origin: center;
   transition: all 150ms ease-in-out;
 }
+
 .progress-bar-container {
   width: 100%;
   height: 8px;
@@ -96,12 +111,14 @@
   overflow: hidden;
   margin-bottom: clamp(0.5rem, 0.4821rem + 0.0893vw, 0.5625rem);
 }
+
 .progress-bar {
   height: 100%;
   background-color: $color-subtask-bar;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
+
 .priority-btn {
   padding: 10px;
   width: 100%;
@@ -115,60 +132,71 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   & span {
     height: 21px;
   }
+
   &.urgent {
     & svg {
       fill: $color-accent-urgent;
     }
+
     &.selected,
     &:hover {
       background-color: $color-accent-urgent;
       color: $color-white;
       border-color: $color-accent-urgent;
+
       & svg {
         fill: $color-white;
       }
     }
   }
+
   &.medium {
     & svg {
       fill: $color-accent-medium;
     }
+
     &.selected,
     &:hover {
       background-color: $color-accent-medium;
       color: $color-white;
       border-color: $color-accent-medium;
+
       & svg {
         fill: $color-white;
       }
     }
   }
+
   &.low {
     & svg {
       fill: $color-accent-low;
     }
+
     &.selected,
     &:hover {
       background-color: $color-accent-low;
       color: $color-white;
       border-color: $color-accent-low;
+
       & svg {
         fill: $color-white;
       }
     }
   }
 }
+
 .priority-buttons {
   display: flex;
   gap: 1rem;
-/*   max-width: 440px; */
- @media (width < 435px){
-   flex-direction: column;
- }
+  @media (width < 435px) {
+    flex-direction: column;
+  }
 }
+
 .add-task-container {
   width: 100%;
   margin: 0;
@@ -179,25 +207,29 @@
   overflow-y: auto;
   height: 100%;
 }
+
 .add-task-heading {
   font-weight: 700;
   color: $color-text-heading;
   margin-bottom: 1.5rem;
 }
+
 .card-wrapper {
   max-width: 90svw;
-    max-height: 99svh;
-    overflow-y: auto;
+  max-height: 99svh;
+  overflow-y: auto;
 }
+
 .justify-start {
   justify-content: flex-start;
 }
-// Form validation utilities
+
 .validation-message {
   color: $color-error;
   font-size: var(--font-size-base);
   margin-top: 4px;
 }
+
 .big-card {
   max-width: 37.5rem;
   justify-content: center;
@@ -208,19 +240,23 @@
   box-shadow: $card-shadow;
   background: $color-bg-card;
   gap: $spacing-sm;
-  margin:$spacing-sm 0;
-  border-radius:$spacing-xl;
-  @media(width < 860px){
+  margin: $spacing-sm 0;
+  border-radius: $spacing-xl;
+
+  @media(width < 860px) {
     width: 85svw;
   }
+
   & h1 {
     text-align: center;
   }
 }
-.big-border-radius{
-    border-radius:$spacing-xl;
+
+.big-border-radius {
+  border-radius: $spacing-xl;
 }
-.btn{
+
+.btn {
   border-radius: 0.625rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: var(--font-size-base);
@@ -228,112 +264,136 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .button-group {
-/*   max-width: 440px; */
   display: flex;
   gap: 1.25rem;
   justify-content: center;
   margin-bottom: 1rem;
-  @media (width < 336px){
+
+  @media (width < 336px) {
     flex-direction: column;
   }
+
   button {
-  border-radius: 0.625rem;
+    border-radius: 0.625rem;
     font-size: var(--font-size-base);
     cursor: pointer;
     transition: all 0.2s ease;
+
     &.cancel-btn {
       background-color: $color-white;
       color: $color-primary;
       border: 1px solid $color-primary;
+
       &:hover {
-        box-shadow:$card-shadow;
+        box-shadow: $card-shadow;
         color: $color-subtask-bar;
         border: 1px solid $color-subtask-bar;
       }
     }
+
     &.create-btn {
       background-color: $color-primary;
       color: $color-white;
       border: 1px solid $color-primary;
+
       &:hover {
         background-color: $color-subtask-bar;
         border-color: $color-subtask-bar;
-        box-shadow:$card-shadow;
+        box-shadow: $card-shadow;
       }
     }
   }
 }
+
 .close-btn {
   position: absolute;
   top: 30px;
   right: 1.25rem;
   cursor: pointer;
   padding: $spacing-xs $spacing-sm;
-  z-index:998;
-  &:hover{
+  z-index: 998;
+
+  &:hover {
     background: $color-light-gray;
     opacity: 0.5;
     border-radius: 50%;
   }
+
   img {
     width: 24px;
     height: 24px;
   }
 }
+
 .delete-confirm-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
 }
+
 .delete-dialog {
   background: $color-primary;
   padding: 2rem;
   border-radius: 8px;
   max-width: 320px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   text-align: center;
-   color: $color-white;
+  color: $color-white;
 }
+
 .button-row {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
 }
+
 .btn.cancel {
   background: $color-light-gray;
 }
+
 .btn.delete {
   background: #e53935;
   color: $color-white;
 }
+
 .priority-icon {
-  margin-left:$spacing-sm;
-  padding-top:2px;
+  margin-left: $spacing-sm;
+  padding-top: 2px;
 }
-  .submit-btn {
-    padding: 12px 24px;
-    background-color: $color-primary;
-    color: $color-white;
-    border: none;
-    border-radius: 8px;
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    &:hover {
-      background-color: $color-primary-dark;
-      box-shadow: $card-shadow;
-    }
+
+.submit-btn {
+  padding: 12px 24px;
+  background-color: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $color-primary-dark;
+    box-shadow: $card-shadow;
   }
-  .delete-dialog p{
-    margin-bottom:$spacing-lg;
-  }
-  .category-user-story {
+}
+
+.delete-dialog p {
+  margin-bottom: $spacing-lg;
+}
+
+.category-user-story {
   background-color: $color-badge-userstory;
 }
+
 .category-technical-task {
   background-color: $color-badge-technical;
 }
@@ -341,9 +401,11 @@
 .category-default {
   background-color: $color-primary;
 }
-.user-story-clr{
-    background:$color-badge-userstory;
+
+.user-story-clr {
+  background: $color-badge-userstory;
 }
-.technical-clr{
-    background:$color-medium-gray;
+
+.technical-clr {
+  background: $color-medium-gray;
 }

@@ -136,7 +136,6 @@ export class ContactsOverlay implements OnInit {
       this.success.show('Contact added');
     }
 
-    // Close the overlay directly using the service
     this.overlayService.close();
   }
 }

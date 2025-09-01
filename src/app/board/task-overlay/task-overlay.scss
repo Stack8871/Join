@@ -1,45 +1,42 @@
 @use "index" as *;
 @use "base";
 
-
-.left-side{
- display:flex;
- flex-direction: column;
- @media (width < 850px){
-   width: 100%;
- }
-
-}
-.right-side{
- display:flex;
- flex-direction: column;
- gap:$spacing-base;
-
- @media (width < 850px){
-   width: 100%;
- }
-
-}
-  label {
-    font-size: var(--font-size-base);
-    color: $color-text-heading;
+.left-side {
+  display: flex;
+  flex-direction: column;
+  @media (width < 850px) {
     width: 100%;
-    margin-bottom:$spacing-xs;
   }
-  .validation-message {
-    color: #ff0000;
-    font-size: var(--font-size-base);
-    margin-top: 4px;
+}
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-base;
+
+  @media (width < 850px) {
+    width: 100%;
   }
+}
+label {
+  font-size: var(--font-size-base);
+  color: $color-text-heading;
+  width: 100%;
+  margin-bottom: $spacing-xs;
+}
+.validation-message {
+  color: #ff0000;
+  font-size: var(--font-size-base);
+  margin-top: 4px;
+}
 
 .input-group {
   display: block;
   & label {
     display: block;
   }
-  &select{
+  &select {
     display: block;
-    width:400px;
+    width: 400px;
   }
 }
 .date-input {
@@ -78,29 +75,28 @@ img {
   width: 20px;
   height: 20px;
   cursor: pointer;
-
 }
-.task-container{
-    max-width: 900px;
-    width: 90svw;
-    padding: 3%;
-    min-height: 40svh;
-  @media(width < 860px){
+.task-container {
+  max-width: 900px;
+  width: 90svw;
+  padding: 3%;
+  min-height: 40svh;
+  @media (width < 860px) {
     width: 89svw;
     padding: 7%;
-    height:90svh;
+    height: 90svh;
   }
 }
-.task-content{
+.task-content {
   overflow: auto;
-  height:100%;
+  height: 100%;
 }
-  .task-heading{
-    padding-bottom:3%;
-  }
+.task-heading {
+  padding-bottom: 3%;
+}
 .priority-icon {
-  margin-left:$spacing-sm;
-  padding-top:2px;
+  margin-left: $spacing-sm;
+  padding-top: 2px;
 }
 .button-group {
   margin-top: $spacing-base;
@@ -121,34 +117,35 @@ img {
     }
   }
 }
-.subtasks-container{
-  max-height:120px;
-  overflow:auto;
+.subtasks-container {
+  max-height: 120px;
+  overflow: auto;
 }
-.subtasks{
+.subtasks {
   border: 1px solid $color-light-gray;
   border-radius: $spacing-xs;
-  background:$color-white;
-  display:flex;
-  & input{
-/*     max-width:390px; */
-    border:0px solid transparent;
+  background: $color-white;
+  display: flex;
+  & input {
+    /*     max-width:390px; */
+    border: 0px solid transparent;
   }
-  & button{
-    border: 0px solid  transparent;
-    margin-left:1rem;
-    background:$color-white;
+  & button {
+    border: 0px solid transparent;
+    margin-left: 1rem;
+    background: $color-white;
     color: $color-medium-gray;
-    &:hover{
-      color:$color-primary;
+    &:hover {
+      color: $color-primary;
       font-size: var(--font-size-base);
       cursor: pointer;
     }
   }
 }
-.plus-icon, .minus-icon{
+.plus-icon,
+.minus-icon {
   font-size: var(--font-size-base);
-  margin:0;
+  margin: 0;
   padding-right: 5%;
 }
 
@@ -159,7 +156,7 @@ select {
   appearance: none;
   -moz-appearance: none;
   border-radius: $spacing-xs;
-  border:1px solid $color-light-gray;
+  border: 1px solid $color-light-gray;
 }
 
 select.minimal {
@@ -170,9 +167,9 @@ select.minimal {
   cursor: pointer;
   height: 100%;
   font-size: var(--font-size-base);
-  background: none; // Entferne das alte CSS-Arrow
+  background: none;
   width: 100%;
-  padding-right: 40px; // Platz für das SVG-Arrow
+  padding-right: 40px;
 }
 
 select.minimal:focus {
@@ -180,7 +177,6 @@ select.minimal:focus {
   outline: 0;
 }
 
-// Einheitliches Select-Container Styling
 .select-wrapper {
   position: relative;
   display: inline-block;
@@ -206,7 +202,6 @@ select.minimal:focus {
   }
 }
 
-// Category Option Styling (ähnlich wie Contact Option)
 .category-option {
   display: flex;
   align-items: center;
@@ -259,15 +254,11 @@ select.minimal:focus {
   font-weight: bold;
   font-size: 16px;
 }
-/* Multiselect: Zeilenhöhe und Scrollbar */
 select.minimal[multiple] {
-  height: 120px; /* Feste Höhe statt 100% */
+  height: 120px;
   overflow-y: auto;
-  /*background-image: none;  Entfernt den Dropdown-Pfeil bei Multiselect */
-
-
 }
-/* Option-Styles */
+
 select.minimal option {
   padding: 12px 16px;
   border-radius: 4px;
@@ -279,7 +270,6 @@ select.minimal option {
   color: $color-text-heading;
   border: none;
 
-  /* Styling für bessere Lesbarkeit */
   &:checked {
     background: $color-primary !important;
     color: white !important;
@@ -292,7 +282,6 @@ select.minimal option {
   }
 }
 
-/* Multi-Select Styling für bessere Darstellung */
 select.minimal[multiple] option {
   padding: 10px 16px;
   display: flex;
@@ -301,7 +290,7 @@ select.minimal[multiple] option {
   min-height: 44px;
 
   &::before {
-    content: '';
+    content: "";
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -316,7 +305,7 @@ select.minimal[multiple] option {
     font-weight: 600;
   }
 }
-/* Optional: Hover- und Selected-Effekt */
+
 select.minimal option:checked,
 select.minimal option:hover {
   background: #e0e7ff;
@@ -327,7 +316,6 @@ select:-moz-focusring {
   text-shadow: 0 0 0 #000;
 }
 
-/* Assigned Contacts Display Styles */
 .assigned-contacts-display {
   margin-top: 12px;
 
@@ -362,21 +350,19 @@ select:-moz-focusring {
 
       .contact-name {
         font-size: 14px;
-        color:$color-medium-gray;
+        color: $color-medium-gray;
         font-weight: 400;
       }
     }
   }
 }
-.horizontal-line{
+.horizontal-line {
   border-right: 1px solid $color-light-gray;
   @media (width < 769px) {
-    display:none;
+    display: none;
   }
 }
 
-
-/* Subtasks List Display (overlay) */
 .subtasks-list-display {
   margin-top: 12px;
   .subtasks-list {
@@ -385,72 +371,70 @@ select:-moz-focusring {
     gap: 8px;
     max-width: 440px;
     margin-top: 8px;
-    max-height: 96px; /* fits ~2 items + gap; from 3+ enable inner scroll */
+    max-height: 96px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding-right: 4px; /* prevent content under scrollbar */
-  }
-  .subtask-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    &:hover {
-      background-color: #f0f0f0;
+    padding-right: 4px;
+    .subtask-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
-  }
-  .subtask-content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    overflow: hidden;
-    max-width: calc(100% - 30px);
-  }
-  .subtask-bullet {
-    color: $color-primary;
-    font-size: 18px;
-    line-height: 1;
-  }
-  .subtask-text {
-    font-size: 14px;
-    color: $color-text-primary;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .subtask-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  .subtask-item:hover .subtask-actions {
-    opacity: 1;
-  }
-  .action-icon {
-    cursor: pointer;
-    color: $color-medium-gray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &:hover {
+    .subtask-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      max-width: calc(100% - 30px);
+    }
+    .subtask-bullet {
       color: $color-primary;
+      font-size: 18px;
+      line-height: 1;
     }
-    svg {
-      fill: currentColor;
+    .subtask-text {
+      font-size: 14px;
+      color: $color-text-primary;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .subtask-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .subtask-item:hover .subtask-actions {
+      opacity: 1;
+    }
+    .action-icon {
+      cursor: pointer;
+      color: $color-medium-gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        color: $color-primary;
+      }
+      svg {
+        fill: currentColor;
+      }
     }
   }
-}
-
-/* Keep the add-subtask input visible at top while list scrolls */
-.subtasks.add-subtask {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: $color-white;
-  padding: 0.1rem;
+  .subtasks.add-subtask {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: $color-white;
+    padding: 0.1rem;
+  }
 }

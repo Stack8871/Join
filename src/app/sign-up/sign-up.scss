@@ -1,85 +1,100 @@
 @use 'sass:color';
 @use 'index' as *;
-.login-container{
+
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.login-content{
+
+.login-content {
     width: 90svw;
     max-width: 490px;
 }
-.single-wrapper{
-  display: flex;
-  flex-direction: column;
-  height:100dvh;
+
+.single-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
 }
-header{
+
+header {
     max-height: 150px;
     display: flex;
     justify-content: space-between;
     width: 100dvw;
-    padding:$spacing-3xl;
-    & img{
+    padding: $spacing-3xl;
+
+    & img {
         max-height: 121px;
-        @media (width < 519px){
-            height:50px;
+
+        @media (width < 519px) {
+            height: 50px;
         }
     }
 }
-.header-content{
-    width:1440px;
+
+.header-content {
+    width: 1440px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: $spacing-base;
 }
- main{
+
+main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:calc(100svh - 130px);
-} 
-footer{
-    height:65px;
+    height: calc(100svh - 130px);
 }
-.subline {
-  position: relative;
-  display: inline-block;
 
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -8px; // Abstand zur Schrift
-    left: 19%;
-    width: 66%;
-    border-bottom: 3px solid $color-subtask-bar;
-  }
+footer {
+    height: 65px;
 }
-.margin-right{
-    margin-right:$spacing-base;
+
+.subline {
+    position: relative;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 19%;
+        width: 66%;
+        border-bottom: 3px solid $color-subtask-bar;
+    }
 }
-.form-container{
+
+.margin-right {
+    margin-right: $spacing-base;
+}
+
+.form-container {
     display: flex;
     flex-direction: column;
     gap: $spacing-xs;
     justify-content: center;
-    width:100%;
+    width: 100%;
 }
-.footer-content{
+
+.footer-content {
     display: flex;
     justify-content: center;
     gap: $spacing-base;
-    & a{
-        color:$color-medium-gray;
-        &:hover{
-            color:$color-primary;
+
+    & a {
+        color: $color-medium-gray;
+
+        &:hover {
+            color: $color-primary;
         }
     }
 }
 
-.justify-center{
+.justify-center {
     justify-content: center;
 }
 
@@ -124,7 +139,6 @@ footer{
     }
 }
 
-// Button styles for disabled state
 .button-group {
     button[disabled] {
         opacity: 0.5;
@@ -135,44 +149,54 @@ footer{
         opacity: 1;
     }
 }
-.login-card{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction:column;
-  padding:$spacing-2xl $spacing-4xl;
-}
-.signup-mobile, .signup-desktop{
-  justify-content: center;
-  align-items: center;
-  gap: $spacing-base;
-  margin-top: $spacing-base;
-}
-  .signup-mobile{
-    display:none;
-  }
-    .signup-desktop{
-    display:flex;
-  }
-@media (width < 520px){
-  .signup-mobile{
-    display:flex;
-  }
-    .signup-desktop{
-    display:none;
-  }
-}
-.back-to-login{
+
+.login-card {
     display: flex;
-    gap:$spacing-4xl;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: $spacing-2xl $spacing-4xl;
+}
+
+.signup-mobile,
+.signup-desktop {
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-base;
+    margin-top: $spacing-base;
+}
+
+.signup-mobile {
+    display: none;
+}
+
+.signup-desktop {
+    display: flex;
+}
+
+@media (width < 520px) {
+    .signup-mobile {
+        display: flex;
+    }
+
+    .signup-desktop {
+        display: none;
+    }
+}
+
+.back-to-login {
+    display: flex;
+    gap: $spacing-4xl;
     align-items: center;
     justify-content: center;
-    width:100%;
-    @media ( width < 519px){
-            justify-content: flex-start;
+    width: 100%;
+
+    @media (width < 519px) {
+        justify-content: flex-start;
     }
-    & button{
+
+    & button {
         background: $color-white;
-        border:1px solid $color-white;
+        border: 1px solid $color-white;
     }
 }

@@ -38,12 +38,12 @@ a.nav-item {
   }
 }
 .nav-item svg {
-  fill: $color-gray;  // Standardfarbe
+  fill: $color-gray;  
   transition: fill 0.3s;
 }
 .nav-item:hover svg,
 .nav-item.active svg {
-  fill: $color-white;  // Hover und Active Farbe
+  fill: $color-white;  
 }
 .nav-icon {
   width: 24px;

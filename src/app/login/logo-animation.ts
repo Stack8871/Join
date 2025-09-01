@@ -47,7 +47,6 @@ export class LogoAnimation {
     this.logoElement = document.querySelector('.img-start') as HTMLImageElement;
 
     if (!this.logoElement) {
-      // Logo element not found
       this.resetState();
       onComplete?.();
       return;
@@ -55,7 +54,7 @@ export class LogoAnimation {
 
     this.setPositions();
     this.applyInitialStyles();
-    this.logoElement.offsetHeight; // force reflow
+    this.logoElement.offsetHeight;
     setTimeout(() => this.animateToFinalPosition(onComplete), 300);
   }
 

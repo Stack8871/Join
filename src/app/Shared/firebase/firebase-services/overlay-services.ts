@@ -28,7 +28,6 @@ export class OverlayService {
     const portal = new ComponentPortal(ContactsOverlay);
     const componentRef = this.overlayRef.attach(portal);
 
-    // ❗ WICHTIG: Kontakt übergeben, wenn Edit-Modus
     if (contactToEdit) {
       componentRef.instance.contactToEdit = contactToEdit;
     }

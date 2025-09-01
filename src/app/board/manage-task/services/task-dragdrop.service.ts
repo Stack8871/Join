@@ -130,7 +130,6 @@ export class TaskDragDropService {
         );
       })
       .catch((error) => {
-        // Error handling already managed by try-catch
         successService.show('Failed to move task. Please try again.', 3000);
       });
   }
@@ -196,7 +195,6 @@ export class TaskDragDropService {
     Promise.all(updatePromises)
       .then(() => successService.show('Tasks reordered successfully!', 2000))
       .catch((error) => {
-        // Error handling already managed by try-catch
         successService.show('Failed to reorder tasks.', 3000);
       });
   }
