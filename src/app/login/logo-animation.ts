@@ -121,14 +121,25 @@ export class LogoAnimation {
     }, { once: true });
   }
 
+  /**
+   * Resets the animation state to completed and marks animation as played.
+   * Used as fallback when animation cannot complete normally.
+   */
   private resetState(): void {
     this.state = AnimationState.Completed;
     LogoAnimation.hasPlayed = true;
   }
 }
 
+/**
+ * Enumeration of possible animation states for the logo animation.
+ * Tracks the current phase of the animation lifecycle.
+ */
 enum AnimationState {
+  /** Animation is not running and ready to start */
   Idle = 'Idle',
+  /** Animation is currently in progress */
   Running = 'Running',
+  /** Animation has finished successfully */
   Completed = 'Completed'
 }

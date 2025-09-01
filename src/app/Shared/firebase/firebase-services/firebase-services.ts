@@ -31,10 +31,10 @@ import { TaskInterface } from '../../../interfaces/task-interface';
 export class Firebase implements OnDestroy {
   /** Injected Firestore instance */
   private firestore = inject(Firestore);
-  
+
   /** Unsubscribe function for real-time listeners */
-  private unsubscribe: Unsubscribe = () => {};
-  
+  private unsubscribe: Unsubscribe = () => { };
+
   /** Real-time synchronized contacts list */
   ContactsList: ContactsInterface[] = [];
 
@@ -67,16 +67,35 @@ export class Firebase implements OnDestroy {
     }
   }
 
+  /**
+   * Retrieves contacts from Firestore ordered alphabetically by name.
+   * Returns an observable that emits the contact list whenever data changes.
+   * 
+   * @returns Observable of ContactsInterface array sorted by name
+   */
   getAlphabeticalContacts(): Observable<ContactsInterface[]> {
     const contactsRef = collection(this.firestore, 'contacts');
     const sortedQuery = query(contactsRef, orderBy('name'));
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<ContactsInterface[]>;
   }
 
+  /**
+   * Adds a new contact to the Firestore contacts collection.
+   * 
+   * @param contacts The contact object to add to the database
+   * @returns Promise that resolves when the contact is successfully added
+   */
   async addContactsToDatabase(contacts: ContactsInterface) {
     await addDoc(collection(this.firestore, 'contacts'), contacts);
   }
 
+  /**
+   * Updates an existing contact in the Firestore contacts collection.
+   * 
+   * @param id The document ID of the contact to update
+   * @param editedContacts The updated contact data
+   * @returns Promise that resolves when the contact is successfully updated
+   */
   async editContactsToDatabase(id: string, editedContacts: ContactsInterface) {
     await updateDoc(doc(this.firestore, 'contacts', id), {
       name: editedContacts.name,
@@ -86,10 +105,24 @@ export class Firebase implements OnDestroy {
     });
   }
 
+  /**
+   * Deletes a contact from the Firestore contacts collection.
+   * 
+   * @param id The document ID of the contact to delete
+   * @returns Promise that resolves when the contact is successfully deleted
+   */
   async deleteContactsFromDatabase(id: string) {
     await deleteDoc(doc(this.firestore, 'contacts', id));
   }
 
+  /**
+   * Creates a ContactsInterface object with the provided ID and contact data.
+   * Ensures all required fields are properly set with default values where needed.
+   * 
+   * @param id The unique identifier for the contact
+   * @param obj The contact data to structure
+   * @returns Formatted ContactsInterface object
+   */
   setContactsObject(id: string, obj: ContactsInterface): ContactsInterface {
     return {
       id: id,
@@ -100,11 +133,24 @@ export class Firebase implements OnDestroy {
     };
   }
 
+  /**
+   * Adds a new task to the Firestore tasks collection.
+   * 
+   * @param tasks The task object to add to the database
+   * @returns Promise that resolves with the new document ID
+   */
   async addTaskToDatabase(tasks: TaskInterface): Promise<string> {
     const docRef = await addDoc(collection(this.firestore, 'tasks'), tasks);
     return docRef.id;
   }
 
+  /**
+   * Updates an existing task in the Firestore tasks collection.
+   * 
+   * @param id The document ID of the task to update
+   * @param editedTasks The updated task data
+   * @returns Promise that resolves when the task is successfully updated
+   */
   async editTaskToDatabase(id: string, editedTasks: TaskInterface) {
     await updateDoc(doc(this.firestore, 'tasks', id), {
       title: editedTasks.title,
@@ -119,10 +165,20 @@ export class Firebase implements OnDestroy {
     });
   }
 
+  /**
+   * Deletes a task from the Firestore tasks collection.
+   * 
+   * @param id The document ID of the task to delete
+   * @returns Promise that resolves when the task is successfully deleted
+   */
   async deleteTaskFromDatabase(id: string) {
     await deleteDoc(doc(this.firestore, 'tasks', id));
   }
 
+  /**
+   * Cleanup method called when the service is destroyed.
+   * Unsubscribes from real-time Firestore listeners to prevent memory leaks.
+   */
   ngOnDestroy() {
     if (this.unsubscribe) {
       this.unsubscribe();

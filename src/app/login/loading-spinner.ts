@@ -45,8 +45,12 @@ import {CommonModule} from '@angular/common';
   styleUrls: ['./loading-spinner.scss']
 })
 export class LoadingSpinner implements OnInit {
+  /** Flag indicating if spinner should be visible */
   isLoading = true;
 
+  /**
+   * Constructor for LoadingSpinner component
+   */
   constructor() {}
 
   /**

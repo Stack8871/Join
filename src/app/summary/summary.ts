@@ -7,8 +7,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 /**
- * Summary component displaying task statistics and overview
- * Shows counts of tasks by status, priority and upcoming deadlines
+ * Summary component displaying task statistics and overview.
+ * Shows counts of tasks by status, priority and upcoming deadlines.
+ * 
+ * @example
+ * ```html
+ * <app-summary></app-summary>
+ * ```
  */
 @Component({
   selector: 'app-summary',
@@ -19,26 +24,67 @@ import { Router } from '@angular/router';
   providers: [DatePipe]
 })
 export class summary implements OnInit {
+  /** Injected task service for task data operations */
   private taskService = inject(TaskService);
+  
+  /** Injected authentication service for user data */
   private authService = inject(AuthService);
+  
+  /** Injected date pipe for date formatting */
   private datePipe = inject(DatePipe);
+  
+  /** Injected router service for navigation */
   private router = inject(Router);
+  
+  /** Observable stream of all tasks */
   tasks$!: Observable<TaskInterface[]>;
+  
+  /** Observable stream of urgent tasks sorted by due date */
   urgentTasks$!: Observable<TaskInterface[]>;
+  
+  /** Array containing all tasks */
   tasks: TaskInterface[] = [];
+  
+  /** Array containing urgent tasks */
   urgentTasks: TaskInterface[] = [];
+  
+  /** Count of tasks with 'todo' status */
   todoCount: number = 0;
+  
+  /** Count of tasks with 'inProgress' status */
   inProgressCount: number = 0;
+  
+  /** Count of tasks with 'feedback' status */
   feedbackCount: number = 0;
+  
+  /** Count of tasks with 'done' status */
   doneCount: number = 0;
+  
+  /** Count of urgent priority tasks */
   urgentCount: number = 0;
+  
+  /** Total count of all tasks across all statuses */
   totalTasksCount: number = 0;
+  
+  /** Greeting message based on time of day */
   greeting: string = 'Good day';
+  
+  /** Display name of the current user */
   userName: string = '';
+  
+  /** Flag indicating if current user is a guest */
   isGuest: boolean = false;
+  
+  /** Formatted date string of next urgent task deadline */
   nextUrgentDeadline: string = '';
+  
+  /** Flag indicating if there are any urgent tasks */
   hasUrgentTasks: boolean = false;
+  
+  /** Formatted date string of next due date */
   nextDueDate: string = '';
+  
+  /** Flag indicating if there are upcoming tasks */
   hasUpcomingTasks: boolean = false;
 
   /**

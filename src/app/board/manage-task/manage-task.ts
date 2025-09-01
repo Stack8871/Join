@@ -33,8 +33,12 @@ import { TaskDragDropService } from './services/task-dragdrop.service';
 })
 export class ManageTask implements OnInit, OnDestroy {
   
+  /** Task service for task operations */
   public TaskService = inject(TaskService);
+  
+  /** Firebase service for database operations */
   public firebase = inject(Firebase);
+  
   private filterService = inject(TaskFilterService);
   private taskOverlayService = inject(TaskOverlayService);
   private userPermissionService = inject(UserPermissionService);
@@ -45,30 +49,64 @@ export class ManageTask implements OnInit, OnDestroy {
   private columnService = inject(TaskColumnService);
   private uiHelper = inject(TaskUIHelperService);
   private highlightService = inject(TaskHighlightService);
+  
+  /** Mobile slider service for touch navigation */
   public mobileSlider = inject(MobileSliderService);
+  
   private dragDropService = inject(TaskDragDropService);
 
+  /** Observable stream of tasks */
   tasks$!: Observable<TaskInterface[]>;
+  
+  /** Array of all tasks */
   tasks: TaskInterface[] = [];
+  
+  /** Current search term for filtering */
   searchTerm: string = '';
+  
+  /** Filtered columns based on search term */
   filteredColumns: any[] = [];
+  
+  /** Flag indicating if no tasks were found after filtering */
   noTasksFound: boolean = false;
+  
+  /** Array of task columns */
   columns: any[] = [];
   
+  /** Flag indicating if task is being edited */
   isEdited = false;
+  
+  /** Flag indicating if task is selected */
   isSelected = false;
+  
+  /** ID of selected task */
   taskId?: string = '';
+  
+  /** Currently selected task object */
   selectedTask?: TaskInterface;
+  
+  /** Index of selected task */
   selectedTasksIndex?: number;
+  
+  /** Flag indicating if drag operation is in progress */
   isDragging = false; 
   
+  /** Permission flag for task creation */
   canCreateTask = false;
+  
+  /** Permission flag for task editing */
   canEditTask = false;
+  
+  /** Permission flag for task deletion */
   canDeleteTask = false;
   
+  /** Array of drop list IDs for drag and drop */
   dropListIds: string[] = [];
   
+  /** Event listener for edit overlay */
   private editOverlayListener?: (event: any) => void;
+  
+  /** Flag to prevent multiple parameter subscriptions */
   private paramsSubscribed = false;
 
   /**
@@ -177,6 +215,10 @@ export class ManageTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Selects a task and opens task detail view
+   * @param task - Task to be selected and displayed
+   */
   selectTask(task: TaskInterface) {
     if (!task) return;
     this.isSelected = true;
@@ -184,11 +226,18 @@ export class ManageTask implements OnInit, OnDestroy {
     this.taskId = task.id;
   }
 
+  /**
+   * Closes the task detail overlay
+   */
   closeOverlay() {
     this.isSelected = false;
     this.selectedTask = undefined;
   }
 
+  /**
+   * Opens overlay to add a new task
+   * Checks user permissions before allowing task creation
+   */
   addNewTask() {
     if (!this.canCreateTask) {
       this.success.show('You do not have permission to create tasks', 3000);
@@ -197,6 +246,10 @@ export class ManageTask implements OnInit, OnDestroy {
     this.taskOverlayService.openOverlay();
   }
 
+  /**
+   * Opens overlay to edit an existing task
+   * @param task - Task to be edited
+   */
   editTask(task: TaskInterface) {
     if (!this.canEditTask) {
       this.success.show('You do not have permission to edit tasks', 3000);
@@ -205,6 +258,10 @@ export class ManageTask implements OnInit, OnDestroy {
     this.taskOverlayService.openOverlay(task);
   }
 
+  /**
+   * Deletes a task from the database
+   * @param taskId - ID of the task to delete
+   */
   deleteItem(taskId: string) {
     if (!this.canDeleteTask) {
       this.success.show('You do not have permission to delete tasks', 3000);
@@ -213,6 +270,10 @@ export class ManageTask implements OnInit, OnDestroy {
     this.firebase.deleteTaskFromDatabase(taskId);
   }
 
+  /**
+   * Applies search filter to tasks
+   * @param searchTerm - Search term to filter tasks by
+   */
   applyFilter(searchTerm: string) {
     this.searchTerm = searchTerm;
     if (!searchTerm || searchTerm.trim() === '') {
@@ -225,67 +286,146 @@ export class ManageTask implements OnInit, OnDestroy {
     this.noTasksFound = !this.filteredColumns.some(column => column.tasks.length > 0);
   }
 
+  /**
+   * Gets initials from a contact name
+   * @param name - Full name of the contact
+   * @returns Initials as string
+   */
   getInitials(name: string): string {
     return this.TaskService.getInitials(name);
   }
 
+  /**
+   * Gets consistent color for a contact name
+   * @param name - Name of the contact
+   * @returns Hex color string
+   */
   getColor(name: string): string {
     return this.TaskService.getColor(name);
   }
 
+  /**
+   * Gets contact name by ID
+   * @param contactId - ID of the contact
+   * @returns Contact name or empty string if not found
+   */
   getContactName(contactId: string): string {
     const contact = this.firebase.ContactsList.find(c => c.id === contactId);
     return contact ? contact.name : '';
   }
 
+  /**
+   * Gets CSS class for task category
+   * @param category - Task category
+   * @returns CSS class name
+   */
   getCategoryClass(category: string): string {
     return this.uiHelper.getCategoryClass(category);
   }
 
+  /**
+   * Truncates text to a specific length
+   * @param text - Text to truncate
+   * @returns Truncated text with ellipsis if needed
+   */
   truncateText(text: string): string {
     return this.uiHelper.truncateText(text);
   }
 
+  /**
+   * Limits array to a specific number of items
+   * @param array - Array to limit
+   * @returns Limited array
+   */
   limitArray(array: any[]): any[] {
     return this.uiHelper.limitArray(array);
   }
 
+  /**
+   * Gets priority icon path for a given priority
+   * @param priority - Task priority level
+   * @returns Icon path string
+   */
   getPriorityIcon(priority: string): string {
     return this.uiHelper.getPriorityIcon(priority);
   }
 
+  /**
+   * Calculates subtask completion progress as percentage
+   * @param task - Task containing subtasks
+   * @returns Progress percentage (0-100)
+   */
   getSubtaskProgress(task: TaskInterface): number {
     return this.uiHelper.getSubtaskProgress(task);
   }
 
+  /**
+   * Gets number of completed subtasks
+   * @param task - Task containing subtasks
+   * @returns Number of completed subtasks
+   */
   getCompletedSubtasks(task: TaskInterface): number {
     return this.uiHelper.getCompletedSubtasks(task);
   }
 
+  /**
+   * Gets current task index for mobile slider
+   * @param columnId - ID of the column
+   * @returns Current task index
+   */
   getCurrentTaskIndex(columnId: string): number {
     return this.mobileSlider.getCurrentTaskIndex(columnId);
   }
 
+  /**
+   * Gets current visible task index for mobile slider
+   * @param columnId - ID of the column
+   * @returns Current visible task index
+   */
   getCurrentVisibleTaskIndex(columnId: string): number {
     return this.mobileSlider.getCurrentTaskIndex(columnId);
   }
 
+  /**
+   * Scrolls to specific task in mobile view
+   * @param columnId - ID of the column
+   * @param index - Index of the task to scroll to
+   */
   scrollToTask(columnId: string, index: number): void {
     this.mobileSlider.scrollToTask(columnId, index, this.filteredColumns);
   }
 
+  /**
+   * Shows task at specific index in mobile view
+   * @param columnId - ID of the column
+   * @param index - Index of the task to show
+   */
   showTaskAtIndex(columnId: string, index: number): void {
     this.mobileSlider.showTaskAtIndex(columnId, index, this.filteredColumns);
   }
 
+  /**
+   * Handles touch start event for mobile slider
+   * @param event - Touch event
+   */
   onTouchStart(event: TouchEvent): void {
     this.mobileSlider.onTouchStart(event);
   }
 
+  /**
+   * Handles touch end event for mobile slider
+   * @param event - Touch event
+   * @param columnId - ID of the column
+   */
   onTouchEnd(event: TouchEvent, columnId: string): void {
     this.mobileSlider.onTouchEnd(event, columnId, this.filteredColumns);
   }
 
+  /**
+   * Handles drag and drop events for tasks
+   * @param event - CDK drag drop event
+   * @param targetColumnId - ID of the target column
+   */
   onDrop(event: CdkDragDrop<TaskInterface[]>, targetColumnId: string): void {
     this.dragDropService.handleDrop(
       event, 

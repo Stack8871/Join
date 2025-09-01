@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {LoginService} from './login.service';
-import {AuthService} from '../Shared/firebase/firebase-services/auth.service';
-import {RouterModule, Router} from '@angular/router';
-import {LogoAnimation} from './logo-animation';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { LoginService } from './login.service';
+import { AuthService } from '../Shared/firebase/firebase-services/auth.service';
+import { RouterModule, Router } from '@angular/router';
+import { LogoAnimation } from './logo-animation';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Login component for user authentication
@@ -31,7 +31,7 @@ export class Login implements OnInit {
     private logoAnimation: LogoAnimation,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   /** Logs in the user with email and password. */
   login() {
@@ -86,11 +86,11 @@ export class Login implements OnInit {
   /** Initializes login animation after page load. */
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const skipAnimation = params['fromLogout'] === 'true' || 
-                           params['skipAnimation'] === 'true' ||
-                           LogoAnimation.hasPlayed ||
-                           this.isInternalNavigation();
-      
+      const skipAnimation = params['fromLogout'] === 'true' ||
+        params['skipAnimation'] === 'true' ||
+        LogoAnimation.hasPlayed ||
+        this.isInternalNavigation();
+
       if (skipAnimation) {
         this.isLoading = false;
         this.showLoginCard = true;
@@ -114,7 +114,7 @@ export class Login implements OnInit {
   private isInternalNavigation(): boolean {
     const referrer = document.referrer;
     const currentOrigin = window.location.origin;
-    
+
     return !!(referrer && referrer.startsWith(currentOrigin));
   }
 }

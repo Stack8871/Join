@@ -8,6 +8,15 @@ import { Firebase } from '../../Shared/firebase/firebase-services/firebase-servi
 import { SuccessServices } from '../../Shared/firebase/firebase-services/success-services';
 import { ContactsInterface } from '../../interfaces/contacts-interface';
 
+/**
+ * Task overlay component for creating and editing tasks
+ * Provides a modal interface for task creation and modification with form validation
+ * 
+ * @example
+ * ```html
+ * <app-task-overlay [taskToEdit]="selectedTask"></app-task-overlay>
+ * ```
+ */
 @Component({
   selector: 'app-task-overlay',
  imports: [CommonModule, ReactiveFormsModule],
@@ -19,16 +28,30 @@ export class TaskOverlay implements OnInit, OnChanges{
   private success = inject(SuccessServices);
   private taskService = inject(TaskService);
   private firebase = inject(Firebase);
+  
+  /** List of all available contacts */
   public ContactsList: ContactsInterface[] = [];
+  
+  /** Task to edit (optional, for edit mode) */
   @Input() taskToEdit?: TaskInterface;
+  
+  /** Contact to edit (optional) */
   @Input() contactToEdit?: ContactsInterface;
 
+  /** Flag for dropdown visibility state */
   isDropdownOpen = false;
+  
+  /** Flag for category dropdown visibility state */
   isCategoryDropdownOpen = false;
 
-form: FormGroup;
+  /** Reactive form for task data */
+  form: FormGroup;
 
-constructor(private fb: FormBuilder) {
+  /**
+   * Constructor - initializes the reactive form with validation rules
+   * @param fb - FormBuilder service for creating reactive forms
+   */
+  constructor(private fb: FormBuilder) {
   this.form = this.fb.group({
     status:'todo',
     title: ['', Validators.required],
@@ -41,19 +64,34 @@ constructor(private fb: FormBuilder) {
   });
 }
 
+/**
+ * Getter for subtasks FormArray
+ * @returns FormArray containing subtask controls
+ */
 get subtasks(): FormArray {
   return this.form.get('subtasks') as FormArray;
 }
 
+/**
+ * Getter for subtask controls as FormControl array
+ * @returns Array of FormControl instances for subtasks
+ */
 get subtaskControls(): FormControl[] {
   return (this.form.get('subtasks') as FormArray).controls.map(c => c as FormControl);
 }
 
+/**
+ * Adds a new subtask to the form array
+ */
 addSubtask() {
   const subtasks = this.form.get('subtasks') as FormArray;
   subtasks.push(this.fb.control('', Validators.required));
 }
 
+/**
+ * Removes a subtask at the specified index
+ * @param index - Index of subtask to remove
+ */
 removeSubtask(index: number) {
   const subtasks = this.form.get('subtasks') as FormArray;
   if (subtasks.length > 1) {
@@ -61,14 +99,22 @@ removeSubtask(index: number) {
   }
 }
 
+  /** Flag indicating if component is in edit mode */
   public isEditMode = false;
 
+  /**
+   * Lifecycle hook that responds to changes in input properties
+   * @param changes - Object containing the changed properties
+   */
   ngOnChanges(changes: SimpleChanges) {
     if (changes['taskToEdit'] && changes['taskToEdit'].currentValue) {
       this.initializeEditMode();
     }
   }
 
+  /**
+   * Component initialization lifecycle hook
+   */
   ngOnInit() {
     this.taskService.getContactsRef().subscribe((contacts: ContactsInterface[]) => {
       this.ContactsList = contacts;
@@ -77,6 +123,9 @@ removeSubtask(index: number) {
     this.initializeEditMode();
   }
 
+  /**
+   * Initializes edit mode by setting form values from taskToEdit
+   */
   private initializeEditMode() {
     this.isEditMode = !!this.taskToEdit;
 
@@ -105,7 +154,13 @@ removeSubtask(index: number) {
     }
   }
 
-    private hasFieldState(fieldName: string, shouldBeValid: boolean): boolean {
+  /**
+   * Private helper method to check field validation state
+   * @param fieldName - Name of the form field to check
+   * @param shouldBeValid - Whether to check for valid or invalid state
+   * @returns True if field matches the expected validation state
+   */
+  private hasFieldState(fieldName: string, shouldBeValid: boolean): boolean {
     const control = this.form.get(fieldName);
     if (!control) {
       return false;
@@ -114,14 +169,29 @@ removeSubtask(index: number) {
     return touched && (shouldBeValid ? control.valid : control.invalid);
   }
 
+  /**
+   * Checks if a form field is valid and has been touched by the user
+   * @param fieldName - Name of the form field to validate
+   * @returns True if field is valid and touched
+   */
   isFieldValid(fieldName: string): boolean {
     return this.hasFieldState(fieldName, true);
   }
 
+  /**
+   * Checks if a form field is invalid and has been touched by the user
+   * @param fieldName - Name of the form field to validate
+   * @returns True if field is invalid and touched
+   */
   isFieldInvalid(fieldName: string): boolean {
     return this.hasFieldState(fieldName, false);
   }
 
+  /**
+   * Gets validation error message for a form field
+   * @param fieldName - Name of the form field
+   * @returns Error message string or empty string if no error
+   */
   getValidationMessage(fieldName: string): string {
     const field = this.form.get(fieldName);
     if (!field?.errors || !(field.dirty || field.touched)) {
@@ -133,7 +203,11 @@ removeSubtask(index: number) {
     return 'Invalid input';
   }
 
-    setPriority(priority: string): void {
+  /**
+   * Sets priority for the task
+   * @param priority - Priority level ('low', 'medium', 'urgent')
+   */
+  setPriority(priority: string): void {
     this.form.get('priority')?.setValue(priority);
   };
 
@@ -164,19 +238,33 @@ removeSubtask(index: number) {
     return this.ContactsList.find(contact => contact.id === contactId);
   }
 
+  /**
+   * Toggles the assignedTo dropdown visibility
+   */
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  /**
+   * Toggles the category dropdown visibility
+   */
   toggleCategoryDropdown(): void {
     this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
   }
 
+  /**
+   * Selects a category and closes the dropdown
+   * @param category - Category to select
+   */
   selectCategory(category: string): void {
     this.form.get('category')?.setValue(category);
     this.isCategoryDropdownOpen = false;
   }
 
+  /**
+   * Toggles contact selection for task assignment
+   * @param contactId - ID of contact to toggle
+   */
   toggleContact(contactId: string): void {
     const currentValue = this.form.get('assignedTo')?.value || [];
     const index = currentValue.indexOf(contactId);
@@ -190,11 +278,20 @@ removeSubtask(index: number) {
     this.form.get('assignedTo')?.setValue([...currentValue]);
   }
 
+  /**
+   * Checks if a contact is selected for task assignment
+   * @param contactId - ID of contact to check
+   * @returns True if contact is selected
+   */
   isContactSelected(contactId: string): boolean {
     const currentValue = this.form.get('assignedTo')?.value || [];
     return currentValue.includes(contactId);
   }
 
+  /**
+   * Host listener to close dropdowns when clicking outside
+   * @param event - Click event
+   */
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event): void {
     const target = event.target as HTMLElement;
@@ -204,6 +301,10 @@ removeSubtask(index: number) {
     }
   }
 
+  /**
+   * Submits the task form and creates/updates task
+   * Validates required fields and processes subtasks before saving
+   */
   async submit() {
     
     const requiredFields = ['title', 'dueDate', 'category'];
@@ -266,6 +367,9 @@ removeSubtask(index: number) {
     document.dispatchEvent(new CustomEvent('closeOverlay'));
   }
 
+  /**
+   * Cancels task creation/editing and closes overlay
+   */
   cancel() {
     document.dispatchEvent(new CustomEvent('closeOverlay'));
   }

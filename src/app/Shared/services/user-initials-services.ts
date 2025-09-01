@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Service for generating user initials and color assignments
- * Provides consistent color assignment and initial generation for user names
+ * Service for generating user initials and color assignments.
+ * Provides consistent color assignment and initial generation for user names.
+ * 
+ * @example
+ * ```typescript
+ * constructor(private userInitials: UserInitialsServices) {
+ *   const display = this.userInitials.getUserDisplay('John Doe', 'john@example.com');
+ *   console.log(display.initials); // 'JD'
+ *   console.log(display.color); // '#EF4444'
+ * }
+ * ```
  */
 @Injectable({
   providedIn: 'root'
 })
 export class UserInitialsServices {
   
+  /** Array of predefined colors for user avatar backgrounds */
   private readonly colors = [
     '#EF4444', '#F97316', '#F59E0B', '#EAB308',
     '#84CC16', '#22C55E', '#10B981', '#14B8A6',
@@ -27,7 +37,10 @@ export class UserInitialsServices {
     '#15803D', '#166534', '#0F766E', '#155E75'
   ];
 
+  /** Map to store persistent color assignments for users based on name/email */
   private readonly colorAssignments = new Map<string, string>();
+  
+  /** Index counter for cycling through available colors */
   private colorIndex = 0;
 
   /**
