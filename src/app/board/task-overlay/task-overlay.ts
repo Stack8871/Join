@@ -212,27 +212,27 @@ removeSubtask(index: number) {
   };
 
   /**
-   * Generiert Initialen aus einem Namen
-   * @param name - Der vollständige Name
-   * @returns Die Initialen
+   * Generates initials from a name.
+   * @param name - The full name
+   * @returns The initials
    */
   getInitials(name: string): string {
     return this.taskService.getInitials(name);
   }
 
   /**
-   * Generiert eine konsistente Farbe für einen Namen
-   * @param name - Der Name des Mitarbeiters
-   * @returns Eine Hex-Farbe
+   * Generates a consistent color for a name.
+   * @param name - The employee's name
+   * @returns A hex color code
    */
   getColor(name: string): string {
     return this.taskService.getColor(name);
   }
 
   /**
-   * Findet einen Kontakt anhand der ID
-   * @param contactId - Die ID des Kontakts
-   * @returns Der Kontakt oder undefined
+   * Finds a contact by ID.
+   * @param contactId - The contact's ID
+   * @returns The contact or undefined
    */
   getContactById(contactId: string): ContactsInterface | undefined {
     return this.ContactsList.find(contact => contact.id === contactId);

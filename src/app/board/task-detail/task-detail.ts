@@ -165,7 +165,7 @@ export class TaskDetail implements OnInit {
       await this.taskService.deleteTaskFromDatabase(taskId);
       this.close.emit();
     } catch (error) {
-      alert('Fehler beim Löschen der Aufgabe. Bitte versuchen Sie es erneut.');
+      alert('Error deleting task. Please try again.');
     }
   }
 
@@ -179,27 +179,27 @@ export class TaskDetail implements OnInit {
   }
 
   /**
-   * Generiert Initialen aus einem Namen
-   * @param name - Der vollständige Name
-   * @returns Die Initialen
+   * Generates initials from a name.
+   * @param name - The full name
+   * @returns The initials
    */
   getInitials(name: string): string {
     return this.taskService.getInitials(name);
   }
 
   /**
-   * Generiert eine konsistente Farbe für einen Namen
-   * @param name - Der Name des Mitarbeiters
-   * @returns Eine Hex-Farbe
+   * Generates a consistent color for a name.
+   * @param name - The employee's name
+   * @returns A hex color code
    */
   getColor(name: string): string {
     return this.taskService.getColor(name);
   }
 
   /**
-   * Findet den Namen eines Kontakts anhand der ID
-   * @param contactId - Die ID des Kontakts
-   * @returns Der Name des Kontakts oder leerer String
+   * Finds the name of a contact by ID.
+   * @param contactId - The contact's ID
+   * @returns The contact's name or empty string
    */
   getContactName(contactId: string): string {
     const contact = this.ContactsList.find(c => c.id === contactId);
@@ -207,18 +207,18 @@ export class TaskDetail implements OnInit {
   }
 
   /**
-   * Bestimmt die CSS-Klasse für eine Kategorie
-   * @param category - Die Kategorie der Task
-   * @returns Die entsprechende CSS-Klasse
+   * Determines the CSS class for a category.
+   * @param category - The task category
+   * @returns The corresponding CSS class
    */
   getCategoryClass(category: string): string {
     return `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
   }
 
   /**
-   * Bestimmt das Icon-Pfad für eine Priorität
-   * @param priority - Die Priorität der Task (Low, Medium, High)
-   * @returns Der Pfad zum entsprechenden Icon
+   * Determines the icon path for a priority.
+   * @param priority - The task priority (Low, Medium, High)
+   * @returns The path to the corresponding icon
    */
   getPriorityIcon(priority: string): string {
     switch (priority) {
@@ -234,8 +234,8 @@ export class TaskDetail implements OnInit {
   }
 
   /**
-   * Schaltet den Status eines Subtasks um und aktualisiert die Datenbank
-   * @param subtaskIndex - Der Index des Subtasks im Array
+   * Toggles the status of a subtask and updates the database.
+   * @param subtaskIndex - The subtask index in the array
    */
   async toggleSubtask(subtaskIndex: number) {
     if (!this.selectedTask.subtasks || subtaskIndex < 0 || subtaskIndex >= this.selectedTask.subtasks.length) {
@@ -262,8 +262,8 @@ export class TaskDetail implements OnInit {
   }
 
   /**
-   * Berechnet den Fortschritt der Subtasks in Prozent
-   * @returns Fortschritt zwischen 0 und 100
+   * Calculates the progress of subtasks in percentage.
+   * @returns Progress between 0 and 100
    */
   getSubtaskProgress(): number {
     if (!this.selectedTask.subtasks || this.selectedTask.subtasks.length === 0) {
@@ -281,8 +281,8 @@ export class TaskDetail implements OnInit {
   }
 
   /**
-   * Gibt die Anzahl der erledigten Subtasks zurück
-   * @returns Anzahl der erledigten Subtasks
+   * Returns the number of completed subtasks.
+   * @returns Number of completed subtasks
    */
   getCompletedSubtasks(): number {
     if (!this.selectedTask.subtasks) return 0;
